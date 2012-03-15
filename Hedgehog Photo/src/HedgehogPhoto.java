@@ -7,10 +7,7 @@ public class HedgehogPhoto {
 	public static void main(String[] args) {
 		System.out.println("TEST");
 		
-		JFrame frame = new JFrame("Hedgehog Photo");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1100, 700);
-		frame.setVisible(true);
+		//TODO Here we implement new functions!
 	}
 
 }
