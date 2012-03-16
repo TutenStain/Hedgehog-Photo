@@ -1,5 +1,8 @@
+package se.cth.hedgehogphoto;
 import javax.swing.JFrame;
-
+/**
+ * @author Barnabas Sapan
+ */
 
 public class HedgehogPhoto {
 	
