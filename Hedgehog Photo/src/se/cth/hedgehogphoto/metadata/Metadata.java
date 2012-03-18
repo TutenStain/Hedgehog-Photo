@@ -38,13 +38,16 @@ public class Metadata {
 	
 	public static String extract(File file) {
 		IImageMetadata metadata = null;
-		try {
-			metadata = Sanselan.getMetadata(file);
-		} catch (ImageReadException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+			try {
+				metadata = Sanselan.getMetadata(file);
+			} catch (ImageReadException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		return metadata.toString();
 	}
 	
