@@ -29,6 +29,7 @@ public class Metadata {
 			IImageMetadata metadata = extractMetadata();
 			ImageObject io = getImageObject(metadata);
 			setFileProperties(io);
+			io.print();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
