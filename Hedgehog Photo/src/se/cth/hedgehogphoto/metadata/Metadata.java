@@ -7,10 +7,11 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.IImageMetadata;
+
+import se.cth.hedgehogphoto.ImageObject;
 
 /**
  * A wrapper/test-class for the metadata extractor
@@ -18,25 +19,28 @@ import org.apache.sanselan.common.IImageMetadata;
  */
 public class Metadata {
 	
+	private static File file = new File("finbild.jpg"); //default file
 	private static final String[] metadataTypes = 
 			{"Modify Date", "Artist", "XPComment", "XPAuthor", 
 					"XPKeywords", "Date Time Original"};
 	
 	public static void main(String [] args) {
 		try {
-			searchTag(extract());
+			IImageMetadata metadata = extractMetadata();
+			ImageObject io = getImageObject(metadata);
+			setFileProperties(io);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static String extract() {
-		File file = new File("finbild.jpg");
-		return extract(file);
+	private static IImageMetadata extractMetadata() {
+		return extractMetadata(file);
 	}
 	
-	public static String extract(File file) {
+	private static IImageMetadata extractMetadata(File file) {
+		Metadata.file = file;
 		IImageMetadata metadata = null;
 		try {
 			metadata = Sanselan.getMetadata(file);
@@ -45,22 +49,22 @@ public class Metadata {
 			e.printStackTrace();
 		}
 		
-		return metadata.toString();
+		return metadata;
 	}
 	
-	public static void searchTag(String text) throws IOException {
-		BufferedReader br = new BufferedReader( new StringReader(text) );
-		List<String> foundTypes = new ArrayList<String>();
+	public static ImageObject getImageObject(IImageMetadata imageMetadata) throws IOException {
+		String metadata = imageMetadata.toString();
+		BufferedReader br = new BufferedReader( new StringReader(metadata) );
+		ImageObject imageObject = new ImageObject();
 		
 		String line;
-		int nbrOfTypes = metadataTypes.length;
 		while((line = br.readLine()) != null) {		
 			if (containsTargetMetadata(line)) {
-				foundTypes.add(line);
+				setPropertyFromString(imageObject, line);
 			}
 		}
 		
-		printList(foundTypes);
+		return imageObject;
 	}
 	
 	private static boolean containsTargetMetadata(String line) {
@@ -73,13 +77,26 @@ public class Metadata {
 		return false;
 	}
 	
-	
-	
-	private static void printList(List<String> list) {
-		for(int i = 0; i<list.size(); i++) {
-			System.out.println(list.get(i));
-		}
+	private static void setPropertyFromString(ImageObject imageObject, String line) {
+		line = line.trim();
+		String property = getProperty(line);
+		String value = getPropertyValue(line);
+		imageObject.setProperty(property, value);
 	}
 	
+	private static String getProperty(String line) {
+		int indexOfPropertyEnds = line.indexOf(":");
+		return line.substring(0,indexOfPropertyEnds);
+	}
+	
+	private static String getPropertyValue(String line) {
+		int indexOfValueStarts = line.indexOf(":") + 1;
+		return line.substring(indexOfValueStarts);
+	}
+	
+	private static void setFileProperties(ImageObject io) {
+		io.setProperty("fileName", file.getName());
+		io.setProperty("filePath", file.getPath());
+	}
 	
 }
