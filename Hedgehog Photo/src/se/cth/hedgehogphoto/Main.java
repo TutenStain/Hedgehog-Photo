@@ -1,7 +1,8 @@
+package se.cth.hedgehogphoto;
 import javax.swing.JFrame;
 
 
-public class HedgehogPhoto {
+public class Main {
 	
 	//TODO Just a skeleton of the main
 	public static void main(String[] args) {
