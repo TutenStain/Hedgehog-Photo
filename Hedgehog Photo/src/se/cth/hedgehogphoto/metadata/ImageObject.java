@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto;
+package se.cth.hedgehogphoto.metadata;
 
 
 public class ImageObject {

@@ -11,7 +11,6 @@ import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.IImageMetadata;
 
-import se.cth.hedgehogphoto.ImageObject;
 
 /**
  * A wrapper/test-class for the metadata extractor
