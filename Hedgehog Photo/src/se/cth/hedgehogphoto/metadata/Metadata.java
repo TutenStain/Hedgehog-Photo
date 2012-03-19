@@ -44,8 +44,10 @@ public class Metadata {
 		IImageMetadata metadata = null;
 		try {
 			metadata = Sanselan.getMetadata(file);
-		} catch (ImageReadException | IOException e) {
+		} catch (ImageReadException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
