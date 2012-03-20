@@ -14,13 +14,17 @@ public class DatabaseModel {
 	}
 	
 	//TODO Create the DB connection here.
-	 private static void createConnection(){
+	 public void createConnection(){
 		 
 	 }
 	 
 	 //TODO Close the DB connection here.
-	 private static void shutdown(){
+	 public void closeConnection(){
 		  
 	 }
-
+	 
+	 //TODO Our SQL querry
+	 public boolean querry(String querry){
+		 return true;
+	 }
 }
