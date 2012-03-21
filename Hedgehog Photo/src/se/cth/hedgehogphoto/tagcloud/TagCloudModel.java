@@ -1,0 +1,31 @@
+package se.cth.hedgehogphoto.tagcloud;
+
+import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+public class TagCloudModel {
+	private List<String> tags = new ArrayList<String>();
+	private Map<String, Integer> map = new HashMap<String, Integer>();
+	
+	public void setTags(List<String> _tags){
+		if(_tags.size() != 0){
+			tags = _tags;
+			
+			Iterator<String> itr = tags.iterator();
+			while(itr.hasNext()){
+				String o = itr.next();
+				int occurrences = Collections.frequency(tags, o);
+				map.put(o, occurrences);
+			}
+		}
+	}
+	
+	public Map<String, Integer> getTagsOccurrence (){
+		return map;
+	}
+}
