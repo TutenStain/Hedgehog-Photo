@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/sanselan-0.97-incubator-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/sanselan-0.97-incubator-sources.jar"/>
+	<classpathentry kind="lib" path="lib/sanselan-0.97-incubator.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
