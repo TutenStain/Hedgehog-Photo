@@ -16,7 +16,12 @@ public class TagCloudModel {
 		if(_tags.size() != 0){
 			tags = _tags;
 			
+			//TODO This shuffle the tags, which it does, but they still get returned in the same order,
+			//TODO maybe because of the iterator still having references to the old order?
+			Collections.shuffle(tags);
+	
 			Iterator<String> itr = tags.iterator();
+			
 			while(itr.hasNext()){
 				String o = itr.next();
 				int occurrences = Collections.frequency(tags, o);
