@@ -1,19 +1,20 @@
 package hedgehogView;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.ScrollPane;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+<<<<<<< HEAD:Hedgehog Photo/src/View.java
 import javax.swing.JSeparator;
 import java.awt.Panel;
 import java.awt.FlowLayout;
@@ -25,6 +26,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+=======
+import javax.swing.LayoutStyle.ComponentPlacement;
+>>>>>>> f1829fc4b121f35f28730635aa36d10e8e03a956:Hedgehog Photo/src/se/cth/hedgehogphoto/View.java
 
 public class View {
 
@@ -32,25 +36,6 @@ public class View {
 	private JTextField searchField;
 	PhotoPanel[] photoPanels = new PhotoPanel[2];
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					View window = new View();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
 	public View() {
 		initialize();
 	}
@@ -59,12 +44,18 @@ public class View {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+<<<<<<< HEAD:Hedgehog Photo/src/View.java
 		frame =  new JFrame();
 		frame.setBounds(200, 200, 900, 600);
+=======
+		frame =  new JFrame("Hedgehog Photo");
+		frame.setSize(1100, 700);
+>>>>>>> f1829fc4b121f35f28730635aa36d10e8e03a956:Hedgehog Photo/src/se/cth/hedgehogphoto/View.java
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel bottomPanel = new JPanel();
 		frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+<<<<<<< HEAD:Hedgehog Photo/src/View.java
 
 		JButton btnShowhideTags = new JButton("Show/Hide tags");
 
@@ -79,6 +70,17 @@ public class View {
 			}
 		});
 
+=======
+		frame.setVisible(true);
+		
+		JCheckBox checkboxTag = new JCheckBox("Show/hide tags");
+		
+		JCheckBox checkboxText = new JCheckBox("Show/hide text");
+		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		bottomPanel.add(checkboxTag);
+		bottomPanel.add(checkboxText);
+		
+>>>>>>> f1829fc4b121f35f28730635aa36d10e8e03a956:Hedgehog Photo/src/se/cth/hedgehogphoto/View.java
 		JSlider slider = new JSlider();
 
 		JButton showHideComments = new JButton("Show/Hide comments");
