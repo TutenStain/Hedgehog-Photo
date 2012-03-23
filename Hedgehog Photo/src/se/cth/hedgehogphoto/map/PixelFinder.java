@@ -94,6 +94,23 @@ public class PixelFinder {
 		return returnString.toString(); //if using the example above
 	}
 	
+	public String getMapCenterInLongLat(List<Location> markerList) {
+		/**
+		 * find our centre - we can reuse some of these variable later
+		 */	
+		double m_maxLatitude = getLocationsInfo("max", "Latitude", markerList);
+		double m_minLatitude = getLocationsInfo("min", "Latitude", markerList);
+		double m_maxLongitude = getLocationsInfo("max", "Longitude", markerList);
+		double m_minLongitude = getLocationsInfo("min", "Longitude", markerList);
+		double atanhsinO = atanh(Math.sin(m_maxLatitude * Math.PI / 180.00));
+		double atanhsinD = atanh(Math.sin(m_minLatitude * Math.PI / 180.00));
+		double atanhCentre = (atanhsinD + atanhsinO) / 2;
+		double radianOfCentreLatitude = Math.atan(Math.sinh(atanhCentre));
+		double centreLatitude = radianOfCentreLatitude * 180.00 / Math.PI; //turn it to degrees
+		double centreLongitude = (m_maxLongitude + m_minLongitude) / 2;
+		return (centreLatitude + " x " + centreLongitude);
+	}
+	
 	private double getLocationsInfo(String maxMin, String latLong, List<Location> locations) {
 		String wantedInfo = maxMin + latLong;
 		switch(wantedInfo) {
