@@ -1,64 +1,77 @@
-package se.cth.hedgehogphoto;
+package hedgehogView;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Label;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
 
 public class PhotoPanel extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public PhotoPanel() {
+	JLabel commentsLabel = new JLabel("Comments");
+	JLabel tagsLabel = new JLabel("Tags:");
+	JLabel locationLabel = new JLabel("Location:");
+	
+	public PhotoPanel(String path) {
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		add(panel, BorderLayout.SOUTH);
-		
-		JLabel lblTags = new JLabel("Tags");
-		
-		JLabel lblLocations = new JLabel("Locations");
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblTags)
-						.addComponent(lblLocations))
-					.addContainerGap(395, Short.MAX_VALUE))
+		JPanel tagsLocationsPanel = new JPanel();
+		add(tagsLocationsPanel, BorderLayout.SOUTH);
+	
+		GroupLayout gl_tagsLocationsPanel = new GroupLayout(tagsLocationsPanel);
+		gl_tagsLocationsPanel.setHorizontalGroup(
+			gl_tagsLocationsPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_tagsLocationsPanel.createSequentialGroup()
+					.addGroup(gl_tagsLocationsPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(tagsLabel)
+						.addComponent(locationLabel))
+					.addContainerGap(405, Short.MAX_VALUE))
 		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(lblTags)
+		gl_tagsLocationsPanel.setVerticalGroup(
+			gl_tagsLocationsPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_tagsLocationsPanel.createSequentialGroup()
+					.addComponent(tagsLabel)
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(lblLocations))
+					.addComponent(locationLabel))
 		);
-		panel.setLayout(gl_panel);
+		tagsLocationsPanel.setLayout(gl_tagsLocationsPanel);
 		
-		JPanel panel_1 = new JPanel();
-		add(panel_1, BorderLayout.EAST);
+		JPanel commentsPanel = new JPanel();
+		add(commentsPanel, BorderLayout.CENTER);
+		commentsPanel.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblBildBeskrivning = new JLabel((String) null);
-		panel_1.add(lblBildBeskrivning);
+		JLabel iconLabel = new JLabel("");
+		iconLabel.setIcon(new ImageIcon(path));
+		commentsPanel.add(iconLabel, BorderLayout.WEST);
 		
-		JLabel lblBeskrivandeText = new JLabel("Beskrivande text");
-		panel_1.add(lblBeskrivandeText);
-		
-		JLabel lblZoom = new JLabel((String) null);
-		panel_1.add(lblZoom);
-		
-		JPanel panel_2 = new JPanel();
-		add(panel_2, BorderLayout.CENTER);
-		
-		JLabel lblBild = new JLabel("Bild");
-		panel_2.add(lblBild);
+		commentsPanel.add(commentsLabel, BorderLayout.CENTER);
 
 	}
-
+	public void displayComments(Boolean b){
+		this.commentsLabel.setVisible(b);
+	}
+	public boolean isVisibleComments(){
+		return this.commentsLabel.isVisible();
+	}
+	public void displayTags(Boolean b){
+		this.tagsLabel.setVisible(b);
+	}
+	public boolean isVisibleTags(){
+		return this.tagsLabel.isVisible();
+	}
+	public void displayLocation(Boolean b){
+		this.locationLabel.setVisible(b);
+	}
+	public boolean isVisibleLocation(){
+		return this.locationLabel.isVisible();
+	}
 }
