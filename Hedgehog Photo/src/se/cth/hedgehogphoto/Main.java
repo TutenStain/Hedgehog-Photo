@@ -14,9 +14,7 @@ import se.cth.hedgehogphoto.tagcloud.TagCloudView;
  */
 
 public class Main {
-	
 
-	
 	//TODO Just a skeleton of the main
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("TagCloud");
