@@ -9,7 +9,11 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import se.cth.hedgehogphoto.FileObject;
-
+/**
+ * 
+ * @author Julia
+ *
+ */
 
 
 public class DatabaseHandler {
