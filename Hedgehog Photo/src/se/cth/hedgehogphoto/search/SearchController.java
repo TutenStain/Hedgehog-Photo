@@ -20,7 +20,7 @@ public class SearchController {
 		view.setSearchBoxFocusListener(new FocusListener() {
 	        @Override
 	        public void focusGained(FocusEvent e) {
-	        	if (view.getSearchBoxText().equals(model.getPlaceholderText())) {   
+	        	if (view.getSearchBoxText().equals(view.getPlaceholderText())) {   
 	            	view.setSearchBoxText("");
 	            }
 	        }
@@ -28,7 +28,7 @@ public class SearchController {
 	        @Override
 	        public void focusLost(FocusEvent e) {
 	        	if(view.getSearchBoxText().isEmpty()){
-	        		view.setSearchBoxText(model.getPlaceholderText());
+	        		view.setSearchBoxText(view.getPlaceholderText());
 	        	}
 	        }
 
@@ -54,7 +54,7 @@ public class SearchController {
 	        }
 	        
 	        private void update(){
-	        	if(!view.getSearchBoxText().isEmpty() && !view.getSearchBoxText().equals(model.getPlaceholderText())){
+	        	if(!view.getSearchBoxText().isEmpty() && !view.getSearchBoxText().equals(view.getPlaceholderText())){
 	            	//Updates our model to always contain the latest and most recent search query.
 	        		model.setSearchQueryText(view.getSearchBoxText());
 	        		if(t.getState() == Thread.State.NEW){
@@ -71,7 +71,7 @@ public class SearchController {
 		view.setSearchButtonListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!view.getSearchBoxText().equals(model.getPlaceholderText())){
+				if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
 					new SearchThread(model, 0).start();
 				}
 			}

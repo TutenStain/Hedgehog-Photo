@@ -11,6 +11,7 @@ import com.sun.org.apache.xerces.internal.impl.RevalidationHandler;
 
 import se.cth.hedgehogphoto.search.SearchController;
 import se.cth.hedgehogphoto.search.SearchModel;
+import se.cth.hedgehogphoto.search.SearchPreviewView;
 import se.cth.hedgehogphoto.search.SearchView;
 import se.cth.hedgehogphoto.tagcloud.TagCloudModel;
 import se.cth.hedgehogphoto.tagcloud.TagCloudView;
@@ -50,11 +51,12 @@ public class Main {
 		frame.add(tgv);*/
 		
 		SearchModel sm = new SearchModel();
-		sm.setSearchBoxSize(new Dimension(100, 30));
-		sm.setSearchButtonSize(new Dimension(100, 30));
-		SearchView sv = new SearchView(sm);
+		SearchView sv = new SearchView();
 		sv.setPreferredSize(new Dimension(250, 30));
 		sm.addObserver(sv);
+		SearchPreviewView spv = new SearchPreviewView();
+		sv.setSearchPreview(spv);
+		sm.addObserver(spv);
 		SearchController sc = new SearchController(sm, sv);
 		frame.add(sv);	
 		

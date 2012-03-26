@@ -10,4 +10,5 @@ public interface FileObject {
 	public String getImageName();
 	public String getImagePath();
 	public String getCoverPath();
+	public String getAlbumName();
 }

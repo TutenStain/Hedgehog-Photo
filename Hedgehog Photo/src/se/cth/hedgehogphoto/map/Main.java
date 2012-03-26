@@ -23,8 +23,8 @@ public class Main {
 		locations.add(loc4);
 		
 		PixelFinder pixelFinder = new PixelFinder();
-		String sträng = pixelFinder.getPixelCoordinates(locations);
-		System.out.println(sträng);
+		String string = pixelFinder.getPixelCoordinates(locations);
+		System.out.println(string);
 	}
 
 }
