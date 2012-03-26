@@ -8,6 +8,7 @@ import java.util.List;
 import se.cth.hedgehogphoto.Location;
 
 public class MapModel {
+	//TODO move constants into proper class; URLBuilder?
 	private final int maxZoom = 18;
 	private final int minZoom = 0; 
 	private final List<String> acceptedMaptypes = 
@@ -43,10 +44,11 @@ public class MapModel {
 	}
 	
 	private String createURL() {
-		URLBuilder url = new URLBuilder();
-		url.setMaptype(maptype);
-		url.setMapSize(mapsize);
-		url.setMarkers(locations);
+		XMLPath url = new XMLPath();
+//		url.setMaptype(maptype);
+//		url.setMapSize(mapsize);
+//		url.setMarkers(locations);
+		url.setAddress("Berlin");
 		
 		return url.getPath();
 	}
