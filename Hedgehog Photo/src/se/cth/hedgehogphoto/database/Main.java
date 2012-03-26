@@ -25,9 +25,11 @@ public class Main {
 		f.setImageName("lallen");
 		f.setDate("d");
 		f.setTag("blubb");
-		f.setImagePath("BANANABASananana");
-		DatabaseHandler.insert(f);
-		DatabaseHandler.removeFileObject(f);
-	
+		f.setImagePath("BANANABASanananamaaaama");
+	DatabaseHandler.insert(f);
+		DatabaseHandler.addTag("Växjö","BANANABASanananamaaaama" );
+		
+	//DatabaseHandler.removeFileObject(f);
+	//DatabaseHandler.deletePath("BANANABASanananamaaaama");
 }
 }

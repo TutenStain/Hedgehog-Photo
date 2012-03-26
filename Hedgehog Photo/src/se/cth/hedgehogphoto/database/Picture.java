@@ -50,7 +50,7 @@ public class Picture {
 		return album_ID;
 	}
 
-	public void setAlbum_ID(int album_ID) {
+	public void setAlbum_ID(long album_ID) {
 		this.album_ID = album_ID;
 	}
 
@@ -60,4 +60,7 @@ public class Picture {
 		return "Pictures [Path=" + path + ", Date=" + date + "Name="+name+"Album_ID="+album_ID
 				+ "]";
 	}
+
+
+
 }

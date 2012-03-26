@@ -26,7 +26,7 @@ public class DatabaseHandler {
 	public static List<String> getTags(){
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
-		Query q = em.createQuery("select t from Tags t");
+		Query q = em.createQuery("select t from Tag t");
 		List<Tag> list = q.getResultList();
 		List<String> tags = new ArrayList();
 		for (int i = 0; i < list.size(); i++ ){
@@ -43,7 +43,7 @@ public class DatabaseHandler {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
 
-		Query q = em.createQuery("select t from Locations t");
+		Query q = em.createQuery("select t from Location t");
 		List<Location> LocationsList = q.getResultList();
 		List<String> LocationsStringList = new ArrayList();
 		for (Location Locations : LocationsList ){
@@ -125,7 +125,7 @@ public class DatabaseHandler {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
 
-		Query q = em.createQuery("select t from Tags t");
+		Query q = em.createQuery("select t from Tag t");
 		List<Tag> list = q.getResultList();
 		List<String> paths = new ArrayList();
 		for(int i=0; i <list.size();i++){
@@ -218,21 +218,26 @@ public class DatabaseHandler {
 		List<Picture> pics =  t.getResultList();
 		boolean existAlready = false; 
 		for(Picture pic: pics){
-			if(pic.getPath() == f.getImagePath()){
+			System.out.print(pic.getPath());
+			if(pic.getPath().equals(f.getImagePath())){
 				existAlready = true;
+				break;
 			}
 		}
-		System.out.print((existAlready));
-		if(existAlready == false){
+		//System.out.print(f.getImagePath());
+		System.out.print(existAlready);
+	
+		if(!(existAlready)){
 
-			if(f.getImagePath() != ""){
+			if(f.getImagePath() != null || f.getImagePath().equals("")){
 				System.out.print(f.getImagePath());
 				em.getTransaction().begin();
 				Picture pic = new Picture();
 				pic.setPath(f.getImagePath());
 				if(f.getDate() != "")
 					pic.setDate(f.getDate());
-				if(f.getImageName() != "")
+				
+				if(f.getImageName() != null ||f.getImageName().equals(""))
 					pic.setName(f.getImageName());
 
 				em.persist(pic);
@@ -260,7 +265,7 @@ public class DatabaseHandler {
 				em.getTransaction().begin();
 				Comment comment = new Comment();
 				comment.setPath(f.getImagePath());
-				if(f.getComment() != ""){
+				if(f.getComment() != null ||f.getComment().equals("")){
 
 					comment.setComment(f.getComment());
 
@@ -268,11 +273,10 @@ public class DatabaseHandler {
 				em.persist(comment);
 				em.getTransaction().commit();
 
-
 				em.getTransaction().begin();
 				Location location = new Location();
 				location.setPath(f.getImagePath());
-				if(f.getLocation() != null || f.getLocation() != ""){
+				if(f.getLocation() != null || f.getLocation().equals("")){
 
 					location.setLocation(f.getLocation());
 
@@ -284,17 +288,19 @@ public class DatabaseHandler {
 
 				Query a = em.createQuery("select t from Album t");
 				List<Album> albums=  a.getResultList();
-				existAlready = false;
+				boolean albumExistAlready = false;
+				Long aid = (long) 0;
 				for(Album album: albums){
-					if(album.getCoverPath() == f.getCoverPath()){
-						existAlready = true; 
+					if(album.getCoverPath().equals(f.getCoverPath())){
+						albumExistAlready = true; 
+						aid = album.getAlbumID();
 					}
 				}
-				if(!(existAlready)){
+					if(!(albumExistAlready)){
 					em.getTransaction().begin();
 					Album album = new Album();
 
-					if(f.getAlbumName() != null || f.getAlbumName() != ""){
+					if(f.getAlbumName() != null || f.getAlbumName().equals("")){
 						album.setName("Nytt Album");
 					}else{
 						album.setName(f.getAlbumName());
@@ -308,10 +314,15 @@ public class DatabaseHandler {
 					em.getTransaction().commit();
 					em.close();
 				}
+					else{
+						pic.setAlbum_ID(aid);
+					}
+			}
 			}
 		}
-	}
-	public static void addTag(String tag, String filePath){
+	
+
+	public static void addTag(String tags, String filePath){
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
 		Query b = em.createQuery("select t from Picture t");
@@ -320,31 +331,38 @@ public class DatabaseHandler {
 		boolean existAlready = false;
 
 		for(Picture picts: pic){
-			if(picts.getPath() == filePath){
+			if(picts.getPath().equals(filePath)){
 				existAlready = true;
 				break;
 			}
 		}
 		
-		if(!(existAlready)){
+	/*	if(!(existAlready)){
 		em.getTransaction().begin();
 		Tag todo = new Tag();
 		todo.setPath(filePath);
-		todo.setTag(tag);
+		todo.setTag(tags);
 		em.persist(todo);
 		em.getTransaction().commit();	
 		em.close();
 		}
-		else{
-			
+		else{*/
+			if(existAlready){
 			  Tag tagg = em.find(Tag.class, filePath);
 			  
 			  em.getTransaction().begin();
-			  tagg.setTag(tag);
-			  em.getTransaction().commit();
+			
+			  tagg.setTag(tags);
 			  
+			  em.getTransaction().commit();
+			 
 		}
-		
+			
+			 Tag tagg = em.find(Tag.class, filePath);
+			 List<String> tagss = tagg.getTags();
+ 			 for(String tag: tagss){
+ 				 System.out.print(tag);
+ 			 }
 	}
 	public static void addComment(String comment, String filePath){
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -352,16 +370,17 @@ public class DatabaseHandler {
 		///KOLL ifall det finns redan ==> ej adda utan uppdatera
 		Query b = em.createQuery("select t from Picture t");
 		List<Picture> pic =  b.getResultList();
-		
+		Picture picu = new Picture();
 		boolean existAlready = false;
 
 		for(Picture picts: pic){
-			if(picts.getPath() == filePath){
+			if(picts.getPath().equals(filePath)){
 				existAlready = true;
+				picu = picts;
 				break;
 			}
 		}
-		if(!(existAlready)){
+	/*	if(!(existAlready)){
 			em.getTransaction().begin();
 			Comment com = new Comment();
 			com.setPath(filePath);
@@ -370,7 +389,8 @@ public class DatabaseHandler {
 			em.getTransaction().commit();	
 		}
 		else{
-			
+			*/
+		if(existAlready){
 			  Comment comm = em.find(Comment.class, filePath);
 			  
 			  em.getTransaction().begin();
@@ -378,8 +398,8 @@ public class DatabaseHandler {
 			  em.getTransaction().commit();
 			  
 		}
-
-
+		
+		 
 	}
 
 	/*public static List<Comment> getComments(){
@@ -399,13 +419,13 @@ public class DatabaseHandler {
 		boolean existAlready = false;
 
 		for(Picture picts: pic){
-			if(picts.getPath() == filePath){
+			if(picts.getPath().equals(filePath)){
 				existAlready = true;
 				break;
 			}
 		}
 		
-		if(!(existAlready)){
+	/*	if(!(existAlready)){
 		em.getTransaction().begin();
 		Location todo = new Location();
 		todo.setPath(filePath);
@@ -413,13 +433,14 @@ public class DatabaseHandler {
 		em.persist(todo);
 		em.getTransaction().commit();	
 		}
-		else{
+		else{*/
+		if(existAlready){
 			Location loc = em.find(Location.class, filePath);
 			  
 			  em.getTransaction().begin();
 			  loc.setLocation(location);
 			  em.getTransaction().commit();
-			  
+			  System.out.print(loc);
 		}
 
 	}
@@ -436,24 +457,33 @@ public class DatabaseHandler {
 		boolean existAlready = false; 
 		Picture p = new Picture();
 		for(Picture pic: pics){
-			if(pic.getPath() == f.getImagePath()){
+			if(pic.getPath().equals(f.getImagePath())){
 				existAlready = true;
 				p = pic;
 			}
 		}
 		System.out.print(existAlready);
 		if(existAlready){
-			Query q = em
-					.createQuery("SELECT p FROM Picture p WHERE p.path = :path");
-			q.setParameter("path", f.getImagePath());
-			//  Picture userx = em.find(Picture.class, f.getImagePath());
-
-			Picture userx = (Picture) q.getSingleResult();
-			System.out.print(userx);
+			 //Query query = em.createQuery( "DELETE c FROM Picture c");
+			// List<Pictures> pics = query.getResultList()
+			em.getTransaction().begin();
+				//	 int deletedCount = em.createQuery("delete t from Picture t").executeUpdate();
+			 Query query = em.createQuery("DELETE FROM Picture c where c.path=:p");
+			 String pa = f.getImagePath();
+	
+					 int deletedCount = query.setParameter("p", f.getImagePath()).executeUpdate();	
+					/* Query q = em.createQuery("DELETE FROM Subscription s WHERE s.subscriptionDate < :today");
+					 q.setParameter("today", new Date());
+					 int deleted = q.executeUpdate();*/
+			em.getTransaction().commit();
+					 // int pic = query.setParameter(f.getImagePath(),Picture.class).executeUpdate();
+			// query.set
+		//	Picture userx = (Picture) q.getSingleResult();
+		/*	System.out.print(userx);
 			em.getTransaction().begin();
 			em.remove(userx); 
 			em.getTransaction().commit();
-			//Picture pict = userx;
+			//Picture pict = userx;*/
 		}
 		checkifexist(f.getImagePath());
 
@@ -477,6 +507,35 @@ public class DatabaseHandler {
 			}
 		}
 		return false;
+	}
+	
+	public static void deleteAll(){
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		 int deletedCount = em.createQuery("delete from Picture").executeUpdate();
+		 deletedCount = em.createQuery("delete from Tag").executeUpdate();
+		 deletedCount = em.createQuery("delete from Comment").executeUpdate();
+		 deletedCount = em.createQuery("delete from Location").executeUpdate();
+		 deletedCount = em.createQuery("delete from Album").executeUpdate();
+		em.getTransaction().commit();
+
+	}
+	public static void deletePath (String f){
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		 Query p = em.createQuery("delete from Picture c where c.path= :p");
+		 Query t = em.createQuery("delete from Tag c where c.path= :p");
+		 Query c = em.createQuery("delete from Comment c where c.path= :p");
+		 Query l = em.createQuery("delete from  Location c where c.path= :p");
+	
+		 int deletedCount = p.setParameter("p", f).executeUpdate();	
+		 deletedCount = t.setParameter("p", f).executeUpdate();	
+		 deletedCount = c.setParameter("p", f).executeUpdate();	
+		 deletedCount = l.setParameter("p", f).executeUpdate();	
+		 em.getTransaction().commit();
+
 	}
 }
 
