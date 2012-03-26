@@ -29,6 +29,8 @@ public class PixelFinder {
 	}
 
 	public String getPixelCoordinates(List<Location> markerList) {
+		//TODO Refactor this class, split up in several smaller functions; READABILITY!
+		
 		StringBuilder returnString = new StringBuilder("");
 		/**
 		 * find our centre - we can reuse some of these variable later
