@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import se.cth.hedgehogphoto.FileObject;
+import se.cth.hedgehogphoto.ImageObject;
 /**
  * 
  * @author Julia
@@ -111,11 +112,12 @@ public class DatabaseHandler {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
 
-		Query q = em.createQuery("select t.path from Comment t");
+		Query q = em.createQuery("select t from Comment t");
 		List<Comment> list = q.getResultList();
 		//List<String> paths = getPaths("Picture");
 		List<FileObject> fileObjects = new ArrayList();
 		for (int i =0; i< list.size(); i++) {
+			if(list.get(i).getComment().equals(search))
 			fileObjects.add( makeFileObjectfromPath(list.get(i).getPath(),em));
 		}
 		return fileObjects;
@@ -161,7 +163,7 @@ public class DatabaseHandler {
 		String date = "";
 		String album_ID = "";
 		for(Picture pic: list){
-			if(pic.getPath() == filePath){
+			if(pic.getPath().equals(filePath)){
 				name=pic.getName();
 				date=pic.getDate();
 				album_ID = pic.getAlbum_ID()+"";		
@@ -173,10 +175,10 @@ public class DatabaseHandler {
 		String coverPath= "";
 		for(Picture pic: list){
 			for(Album alb: alist){
-				if(pic.getPath() == filePath){
+				if(pic.getPath().equals(filePath)){
 
 					coverPath = alb.getCoverPath();
-
+					break;
 				}
 
 			}
@@ -185,7 +187,7 @@ public class DatabaseHandler {
 		List<Tag> tlist = t.getResultList();
 		List<String> tags = new ArrayList();
 		for(Tag tag: tlist){
-			if(tag.getPath() == filePath){
+			if(tag.getPath().equals(filePath)){
 				List<String> taglist = tag.getTags();
 				for(int i =0; i<taglist.size();i++){
 					tags.add(taglist.get(i));
@@ -198,14 +200,31 @@ public class DatabaseHandler {
 		List<Location> llist = l.getResultList();
 		String locations = "";
 		for(Location location: llist){
-			if(location.getPath() == filePath){
+			if(location.getPath().equals(filePath)){
 				locations=location.getLocation();
+				break;
+			}
+		}
+		Query c = em.createQuery("select t from Comment t");
+		List<Comment> clist = c.getResultList();
+		String comment = "";
+		for(Comment com: clist){
+			if(com.getPath().equals(filePath)){
+				comment=com.getComment();
+				break;
 			}
 		}
 
+		FileObject f = new ImageObject(); 
+		f.setImagePath(filePath);
+		f.setComment(comment);
+		f.setDate(date);
+		f.setCoverPath(coverPath);
+		f.setTags(tags);
+		f.setLocation(locations);
+		f.setImageName(name);
 
-
-		return null;
+		return f;
 	}
 
 
@@ -213,7 +232,7 @@ public class DatabaseHandler {
 	public static void insert(FileObject f){
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
-		// KOLL SÅ ATT det inte finnns en med samma filepath? 
+		// KOLL Sï¿½ ATT det inte finnns en med samma filepath? 
 		Query t = em.createQuery("select t from Picture t");
 		List<Picture> pics =  t.getResultList();
 		boolean existAlready = false; 
@@ -501,7 +520,7 @@ public class DatabaseHandler {
 		List<Picture> pic =  b.getResultList();
 
 		for(Picture picts: pic){
-			if(picts.getPath() == path){
+			if(picts.getPath().equals(path)){
 				System.out.print("nu blev det fel");
 				return true;
 			}

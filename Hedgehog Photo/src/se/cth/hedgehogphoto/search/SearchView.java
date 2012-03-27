@@ -21,7 +21,7 @@ public class SearchView extends JPanel implements Observer{
 	private SearchPreviewView svp;
 	private String searchButtonText = "Search";
 	private String placeHolderText = "Search...";
-	private Dimension searchBoxSize = new Dimension(100, 30);
+	private Dimension searchBoxSize = new Dimension(150, 30);
 	private Dimension searchButtonSize = new Dimension(100, 30);
 	private JTextField searchBox;
 	private JButton searchButton;
@@ -77,6 +77,7 @@ public class SearchView extends JPanel implements Observer{
 	//TODO Use interface argument instead.
 	public void setSearchPreview(SearchPreviewView _spv){
 		spv = _spv;
+		spv.setTextField(searchBox);
 		add(spv);
 	}
 	
@@ -93,6 +94,7 @@ public class SearchView extends JPanel implements Observer{
 		if(spv == null){
 			SearchModel model = (SearchModel)arg;
 			System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());
+			model.getSearchObjects();
 		}
 	}
 }

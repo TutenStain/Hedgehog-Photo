@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageObject implements FileObject{
-	List<String> tags = new ArrayList();
-	String date = "";
-	String comment = "";
-	String location = "";
-	String name = "";
-	String path = "";
-	String coverPath = "";
-	String albumName = "";
+	private List<String> tags = new ArrayList<String>();
+	private String date = "";
+	private String comment = "";
+	private String location = "";
+	private String name = "";
+	private String path = "";
+	private String coverPath = "";
+	private String albumName = "";
 	/*public ImageObject(List<String> tags, String date, String comment, String location, String path, String coverPath){
 		
 	}*/
@@ -66,9 +66,13 @@ public void setTag(String tag){
 	public String getAlbumName(){
 		return albumName;
 	}
+	
 	@Override
 	public void setTags(List<String> tags) {
-		// TODO Auto-generated method stub
 		
+	}
+	
+	public String toString(){
+		return "[name=" + name + "] [location=" + location + "] [path=" + path + "] [date=" + date + "] [tag=" + tags.toString() + "] [comments= " + comment +"[albumName=" + albumName + "] [coverPath=" + coverPath + "]";
 	}
 }
