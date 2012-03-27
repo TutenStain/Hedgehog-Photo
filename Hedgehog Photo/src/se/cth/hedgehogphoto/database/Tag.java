@@ -15,10 +15,11 @@ import javax.persistence.Id;
 @Entity
 public class Tag {
 private List<String> tags = new ArrayList();
+@Id
 private String path;
-@Id 
+/*@Id 
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-private long tagID;
+private long tagID;*/
 
 
 
