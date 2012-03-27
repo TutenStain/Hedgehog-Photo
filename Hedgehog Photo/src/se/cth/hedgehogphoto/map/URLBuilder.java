@@ -5,7 +5,6 @@ import java.util.List;
 
 import se.cth.hedgehogphoto.Location;
 
-//TODO Split up in two classes; use abstract class? or some other kind of inheritance
 public abstract class URLBuilder {
 	protected final StringBuilder urlBuilder;
 	private final String baseURL;
