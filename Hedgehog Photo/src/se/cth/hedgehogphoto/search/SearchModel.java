@@ -8,12 +8,15 @@ import se.cth.hedgehogphoto.FileObject;
 import se.cth.hedgehogphoto.ImageObject;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 
+/**
+ * 
+ * @author Barnabas Sapan
+ *
+ */
+
 public class SearchModel extends Observable{
 	private String searchText = "";
-	
-	public SearchModel(){
-	}
-	
+
 	public String getSearchQueryText(){
 		return searchText;
 	}
@@ -23,32 +26,31 @@ public class SearchModel extends Observable{
 	}
 
 	//TODO This is in the DB:
-	/*FileObject f = new ImageObject();
-	f.setComment("Bra bild alltsa");
-	f.setImageName("wei");
-	f.setDate("2012.12.02");
-	f.setTag("Bra");
-	f.setTag("Battre");
-	f.setImagePath("jumbooo.jpg");
-	f.setCoverPath("jumbooo.jpg");
-	f.setLocation("Sverige");
-	DatabaseHandler.insert(f);*/
-	public List<FileObject> getSearchObjects(){
-		FileObject f = new ImageObject();
+	/*	FileObject f = new ImageObject();
 		f.setComment("Gutes bild");
 		f.setImageName("wei");
 		f.setDate("2012.12.02");
 		f.setTag("Bra");
 		f.setTag("Battre");
-		f.setImagePath("bajjjs.jpg");
+		f.setImagePath("gut.jpg");
 		f.setCoverPath("jumboooo.jpg");
 		f.setLocation("Japan");
-		//DatabaseHandler.insert(f);
-	//	DatabaseHandler.removeFileObject(f);
-	//	DatabaseHandler.deleteAll();
+		f.setAlbumName("Bra bilder");
+		DatabaseHandler.insert(f);
+		
+		FileObject b = new ImageObject();
+		b.setComment("En valdigt trevlig bild");
+		b.setImageName("noice");
+		b.setDate("2011.04.01");
+		b.setTag("Fin");
+		b.setTag("Gullig");
+		b.setImagePath("jaha.jpg");
+		b.setLocation("Chalmers");
+		DatabaseHandler.insert(b);*/
+	public List<FileObject> getSearchObjects(){
 		//System.out.println(DatabaseHandler.getTags());
 		//System.out.println(DatabaseHandler.getLocations());
-		return DatabaseHandler.searchComments("Gutes bild");
+		return DatabaseHandler.searchComments(searchText);
 	}
 	
 	public void doSearch(){

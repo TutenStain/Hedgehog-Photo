@@ -8,6 +8,12 @@ import java.awt.event.FocusListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+/**
+ * 
+ * @author Barnabas Sapan
+ *
+ */
+
 public class SearchController {
 	private SearchModel model;
 	private SearchView view;

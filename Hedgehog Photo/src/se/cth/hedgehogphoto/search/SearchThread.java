@@ -3,6 +3,12 @@ package se.cth.hedgehogphoto.search;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * 
+ * @author Barnabas Sapan
+ *
+ */
+
 public class SearchThread extends Thread{
 	private SearchModel model;
 	private long delay = 1000;

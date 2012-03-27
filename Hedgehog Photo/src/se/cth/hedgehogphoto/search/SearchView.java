@@ -17,6 +17,12 @@ import javax.swing.event.DocumentListener;
 
 import sun.print.resources.serviceui;
 
+/**
+ * 
+ * @author Barnabas Sapan
+ *
+ */
+
 public class SearchView extends JPanel implements Observer{
 	private SearchPreviewView svp;
 	private String searchButtonText = "Search";
@@ -94,7 +100,7 @@ public class SearchView extends JPanel implements Observer{
 		if(spv == null){
 			SearchModel model = (SearchModel)arg;
 			System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());
-			model.getSearchObjects();
+			//System.out.println(model.getSearchObjects());
 		}
 	}
 }

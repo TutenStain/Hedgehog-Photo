@@ -14,7 +14,7 @@ import javax.persistence.Id;
  */
 @Entity
 public class Tag {
-private List<String> tags = new ArrayList();
+private List<String> tags = new ArrayList<String>();
 @Id
 private String path;
 /*@Id 
@@ -22,11 +22,9 @@ private String path;
 private long tagID;*/
 
 
-
 	public void setTag(String tag) {
 		tags.add(tag);
 	}
-
 	public List<String> getTags() {
 		return tags;
 	}

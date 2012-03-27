@@ -118,7 +118,7 @@ public class DatabaseHandler {
 		List<FileObject> fileObjects = new ArrayList();
 		for (int i =0; i< list.size(); i++) {
 			if(list.get(i).getComment().equals(search))
-			fileObjects.add( makeFileObjectfromPath(list.get(i).getPath(),em));
+				fileObjects.add( makeFileObjectfromPath(list.get(i).getPath(),em));
 		}
 		return fileObjects;
 
@@ -260,9 +260,7 @@ public class DatabaseHandler {
 					pic.setName(f.getImageName());
 
 				em.persist(pic);
-
 				em.getTransaction().commit();
-
 
 
 				em.getTransaction().begin();
@@ -270,12 +268,9 @@ public class DatabaseHandler {
 				tag.setPath(f.getImagePath());
 				List <String> tags = f.getTags();
 				if(f.getTags() != null){ 
-
 					for(int i = 0; i < tags.size(); i++){
 						tag.setTag(tags.get(i));
-
 					} 
-
 				}
 				em.persist(tag);
 				em.getTransaction().commit();
@@ -285,9 +280,7 @@ public class DatabaseHandler {
 				Comment comment = new Comment();
 				comment.setPath(f.getImagePath());
 				if(f.getComment() != null ||f.getComment().equals("")){
-
 					comment.setComment(f.getComment());
-
 				}
 				em.persist(comment);
 				em.getTransaction().commit();
@@ -296,15 +289,11 @@ public class DatabaseHandler {
 				Location location = new Location();
 				location.setPath(f.getImagePath());
 				if(f.getLocation() != null || f.getLocation().equals("")){
-
 					location.setLocation(f.getLocation());
-
-
 				}
 				em.persist(location);
 				em.getTransaction().commit();
-
-
+				
 				Query a = em.createQuery("select t from Album t");
 				List<Album> albums=  a.getResultList();
 				boolean albumExistAlready = false;
@@ -315,7 +304,7 @@ public class DatabaseHandler {
 						aid = album.getAlbumID();
 					}
 				}
-					if(!(albumExistAlready)){
+				if(!(albumExistAlready)){
 					em.getTransaction().begin();
 					Album album = new Album();
 
@@ -325,9 +314,9 @@ public class DatabaseHandler {
 						album.setName(f.getAlbumName());
 					}
 
-
 					album.setCoverPath(f.getCoverPath());
 					album.setName(f.getAlbumName());
+					
 
 					em.persist(album);
 					em.getTransaction().commit();

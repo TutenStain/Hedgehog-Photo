@@ -10,6 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * @author Barnabas Sapan
+ *
+ */
+
 public class SearchPreviewView extends JPopupMenu implements Observer{
 	private JPanel jp;
 	private JLabel jl;
@@ -21,7 +27,7 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 		setLayout(new BorderLayout());
 		add(jp);
 		setPopupSize(250, 100);
-		//Better implementation needed as right now we cant select things in the popup.
+		//Better implementation needed as right now we can't select things in the popup.
 		setFocusable(false);
 	}
 	
