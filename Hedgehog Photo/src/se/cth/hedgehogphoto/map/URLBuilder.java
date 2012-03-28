@@ -1,18 +1,11 @@
 package se.cth.hedgehogphoto.map;
 
-import java.awt.Dimension;
-import java.util.List;
-
-import se.cth.hedgehogphoto.Location;
-
 public abstract class URLBuilder {
 	protected final StringBuilder urlBuilder;
-	private final String baseURL;
 	protected final String languageURL = "languages=";
 	protected final String sensorURL = "sensor=false";
 	
 	public URLBuilder(String baseURL) {
-		this.baseURL = baseURL;
 		this.urlBuilder = new StringBuilder(baseURL);
 	}
 	

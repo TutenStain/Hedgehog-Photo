@@ -1,6 +1,5 @@
 package se.cth.hedgehogphoto.tagcloud;
 
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

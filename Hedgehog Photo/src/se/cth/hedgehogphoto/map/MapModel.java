@@ -9,6 +9,7 @@ import se.cth.hedgehogphoto.Location;
 
 public class MapModel {
 	//TODO move constants into proper class; URLBuilder?
+	//NO! Let them stay here!
 	private final int maxZoom = 18;
 	private final int minZoom = 0; 
 	private final List<String> acceptedMaptypes = 
