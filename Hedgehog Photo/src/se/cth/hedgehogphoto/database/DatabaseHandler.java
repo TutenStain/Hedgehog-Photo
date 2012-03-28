@@ -99,11 +99,13 @@ public class DatabaseHandler {
 		List<Picture> piclist = t.getResultList();
 		List<FileObject> fileObjects = new ArrayList();
 		for (int i =0; i< list.size(); i++) {
-			if(list.get(i).getName() == search)
+			if(list.get(i).getName().equals(search)){
 				for(Picture pic: piclist){
 					if(pic.getAlbum_ID() == list.get(i).getAlbumID())
+						
 						fileObjects.add( makeFileObjectfromPath(pic.getPath(),em));
 				}
+			}
 		}
 		return fileObjects;
 
@@ -133,7 +135,7 @@ public class DatabaseHandler {
 		for(int i=0; i <list.size();i++){
 			//if(!(paths.contains(list.get(i).getTags())));
 			for(int j = 0; j < list.get(i).getTags().size(); i++)
-				if(list.get(i).getTags().get(j) == search){
+				if(list.get(i).getTags().get(j).equals(search)){
 					paths.add(list.get(i).getPath());
 				}
 		}
@@ -161,27 +163,33 @@ public class DatabaseHandler {
 		List<Picture> list = p.getResultList();
 		String name = "";
 		String date = "";
-		String album_ID = "";
+		long album_ID = 0;
 		for(Picture pic: list){
 			if(pic.getPath().equals(filePath)){
 				name=pic.getName();
 				date=pic.getDate();
-				album_ID = pic.getAlbum_ID()+"";		
+				album_ID = pic.getAlbum_ID();
+				
 			}
 		}
 
 		Query a = em.createQuery("select t from Album t");
 		List<Album> alist = a.getResultList();
 		String coverPath= "";
-		for(Picture pic: list){
+		String albumName = "";
+		//for(Picture pic: list){
 			for(Album alb: alist){
-				if(pic.getPath().equals(filePath)){
-
+				System.out.println("LOOP");
+				if(alb.getAlbumID() == (album_ID)){
+					System.out.println("Albumid 1: " + alb.getAlbumID());
+					System.out.println("Albumid 2: " + album_ID);
+					System.out.println("NAME: " + alb.getName());
+					System.out.println("CoverPaht: " + alb.getCoverPath());
+					albumName = alb.getName();
 					coverPath = alb.getCoverPath();
-					break;
 				}
-
-			}
+		
+			
 		}
 		Query t = em.createQuery("select t from Tag t");
 		List<Tag> tlist = t.getResultList();
@@ -223,7 +231,9 @@ public class DatabaseHandler {
 		f.setTags(tags);
 		f.setLocation(locations);
 		f.setImageName(name);
-
+		//System.out.print("aöbumna" + albumName + "slut");
+		f.setAlbumName(albumName);
+		System.out.println("Setting album name: " + f.getAlbumName());
 		return f;
 	}
 
@@ -235,34 +245,24 @@ public class DatabaseHandler {
 		// KOLL S� ATT det inte finnns en med samma filepath? 
 		Query t = em.createQuery("select t from Picture t");
 		List<Picture> pics =  t.getResultList();
+		long albumid = 0;
 		boolean existAlready = false; 
 		for(Picture pic: pics){
 			System.out.print(pic.getPath());
 			if(pic.getPath().equals(f.getImagePath())){
 				existAlready = true;
+				albumid = pic.getAlbum_ID();
 				break;
 			}
 		}
-		//System.out.print(f.getImagePath());
-		System.out.print(existAlready);
-	
-		if(!(existAlready)){
 
-			if(f.getImagePath() != null || f.getImagePath().equals("")){
-				System.out.print(f.getImagePath());
-				em.getTransaction().begin();
-				Picture pic = new Picture();
-				pic.setPath(f.getImagePath());
-				if(f.getDate() != "")
-					pic.setDate(f.getDate());
+
+		if(f.getImagePath() != null || (!(f.getImagePath().equals("")))){
+		
+			if(!(existAlready)){
+
 				
-				if(f.getImageName() != null ||f.getImageName().equals(""))
-					pic.setName(f.getImageName());
-
-				em.persist(pic);
-				em.getTransaction().commit();
-
-
+			
 				em.getTransaction().begin();
 				Tag tag = new Tag();
 				tag.setPath(f.getImagePath());
@@ -293,42 +293,116 @@ public class DatabaseHandler {
 				}
 				em.persist(location);
 				em.getTransaction().commit();
-				
+			}
+		
 				Query a = em.createQuery("select t from Album t");
 				List<Album> albums=  a.getResultList();
 				boolean albumExistAlready = false;
 				Long aid = (long) 0;
+				if(aid != null || aid != 0){
 				for(Album album: albums){
-					if(album.getCoverPath().equals(f.getCoverPath())){
+					if(album.getAlbumID().equals(albumid)){
 						albumExistAlready = true; 
-						aid = album.getAlbumID();
+						 Album al= em.find(Album.class, albumid);
+						  
+						  em.getTransaction().begin();
+							if(f.getAlbumName() == null || (f.getAlbumName().equals(""))){
+								al.setName("Nytt Album");
+								System.out.println("NYTT ALBUM");
+							}else{
+								al.setName(f.getAlbumName());
+								System.out.println("Sätter album:" + f.getAlbumName());
+							
+							}
+							
+							al.setCoverPath(f.getCoverPath());
+						  em.getTransaction().commit();
+						  
+						//aid = album.getAlbumID();
+						System.out.println("sätter aid: " + aid);
+						break;
+					}
+				
+				else{
+					for(Picture pic: pics){
+						if(f.getCoverPath().equals(album.getCoverPath())){
+							em.getTransaction().begin();
+							Album albumss = new Album();
+
+							if(f.getAlbumName() == null || (f.getAlbumName().equals(""))){
+								albumss.setName("Nytt Album");
+							}else{
+								albumss.setName(f.getAlbumName());
+							
+							}
+
+							albumss.setCoverPath(f.getCoverPath());
+							
+						
+							
+							em.persist(albumss);
+							em.getTransaction().commit();
+							
+						}
 					}
 				}
+				}
+			
 				if(!(albumExistAlready)){
 					em.getTransaction().begin();
 					Album album = new Album();
 
-					if(f.getAlbumName() != null || f.getAlbumName().equals("")){
+					if(f.getAlbumName() == null || (f.getAlbumName().equals(""))){
 						album.setName("Nytt Album");
 					}else{
 						album.setName(f.getAlbumName());
-					}
-
-					album.setCoverPath(f.getCoverPath());
-					album.setName(f.getAlbumName());
 					
-
+					}
+					/*if(f.getCoverPath() == null || (f.getCoverPath().equals(""))){
+						album.setCoverPath();
+					}else{*/
+						album.setCoverPath(f.getCoverPath());
+					
+					
+					
+					
+				
+					System.out.print("MAJSAN");
 					em.persist(album);
 					em.getTransaction().commit();
-					em.close();
+				
 				}
-					else{
+					/*else{
 						pic.setAlbum_ID(aid);
-					}
+					}*/
+				if(!(existAlready)){
+			em.getTransaction().begin();
+			Picture pic = new Picture();
+			pic.setPath(f.getImagePath());
+			if(aid != 0){
+				pic.setAlbum_ID(aid);
+			}else{
+			for(Album al: albums){
+				if(al.getCoverPath().equals(f.getCoverPath())){
+					pic.setAlbum_ID(al.getAlbumID());
+				}
 			}
-			}
+			
+			if(f.getDate() != "")
+				pic.setDate(f.getDate());
+			
+			if(f.getImageName() != null ||f.getImageName().equals(""))
+				pic.setName(f.getImageName());
+
+			em.persist(pic);
+			em.getTransaction().commit();
+				}
+
+				}
+				}
 		}
-	
+		
+	}
 
 	public static void addTag(String tags, String filePath){
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -544,6 +618,18 @@ public class DatabaseHandler {
 		 deletedCount = l.setParameter("p", f).executeUpdate();	
 		 em.getTransaction().commit();
 
+	}
+	public static void getAlbumName(String filePath){
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManager em = factory.createEntityManager();
+		Query b = em.createQuery("select t from Album t");
+		List<Album> album =  b.getResultList();
+
+		for(Album a: album){
+			System.out.println(a.getName());
+			System.out.println(a.getAlbumID()+"");
+		}
+	
 	}
 }
 

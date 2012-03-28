@@ -4,6 +4,8 @@ package se.cth.hedgehogphoto.search;
 import java.util.List;
 import java.util.Observable;
 
+import javax.activation.DataHandler;
+
 import se.cth.hedgehogphoto.FileObject;
 import se.cth.hedgehogphoto.ImageObject;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
@@ -47,10 +49,25 @@ public class SearchModel extends Observable{
 		b.setImagePath("jaha.jpg");
 		b.setLocation("Chalmers");
 		DatabaseHandler.insert(b);*/
-	public List<FileObject> getSearchObjects(){
-		//System.out.println(DatabaseHandler.getTags());
-		//System.out.println(DatabaseHandler.getLocations());
-		return DatabaseHandler.searchComments(searchText);
+	public List<FileObject> /*void*/ getSearchObjects(){
+		FileObject f = new ImageObject();
+		f.setComment("Gutes bild");
+		f.setImageName("wei");
+		f.setDate("2012.12.02");
+		f.setTag("Brad");
+		f.setTag("Battre");
+		f.setImagePath("C://Bilder/IMG_001.jpg");
+		f.setCoverPath("hej.jpg");
+		f.setLocation("Chalmers");
+		f.setAlbumName("Bra bilder");
+		DatabaseHandler.insert(f);
+		
+		//DatabaseHandler.deleteAll();
+		//System.out.println(DatabaseHandler.getTags())
+		//System.out.println(DatabaseHandler.getLocationd"s());
+		//DatabaseHandler.getAlbumName("jaggillarelefanter.jpg");
+		return DatabaseHandler.searchComments("Gutes bild");
+	
 	}
 	
 	public void doSearch(){
