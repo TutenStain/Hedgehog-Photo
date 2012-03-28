@@ -3,11 +3,15 @@ package hedgehogView;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Label;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
@@ -20,6 +24,7 @@ public class PhotoPanel extends JPanel {
 	JLabel commentsLabel = new JLabel("Comments");
 	JLabel tagsLabel = new JLabel("Tags:");
 	JLabel locationLabel = new JLabel("Location:");
+	JLabel iconLabel = new JLabel("");
 	
 	public PhotoPanel(String path) {
 		setLayout(new BorderLayout(0, 0));
@@ -49,12 +54,13 @@ public class PhotoPanel extends JPanel {
 		add(commentsPanel, BorderLayout.CENTER);
 		commentsPanel.setLayout(new BorderLayout(0, 0));
 		
-		JLabel iconLabel = new JLabel("");
 		iconLabel.setIcon(new ImageIcon(path));
 		commentsPanel.add(iconLabel, BorderLayout.WEST);
-		
 		commentsPanel.add(commentsLabel, BorderLayout.CENTER);
-
+		
+	}
+	public Icon getIcon(){
+		return this.iconLabel.getIcon();
 	}
 	public void displayComments(Boolean b){
 		this.commentsLabel.setVisible(b);
