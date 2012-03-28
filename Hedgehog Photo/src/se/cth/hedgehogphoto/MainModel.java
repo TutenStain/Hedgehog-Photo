@@ -20,8 +20,8 @@ public class MainModel extends Observable {
 	}
 	
 	public List<FileObject> getImages() {
-		for(int i = 0; i<imagePaths.size(); i++) {
-			System.out.println(imagePaths.get(i));
+		for(int i = 0; i<images.size(); i++) {
+			System.out.println(images.get(i));
 		}
 		return images;
 	}

@@ -198,7 +198,7 @@ public class View implements Observer {
 		// TODO Auto-generated method stub
 		if(arg1 instanceof MainModel) {
 			MainModel model = (MainModel)arg1;
-			List<FileObject> imagePaths = model.getImages();
+			List<FileObject> images = model.getImages();
 			photoViewPanel.removeAll();
 			for(int i = 0; i<10; i++) {
 				photoPanels[i] = new PhotoPanel(images.get(i));

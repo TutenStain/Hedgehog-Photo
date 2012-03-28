@@ -16,6 +16,8 @@ import java.awt.Label;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 
+import se.cth.hedgehogphoto.FileObject;
+
 public class PhotoPanel extends JPanel {
 
 	/**
@@ -25,6 +27,10 @@ public class PhotoPanel extends JPanel {
 	JLabel tagsLabel = new JLabel("Tags:");
 	JLabel locationLabel = new JLabel("Location:");
 	JLabel iconLabel = new JLabel("");
+	
+	public PhotoPanel(FileObject f) {
+		this(f.getImagePath());
+	}
 	
 	public PhotoPanel(String path) {
 		setLayout(new BorderLayout(0, 0));
