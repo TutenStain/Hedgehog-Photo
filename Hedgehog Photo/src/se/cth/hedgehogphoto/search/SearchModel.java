@@ -49,24 +49,13 @@ public class SearchModel extends Observable{
 		b.setImagePath("jaha.jpg");
 		b.setLocation("Chalmers");
 		DatabaseHandler.insert(b);*/
-	public List<FileObject> /*void*/ getSearchObjects(){
-		FileObject f = new ImageObject();
-		f.setComment("Gutes bild");
-		f.setImageName("wei");
-		f.setDate("2012.12.02");
-		f.setTag("Brad");
-		f.setTag("Battre");
-		f.setImagePath("C://Bilder/IMG_001.jpg");
-		f.setCoverPath("hej.jpg");
-		f.setLocation("Chalmers");
-		f.setAlbumName("Bra bilder");
-		DatabaseHandler.insert(f);
-		
+	//TODO fix this...
+	public List<FileObject> getSearchObjects(){
 		//DatabaseHandler.deleteAll();
 		//System.out.println(DatabaseHandler.getTags())
 		//System.out.println(DatabaseHandler.getLocationd"s());
 		//DatabaseHandler.getAlbumName("jaggillarelefanter.jpg");
-		return DatabaseHandler.searchComments("Gutes bild");
+		return DatabaseHandler.searchComments("En valdigt trevlig bild");
 	
 	}
 	

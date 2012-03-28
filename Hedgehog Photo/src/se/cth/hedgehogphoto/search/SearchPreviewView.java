@@ -1,14 +1,19 @@
 package se.cth.hedgehogphoto.search;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+
+import se.cth.hedgehogphoto.FileObject;
 
 /**
  * 
@@ -17,16 +22,11 @@ import javax.swing.JTextField;
  */
 
 public class SearchPreviewView extends JPopupMenu implements Observer{
-	private JPanel jp;
-	private JLabel jl;
 	private JTextField jtf;
+	
 	public SearchPreviewView(){
-		jl = new JLabel();
-		jp = new JPanel();
-		jp.add(jl);
-		setLayout(new BorderLayout());
-		add(jp);
-		setPopupSize(250, 100);
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));		
+		setPopupSize(250, 200);
 		//Better implementation needed as right now we can't select things in the popup.
 		setFocusable(false);
 	}
@@ -39,8 +39,21 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 	public void update(Observable o, Object arg) {
 		SearchModel model = (SearchModel)arg;
 		System.out.println("UPDATE @ SEARCH_PREVIEW_VIEW: " + model.getSearchQueryText());
-		jl.setText(model.getSearchQueryText());
 		show(jtf, -50, jtf.getHeight());
-		System.out.println(model.getSearchObjects());
+		List<FileObject> fo = model.getSearchObjects();
+		Iterator<FileObject> itr = fo.iterator();
+		removeAll();
+		while(itr.hasNext()){
+			FileObject ob = itr.next();
+			SearchComponent sc = new SearchComponent(ob);
+			sc.setAlignmentX(Component.LEFT_ALIGNMENT);
+			sc.setAlignmentY(Component.LEFT_ALIGNMENT);
+			add(sc);
+			
+			//Insert a space between each SearchComponent.
+			add(Box.createRigidArea(new Dimension(0, 10)));
+		}
+		revalidate();
+		System.out.println(fo);
 	}
 }
