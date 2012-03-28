@@ -1,39 +1,31 @@
 package se.cth.hedgehogphoto.gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-import javax.swing.BoxLayout;
-import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JCheckBox;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.JSeparator;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.Panel;
-import java.awt.FlowLayout;
-import javax.swing.JTextPane;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import java.awt.ScrollPane;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import static javax.swing.ScrollPaneConstants.*;
-public class View {
+import se.cth.hedgehogphoto.FileObject;
+import se.cth.hedgehogphoto.MainModel;
+public class View implements Observer {
 
 	private JFrame frame;
+	private JPanel photoViewPanel;
 	private JTextField searchField;
 	PhotoPanel[] photoPanels = new PhotoPanel[10];
 
@@ -45,7 +37,6 @@ public class View {
 			public void run() {
 				try {
 					View window = new View();
-					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -160,7 +151,7 @@ public class View {
 		JScrollPane photoView = new JScrollPane();
 		frame.getContentPane().add(photoView, BorderLayout.CENTER);
 
-		JPanel photoViewPanel = new JPanel();
+		photoViewPanel = new JPanel();
 		photoView.setViewportView(photoViewPanel);
 		
 		photoViewPanel.setLayout(new GridLayout(photoPanels.length/2,2));
@@ -168,7 +159,7 @@ public class View {
 		
 		
 		for(int i=0;i<photoPanels.length;i++){
-			photoPanels[i] = new PhotoPanel("C:\\Users\\starpie\\Desktop\\Hedgehog\\\u00F6vriga bilder\\kottis.jpg");
+			photoPanels[i] = new PhotoPanel("Pictures/55hours.jpg");
 		}
 
 		for(int i=0;i<photoPanels.length;i++){
@@ -198,5 +189,23 @@ public class View {
 
 			}
 		});
+		
+		frame.setVisible(true);
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		if(arg1 instanceof MainModel) {
+			MainModel model = (MainModel)arg1;
+			List<FileObject> imagePaths = model.getImages();
+			photoViewPanel.removeAll();
+			for(int i = 0; i<10; i++) {
+				photoPanels[i] = new PhotoPanel(images.get(i));
+				
+				photoViewPanel.add(photoPanels[i]);
+				frame.revalidate();
+			}
+		}
 	}
 }
