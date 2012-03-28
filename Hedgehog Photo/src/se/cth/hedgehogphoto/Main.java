@@ -1,20 +1,13 @@
 package se.cth.hedgehogphoto;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
-
-import com.sun.org.apache.xerces.internal.impl.RevalidationHandler;
 
 import se.cth.hedgehogphoto.search.SearchController;
 import se.cth.hedgehogphoto.search.SearchModel;
 import se.cth.hedgehogphoto.search.SearchPreviewView;
 import se.cth.hedgehogphoto.search.SearchView;
-import se.cth.hedgehogphoto.tagcloud.TagCloudModel;
-import se.cth.hedgehogphoto.tagcloud.TagCloudView;
 
 /**
  * @author Barnabas Sapan

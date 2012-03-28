@@ -17,6 +17,8 @@ public class MapPath extends URLBuilder {
 	private final int defaultZoom = 7;
 	private final Location defaultCenter = new Location("Sweden");
 	
+	private final PixelFinder pixelFinder = new PixelFinder();
+	
 	public MapPath() {
 		super("http://maps.googleapis.com/maps/api/staticmap?");
 	}
@@ -55,14 +57,21 @@ public class MapPath extends URLBuilder {
 		addToURL(centerURL, center);
 	}
 	
+	private void setPixelCenter(List<Location> locations) {
+		String center = pixelFinder.getMapCenterInLongLat(locations);
+		addToURL(centerURL, center);
+	}
+	
 	public void setMarkers(List<Location> locations) {
 		String markers = getLocationsURL(locations);
 		addToURL(markersURL, markers);
+		setPixelCenter(locations);
 	}
 	
 	public void setVisibleLocations(List<Location> locations) {
 		String visibleLocations = getLocationsURL(locations);
 		addToURL(visibleLocationsURL, visibleLocations);
+		setPixelCenter(locations);
 	}
 	
 	private String getLocationsURL(List<Location> locations) {
