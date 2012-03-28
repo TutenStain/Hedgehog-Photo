@@ -15,7 +15,9 @@ import se.cth.hedgehogphoto.Location;
  *
  */
 public class PixelFinder {
-	private final int MAP_SIZE = 256;
+	//TODO MAP_SIZE: there is currently a constant in the pixelfinder,
+	//should be placed somewhere more appropriate.
+	private final int MAP_SIZE = 512;
 
 	private double atanh(double rad) {
 		return Math.log(((1 + rad) / (1 - rad))) / 2;
@@ -41,17 +43,17 @@ public class PixelFinder {
 		double m_minLongitude = getLocationsInfo("min", "Longitude", markerList);
 		double atanhsinO = atanh(Math.sin(m_maxLatitude * Math.PI / 180.00));
 		double atanhsinD = atanh(Math.sin(m_minLatitude * Math.PI / 180.00));
-		double atanhCentre = (atanhsinD + atanhsinO) / 2;
-		double radianOfCentreLatitude = Math.atan(Math.sinh(atanhCentre));
-		double centreLatitude = radianOfCentreLatitude * 180.00 / Math.PI; //turn it to degrees
-		double centreLongitude = (m_maxLongitude + m_minLongitude) / 2;
-		System.out.println(centreLatitude + " x " + centreLongitude);
+		double atanhCenter = (atanhsinD + atanhsinO) / 2;
+		double radianOfCenterLatitude = Math.atan(Math.sinh(atanhCenter));
+		double centerLatitude = radianOfCenterLatitude * 180.00 / Math.PI; //turn it to degrees
+		double centerLongitude = (m_maxLongitude + m_minLongitude) / 2;
+		System.out.println(centerLongitude + "," + centerLatitude);
 
 
 		// zoom is decided by the max span of longitude and an adjusted latitude span
 		// the relationship between the latitude span and the longitude span is /cos
 		double latitudeSpan = m_maxLatitude - m_minLatitude;
-		latitudeSpan = latitudeSpan / Math.cos(radianOfCentreLatitude);
+		latitudeSpan = latitudeSpan / Math.cos(radianOfCenterLatitude);
 		double longitudeSpan = m_maxLongitude - m_minLongitude;
 		double zoom = getZoom(Math.max(longitudeSpan, latitudeSpan)) + 1;
 
@@ -65,7 +67,7 @@ public class PixelFinder {
 		double oneDegree = realWidth / 360.00;
 		double radianLength = realWidth / (2.00 * Math.PI);
 		// ** result 2 ** the centre on our virtual map
-		double centreY = radianLength * atanhCentre;
+		double centreY = radianLength * atanhCenter;
 		
 		/**
 		 * now we go though the providers creating the x,y's and adjusting them to the virtual frame of our
@@ -76,7 +78,7 @@ public class PixelFinder {
 			Location markerDetails = markerList.get(i); 
 			double currentLatitude = markerDetails.getLatitude();
 			double currentLongitude = markerDetails.getLongitude();
-			double pixelLongitude = (currentLongitude - centreLongitude) * oneDegree;
+			double pixelLongitude = (currentLongitude - centerLongitude) * oneDegree;
 			double pixelLatitudeRadians = currentLatitude * Math.PI / 180.00;
 			double localAtanh = atanh(Math.sin(pixelLatitudeRadians));
 			double realPixelLatitude = radianLength * localAtanh;
@@ -108,9 +110,9 @@ public class PixelFinder {
 		double atanhsinD = atanh(Math.sin(m_minLatitude * Math.PI / 180.00));
 		double atanhCentre = (atanhsinD + atanhsinO) / 2;
 		double radianOfCentreLatitude = Math.atan(Math.sinh(atanhCentre));
-		double centreLatitude = radianOfCentreLatitude * 180.00 / Math.PI; //turn it to degrees
-		double centreLongitude = (m_maxLongitude + m_minLongitude) / 2;
-		return (centreLatitude + " x " + centreLongitude);
+		double centerLatitude = radianOfCentreLatitude * 180.00 / Math.PI; //turn it to degrees
+		double centerLongitude = (m_maxLongitude + m_minLongitude) / 2;
+		return (centerLongitude + "," + centerLatitude);
 	}
 	
 	private double getLocationsInfo(String maxMin, String latLong, List<Location> locations) {
@@ -149,7 +151,7 @@ public class PixelFinder {
 	}
 	
 	private double getLocationsMaxLongitude(List<Location> locations) {
-		double maxLongitude = locations.get(0).getLatitude();
+		double maxLongitude = locations.get(0).getLongitude();
 		for(Location location : locations) { //does one loop too much, nvm
 			if(location.getLongitude() > maxLongitude) {
 				maxLongitude = location.getLongitude();
@@ -159,7 +161,7 @@ public class PixelFinder {
 	}
 	
 	private double getLocationsMinLongitude(List<Location> locations) {
-		double minLongitude = locations.get(0).getLatitude();
+		double minLongitude = locations.get(0).getLongitude();
 		for(Location location : locations) { //does one loop too much, nvm
 			if(location.getLongitude() < minLongitude) {
 				minLongitude = location.getLongitude();
