@@ -26,7 +26,7 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 	
 	public SearchPreviewView(){
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));		
-		setPopupSize(250, 200);
+		setPopupSize(250, 300);
 		//Better implementation needed as right now we can't select things in the popup.
 		setFocusable(false);
 	}
@@ -51,7 +51,7 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 			add(sc);
 			
 			//Insert a space between each SearchComponent.
-			add(Box.createRigidArea(new Dimension(0, 10)));
+			add(Box.createRigidArea(new Dimension(0, 3)));
 		}
 		revalidate();
 		System.out.println(fo);
