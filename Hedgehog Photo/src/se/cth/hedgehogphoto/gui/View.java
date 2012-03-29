@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -27,7 +28,7 @@ public class View implements Observer {
 	private JFrame frame;
 	private JPanel photoViewPanel;
 	private JTextField searchField;
-	PhotoPanel[] photoPanels = new PhotoPanel[10];
+	List<PhotoPanel> photoPanels = new ArrayList<PhotoPanel>();
 
 	/**
 	 * Launch the application.
@@ -154,36 +155,34 @@ public class View implements Observer {
 		photoViewPanel = new JPanel();
 		photoView.setViewportView(photoViewPanel);
 		
-		photoViewPanel.setLayout(new GridLayout(photoPanels.length/2,2));
+		photoViewPanel.setLayout(new GridLayout(photoPanels.size()/2,2));
 		
-		
-		
-		for(int i=0;i<photoPanels.length;i++){
-			photoPanels[i] = new PhotoPanel("Pictures/55hours.jpg");
+		for(int i=0;i<10;i++){
+			photoPanels.add(new PhotoPanel("Pictures/55hours.jpg"));
 		}
 
-		for(int i=0;i<photoPanels.length;i++){
-			photoViewPanel.add(photoPanels[i]);
+		for(int i=0;i<photoPanels.size();i++){
+			photoViewPanel.add(photoPanels.get(i));
 		}
 		
 		showHideComments.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				for(int i=0;i<photoPanels.length;i++){
-					photoPanels[i].displayComments(!photoPanels[i].isVisibleComments());
+				for(int i=0;i<photoPanels.size();i++){
+					photoPanels.get(i).displayComments(!photoPanels.get(i).isVisibleComments());
 				}
 			}
 		});
 		btnShowhideTags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				for(int i=0;i<photoPanels.length;i++){
-					photoPanels[i].displayTags(!photoPanels[i].isVisibleTags());
+				for(int i=0;i<photoPanels.size();i++){
+					photoPanels.get(i).displayTags(!photoPanels.get(i).isVisibleTags());
 				}
 			}
 		});
 		btnShowhideLocation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for(int i=0;i<photoPanels.length;i++){
-					photoPanels[i].displayLocation(!photoPanels[i].isVisibleLocation());
+				for(int i=0;i<photoPanels.size();i++){
+					photoPanels.get(i).displayLocation(!photoPanels.get(i).isVisibleLocation());
 				}
 
 
@@ -201,9 +200,9 @@ public class View implements Observer {
 			List<FileObject> images = model.getImages();
 			photoViewPanel.removeAll();
 			for(int i = 0; i<10; i++) {
-				photoPanels[i] = new PhotoPanel(images.get(i));
+				photoPanels.add(i,new PhotoPanel(images.get(i)));
 				
-				photoViewPanel.add(photoPanels[i]);
+				photoViewPanel.add(photoPanels.get(i));
 				frame.revalidate();
 			}
 		}
