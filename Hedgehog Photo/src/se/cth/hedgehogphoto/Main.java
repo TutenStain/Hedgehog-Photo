@@ -19,7 +19,7 @@ public class Main {
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frame.setSize(600, 600);
 //		frame.setVisible(true);
-		
+		DatabaseHandler.deleteAll();
 		insertFileObjectsIntoDatabase();
 		MainModel model = new MainModel();
 		View view = new View();
