@@ -17,7 +17,7 @@ import se.cth.hedgehogphoto.Location;
 public class PixelFinder {
 	//TODO MAP_SIZE: there is currently a constant in the pixelfinder,
 	//should be placed somewhere more appropriate.
-	private final int MAP_SIZE = 512;
+	private final int MAP_SIZE = 256;
 
 	private double atanh(double rad) {
 		return Math.log(((1 + rad) / (1 - rad))) / 2;
@@ -27,7 +27,6 @@ public class PixelFinder {
 		double zoom = (180.00 / span) * (MAP_SIZE / 256.00);
 		zoom = Math.log(zoom)/Math.log(2.0); //logaritm of 'zoom' base 2
 		return Math.floor(zoom);
-
 	}
 
 	public String getPixelCoordinates(List<Location> markerList) {
@@ -41,11 +40,12 @@ public class PixelFinder {
 		double m_minLatitude = getLocationsInfo("min", "Latitude", markerList);
 		double m_maxLongitude = getLocationsInfo("max", "Longitude", markerList);
 		double m_minLongitude = getLocationsInfo("min", "Longitude", markerList);
-		double atanhsinO = atanh(Math.sin(m_maxLatitude * Math.PI / 180.00));
+		double atanhsinO = atanh(Math.sin(m_maxLatitude * Math.PI / 180.00)); //convert to radians
 		double atanhsinD = atanh(Math.sin(m_minLatitude * Math.PI / 180.00));
 		double atanhCenter = (atanhsinD + atanhsinO) / 2;
 		double radianOfCenterLatitude = Math.atan(Math.sinh(atanhCenter));
 		double centerLatitude = radianOfCenterLatitude * 180.00 / Math.PI; //turn it to degrees
+//		centerLatitude = (m_maxLatitude + m_minLatitude) / 2;
 		double centerLongitude = (m_maxLongitude + m_minLongitude) / 2;
 		System.out.println(centerLongitude + "," + centerLatitude);
 
@@ -55,13 +55,13 @@ public class PixelFinder {
 		double latitudeSpan = m_maxLatitude - m_minLatitude;
 		latitudeSpan = latitudeSpan / Math.cos(radianOfCenterLatitude);
 		double longitudeSpan = m_maxLongitude - m_minLongitude;
-		double zoom = getZoom(Math.max(longitudeSpan, latitudeSpan)) + 1;
+		double zoom = getZoom(Math.max(longitudeSpan, latitudeSpan));
 
 
 		/**
 		 * create the x,y co-ordinates for the centre as they would appear on a map of the earth
 		 */
-		double power = Math.pow(2.00, zoom);
+		double power = Math.pow(2.00, zoom-1);
 		double realWidth = 256.00 * power;
 		// ** result 1 - pixel size of a degree **
 		double oneDegree = realWidth / 360.00;
@@ -82,15 +82,16 @@ public class PixelFinder {
 			double pixelLatitudeRadians = currentLatitude * Math.PI / 180.00;
 			double localAtanh = atanh(Math.sin(pixelLatitudeRadians));
 			double realPixelLatitude = radianLength * localAtanh;
+			realPixelLatitude = (currentLatitude - centerLatitude) * oneDegree;
 			double pixelLatitude = centreY - realPixelLatitude; // convert from our virtual map to the displayed portion
 			pixelLongitude = pixelLongitude + (MAP_SIZE/2);
-			pixelLatitude = pixelLatitude + (MAP_SIZE/2);
-			int roleOverX = (int)(Math.floor(pixelLongitude)) ;
+//			pixelLatitude = pixelLatitude + (MAP_SIZE/2); //delete this sentence
+			int roleOverX = (int)(Math.floor(pixelLongitude)) ; //avrunda
 			int roleOverY = (int)(Math.floor(pixelLatitude));
 			// now create whatever div you want with the given roleOverX and roleOverY so they overlay the map
 			// add them to a List or just concatenate a string in this loop and then return .
 			//e.g -
-			String locationPixelCoordinates = "name=" + markerDetails.toString() + "\n left:" + roleOverX + "px;\n top:" + roleOverY + "px;\n";
+			String locationPixelCoordinates = "name=" + markerDetails.toString() + "\n from top:" + roleOverX + "px;\n from right:" + roleOverY + "px;\n";
 			returnString.append( locationPixelCoordinates );
 			returnString.append( "\n");
 		}	
@@ -111,6 +112,7 @@ public class PixelFinder {
 		double atanhCentre = (atanhsinD + atanhsinO) / 2;
 		double radianOfCentreLatitude = Math.atan(Math.sinh(atanhCentre));
 		double centerLatitude = radianOfCentreLatitude * 180.00 / Math.PI; //turn it to degrees
+		centerLatitude = (m_maxLatitude + m_minLatitude) / 2;
 		double centerLongitude = (m_maxLongitude + m_minLongitude) / 2;
 		return (centerLongitude + "," + centerLatitude);
 	}

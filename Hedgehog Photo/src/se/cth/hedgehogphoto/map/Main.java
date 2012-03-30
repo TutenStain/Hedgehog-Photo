@@ -13,14 +13,15 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Location loc1 = new Location(40.2,38.442);
-		Location loc2 = new Location(40.2,38.482);
-		Location loc3 = new Location(40.2,38.424);
-		Location loc4 = new Location(40.2,38.444);
-//		Location loc1 = new Location(40.2,38.442);
-//		Location loc2 = new Location(33,35.442);
-//		Location loc3 = new Location(40.2,-3.442);
-//		Location loc4 = new Location(-40.2,-38.442);
+		Location loc1 = new Location(33,35.442); // 	(165,73)		pixel coordinates in a 256x256-map
+		Location loc2 = new Location(5.039,42.13); // 	(184,159)
+		Location loc3 = new Location(10,10); // 		(92,145)
+		Location loc4 = new Location(16.55,2.99); // 	(73,125)
+		
+//		Location loc1 = new Location(24.1,10); 
+//		Location loc2 = new Location(3.37,34); 
+//		Location loc3 = new Location(33.111,52.13); 
+//		Location loc4 = new Location(40,12.55);
 		List<Location> locations = new ArrayList<Location>();
 		locations.add(loc1);
 		locations.add(loc2);
@@ -34,7 +35,19 @@ public class Main {
 		String mapURL = mapPath.getPath();
 		String string = pixelFinder.getPixelCoordinates(locations);
 		System.out.println(string);
+		System.out.println(mapURL + "\n\n");
+		
+		CopyOfPixelFinder copyOfPixelFinder = new CopyOfPixelFinder();
+		String newString = copyOfPixelFinder.getPixelCoordinates(locations);
+		String centerlonglat = copyOfPixelFinder.getMapCenterInLongLat(locations);
+		Location loc = new Location(centerlonglat);
+//		loc.setLocation(copyOfPixelFinder.mapCenterLatitude(locations), copyOfPixelFinder.mapCenterLongitude(locations));
+		mapPath.setCenter(loc);
+		mapURL = mapPath.getPath();
+		
+		System.out.println(newString);
 		System.out.println(mapURL);
+		
 	}
 
 }

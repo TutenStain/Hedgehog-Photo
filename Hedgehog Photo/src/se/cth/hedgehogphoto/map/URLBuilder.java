@@ -37,7 +37,7 @@ public abstract class URLBuilder {
 	private void replace(String typeURL, String value) {
 		//TODO add handling of | (eg markers), if not, make method final
 		int typeStartIndex = urlBuilder.indexOf(typeURL);
-		int valueStartIndex = urlBuilder.indexOf(value, typeStartIndex); 
+		int valueStartIndex = urlBuilder.indexOf("=", typeStartIndex) + 1; 
 		int endIndex = urlBuilder.indexOf("&", valueStartIndex); 
 		urlBuilder.replace(valueStartIndex, endIndex, value);
 	}

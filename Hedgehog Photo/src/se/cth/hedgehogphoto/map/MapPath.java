@@ -44,7 +44,7 @@ public class MapPath extends URLBuilder {
 	}
 	
 	public void setZoomLevel(int zoomLevel) {
-		String zoom = String.valueOf(zoomLevel);
+		String zoom = String.valueOf(zoomLevel != 0 && zoomLevel != 21 ? zoomLevel +1 : zoomLevel);
 		addToURL(zoomURL, zoom);
 	}
 	
