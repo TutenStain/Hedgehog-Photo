@@ -78,7 +78,6 @@ public class SearchController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
-		
 					new SearchThread(model, 0).start();
 				}
 			}

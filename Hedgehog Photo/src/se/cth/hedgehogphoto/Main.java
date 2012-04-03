@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import se.cth.hedgehogphoto.search.SearchComponentController;
 import se.cth.hedgehogphoto.search.SearchController;
 import se.cth.hedgehogphoto.search.SearchModel;
 import se.cth.hedgehogphoto.search.SearchPreviewView;
@@ -24,7 +25,8 @@ public class Main {
 		
 		//TagCloud
 		/*List<String> l = new ArrayList<String>();
-		l.add("hej");
+		l.add("hej");e
+		
 		l.add("whiii");
 		l.add("sfsdf");
 		l.add("hej");
@@ -50,7 +52,7 @@ public class Main {
 		SearchPreviewView spv = new SearchPreviewView();
 		sv.setSearchPreview(spv);
 		sm.addObserver(spv);
-		SearchController sc = new SearchController(sm, sv);
+		new SearchController(sm, sv);
 		frame.add(sv);	
 		
 		//Manually refresh the view as it for some reason wont do it automatically all the time.

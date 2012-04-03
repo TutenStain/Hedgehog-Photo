@@ -1,7 +1,11 @@
 package se.cth.hedgehogphoto.search;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
@@ -9,8 +13,11 @@ import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import se.cth.hedgehogphoto.FileObject;
@@ -23,16 +30,27 @@ import se.cth.hedgehogphoto.FileObject;
 
 public class SearchPreviewView extends JPopupMenu implements Observer{
 	private JTextField jtf;
+	//Better to add everything to a JPanel first
+	//instead of adding directly to a JPopup to prevent some rendering issues.
+	private JPanel panel;
 	
 	public SearchPreviewView(){
-		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));		
-		setPopupSize(250, 300);
-		//Better implementation needed as right now we can't select things in the popup.
+		panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		add(panel);
+		
 		setFocusable(false);
 	}
 	
 	public void setTextField(JTextField t){
 		jtf = t;
+	}
+	
+	private Component leftJustify(JPanel panel)  {
+	    Box b = Box.createHorizontalBox();
+	    b.add(panel);
+	    b.add(Box.createHorizontalGlue());
+	    return b;
 	}
 
 	@Override
@@ -42,18 +60,36 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 		show(jtf, -50, jtf.getHeight());
 		List<FileObject> fo = model.getSearchObjects();
 		Iterator<FileObject> itr = fo.iterator();
-		removeAll();
+		panel.removeAll();
+		
+		//TODO Change this value to reflect the max size of the popup.
+		if(fo.size() > 2){
+			JPanel p = new JPanel();
+			p.setLayout(new FlowLayout());
+			p.add(new JLabel("More results for '" + model.getSearchQueryText() + "'"));
+			p.addMouseListener(new MouseAdapter() {     
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					System.out.println("Clicked ON ME!!!");
+		        }
+			});
+			panel.add(p);
+			panel.add(new JSeparator());
+		}
+		
 		while(itr.hasNext()){
 			FileObject ob = itr.next();
-			SearchComponent sc = new SearchComponent(ob);
-			sc.setAlignmentX(Component.LEFT_ALIGNMENT);
-			sc.setAlignmentY(Component.LEFT_ALIGNMENT);
-			add(sc);
-			
-			//Insert a space between each SearchComponent.
-			add(Box.createRigidArea(new Dimension(0, 3)));
+			SearchComponentView view = new SearchComponentView(ob);
+			new SearchComponentController(view, ob);
+			panel.add(view);
+			System.out.println(view.getBounds());
+			//panel.add(new JSeparator());		
 		}
-		revalidate();
+		
+		setPopupSize(250, (fo.size() * 70));
+
+		panel.revalidate();
+		
 		System.out.println(fo);
 	}
 }
