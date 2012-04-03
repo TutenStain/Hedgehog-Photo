@@ -18,6 +18,10 @@ import javax.swing.JTextArea;
 
 import se.cth.hedgehogphoto.FileObject;
 
+/**
+ * @author Barnabas Sapan
+ */
+
 public class SearchComponentView extends JPanel{
 	private JTextArea comment;
 	private JTextArea tags;

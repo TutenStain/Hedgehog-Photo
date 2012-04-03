@@ -23,9 +23,7 @@ import javax.swing.JTextField;
 import se.cth.hedgehogphoto.FileObject;
 
 /**
- * 
  * @author Barnabas Sapan
- *
  */
 
 public class SearchPreviewView extends JPopupMenu implements Observer{

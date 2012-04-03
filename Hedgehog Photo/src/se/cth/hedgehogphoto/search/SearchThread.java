@@ -4,9 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * 
  * @author Barnabas Sapan
- *
  */
 
 public class SearchThread extends Thread{

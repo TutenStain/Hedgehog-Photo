@@ -18,9 +18,7 @@ import javax.swing.event.DocumentListener;
 import sun.print.resources.serviceui;
 
 /**
- * 
  * @author Barnabas Sapan
- *
  */
 
 public class SearchView extends JPanel implements Observer{

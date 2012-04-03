@@ -6,6 +6,10 @@ import java.awt.event.MouseListener;
 
 import se.cth.hedgehogphoto.FileObject;
 
+/**
+ * @author Barnabas Sapan
+ */
+
 public class SearchComponentController{
 	private SearchComponentView view;
 	private final FileObject fo;

@@ -11,9 +11,7 @@ import se.cth.hedgehogphoto.ImageObject;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 
 /**
- * 
  * @author Barnabas Sapan
- *
  */
 
 public class SearchModel extends Observable{
