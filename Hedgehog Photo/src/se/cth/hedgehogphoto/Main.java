@@ -5,7 +5,7 @@ import java.io.File;
 import javax.swing.JFrame;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
-import se.cth.hedgehogphoto.gui.View;
+import se.cth.hedgehogphoto.gui.ModelView;
 
 /**
  * @author Barnabas Sapan
@@ -22,7 +22,7 @@ public class Main {
 		DatabaseHandler.deleteAll();
 		insertFileObjectsIntoDatabase();
 		MainModel model = new MainModel();
-		View view = new View();
+		ModelView view = new ModelView();
 		model.addObserver(view);
 		model.testNotify();
 		

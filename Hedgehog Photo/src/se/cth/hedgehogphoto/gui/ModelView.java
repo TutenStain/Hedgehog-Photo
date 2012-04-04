@@ -23,7 +23,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import se.cth.hedgehogphoto.FileObject;
 import se.cth.hedgehogphoto.MainModel;
-public class View implements Observer {
+public class ModelView implements Observer {
 
 	private JFrame frame;
 	private JPanel photoViewPanel;
@@ -31,24 +31,9 @@ public class View implements Observer {
 	List<PhotoPanel> photoPanels = new ArrayList<PhotoPanel>();
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					View window = new View();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
-	public View() {
+	public ModelView() {
 		initialize();
 	}
 
