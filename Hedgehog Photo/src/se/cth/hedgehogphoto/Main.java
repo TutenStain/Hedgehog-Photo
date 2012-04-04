@@ -1,11 +1,16 @@
 package se.cth.hedgehogphoto;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
-import se.cth.hedgehogphoto.gui.ModelView;
+import se.cth.hedgehogphoto.gui.MainView;
+import se.cth.hedgehogphoto.search.SearchController;
+import se.cth.hedgehogphoto.search.SearchModel;
+import se.cth.hedgehogphoto.search.SearchPreviewView;
+import se.cth.hedgehogphoto.search.SearchView;
 import se.cth.hedgehogphoto.tagcloud.TagCloudModel;
 import se.cth.hedgehogphoto.tagcloud.TagCloudView;
 
@@ -20,7 +25,7 @@ public class Main {
 		DatabaseHandler.deleteAll();
 		insertFileObjectsIntoDatabase();
 		MainModel model = new MainModel();
-		ModelView view = new ModelView();
+		MainView view = new MainView();
 		model.addObserver(view);
 		
 		//TagCloud
@@ -31,6 +36,17 @@ public class Main {
 		tgm.addObserver(tgv);
 		tgm.setTags(l);
 		view.addToLeftPanel(tgv);
+		
+		//Search
+		SearchModel sm = new SearchModel();
+		SearchView sv = new SearchView();
+		sv.setPreferredSize(new Dimension(250, 30));
+		sm.addObserver(sv);
+		SearchPreviewView spv = new SearchPreviewView();
+		sv.setSearchPreview(spv);
+		sm.addObserver(spv);
+		new SearchController(sm, sv);
+		view.addToTopPanel(sv);
 
 		model.testNotify();
 	}

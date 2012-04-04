@@ -9,9 +9,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
- * 
  * @author Barnabas Sapan
- *
  */
 
 public class SearchController {
@@ -84,4 +82,3 @@ public class SearchController {
 		});
 	}
 }
-

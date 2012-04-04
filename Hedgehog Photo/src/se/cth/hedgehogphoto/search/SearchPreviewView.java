@@ -1,46 +1,88 @@
 package se.cth.hedgehogphoto.search;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
+import se.cth.hedgehogphoto.FileObject;
+
 /**
- * 
  * @author Barnabas Sapan
- *
  */
 
 public class SearchPreviewView extends JPopupMenu implements Observer{
-	private JPanel jp;
-	private JLabel jl;
 	private JTextField jtf;
+	//Better to add everything to a JPanel first
+	//instead of adding directly to a JPopup to prevent some rendering issues.
+	private JPanel panel;
+	
 	public SearchPreviewView(){
-		jl = new JLabel();
-		jp = new JPanel();
-		jp.add(jl);
-		setLayout(new BorderLayout());
-		add(jp);
-		setPopupSize(250, 100);
-		//Better implementation needed as right now we can't select things in the popup.
+		panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		add(panel);
+		
 		setFocusable(false);
 	}
 	
 	public void setTextField(JTextField t){
 		jtf = t;
 	}
-
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		SearchModel model = (SearchModel)arg;
 		System.out.println("UPDATE @ SEARCH_PREVIEW_VIEW: " + model.getSearchQueryText());
-		jl.setText(model.getSearchQueryText());
 		show(jtf, -50, jtf.getHeight());
-		System.out.println(model.getSearchObjects());
+		List<FileObject> fo = model.getSearchObjects();
+		Iterator<FileObject> itr = fo.iterator();
+		panel.removeAll();
+		
+		//TODO Change this value to reflect the max size of the popup.
+		if(fo.size() > 2){
+			JPanel p = new JPanel();
+			p.setLayout(new FlowLayout());
+			p.add(new JLabel("More results for '" + model.getSearchQueryText() + "'"));
+			p.addMouseListener(new MouseAdapter() {     
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					System.out.println("Clicked ON ME!!!");
+		        }
+			});
+			panel.add(p);
+			panel.add(new JSeparator());
+		}
+		
+		int i = 0;
+		while(itr.hasNext() && i < 5){
+			FileObject ob = itr.next();
+			SearchComponentView view = new SearchComponentView(ob);
+			new SearchComponentController(view, ob);
+			panel.add(view);
+			System.out.println(view.getBounds());
+			i++;
+			//panel.add(new JSeparator());		
+		}
+		
+		setPopupSize(250, (i * 70));
+
+		panel.revalidate();
+		
+		System.out.println(fo);
 	}
 }

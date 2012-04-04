@@ -4,14 +4,14 @@ package se.cth.hedgehogphoto.search;
 import java.util.List;
 import java.util.Observable;
 
+import javax.activation.DataHandler;
+
 import se.cth.hedgehogphoto.FileObject;
 import se.cth.hedgehogphoto.ImageObject;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 
 /**
- * 
  * @author Barnabas Sapan
- *
  */
 
 public class SearchModel extends Observable{
@@ -47,10 +47,14 @@ public class SearchModel extends Observable{
 		b.setImagePath("jaha.jpg");
 		b.setLocation("Chalmers");
 		DatabaseHandler.insert(b);*/
+	//TODO fix this...
 	public List<FileObject> getSearchObjects(){
-		//System.out.println(DatabaseHandler.getTags());
-		//System.out.println(DatabaseHandler.getLocations());
-		return DatabaseHandler.searchComments(searchText);
+		//DatabaseHandler.deleteAll();
+		//System.out.println(DatabaseHandler.getTags())
+		//System.out.println(DatabaseHandler.getLocationd"s());
+		//DatabaseHandler.getAlbumName("jaggillarelefanter.jpg");
+		return DatabaseHandler.searchComments("Gutes bild");
+	
 	}
 	
 	public void doSearch(){

@@ -23,18 +23,19 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import se.cth.hedgehogphoto.FileObject;
 import se.cth.hedgehogphoto.MainModel;
-public class ModelView implements Observer {
+public class MainView implements Observer {
 
 	private JFrame frame;
 	private JPanel photoViewPanel;
 	private JTextField searchField;
 	private	JPanel leftPanelView;
+	private JPanel topPanel;
 	List<PhotoPanel> photoPanels = new ArrayList<PhotoPanel>();
 
 	/**
 	 * Create the application.
 	 */
-	public ModelView() {
+	public MainView() {
 		initialize();
 	}
 
@@ -89,10 +90,10 @@ public class ModelView implements Observer {
 				);
 		bottomPanel.setLayout(gl_bottomPanel);
 
-		JPanel topPanel = new JPanel();
+		topPanel = new JPanel();
 		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
 
-		searchField = new JTextField();
+		/*searchField = new JTextField();
 		searchField.setText("Search..");
 		searchField.setColumns(10);
 
@@ -120,7 +121,7 @@ public class ModelView implements Observer {
 								.addComponent(lblAlbum)
 								.addComponent(lblicon)))
 				);
-		topPanel.setLayout(gl_topPanel);
+		topPanel.setLayout(gl_topPanel);*/
 
 		leftPanelView = new JPanel();
 		frame.getContentPane().add(leftPanelView, BorderLayout.WEST);
@@ -180,6 +181,10 @@ public class ModelView implements Observer {
 	
 	public void addToLeftPanel(JPanel panel){
 		leftPanelView.add(panel);
+	}
+	
+	public void addToTopPanel(JPanel panel){
+		topPanel.add(panel);
 	}
 
 	@Override

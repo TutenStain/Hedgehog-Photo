@@ -18,16 +18,14 @@ import javax.swing.event.DocumentListener;
 import sun.print.resources.serviceui;
 
 /**
- * 
  * @author Barnabas Sapan
- *
  */
 
 public class SearchView extends JPanel implements Observer{
 	private SearchPreviewView svp;
 	private String searchButtonText = "Search";
 	private String placeHolderText = "Search...";
-	private Dimension searchBoxSize = new Dimension(150, 30);
+	private Dimension searchBoxSize = new Dimension(100, 30);
 	private Dimension searchButtonSize = new Dimension(100, 30);
 	private JTextField searchBox;
 	private JButton searchButton;
