@@ -28,6 +28,7 @@ public class ModelView implements Observer {
 	private JFrame frame;
 	private JPanel photoViewPanel;
 	private JTextField searchField;
+	private	JPanel leftPanelView;
 	List<PhotoPanel> photoPanels = new ArrayList<PhotoPanel>();
 
 	/**
@@ -121,15 +122,15 @@ public class ModelView implements Observer {
 				);
 		topPanel.setLayout(gl_topPanel);
 
-		JPanel leftPanelView = new JPanel();
+		leftPanelView = new JPanel();
 		frame.getContentPane().add(leftPanelView, BorderLayout.WEST);
 		leftPanelView.setLayout(new GridLayout(3, 0, 0, 0));
 
 		JButton btnMaps = new JButton("Maps");
 		leftPanelView.add(btnMaps);
 
-		JButton btnTags = new JButton("Tags");
-		leftPanelView.add(btnTags);
+		//JButton btnTags = new JButton("Tags");
+		//leftPanelView.add(btnTags);
 
 		JButton btnCalender = new JButton("Calender");
 		leftPanelView.add(btnCalender);
@@ -175,6 +176,10 @@ public class ModelView implements Observer {
 		});
 		
 		frame.setVisible(true);
+	}
+	
+	public void addToLeftPanel(JPanel panel){
+		leftPanelView.add(panel);
 	}
 
 	@Override

@@ -6,8 +6,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
-public class TagCloudModel {
+/**
+ * @author Barnabas Sapan
+ */
+
+public class TagCloudModel extends Observable{
 	private List<String> tags = new ArrayList<String>();
 	private Map<String, Integer> map = new HashMap<String, Integer>();
 	
@@ -26,6 +31,9 @@ public class TagCloudModel {
 				int occurrences = Collections.frequency(tags, o);
 				map.put(o, occurrences);
 			}
+			
+			setChanged();
+			notifyObservers(this);
 		}
 	}
 	
