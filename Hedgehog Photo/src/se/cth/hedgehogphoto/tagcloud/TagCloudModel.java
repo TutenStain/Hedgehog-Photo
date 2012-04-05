@@ -12,7 +12,7 @@ import java.util.Observable;
  * @author Barnabas Sapan
  */
 
-public class TagCloudModel extends Observable{
+public class TagCloudModel extends Observable {
 	private List<String> tags = new ArrayList<String>();
 	private Map<String, Integer> map = new HashMap<String, Integer>();
 	

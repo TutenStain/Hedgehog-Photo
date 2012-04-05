@@ -2,6 +2,7 @@ package se.cth.hedgehogphoto.gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -136,21 +138,16 @@ public class MainView implements Observer {
 		JButton btnCalender = new JButton("Calender");
 		leftPanelView.add(btnCalender);
 
-		JScrollPane photoView = new JScrollPane();
+		
+		
+		JScrollPane photoView = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		frame.getContentPane().add(photoView, BorderLayout.CENTER);
 
 		photoViewPanel = new JPanel();
 		photoView.setViewportView(photoViewPanel);
 		
-		photoViewPanel.setLayout(new GridLayout(photoPanels.size()/2,2));
-		
-		for(int i=0;i<10;i++){
-			photoPanels.add(new PhotoPanel("Pictures/55hours.jpg"));
-		}
-
-		for(int i=0;i<photoPanels.size();i++){
-			photoViewPanel.add(photoPanels.get(i));
-		}
+		//photoViewPanel.setLayout(new GridLayout(photoPanels.size()/2,2));
+		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 		
 		showHideComments.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

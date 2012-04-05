@@ -25,28 +25,6 @@ public class SearchModel extends Observable{
 		searchText = txt;
 	}
 
-	//TODO This is in the DB:
-	/*	FileObject f = new ImageObject();
-		f.setComment("Gutes bild");
-		f.setImageName("wei");
-		f.setDate("2012.12.02");
-		f.setTag("Bra");
-		f.setTag("Battre");
-		f.setImagePath("gut.jpg");
-		f.setCoverPath("jumboooo.jpg");
-		f.setLocation("Japan");
-		f.setAlbumName("Bra bilder");
-		DatabaseHandler.insert(f);
-		
-		FileObject b = new ImageObject();
-		b.setComment("En valdigt trevlig bild");
-		b.setImageName("noice");
-		b.setDate("2011.04.01");
-		b.setTag("Fin");
-		b.setTag("Gullig");
-		b.setImagePath("jaha.jpg");
-		b.setLocation("Chalmers");
-		DatabaseHandler.insert(b);*/
 	//TODO fix this...
 	public List<FileObject> getSearchObjects(){
 		//DatabaseHandler.deleteAll();
