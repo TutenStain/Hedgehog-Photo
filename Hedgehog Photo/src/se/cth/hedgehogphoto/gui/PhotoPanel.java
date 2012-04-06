@@ -18,16 +18,19 @@ import javax.swing.BoxLayout;
 
 import se.cth.hedgehogphoto.FileObject;
 
+//TODO This class need to be fixed, photopanels gets a incorrect dimension that does
+//not wrap tight around the picture when only the pictures are shown. Did not check if they 
+//get the correct size from the begining with all the tags, comments and location.
 public class PhotoPanel extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
 	JLabel commentsLabel = new JLabel("Comments");
 	JLabel tagsLabel = new JLabel("Tags:");
 	JLabel locationLabel = new JLabel("Location:");
 	JLabel iconLabel = new JLabel("");
 	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public PhotoPanel(FileObject f) {
 		this(f.getImagePath());
 	}

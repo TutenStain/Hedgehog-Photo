@@ -21,7 +21,7 @@ public class TagCloudModel extends Observable {
 			tags = _tags;
 			
 			//TODO This shuffle the tags, which it does, but they still get returned in the same order,
-			//TODO maybe because of the iterator still having references to the old order?
+			//maybe because of the iterator still having references to the old unshuffled order?
 			Collections.shuffle(tags);
 	
 			Iterator<String> itr = tags.iterator();

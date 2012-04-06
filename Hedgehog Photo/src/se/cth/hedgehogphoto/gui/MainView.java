@@ -1,7 +1,7 @@
 package se.cth.hedgehogphoto.gui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,9 +15,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -29,7 +27,6 @@ public class MainView implements Observer {
 
 	private JFrame frame;
 	private JPanel photoViewPanel;
-	private JTextField searchField;
 	private	JPanel leftPanelView;
 	private JPanel topPanel;
 	List<PhotoPanel> photoPanels = new ArrayList<PhotoPanel>();
@@ -192,9 +189,9 @@ public class MainView implements Observer {
 			List<FileObject> images = model.getImages();
 			photoViewPanel.removeAll();
 			for(int i = 0; i<10; i++) {
-				photoPanels.add(i,new PhotoPanel(images.get(i)));
-				
-				photoViewPanel.add(photoPanels.get(i));
+				PhotoPanel pp = new PhotoPanel(images.get(i));
+				photoPanels.add(i, pp);
+				photoViewPanel.add(pp);
 				frame.revalidate();
 			}
 		}

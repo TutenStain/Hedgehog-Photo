@@ -1,21 +1,20 @@
 package se.cth.hedgehogphoto.tagcloud;
 
-import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import se.cth.hedgehogphoto.search.SearchModel;
+import se.cth.hedgehogphoto.gui.WrapLayout;
 
 /**
+ * The view representation of the tagcloud.
+ * !setPreferredSize should always be set!
  * @author Barnabas Sapan
  */
 
@@ -24,9 +23,13 @@ public class TagCloudView extends JPanel implements Observer{
 	private Font baseFont = new Font("Serif", Font.PLAIN, 11);
 	private float fontMax = 20f;
 	private float fontMin = baseFont.getSize();
+	private int removeFromMax = 0;
+	private int addToMin = 0;
 	
 	public TagCloudView(){
-		setLayout(new FlowLayout());
+		setLayout(new WrapLayout(FlowLayout.LEFT));
+		//Default values
+		setPreferredSize(new Dimension(150, 75));
 	}
 	
 	//TODO Maybe a better implementation fontSize based on max/min size.
@@ -34,11 +37,13 @@ public class TagCloudView extends JPanel implements Observer{
 		float size = map.size() * tagOccurrence;
 		
 		if(size > fontMax){
-			size = fontMax;
+			size = fontMax - removeFromMax;
+			removeFromMax += 2;
 		}
 		
 		if(size < fontMin){
-			size = fontMin;
+			size = fontMin + addToMin;
+			addToMin += 2;
 		}
 		
 		return size;
