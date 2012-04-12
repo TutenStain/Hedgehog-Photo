@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.test;
+package se.cth.hedgehogphoto.map;
 /*******************************************************************************
  * Copyright (c) 2008, 2012 Stepan Rutz.
  * All rights reserved. This program and the accompanying materials

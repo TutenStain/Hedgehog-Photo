@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.test;
+package se.cth.hedgehogphoto.map;
 
 import java.awt.GridLayout;
 import java.awt.Point;
