@@ -1,3 +1,4 @@
+package se.cth.hedgehogphoto.test;
 /*******************************************************************************
  * Copyright (c) 2008, 2012 Stepan Rutz.
  * All rights reserved. This program and the accompanying materials
@@ -9,7 +10,6 @@
  *    Stepan Rutz - initial implementation
  *******************************************************************************/
 
-package com.roots.map;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -170,8 +170,9 @@ public class MapPanel extends JPanel {
     };
 
     private static final String NAMEFINDER_URL = "http://gazetteer.openstreetmap.org/namefinder/search.xml";
-    private static final int PREFERRED_WIDTH = 320;
-    private static final int PREFERRED_HEIGHT = 200;
+    //WATCH THIS: change width/height of mappanel. NOT, doesn't change a shit.
+    private static final int PREFERRED_WIDTH = 400;
+    private static final int PREFERRED_HEIGHT = 700;
 
 
     private static final int ANIMATION_FPS = 15, ANIMATION_DURARTION_MS = 500;
@@ -210,6 +211,7 @@ public class MapPanel extends JPanel {
 
     private Dimension mapSize = new Dimension(0, 0);
     private Point mapPosition = new Point(0, 0);
+    private Point centerPosition = new Point(0, 0);
     private int zoom;
 
     private TileServer tileServer = TILESERVERS[0];
@@ -228,6 +230,8 @@ public class MapPanel extends JPanel {
     private Point smoothPosition, smoothPivot;
     private SearchPanel searchPanel;
     private Rectangle magnifyRegion;
+    
+    private boolean interactionEnabled;
 
     public MapPanel() {
         this(new Point(8282, 5179), 6);
@@ -266,6 +270,7 @@ public class MapPanel extends JPanel {
         searchPanel = new SearchPanel();
         checkTileServers();
         checkActiveTileServer();
+        interactionEnabled = false; //will prevent listener to work correctly
     }
 
     private void checkTileServers() {
@@ -379,6 +384,16 @@ public class MapPanel extends JPanel {
         firePropertyChange("zoom", oldZoom, zoom);
     }
 
+    /** @author Florian Minges */
+    public void enableInteraction(boolean state) {
+    	interactionEnabled = state;
+    }
+    
+    /** @author Florian Minges */
+    public void enableOverlayPanels(boolean state) {
+    	getOverlayPanel().setVisible(state);
+    	getControlPanel().setVisible(state);
+    }
 
     public void zoomInAnimated(Point pivot) {
         if (!useAnimations) {
@@ -485,11 +500,22 @@ public class MapPanel extends JPanel {
     }
 
     public Point getCenterPosition() {
-        return new Point(mapPosition.x + getWidth() / 2, mapPosition.y + getHeight() / 2);
+    	if (getWidth() != 0 && getHeight() != 0)
+    		return new Point(mapPosition.x + getWidth() / 2, mapPosition.y + getHeight() / 2);
+    	return new Point(mapPosition.x + PREFERRED_WIDTH / 2, mapPosition.y + PREFERRED_HEIGHT / 2);
+    }
+    
+    public Point getStoredCenterPosition() {
+    	return centerPosition;
     }
 
     public void setCenterPosition(Point p) {
+//    	System.out.println("p.x: " + p.x);
+//    	System.out.println("getWidth(): " + getWidth());
+//    	System.out.println("p.y: " + p.y);
+//    	System.out.println("getHeight(): " + getHeight());
         setMapPosition(p.x - getWidth() / 2, p.y - getHeight() / 2);
+        centerPosition = p;
     }
 
     public Point.Double getLongitudeLatitude(Point position) {
@@ -582,7 +608,7 @@ public class MapPanel extends JPanel {
                     // TODO: continue here later
                     //System.err.println("fill : " + mapPosition);
                     //System.err.println("fill : " + magnifyRegion);
-                    //g.fillRect(magnifyRegion.x, magnifyRegion.y, magnifyRegion.width, magnifyRegion.height);
+                    g.fillRect(magnifyRegion.x, magnifyRegion.y, magnifyRegion.width, magnifyRegion.height);
                 }
             } finally {
                 g.dispose();
@@ -666,6 +692,13 @@ public class MapPanel extends JPanel {
 
         long t1 = System.currentTimeMillis();
         stats.dt = t1 - t0;
+        
+        if (centerPosition.equals(mapPosition)) {
+        	setCenterPosition(centerPosition); //neccesary, since the first call probably 
+        	//didn't set proper mapPosition, since width/height of the panel was 0.
+        	paintInternal(g);
+        	//TODO: Care for eternity-loop if the panels size is 0...
+        }
     }
 
 
@@ -1192,7 +1225,9 @@ public class MapPanel extends JPanel {
         }
 
         private void handleDrag(MouseEvent e) {
-            if (downCoords != null) {
+        	if (!interactionEnabled) {
+        		//do nothing
+        	} else if (downCoords != null) {
                 int tx = downCoords.x - e.getX();
                 int ty = downCoords.y - e.getY();
                 setMapPosition(downPosition.x + tx, downPosition.y + ty);
@@ -1207,10 +1242,13 @@ public class MapPanel extends JPanel {
 
         public void mouseWheelMoved(MouseWheelEvent e) {
             int rotation = e.getWheelRotation();
-            if (rotation < 0)
+            if (!interactionEnabled) {
+            	//do nothing
+            } else if (rotation < 0) {
                 zoomInAnimated(new Point(mouseCoords.x, mouseCoords.y));
-            else
+            } else {
                 zoomOutAnimated(new Point(mouseCoords.x, mouseCoords.y));
+            }
         }
     }
 
@@ -1231,14 +1269,16 @@ public class MapPanel extends JPanel {
             }
         }
 
+        //WATCH THIS: Query info from mappanel
         private void paintOverlay(Graphics2D g) {
             drawBackground(g, getWidth(), getHeight());
             g.setColor(Color.black);
             drawString(g, 0, "Zoom", Integer.toString(getZoom()));
             drawString(g, 1, "MapSize", mapSize.width + ", " + mapSize.height);
             drawString(g, 2, "MapPosition", mapPosition.x + ", " + mapPosition.y);
-            drawString(g, 3, "CursorPosition", (mapPosition.x + getCursorPosition().x) + ", " + (mapPosition.y + getCursorPosition().y));
-            drawString(g, 4, "CenterPosition", (mapPosition.x + getWidth() / 2) + ", " + (mapPosition.y + getHeight() / 2));
+            drawString(g, 3, "CursorPosition", (getCursorPosition().x + ", " + getCursorPosition().y)); //removed mapPosition.x & mapPosition.y
+//            drawString(g, 4, "CenterPosition", (mapPosition.x + getWidth() / 2) + ", " + (mapPosition.y + getHeight() / 2));
+            drawString(g, 4, "CenterPosition", (mapPosition.x + MapPanel.PREFERRED_WIDTH / 2) + ", " + (mapPosition.y + MapPanel.PREFERRED_HEIGHT / 2));
             drawString(g, 5, "Tilescount", getXTileCount() + ", " + getYTileCount() + " (" + (NumberFormat.getIntegerInstance().format((long)getXTileCount() * getYTileCount())) + " total)");
             drawString(g, 6, "Painted-Tilescount", Integer.toString(stats.tileCount));
             drawString(g, 7, "Paint-Time", stats.dt + " ms.");
