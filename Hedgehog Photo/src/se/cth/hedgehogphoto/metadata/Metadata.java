@@ -11,7 +11,7 @@ import org.apache.sanselan.common.IImageMetadata;
 
 
 /**
- * A wrapper/test-class for the metadata extractor
+ * A wrapper-class for the metadata extractor
  * @author Florian
  */
 public class Metadata {
@@ -28,7 +28,7 @@ public class Metadata {
 			setFileProperties(io);
 			io.print();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			//IF POSSIBLE: Add exception handling
 			e.printStackTrace();
 		}
 	}
@@ -43,9 +43,10 @@ public class Metadata {
 		try {
 			metadata = Sanselan.getMetadata(file);
 		} catch (ImageReadException e) {
-			// TODO Auto-generated catch block
+			//IF POSSIBLE: Add exception handling
 			e.printStackTrace();
 		} catch (IOException e) {
+			//IF POSSIBLE: Add exception handling
 			e.printStackTrace();
 		}
 		

@@ -44,18 +44,18 @@ public class Main {
 		double lon = center.getLongitude();
 		double lat = center.getLatitude();
 		
+		/* IF POSSIBLE: Change mapPanel.computePosition to this class implementation
+		where one passes an object of class Location. */
 		Point position = mapPanel.computePosition(new Point2D.Double(lat, lon));
-//		System.out.println(position.x + " och " + position.y);
-		mapPanel.setCenterPosition(position); // sets to the computed position
+		mapPanel.setCenterPosition(position); 
 		
+		/* Sets the proper zoom, so that every location fits on the map*/
+		adjustZoom(mapPanel, locations); 
 		
-		adjustZoom(mapPanel, locations); // set some zoom level (1-18 are valid)
+		/* DEPRECATED COMMENT ON HOW TO DO*/
+		//--------------------------------------------
 		
-		//TODO: calculate proper zoom if several locations are displayed
-		//put "buttons" on top of panel?
-		
-		//HOW TODO THIS: 
-//		1) calculate difference in long/lat between center
+		//HOW: 1) calculate difference in long/lat between center
 //		and the outermost location (greatestDifference in both long and lat).
 //		2) Convert this into the maps positional system  via computePosition(Point)
 //			The outermost point shall be in the top-left corner (IMPORTANT)
@@ -67,13 +67,20 @@ public class Main {
 //			b) if NO, decrease zoom and try again
 //				b1) if YES now, use that zoom
 //		*Low longitude, high latitude
+		
+		//-------------------------------------------
+		
+		/* IF POSSIBLE: enable/disable the overlay panels in case of need*/
 		mapPanel.enableOverlayPanels(true);
 		mapPanel.enableInteraction(true);
-		mapPanel.repaint(); // if already visible trigger a repaint here
+		
+		/* TODO: list is not even used... refactor!! */
 		List<Double> list = getCoordinatesList(mapPanel, locations);
 		return mapPanel;
 	}
 	
+	/* This method will not be used*/
+	@Deprecated
 	private static JPanel getJPanel() {
 		JPanel panel = new JPanel();
 		try {
@@ -90,6 +97,8 @@ public class Main {
 		return panel;
 	}
 	
+	/* FIXME: Refactor all the methods! Add new classes! 
+	 * Put away the functionality to the mapPanel! */
 	private static boolean coordinatesVisible(MapPanel map, List<Location> locations) {
 		List<Double> list = getCoordinatesList(map, locations);
 		boolean ok = true;

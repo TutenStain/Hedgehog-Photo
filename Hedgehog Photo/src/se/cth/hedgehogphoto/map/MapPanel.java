@@ -133,35 +133,7 @@ public class MapPanel extends JPanel {
 
     private static final Logger log = Logger.getLogger(MapPanel.class.getName());
 
-    public static final class TileServer {
-        private final String url;
-        private final int maxZoom;
-        private boolean broken;
-
-        private TileServer(String url, int maxZoom) {
-            this.url = url;
-            this.maxZoom = maxZoom;
-        }
-
-        public String toString() {
-            return url;
-        }
-
-        public int getMaxZoom() {
-            return maxZoom;
-        }
-        public String getURL() {
-            return url;
-        }
-
-        public boolean isBroken() {
-            return broken;
-        }
-
-        public void setBroken(boolean broken) {
-            this.broken = broken;
-        }
-    }
+    
 
     /* constants ... */
     private static final TileServer[] TILESERVERS = {
@@ -170,16 +142,18 @@ public class MapPanel extends JPanel {
     };
 
     private static final String NAMEFINDER_URL = "http://gazetteer.openstreetmap.org/namefinder/search.xml";
-    //WATCH THIS: change width/height of mappanel. NOT, doesn't change a shit.
+    //The Preferred width and height of the panel. Doesn't change the actual map size, but is important for
+    //calculations right now.
+    //TODO: Let the map size be a constant OUTSIDE of this class (or package?)
     private static final int PREFERRED_WIDTH = 400;
     private static final int PREFERRED_HEIGHT = 700;
 
-
+    //TODO: Erase this IF we don't want to cruise around on the map, leave it otherwise.
     private static final int ANIMATION_FPS = 15, ANIMATION_DURARTION_MS = 500;
     
 
 
-    /* basically not be changed */
+    /* TODO: Display the ABOUT_MSG somewhere else in a proper manner. */
     private static final int TILE_SIZE = 256;
     private static final int CACHE_SIZE = 256;
     private static final String ABOUT_MSG =
@@ -193,7 +167,9 @@ public class MapPanel extends JPanel {
         "Please visit and support the actual projects at http://www.openstreetmap.org/.\r\n" +
         "And keep in mind this application is just a simple alternative renderer for swing.\r\n";
 
-    private static final int MAGNIFIER_SIZE = 100;
+    /* Has to do with the maps size (ie whats visible). 
+     * Don't change this (Stepan Rutz implementation)*/
+    private static final int MAGNIFIER_SIZE = 100; 
 
     //-------------------------------------------------------------------------
     // tile url construction.
@@ -219,8 +195,8 @@ public class MapPanel extends JPanel {
     private DragListener mouseListener = new DragListener();
     private TileCache cache = new TileCache();
     private Stats stats = new Stats();
-    private OverlayPanel overlayPanel = new OverlayPanel();
-    private ControlPanel controlPanel = new ControlPanel();
+    private OverlayPanel overlayPanel = new OverlayPanel(); /* TODO: Eliminate the need of this class, and then erase it. */
+    private ControlPanel controlPanel = new ControlPanel(); /* IF POSSIBLE: Modify this class to better serve our purposes? */
 
     private boolean useAnimations = true;
     private Animation animation;
