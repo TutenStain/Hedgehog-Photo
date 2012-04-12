@@ -71,7 +71,7 @@ public class Main {
 		//-------------------------------------------
 		
 		/* IF POSSIBLE: enable/disable the overlay panels in case of need*/
-		mapPanel.enableOverlayPanels(true);
+		mapPanel.enableAllOverlayPanels(true);
 		mapPanel.enableInteraction(true);
 		
 		/* TODO: list is not even used... refactor!! */

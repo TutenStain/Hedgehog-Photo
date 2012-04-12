@@ -207,6 +207,8 @@ public class MapPanel extends JPanel {
     private SearchPanel searchPanel;
     private Rectangle magnifyRegion;
     
+    /** If true, it's possible to move around and scroll in the map. 
+     *  If false, it's a static map. */
     private boolean interactionEnabled;
 
     public MapPanel() {
@@ -226,29 +228,23 @@ public class MapPanel extends JPanel {
         setLayout(new MapLayout());
         setOpaque(true);
         setBackground(new Color(0xc0, 0xc0, 0xc0));
-        add(overlayPanel);
+        add(overlayPanel); /* TODO: Erase this line OR make the overlayPanel display buttons where the locations are */
         add(controlPanel);
         addMouseListener(mouseListener);
         addMouseMotionListener(mouseListener);
         addMouseWheelListener(mouseListener);
-        //add(slider);
         setZoom(zoom);
         setMapPosition(mapPosition);
-//        if (false) {
-//            SwingUtilities.invokeLater(new Runnable() {
-//                public void run() {
-//                    setZoom(10);
-//                    setCenterPosition(computePosition(new Point2D.Double(-0.11, 51.51)));
-//                }
-//            });
-//        }
 
-        searchPanel = new SearchPanel();
+        searchPanel = new SearchPanel(); /* IF POSSIBLE: check if it is possible to remove this panel, since it is not used right now */
         checkTileServers();
         checkActiveTileServer();
         interactionEnabled = false; //will prevent listener to work correctly
     }
 
+    /* IF POSSIBLE: This method does one thing - it sets the tileServer
+     * to "broken" if an exception is thrown.
+     * One exception is thrown EVERY time one starts the program. Look it up! */
     private void checkTileServers() {
         for (TileServer tileServer : TILESERVERS) {
             String urlstring = getTileString(tileServer, 1, 1, 1);
@@ -264,6 +260,8 @@ public class MapPanel extends JPanel {
     }
 
     private void checkActiveTileServer() {
+    	/* IF POSSIBLE: Make it only check if the tileServer != null
+    	 * if that is the case, call checkTileServers and see if it is broken. */
         if (getTileServer() != null && getTileServer().isBroken()) {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
@@ -339,6 +337,8 @@ public class MapPanel extends JPanel {
         Point oldMapPosition = getMapPosition();
         mapPosition.x = x;
         mapPosition.y = y;
+        centerPosition.x = mapPosition.x + PREFERRED_WIDTH / 2;
+        centerPosition.y = mapPosition.y + PREFERRED_HEIGHT / 2;
         firePropertyChange("mapPosition", oldMapPosition, getMapPosition());
     }
 
@@ -360,14 +360,27 @@ public class MapPanel extends JPanel {
         firePropertyChange("zoom", oldZoom, zoom);
     }
 
-    /** @author Florian Minges */
+    /** Enables/disables map interaction
+     *  If set to false, it becomes a static map. */
     public void enableInteraction(boolean state) {
     	interactionEnabled = state;
     }
     
-    /** @author Florian Minges */
-    public void enableOverlayPanels(boolean state) {
+    /** Hides/shows overlay and control panel */
+    public void enableAllOverlayPanels(boolean state) {
+    	enableOverlayPanel(state);
+    	enableControlPanel(state);
+    }
+    
+    /** Doesn't actually enable/disable the panel,
+     * just hides or shows it. */
+    public void enableOverlayPanel(boolean state) {
     	getOverlayPanel().setVisible(state);
+    }
+    
+    /** Doesn't actually enable/disable the panel,
+     * just hides or shows it. */
+    public void enableControlPanel(boolean state) {
     	getControlPanel().setVisible(state);
     }
 
@@ -481,17 +494,16 @@ public class MapPanel extends JPanel {
     	return new Point(mapPosition.x + PREFERRED_WIDTH / 2, mapPosition.y + PREFERRED_HEIGHT / 2);
     }
     
+    /* IF POSSIBLE: Delete this method, isn't used.
+     * But MIGHT be useful? */
+    @Deprecated
     public Point getStoredCenterPosition() {
     	return centerPosition;
     }
 
     public void setCenterPosition(Point p) {
-//    	System.out.println("p.x: " + p.x);
-//    	System.out.println("getWidth(): " + getWidth());
-//    	System.out.println("p.y: " + p.y);
-//    	System.out.println("getHeight(): " + getHeight());
         setMapPosition(p.x - getWidth() / 2, p.y - getHeight() / 2);
-        centerPosition = p;
+        centerPosition = p; /* IF POSSIBLE: Delete this line if getStoredCenterPosition() gets removed. */
     }
 
     public Point.Double getLongitudeLatitude(Point position) {
@@ -516,6 +528,7 @@ public class MapPanel extends JPanel {
         }
     }
 
+    /** Important inner class which should NOT be ported to the outside. */
     private static final class Painter {
         private final int zoom;
         private float transparency = 1F;
@@ -581,10 +594,6 @@ public class MapPanel extends JPanel {
                     Rectangle magnifyRegion = new Rectangle(mapPanel.magnifyRegion);
                     magnifyRegion.translate(-mapPosition.x, -mapPosition.y);
                     g.setColor(Color.yellow);
-                    // TODO: continue here later
-                    //System.err.println("fill : " + mapPosition);
-                    //System.err.println("fill : " + magnifyRegion);
-                    g.fillRect(magnifyRegion.x, magnifyRegion.y, magnifyRegion.width, magnifyRegion.height);
                 }
             } finally {
                 g.dispose();
@@ -666,17 +675,27 @@ public class MapPanel extends JPanel {
             painter.paint(g, position, null);
         }
 
+        /* IF POSSIBLE: Only used once, when to write how long it took to paint = unneccesary! 
+         * Delete the time-counting lines... */
         long t1 = System.currentTimeMillis();
-        stats.dt = t1 - t0;
+        stats.dt = t1 - t0; 
         
-        if (centerPosition.equals(mapPosition)) {
-        	setCenterPosition(centerPosition); //neccesary, since the first call probably 
-        	//didn't set proper mapPosition, since width/height of the panel was 0.
-        	paintInternal(g);
-        	//TODO: Care for eternity-loop if the panels size is 0...
+        /** DO NOT REMOVE THIS CASE
+         *	Since width/height of the panel initially is 0 before its painted,
+         *	it appears to have the size "0". What was thought to be the center, 
+         *	actually becomes the top left corner of the map. This case fixes that problem.
+         * 	Though one should care for the possibility of an eternity loop as the maps
+         * 	width and height are REALLY 0. This is also handled by checking if size is legit.
+         **/
+        if (centerPosition.equals(mapPosition) && legitMapSize()) {
+        	setCenterPosition(centerPosition); 
+        	paintInternal(g); /* calls itself */
         }
     }
-
+    
+    private boolean legitMapSize() {
+    	return (PREFERRED_WIDTH != 0 && PREFERRED_HEIGHT != 0);
+    }
 
     private void drawScaledRect(Graphics2D g, int cx, int cy, double f, double scale) {
         AffineTransform oldTransform = g.getTransform();
@@ -862,7 +881,9 @@ public class MapPanel extends JPanel {
     private static abstract class Animation implements ActionListener {
 
         private final AnimationType type;
-        private final Timer timer;
+        /* IF POSSIBLE: Is it neccessary to keep info about the time? No? Then delete it. 
+         * Or is it used for something else? Check that! */
+        private final Timer timer; 
         private long t0 = -1L;
         private long dt;
         private final long duration;
@@ -1169,7 +1190,6 @@ public class MapPanel extends JPanel {
         }
 
         public void mouseReleased(MouseEvent e) {
-            //setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             handleDrag(e);
             downCoords = null;
             downPosition = null;
@@ -1181,11 +1201,11 @@ public class MapPanel extends JPanel {
         }
 
         public void mouseDragged(MouseEvent e) {
-            //setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             handlePosition(e);
             handleDrag(e);
         }
  
+        /* IF POSSIBLE: use another cursor if mouse is over a certain location on map? */
         public void mouseExited(MouseEvent e) {
             //setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
@@ -1202,7 +1222,7 @@ public class MapPanel extends JPanel {
 
         private void handleDrag(MouseEvent e) {
         	if (!interactionEnabled) {
-        		//do nothing
+        		/* interaction disabled */
         	} else if (downCoords != null) {
                 int tx = downCoords.x - e.getX();
                 int ty = downCoords.y - e.getY();
@@ -1219,7 +1239,7 @@ public class MapPanel extends JPanel {
         public void mouseWheelMoved(MouseWheelEvent e) {
             int rotation = e.getWheelRotation();
             if (!interactionEnabled) {
-            	//do nothing
+            	/* interaction disabled */
             } else if (rotation < 0) {
                 zoomInAnimated(new Point(mouseCoords.x, mouseCoords.y));
             } else {
