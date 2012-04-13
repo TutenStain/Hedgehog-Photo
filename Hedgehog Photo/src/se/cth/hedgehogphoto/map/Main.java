@@ -36,7 +36,7 @@ public class Main {
 		frame.setVisible(true);
 	}
 	
-	private static JPanel getMapPanel() {
+	public static JPanel getMapPanel() {
 		MapPanel mapPanel = new MapPanel();
 		List<Location> locations = new ArrayList<Location>();
 		locations.add(new Location(57.0,10.0));
