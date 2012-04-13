@@ -18,19 +18,21 @@ import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.Location;
 
+/**
+ * 
+ * @author Florian Minges
+ */
 public class Main {
 	
-	private static final String LONGITUDE = "longitude";
-	private static final String LATITUDE = "latitude";
 	private static final int WIDTH = 400;
 	private static final int HEIGHT = 700; //Be sure to change variables in MapPanel too
+	
 	public static void main(String [] args) {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		panel.add(getMapPanel());
 		frame.add(panel);
 		frame.setSize(600,800);
-//		frame.pack();
 		frame.setVisible(true);
 	}
 	
@@ -41,12 +43,8 @@ public class Main {
 		locations.add(new Location(56.0,11.0));
 		locations.add(new Location(55.0,12.0));
 		Location center = getCenterLocation(locations);
-		double lon = center.getLongitude();
-		double lat = center.getLatitude();
 		
-		/* IF POSSIBLE: Change mapPanel.computePosition to this class implementation
-		where one passes an object of class Location. */
-		Point position = mapPanel.computePosition(new Point2D.Double(lat, lon));
+		Point position = computePosition(mapPanel, center);
 		mapPanel.setCenterPosition(position); 
 		
 		/* Sets the proper zoom, so that every location fits on the map*/
@@ -113,6 +111,7 @@ public class Main {
 		return ok;
 	}
 	
+	/* TODO: wtf does this method do? Better names please! */
 	private static void evaluateCoordinates(MapPanel map, List<Location> locations) {
 		List<Double> list = getCoordinatesList(map, locations);
 		//print out the "real" pixels
@@ -121,6 +120,7 @@ public class Main {
 			
 	}
 	
+	/* TODO: Change name, and return type to List<Point> */
 	private static List<Double> getCoordinatesList(MapPanel map, List<Location> locations) {
 		List<Double> xCoordinates = new ArrayList<Double>();
 		List<Double> yCoordinates = new ArrayList<Double>();
@@ -145,25 +145,29 @@ public class Main {
 		int zoom = 18;
 		map.setZoom(zoom);
 		Location center = getCenterLocation(locations);
-		Point position = map.computePosition(new Point2D.Double(center.getLatitude(), center.getLongitude()));
+		Point position = computePosition(map, center);
 		map.setCenterPosition(position);
 //		while (coordinatesVisible(map, locations) && zoom != 18) {
+		/* IF POSSIBLE: Stick to the one below, but check that it is correct.*/
 		while (!allLocationsVisible(map, locations) && zoom != 1) {
 			map.setZoom(--zoom);
-			position = map.computePosition(new Point2D.Double(center.getLatitude(), center.getLongitude()));
+			position = computePosition(map, center);
 			map.setCenterPosition(position);
 		} 
+		/* IF POSSIBLE: Delete the lines below if the adjustment zoom starts on 18.
+		 * Note though that they are neccessary if it starts on 1. */
 //		map.setZoom(--zoom);
 //		position = map.computePosition(new Point2D.Double(center.getLatitude(), center.getLongitude()));
 //		map.setCenterPosition(position);
+		
+		/* IF POSSIBLE: Change the name of dat function! */
 		evaluateCoordinates(map,locations);
 	}
 	
 	private static boolean allLocationsVisible(MapPanel map, List<Location> locations) {
-//		double outermostPointLongitude = averageLongitude(locations) + greatestLongitudeDiff(locations);
-//		double outermostPointLatitude = averageLatitude(locations) - greatestLatitudeDiff(locations);
 		double outermostPointLongitude = averageLongitude(locations) + greatestLongitudeDiff(locations);
 		double outermostPointLatitude = averageLatitude(locations) - greatestLatitudeDiff(locations);
+		/* IF POSSIBLE: Create a local method called computePosition(double, double) */
 		Point position = map.computePosition(new Point2D.Double(outermostPointLatitude, outermostPointLongitude));
 
 		return withinBounds(position, map);
@@ -173,6 +177,7 @@ public class Main {
 		Point corner = map.getMapPosition();
 		Point center = map.getCenterPosition();
 		
+		/* IF POSSIBLE: Make it more readable, maybe add some help-functions. Readability! */
 		boolean greaterThanCorner = (corner.getX() - position.getX() < WIDTH / 2 && corner.getY() - position.getY() < HEIGHT / 2);
 		boolean smallerThanCenter = (position.getX() < center.getX() && position.getY() < center.getY());
 		return (greaterThanCorner && smallerThanCenter);
@@ -184,56 +189,76 @@ public class Main {
 		return new Location(lon, lat);
 	}
 	
+	/**
+	 * Returns the biggest difference in latitude plus a margin 
+	 * between the center and a the farthest location away (seen in latitude). 
+	 */
 	private static double greatestLatitudeDiff(List<Location> locations) {
 		Location center = getCenterLocation(locations);
 		double latitudeDiff = Math.abs(center.getLatitude() - locations.get(0).getLatitude());
 		double temp;
-		for(int i = 1; i<locations.size(); i++) {
+		double nbrOfLocations = locations.size();
+		
+		for(int i = 1; i < nbrOfLocations; i++) {
 			temp = Math.abs(center.getLatitude() - locations.get(i).getLatitude());
 			if (latitudeDiff < temp) {
 				latitudeDiff = temp;
 			}
 		}
-		return latitudeDiff * 0.8; //multiplication by 0.8 to avoid having
-		//a point on the border, ie not able to place a marker above.
+		return addMargin(latitudeDiff); 
 	}
 	
 	private static double greatestLongitudeDiff(List<Location> locations) {
 		Location center = getCenterLocation(locations);
 		double longitudeDiff = Math.abs(center.getLongitude() - locations.get(0).getLongitude());
 		double temp;
-		for(int i = 1; i<locations.size(); i++) {
+		double nbrOfLocations = locations.size();
+		
+		for(int i = 1; i < nbrOfLocations; i++) {
 			temp = Math.abs(center.getLongitude() - locations.get(i).getLongitude());
 			if (longitudeDiff < temp) {
 				longitudeDiff = temp;
 			}
 		}
-		return longitudeDiff * 1.2; //multiplication by 1.2 to avoid having
-		//a point on the border, ie not able to place a marker above.;
+		return addMargin(longitudeDiff); 
+	}
+	
+	/**
+	 * Returns the distance with a margin.
+	 * This is to avoid having a point on the border, ie not able to place a marker above.
+	 */
+	private static double addMargin(double distance) {
+		return distance * 1.2; 
 	}
 	
 	private static double averageLatitude(List<Location> locations) {
 		double totalLatitude = 0.0;
-		for(int i = 0; i<locations.size(); i++) {
+		double nbrOfLocations = locations.size();
+		for(int i = 0; i < nbrOfLocations; i++) {
 			totalLatitude += locations.get(i).getLatitude();
 		}
-		double averageLatitude = totalLatitude / locations.size(); //doesn't handle empty list
-		//use this only when too many images have to be displayed
-//		averageLatitude = (getLocationsMaxLatitude(locations) + getLocationsMinLatitude(locations)) / 2;
+		
+		/** IF POSSIBLE: Doesn't currently handle an empty list. */
+		double averageLatitude = totalLatitude / nbrOfLocations; 
 		return averageLatitude;
 	}
 	
 	private static double averageLongitude(List<Location> locations) {
 		double totalLongitude = 0.0;
-		for(int i = 0; i<locations.size(); i++) {
+		double nbrOfLocations = locations.size();
+		for(int i = 0; i < nbrOfLocations; i++) {
 			totalLongitude += locations.get(i).getLongitude();
 		}
-		double averageLongitude = totalLongitude / locations.size(); //doesn't handle empty list
-		//use this only when too many images have to be displayed
-//		averageLongitude = (getLocationsMaxLongitude(locations) + getLocationsMinLongitude(locations)) / 2;
+		
+		/** IF POSSIBLE: Doesn't currently handle an empty list. */
+		double averageLongitude = totalLongitude / locations.size(); 
 		return averageLongitude;
 	}
 	
+	//-------------------------------------------------------------------------------
+	// CURRENTLY UNUSED METHODS, 	which may be useful at a later stage. 
+	
+	@Deprecated
 	private static double getLocationsInfo(String maxMin, String latLong, List<Location> locations) {
 		String wantedInfo = maxMin + latLong;
 		switch(wantedInfo) {
@@ -245,6 +270,7 @@ public class Main {
 		}
 	}
 	
+	@Deprecated
 	private static double getLocationsMaxLatitude(List<Location> locations) {
 		double maxLatitude = locations.get(0).getLatitude();
 		for(Location location : locations) { //does one loop too much, nvm
@@ -255,6 +281,7 @@ public class Main {
 		return maxLatitude;
 	}
 	
+	@Deprecated
 	private static double getLocationsMinLatitude(List<Location> locations) {
 		double minLatitude = locations.get(0).getLatitude();
 		for(Location location : locations) { //does one loop too much, nvm
@@ -265,6 +292,7 @@ public class Main {
 		return minLatitude;
 	}
 	
+	@Deprecated
 	private static double getLocationsMaxLongitude(List<Location> locations) {
 		double maxLongitude = locations.get(0).getLongitude();
 		for(Location location : locations) { //does one loop too much, nvm
@@ -275,6 +303,7 @@ public class Main {
 		return maxLongitude;
 	}
 	
+	@Deprecated
 	private static double getLocationsMinLongitude(List<Location> locations) {
 		double minLongitude = locations.get(0).getLongitude();
 		for(Location location : locations) { //does one loop too much, nvm
@@ -284,5 +313,7 @@ public class Main {
 		}
 		return minLongitude;
 	}
+	
+	//-------------------------------------------------------------------------------
 
 }
