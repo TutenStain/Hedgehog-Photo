@@ -20,7 +20,9 @@ public class ImageObject {
 			case "XPKeywords": setTags(value); break;
 			case "File Path": setFilePath(value); break;
 			case "File Name": setFileName(value); break;
+//			case "Interop Index": setFirstGPSDirection(value); break;
 			case "Interop Version": setLatitude(value); break;
+//			case "Unknown Tag (0x3)": setSecondGPSDirection(value); break;
 			case "Unknown Tag (0x4)": setLongitude(value); break;
 			
 			default: break;

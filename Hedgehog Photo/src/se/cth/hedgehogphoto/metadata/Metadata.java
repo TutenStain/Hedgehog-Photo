@@ -16,10 +16,11 @@ import org.apache.sanselan.common.IImageMetadata;
  */
 public class Metadata {
 	
-	private static File file = new File("test3.jpg"); //default file
+	private static File file = new File("try1.jpg"); //default file
 	private static final String[] metadataTypes = 
 			{"Modify Date", "Artist", "XPComment", "XPAuthor", 
-					"XPKeywords", "Date Time Original", "Interop Version", "Unknown Tag (0x4)"};
+					"XPKeywords", "Date Time Original", "Interop Index", 
+					"Interop Version", "Unknown Tag (0x3)", "Unknown Tag (0x4)"};
 	
 	public static void main(String [] args) {
 		try {

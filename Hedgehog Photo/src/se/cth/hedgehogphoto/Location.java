@@ -50,40 +50,100 @@ public class Location {
 		setLongitude( extractCoordinate(longitude) );
 	}
 	
-	private double extractCoordinate(String latitude) {
-		//will be on form 62, 24, 5170/100 (51,7)
-		int degreeEndIndex = latitude.indexOf(',');
-		int minutesEndIndex = latitude.indexOf(',', degreeEndIndex + 2); //+2 to avoid having the same ',' and the space
-		
-		double degree = Double.valueOf( latitude.substring(0,degreeEndIndex) );
-		double minutes = Double.valueOf( latitude.substring(degreeEndIndex + 2, minutesEndIndex) );
-		String secondsString = latitude.substring(minutesEndIndex + 2, latitude.length());
-		double seconds = getSeconds(secondsString);
+	private double extractCoordinate(String coordinate) {
+		//will be on form Double,Double,Double after preparation
+		coordinate = prepareCoordinate(coordinate);
+		int degreeEndIndex = coordinate.indexOf(',');
+		int minutesEndIndex = coordinate.indexOf(',', degreeEndIndex + 1);
+		int lastIndex = coordinate.length();
+			
+		String degreeString = degreeEndIndex != -1 ? coordinate.substring(0,degreeEndIndex) : coordinate.substring(0, lastIndex);
+		String minutesString = minutesEndIndex != -1 ? coordinate.substring(degreeEndIndex + 1, minutesEndIndex) : coordinate.substring(degreeEndIndex + 1, lastIndex);
+		String secondsString = minutesEndIndex != -1 ? coordinate.substring(minutesEndIndex + 1, lastIndex) : "0";
+		double degree = Double.valueOf( degreeString );
+		double minutes = Double.valueOf( minutesString );
+		double seconds = Double.valueOf( secondsString );
 		
 		minutes += seconds / 60;
 		degree += minutes / 60;
 		return degree;
 	}
 	
-	private double getSeconds(String secondsString) {
-		//gets a string of the form '5170/10 (51,7)' - {propably}
-		double seconds;
-		secondsString = secondsString.trim(); 
-		int slashIndex = secondsString.indexOf('/');
-		int parenthesisIndex = secondsString.indexOf('(');
-		int denominatorEndIndex = parenthesisIndex != -1 ? parenthesisIndex : secondsString.length();
-		if (slashIndex != -1) {
-			String numeratorString = secondsString.substring(0, slashIndex);
-			String denominatorString = secondsString.substring(slashIndex + 1, denominatorEndIndex).trim();
-			double numerator = Integer.valueOf(numeratorString);
-			double denominator = Integer.valueOf(denominatorString);
-			seconds = numerator / denominator;
-		} else {
-			String temp = secondsString.substring(0, denominatorEndIndex).trim(); 
-			seconds = Double.valueOf(temp);
+	/**
+	 * If there is a parenthesis in the gps data, eg  '62, 24, 5170/100 (51,7)'
+	 * one want to extract that and replace the other numbers. The gps data above
+	 * for example would look like this afterwards: '62,24,51.7'.
+	 * (The comma in the parenthesis gets converted to a dot, so the JVM can read
+	 * it as a double.)
+	 * @return see javadoc comments.
+	 */
+	private String prepareCoordinate(String coordinate) {
+		coordinate = replaceCommasWithinParenthesis(coordinate);
+		StringBuilder sb = new StringBuilder();
+		int commaIndex = coordinate.indexOf(',');
+		int tempIndex = 0;
+		while (commaIndex != -1) {
+			String data = coordinate.substring(tempIndex, commaIndex + 1);
+			int startParenthesisIndex = data.indexOf('(');
+			if (startParenthesisIndex != -1) {
+				int endParenthesisIndex = data.indexOf(')'); //assume it is not -1
+				String realData = data.substring(startParenthesisIndex + 1, endParenthesisIndex);
+				data = realData; 
+			}
+			sb.append(data);
+			tempIndex = commaIndex + 1;
+			commaIndex = coordinate.indexOf(',', tempIndex);
 		}
 		
-		return seconds;
+		int lastIndex = coordinate.length();
+		String endOfString = coordinate.substring(tempIndex, lastIndex);
+		if (sb.length() > 0) {
+			sb.append(',');
+		}
+		sb.append(endOfString);
+		return sb.toString();
+	}
+	
+	private String replaceCommasWithinParenthesis(String coordinate) {
+		StringBuilder sb = new StringBuilder();
+		int tempIndex = 0;
+		int startParenthesisIndex = coordinate.indexOf('(', tempIndex);
+		int endParenthesisIndex;
+		while (startParenthesisIndex != -1) {
+			endParenthesisIndex = coordinate.indexOf(')', tempIndex);
+			String unalteredText = coordinate.substring(tempIndex, startParenthesisIndex);
+			String parenthesisText = coordinate.substring(startParenthesisIndex, endParenthesisIndex);
+			parenthesisText = parenthesisText.replace(',', '.');
+			sb.append(unalteredText);
+			sb.append(parenthesisText);
+			
+			/* Prepare for next iteration */
+			tempIndex = endParenthesisIndex;
+			startParenthesisIndex = coordinate.indexOf('(', tempIndex); 
+			//not neccesary to calculate endParenthesisIndex since if there is no startParenthesisIndex 
+			//then there is no need to use it		
+		}
+		int lastIndex = coordinate.length();
+		String endOfString = coordinate.substring(tempIndex, lastIndex);
+		sb.append(endOfString);
+		return sb.toString();
+	}
+	
+	@Deprecated
+	private double extractTimeInfo(String timeString) {
+		//gets a string of the form '5170/10 (51,7)' - {propably}
+		double time;
+		timeString = timeString.trim(); 
+//		int slashIndex = timeString.indexOf('/');
+		int parenthesisIndex = timeString.indexOf('(');
+		if (parenthesisIndex != -1) {
+			int endParenthesisIndex = timeString.indexOf(')');
+			timeString = timeString.substring(parenthesisIndex + 1, endParenthesisIndex);
+		}
+		timeString = timeString.replace(',', '.'); //place in the if-loop?
+		time = Double.valueOf(timeString);
+		
+		return time;
 	}
 	
 	public boolean equals(Location otherLocation) {
