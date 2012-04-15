@@ -1,37 +1,43 @@
 package se.cth.hedgehogphoto.map;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class Test {
     private JFrame frame = new JFrame();
     private JLayeredPane lpane = new JLayeredPane();
-    private JPanel panelBlue = new JPanel() { 
-    	@Override
-    	public String toString() {
-    		return "blue Panel";
-    	}
-    };
-    private JPanel panelGreen = new JPanel() { 
-    	@Override
-    	public String toString() {
-    		return "green Panel";
-    	}
-    };
-    private JPanel panelYellow = new JPanel() { 
-    	@Override
-    	public String toString() {
-    		return "yellow Panel";
-    	}
-    };
+    private JLabel loc1 = new JLabel(new ImageIcon("marker.png"));
+    private JLabel loc2 = new JLabel(new ImageIcon("marker.png"));
+    private JLabel loc3 = new JLabel(new ImageIcon("marker.png"));
+//    private JPanel panelBlue = new JPanel() { 
+//    	@Override
+//    	public String toString() {
+//    		return "blue Panel";
+//    	}
+//    };
+//    private JPanel panelGreen = new JPanel() { 
+//    	@Override
+//    	public String toString() {
+//    		return "green Panel";
+//    	}
+//    };
+//    private JPanel panelYellow = new JPanel() { 
+//    	@Override
+//    	public String toString() {
+//    		return "yellow Panel";
+//    	}
+//    };
     private JPanel map = Main.getMapPanel();
     
     public Test()
@@ -39,16 +45,7 @@ public class Test {
         frame.setPreferredSize(new Dimension(500, 800));
         frame.setLayout(new BorderLayout());
         frame.add(lpane, BorderLayout.CENTER);
-        lpane.setBounds(0, 0, 600, 400);
-        panelBlue.setBackground(Color.BLUE);
-        panelBlue.setBounds(109, 185, 7, 12);
-        panelBlue.setOpaque(true);
-        panelGreen.setBackground(Color.GREEN);
-        panelGreen.setBounds(200, 350, 7, 12);
-        panelGreen.setOpaque(true);
-        panelYellow.setBackground(Color.YELLOW);
-        panelYellow.setBounds(291, 511, 7, 12);
-        panelYellow.setOpaque(true);
+//        lpane.setBounds(0, 0, 600, 400);
         MouseListener listener = new MouseListener() {
 
 			@Override
@@ -66,7 +63,11 @@ public class Test {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				System.out.println(arg0.getSource().toString());
+				Component c = arg0.getComponent();
+				Rectangle r = c.getBounds();
+				int x = r.x + r.width / 2;
+				int y = r.y + r.height / 2;
+				System.out.println("x: " + x + "\t\ty: " + y);
 			}
 
 			@Override
@@ -74,16 +75,26 @@ public class Test {
         	
         };
         
-        panelBlue.addMouseListener(listener);
-        panelGreen.addMouseListener(listener);
-        panelYellow.addMouseListener(listener);
         
         map.setBounds(0, 0, 400, 700);
         map.setOpaque(true);
-        lpane.add(panelBlue, new Integer(1), 0);
-        lpane.add(panelGreen, new Integer(1), 0);
-        lpane.add(panelYellow, new Integer(1), 0);
         lpane.add(map, new Integer(0), 0);
+        
+        loc1.setBounds(100, 176, 19, 19); //x-9, y-9, 19, 19
+        loc2.setBounds(191, 341, 19, 19);
+        loc3.setBounds(282, 502, 19, 19);
+        loc1.setOpaque(true);
+        loc2.setOpaque(true);
+        loc3.setOpaque(true);
+        
+        loc1.addMouseListener(listener);
+        loc2.addMouseListener(listener);
+        loc3.addMouseListener(listener);
+        
+        lpane.add(loc1, new Integer(2), 0);
+        lpane.add(loc2, new Integer(2), 0);
+        lpane.add(loc3, new Integer(2), 0);
+        
         frame.pack();
         frame.setVisible(true);
     }

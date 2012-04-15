@@ -16,10 +16,10 @@ import org.apache.sanselan.common.IImageMetadata;
  */
 public class Metadata {
 	
-	private static File file = new File("finbild.jpg"); //default file
+	private static File file = new File("test3.jpg"); //default file
 	private static final String[] metadataTypes = 
 			{"Modify Date", "Artist", "XPComment", "XPAuthor", 
-					"XPKeywords", "Date Time Original"};
+					"XPKeywords", "Date Time Original", "Interop Version", "Unknown Tag (0x4)"};
 	
 	public static void main(String [] args) {
 		try {
@@ -42,6 +42,7 @@ public class Metadata {
 		IImageMetadata metadata = null;
 		try {
 			metadata = Sanselan.getMetadata(file);
+			System.out.println(metadata.toString());
 		} catch (ImageReadException e) {
 			//IF POSSIBLE: Add exception handling
 			e.printStackTrace();

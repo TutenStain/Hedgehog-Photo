@@ -1,8 +1,12 @@
 package se.cth.hedgehogphoto.metadata;
 
+import se.cth.hedgehogphoto.Location;
+
 
 public class ImageObject {
 	private String filePath, fileName, date, artist, comment, tags;
+	private String longitude, latitude;
+	private Location location = new Location("test");
 	
 	public ImageObject() {
 		//init
@@ -16,6 +20,9 @@ public class ImageObject {
 			case "XPKeywords": setTags(value); break;
 			case "File Path": setFilePath(value); break;
 			case "File Name": setFileName(value); break;
+			case "Interop Version": setLatitude(value); break;
+			case "Unknown Tag (0x4)": setLongitude(value); break;
+			
 			default: break;
 		}
 	}
@@ -27,6 +34,7 @@ public class ImageObject {
 		System.out.println("artist: " + artist);
 		System.out.println("comment: " + comment);
 		System.out.println("tags: " + tags);
+		System.out.println("location: " + location.toString());
 	}
 
 	public String getTags() {
@@ -75,5 +83,17 @@ public class ImageObject {
 	
 	private void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+	
+	public Location getLocation() {
+		return location;
+	}
+	
+	private void setLongitude(String longitude) {
+		location.setLongitude(longitude);
+	}
+	
+	private void setLatitude(String latitude) {
+		location.setLatitude(latitude);
 	}
 }
