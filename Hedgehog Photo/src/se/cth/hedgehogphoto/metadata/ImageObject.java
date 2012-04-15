@@ -7,6 +7,7 @@ public class ImageObject {
 	private String filePath, fileName, date, artist, comment, tags;
 	private String longitude, latitude;
 	private Location location = new Location("test");
+	private boolean legitGPSInfo;
 	
 	public ImageObject() {
 		//init
@@ -20,9 +21,9 @@ public class ImageObject {
 			case "XPKeywords": setTags(value); break;
 			case "File Path": setFilePath(value); break;
 			case "File Name": setFileName(value); break;
-//			case "Interop Index": setFirstGPSDirection(value); break;
+			case "Interop Index": setFirstGPSDirection(value); break;
 			case "Interop Version": setLatitude(value); break;
-//			case "Unknown Tag (0x3)": setSecondGPSDirection(value); break;
+			case "Unknown Tag (0x3)": setSecondGPSDirection(value); break;
 			case "Unknown Tag (0x4)": setLongitude(value); break;
 			
 			default: break;
@@ -92,10 +93,22 @@ public class ImageObject {
 	}
 	
 	private void setLongitude(String longitude) {
-		location.setLongitude(longitude);
+		if (legitGPSInfo)
+			location.setLongitude(longitude);
 	}
 	
 	private void setLatitude(String latitude) {
-		location.setLatitude(latitude);
+		if (legitGPSInfo)
+			location.setLatitude(latitude);
+	}
+	
+	private void setFirstGPSDirection(String value) {
+		value = value.trim();
+		legitGPSInfo = value.equals("\'N\'") || value.equals("\'S\'");
+	}
+	
+	private void setSecondGPSDirection(String value) {
+		value = value.trim();
+		legitGPSInfo = value.equals("\'W\'") || value.equals("\'E\'");
 	}
 }

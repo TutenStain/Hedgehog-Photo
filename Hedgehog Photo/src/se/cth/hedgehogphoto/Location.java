@@ -8,18 +8,6 @@ public class Location {
 		setLocation(place);
 	}
 	
-	public static void main(String [] args) {
-		String hej = "hejsasn";
-		int index = hej.indexOf('s');
-		int index2 = hej.indexOf('s', index);
-		System.out.println(hej.substring(0,index));
-		System.out.println(hej.substring(index,hej.length()));
-		String e = " 42";
-		e = e.trim();
-		System.out.println(Integer.valueOf(e) + " " + index + index2);
-		
-	}
-	
 	public Location(double longitude, double latitude) {
 		setLocation(longitude, latitude);
 	}
@@ -52,6 +40,7 @@ public class Location {
 	
 	private double extractCoordinate(String coordinate) {
 		//will be on form Double,Double,Double after preparation
+		coordinate = coordinate.trim();
 		coordinate = prepareCoordinate(coordinate);
 		int degreeEndIndex = coordinate.indexOf(',');
 		int minutesEndIndex = coordinate.indexOf(',', degreeEndIndex + 1);
@@ -59,7 +48,7 @@ public class Location {
 			
 		String degreeString = degreeEndIndex != -1 ? coordinate.substring(0,degreeEndIndex) : coordinate.substring(0, lastIndex);
 		String minutesString = minutesEndIndex != -1 ? coordinate.substring(degreeEndIndex + 1, minutesEndIndex) : coordinate.substring(degreeEndIndex + 1, lastIndex);
-		String secondsString = minutesEndIndex != -1 ? coordinate.substring(minutesEndIndex + 1, lastIndex) : "0";
+		String secondsString = minutesEndIndex != -1 ? coordinate.substring(minutesEndIndex + 1, lastIndex) : "0.0";
 		double degree = Double.valueOf( degreeString );
 		double minutes = Double.valueOf( minutesString );
 		double seconds = Double.valueOf( secondsString );
@@ -82,26 +71,31 @@ public class Location {
 		StringBuilder sb = new StringBuilder();
 		int commaIndex = coordinate.indexOf(',');
 		int tempIndex = 0;
+
 		while (commaIndex != -1) {
 			String data = coordinate.substring(tempIndex, commaIndex + 1);
-			int startParenthesisIndex = data.indexOf('(');
-			if (startParenthesisIndex != -1) {
-				int endParenthesisIndex = data.indexOf(')'); //assume it is not -1
-				String realData = data.substring(startParenthesisIndex + 1, endParenthesisIndex);
-				data = realData; 
-			}
+			data = removeIrrelevantData(data);
 			sb.append(data);
 			tempIndex = commaIndex + 1;
 			commaIndex = coordinate.indexOf(',', tempIndex);
 		}
-		
+
 		int lastIndex = coordinate.length();
 		String endOfString = coordinate.substring(tempIndex, lastIndex);
-		if (sb.length() > 0) {
-			sb.append(',');
-		}
+		endOfString = removeIrrelevantData(endOfString);
 		sb.append(endOfString);
+
 		return sb.toString();
+	}
+	
+	private String removeIrrelevantData(String data) {
+		data = data.trim();
+		int startParenthesisIndex = data.indexOf('(');
+		if (startParenthesisIndex != -1) {
+			int endParenthesisIndex = data.indexOf(')'); //IF POSSIBLE: Add handling of the unprobable case that there is no end parenthesis
+			data = data.substring(startParenthesisIndex + 1, endParenthesisIndex);
+		}
+		return data;
 	}
 	
 	private String replaceCommasWithinParenthesis(String coordinate) {
@@ -119,31 +113,12 @@ public class Location {
 			
 			/* Prepare for next iteration */
 			tempIndex = endParenthesisIndex;
-			startParenthesisIndex = coordinate.indexOf('(', tempIndex); 
-			//not neccesary to calculate endParenthesisIndex since if there is no startParenthesisIndex 
-			//then there is no need to use it		
+			startParenthesisIndex = coordinate.indexOf('(', tempIndex); 		
 		}
 		int lastIndex = coordinate.length();
 		String endOfString = coordinate.substring(tempIndex, lastIndex);
 		sb.append(endOfString);
 		return sb.toString();
-	}
-	
-	@Deprecated
-	private double extractTimeInfo(String timeString) {
-		//gets a string of the form '5170/10 (51,7)' - {propably}
-		double time;
-		timeString = timeString.trim(); 
-//		int slashIndex = timeString.indexOf('/');
-		int parenthesisIndex = timeString.indexOf('(');
-		if (parenthesisIndex != -1) {
-			int endParenthesisIndex = timeString.indexOf(')');
-			timeString = timeString.substring(parenthesisIndex + 1, endParenthesisIndex);
-		}
-		timeString = timeString.replace(',', '.'); //place in the if-loop?
-		time = Double.valueOf(timeString);
-		
-		return time;
 	}
 	
 	public boolean equals(Location otherLocation) {
