@@ -1,6 +1,5 @@
 package se.cth.hedgehogphoto.map;
 
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -74,6 +73,8 @@ public class Main {
 		
 		/* TODO: list is not even used... refactor!! */
 		List<Double> list = getCoordinatesList(mapPanel, locations);
+		mapPanel.setBounds(0, 0, WIDTH, HEIGHT);
+		mapPanel.setOpaque(true);
 		return mapPanel;
 	}
 	
@@ -97,6 +98,7 @@ public class Main {
 	
 	/* FIXME: Refactor all the methods! Add new classes! 
 	 * Put away the functionality to the mapPanel! */
+	@Deprecated
 	private static boolean coordinatesVisible(MapPanel map, List<Location> locations) {
 		List<Double> list = getCoordinatesList(map, locations);
 		boolean ok = true;
@@ -120,19 +122,15 @@ public class Main {
 			
 	}
 	
-	/* TODO: Change name, and return type to List<Point> */
+	/* FIXME: Change name, and return type to List<Point> */
 	private static List<Double> getCoordinatesList(MapPanel map, List<Location> locations) {
-		List<Double> xCoordinates = new ArrayList<Double>();
-		List<Double> yCoordinates = new ArrayList<Double>();
-		List<Double> coordinates = new ArrayList<Double>();
+		List<Point> coordinates = new ArrayList<Point>();
 		Point temp;
 		for(int i = 0; i<locations.size(); i++) {
 			temp = computePosition(map, locations.get(i));
-			xCoordinates.add( (temp.getX() - map.getMapPosition().getX()) );
-			yCoordinates.add( (temp.getY() - map.getMapPosition().getY()) );
-			coordinates.add(xCoordinates.get(i));
-			coordinates.add(yCoordinates.get(i));
-//			System.out.println("x: " + xCoordinates.get(i) + "\t\t\ty: " + yCoordinates.get(i));
+			temp.x = temp.x - map.getMapPosition().x;
+			temp.y = temp.y - map.getMapPosition().y;
+			coordinates.add(temp);
 		}
 		return coordinates;
 	}
