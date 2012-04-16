@@ -1,80 +1,80 @@
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.dataDictionary in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.lockManagerJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.dvfJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.javaCompiler in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.replication.slave in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.rawStore.transactionJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.ef in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.rawStore.transactionJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.database in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.NoneAuthentication in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.netServer.autoStart in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.dvfJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.mgmt.null in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.lockManagerJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.replication.master in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.dvfCDC in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.access.btree in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.lockManagerJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.uuidJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.cryptographyJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.rawStore.data.genericJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.rawStore.data.genericJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.access in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.jdbc169 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.cryptographyJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.optimizer in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.mgmt.jmx in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.dvfJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.specificAuthentication in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.JNDIAuthentication in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.basicAuthentication in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.data.genericJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.validation in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.data.genericJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.streams in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.classManagerJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.resourceAdapterJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.rawStore.transactionJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.jdbcJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.jdbcJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.log in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.log.readonly in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.access.heap in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.daemon in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.cacheManagerJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.tcf in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.jdbcJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.jdbcJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.access.uniquewithduplicatenullssort in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.cacheManagerJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.cacheManagerJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.resultSetStatisticsFactory in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.cacheManagerJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.cryptographyJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.rawStore.data.genericJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.database.slave in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.XPLAINFactory in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.resourceAdapterJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.access.sort in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.mgmt.jmx in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.transactionJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.JNDIAuthentication in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.transactionJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.timer in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.lcf in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.resourceAdapterJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.jdbc169 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.lf in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.jdbcJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.nodeFactory in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.jdbcJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.lockManagerJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
-Mon Apr 16 21:07:50 CEST 2012 Thread[main,5,main]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.dataDictionary in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.lockManagerJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.dvfJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.javaCompiler in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.replication.slave in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.rawStore.transactionJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.ef in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.rawStore.transactionJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.database in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.NoneAuthentication in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.netServer.autoStart in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.dvfJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.mgmt.null in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.lockManagerJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.replication.master in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.dvfCDC in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.access.btree in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.lockManagerJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.uuidJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.cryptographyJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.rawStore.data.genericJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.rawStore.data.genericJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.access in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.jdbc169 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.cryptographyJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.optimizer in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.mgmt.jmx in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.dvfJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.specificAuthentication in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.JNDIAuthentication in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.basicAuthentication in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.data.genericJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.validation in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.data.genericJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.streams in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.classManagerJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.resourceAdapterJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.rawStore.transactionJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.jdbcJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.jdbcJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.log in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.log.readonly in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.access.heap in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.daemon in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.cacheManagerJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.tcf in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.jdbcJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.jdbcJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.access.uniquewithduplicatenullssort in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.cacheManagerJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.cacheManagerJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.resultSetStatisticsFactory in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.cacheManagerJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.cryptographyJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.rawStore.data.genericJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.database.slave in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.XPLAINFactory in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.resourceAdapterJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.access.sort in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.mgmt.jmx in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.transactionJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.JNDIAuthentication in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore.transactionJ1 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.timer in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.lcf in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.rawStore in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.resourceAdapterJ2 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.classes.jdbc169 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.lf in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.jdbcJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.nodeFactory in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.env.jdk.jdbcJ4 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main] Ignored duplicate property derby.module.lockManagerJ6 in jar:file:/home/tutenstain/.eclipse/plugins/org.apache.derby.core_10.8.2/derby.jar!/org/apache/derby/modules.properties
+Mon Apr 16 21:29:55 CEST 2012 Thread[main,5,main]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 ----------------------------------------------------------------
-Mon Apr 16 21:07:51 CEST 2012:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0136-bc8d-c9de-000003582090 
+Mon Apr 16 21:29:55 CEST 2012:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0136-bca1-fffa-0000027aa860 
 on database directory /home/tutenstain/git/Hedgehog-Photo/Hedgehog Photo/HedgeHogDB  with class loader sun.misc.Launcher$AppClassLoader@712801c5 
 Loaded from file:/home/tutenstain/git/Hedgehog-Photo/Hedgehog%20Photo/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -82,366 +82,3 @@ java.runtime.version=1.7.0_147-icedtea-b147
 user.dir=/home/tutenstain/git/Hedgehog-Photo/Hedgehog Photo
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
-Mon Apr 16 21:08:25 CEST 2012 Thread[Thread-19,6,main] (XID = 9288), (SESSIONID = 3), (DATABASE = HedgeHogDB), (DRDAID = null), Cleanup action starting
-Mon Apr 16 21:08:25 CEST 2012 Thread[Thread-19,6,main] (XID = 9288), (SESSIONID = 3), (DATABASE = HedgeHogDB), (DRDAID = null), Failed Statement is: SELECT PATH, COMMENT FROM COMMENT
-ERROR 08000: Connection closed by unknown interrupt.
-	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
-	at org.apache.derby.iapi.util.InterruptStatus.setInterrupted(Unknown Source)
-	at org.apache.derby.iapi.util.InterruptStatus.throwIf(Unknown Source)
-	at org.apache.derby.impl.sql.execute.BasicNoPutResultSetImpl.checkCancellationFlag(Unknown Source)
-	at org.apache.derby.impl.sql.execute.BulkTableScanResultSet.getNextRowCore(Unknown Source)
-	at org.apache.derby.impl.sql.execute.BasicNoPutResultSetImpl.getNextRow(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedResultSet.movePosition(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedResultSet.next(Unknown Source)
-	at org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.processResultSet(DatabaseAccessor.java:713)
-	at org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.basicExecuteCall(DatabaseAccessor.java:621)
-	at org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.executeCall(DatabaseAccessor.java:535)
-	at org.eclipse.persistence.internal.sessions.AbstractSession.basicExecuteCall(AbstractSession.java:1717)
-	at org.eclipse.persistence.sessions.server.ServerSession.executeCall(ServerSession.java:566)
-	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeCall(DatasourceCallQueryMechanism.java:207)
-	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeCall(DatasourceCallQueryMechanism.java:193)
-	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeSelectCall(DatasourceCallQueryMechanism.java:264)
-	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.selectAllRows(DatasourceCallQueryMechanism.java:646)
-	at org.eclipse.persistence.internal.queries.ExpressionQueryMechanism.selectAllRowsFromTable(ExpressionQueryMechanism.java:2611)
-	at org.eclipse.persistence.internal.queries.ExpressionQueryMechanism.selectAllRows(ExpressionQueryMechanism.java:2570)
-	at org.eclipse.persistence.queries.ReadAllQuery.executeObjectLevelReadQuery(ReadAllQuery.java:420)
-	at org.eclipse.persistence.queries.ObjectLevelReadQuery.executeDatabaseQuery(ObjectLevelReadQuery.java:1081)
-	at org.eclipse.persistence.queries.DatabaseQuery.execute(DatabaseQuery.java:844)
-	at org.eclipse.persistence.queries.ObjectLevelReadQuery.execute(ObjectLevelReadQuery.java:1040)
-	at org.eclipse.persistence.queries.ReadAllQuery.execute(ReadAllQuery.java:392)
-	at org.eclipse.persistence.queries.ObjectLevelReadQuery.executeInUnitOfWork(ObjectLevelReadQuery.java:1128)
-	at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.internalExecuteQuery(UnitOfWorkImpl.java:2871)
-	at org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1516)
-	at org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1498)
-	at org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1463)
-	at org.eclipse.persistence.internal.jpa.EJBQueryImpl.executeReadQuery(EJBQueryImpl.java:485)
-	at org.eclipse.persistence.internal.jpa.EJBQueryImpl.getResultList(EJBQueryImpl.java:742)
-	at se.cth.hedgehogphoto.database.DatabaseHandler.searchComments(DatabaseHandler.java:116)
-	at se.cth.hedgehogphoto.search.SearchModel.getSearchObjects(SearchModel.java:36)
-	at se.cth.hedgehogphoto.search.SearchPreviewView.update(SearchPreviewView.java:52)
-	at java.util.Observable.notifyObservers(Observable.java:159)
-	at se.cth.hedgehogphoto.search.SearchModel.doSearch(SearchModel.java:42)
-	at se.cth.hedgehogphoto.search.SearchThread.run(SearchThread.java:22)
----------------
-Stack traces for all live threads:
-Thread name=Reference Handler id=2 priority=10 state=WAITING isdaemon=true
-	java.lang.Object.wait(Native Method)
-	java.lang.Object.wait(Object.java:503)
-	java.lang.ref.Reference$ReferenceHandler.run(Reference.java:133)
-
-Thread name=Finalizer id=3 priority=8 state=WAITING isdaemon=true
-	java.lang.Object.wait(Native Method)
-	java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:135)
-	java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:151)
-	java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:177)
-
-Thread name=Thread-19 id=37 priority=6 state=RUNNABLE isdaemon=false
-	java.lang.Thread.dumpThreads(Native Method)
-	java.lang.Thread.getAllStackTraces(Thread.java:1618)
-	org.apache.derby.iapi.error.ThreadDump.getStackDumpString(Unknown Source)
-	sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
-	sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	java.lang.reflect.Method.invoke(Method.java:601)
-	org.apache.derby.iapi.error.ExceptionUtil$1.run(Unknown Source)
-	java.security.AccessController.doPrivileged(Native Method)
-	org.apache.derby.iapi.error.ExceptionUtil.dumpThreads(Unknown Source)
-	org.apache.derby.iapi.services.context.ContextManager.cleanupOnError(Unknown Source)
-	org.apache.derby.impl.jdbc.TransactionResourceImpl.cleanupOnError(Unknown Source)
-	org.apache.derby.impl.jdbc.TransactionResourceImpl.handleException(Unknown Source)
-	org.apache.derby.impl.jdbc.EmbedConnection.handleException(Unknown Source)
-	org.apache.derby.impl.jdbc.ConnectionChild.handleException(Unknown Source)
-	org.apache.derby.impl.jdbc.EmbedResultSet.closeOnTransactionError(Unknown Source)
-	org.apache.derby.impl.jdbc.EmbedResultSet.movePosition(Unknown Source)
-	org.apache.derby.impl.jdbc.EmbedResultSet.next(Unknown Source)
-	org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.processResultSet(DatabaseAccessor.java:713)
-	org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.basicExecuteCall(DatabaseAccessor.java:621)
-	org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.executeCall(DatabaseAccessor.java:535)
-	org.eclipse.persistence.internal.sessions.AbstractSession.basicExecuteCall(AbstractSession.java:1717)
-	org.eclipse.persistence.sessions.server.ServerSession.executeCall(ServerSession.java:566)
-	org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeCall(DatasourceCallQueryMechanism.java:207)
-	org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeCall(DatasourceCallQueryMechanism.java:193)
-	org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeSelectCall(DatasourceCallQueryMechanism.java:264)
-	org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.selectAllRows(DatasourceCallQueryMechanism.java:646)
-	org.eclipse.persistence.internal.queries.ExpressionQueryMechanism.selectAllRowsFromTable(ExpressionQueryMechanism.java:2611)
-	org.eclipse.persistence.internal.queries.ExpressionQueryMechanism.selectAllRows(ExpressionQueryMechanism.java:2570)
-	org.eclipse.persistence.queries.ReadAllQuery.executeObjectLevelReadQuery(ReadAllQuery.java:420)
-	org.eclipse.persistence.queries.ObjectLevelReadQuery.executeDatabaseQuery(ObjectLevelReadQuery.java:1081)
-	org.eclipse.persistence.queries.DatabaseQuery.execute(DatabaseQuery.java:844)
-	org.eclipse.persistence.queries.ObjectLevelReadQuery.execute(ObjectLevelReadQuery.java:1040)
-	org.eclipse.persistence.queries.ReadAllQuery.execute(ReadAllQuery.java:392)
-	org.eclipse.persistence.queries.ObjectLevelReadQuery.executeInUnitOfWork(ObjectLevelReadQuery.java:1128)
-	org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.internalExecuteQuery(UnitOfWorkImpl.java:2871)
-	org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1516)
-	org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1498)
-	org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1463)
-	org.eclipse.persistence.internal.jpa.EJBQueryImpl.executeReadQuery(EJBQueryImpl.java:485)
-	org.eclipse.persistence.internal.jpa.EJBQueryImpl.getResultList(EJBQueryImpl.java:742)
-	se.cth.hedgehogphoto.database.DatabaseHandler.searchComments(DatabaseHandler.java:116)
-	se.cth.hedgehogphoto.search.SearchModel.getSearchObjects(SearchModel.java:36)
-	se.cth.hedgehogphoto.search.SearchPreviewView.update(SearchPreviewView.java:52)
-	java.util.Observable.notifyObservers(Observable.java:159)
-	se.cth.hedgehogphoto.search.SearchModel.doSearch(SearchModel.java:42)
-	se.cth.hedgehogphoto.search.SearchThread.run(SearchThread.java:22)
-
-Thread name=Thread-23 id=41 priority=6 state=TIMED_WAITING isdaemon=false
-	java.lang.Thread.sleep(Native Method)
-	se.cth.hedgehogphoto.search.SearchThread.run(SearchThread.java:21)
-
-Thread name=AWT-EventQueue-0 id=15 priority=6 state=WAITING isdaemon=false
-	sun.misc.Unsafe.park(Native Method)
-	java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
-	java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
-	java.awt.EventQueue.getNextEvent(EventQueue.java:515)
-	java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:180)
-	java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:128)
-	java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:117)
-	java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:113)
-	java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:105)
-	java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-
-Thread name=DestroyJavaVM id=20 priority=5 state=RUNNABLE isdaemon=false
-
-Thread name=process reaper id=14 priority=10 state=TIMED_WAITING isdaemon=true
-	sun.misc.Unsafe.park(Native Method)
-	java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
-	java.util.concurrent.SynchronousQueue$TransferStack.awaitFulfill(SynchronousQueue.java:460)
-	java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:359)
-	java.util.concurrent.SynchronousQueue.poll(SynchronousQueue.java:942)
-	java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1043)
-	java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1103)
-	java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
-	java.lang.Thread.run(Thread.java:722)
-
-Thread name=Java2D Disposer id=11 priority=10 state=WAITING isdaemon=true
-	java.lang.Object.wait(Native Method)
-	java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:135)
-	java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:151)
-	sun.java2d.Disposer.run(Disposer.java:145)
-	java.lang.Thread.run(Thread.java:722)
-
-Thread name=Timer-0 id=8 priority=5 state=WAITING isdaemon=true
-	java.lang.Object.wait(Native Method)
-	java.lang.Object.wait(Object.java:503)
-	java.util.TimerThread.mainLoop(Timer.java:526)
-	java.util.TimerThread.run(Timer.java:505)
-
-Thread name=AWT-Shutdown id=16 priority=5 state=WAITING isdaemon=false
-	java.lang.Object.wait(Native Method)
-	java.lang.Object.wait(Object.java:503)
-	sun.awt.AWTAutoShutdown.run(AWTAutoShutdown.java:287)
-	java.lang.Thread.run(Thread.java:722)
-
-Thread name=AWT-XAWT id=13 priority=6 state=RUNNABLE isdaemon=true
-	sun.awt.X11.XToolkit.waitForEvents(Native Method)
-	sun.awt.X11.XToolkit.run(XToolkit.java:631)
-	sun.awt.X11.XToolkit.run(XToolkit.java:595)
-	java.lang.Thread.run(Thread.java:722)
-
-Thread name=derby.rawStoreDaemon id=10 priority=5 state=TIMED_WAITING isdaemon=true
-	java.lang.Object.wait(Native Method)
-	org.apache.derby.impl.services.daemon.BasicDaemon.rest(Unknown Source)
-	org.apache.derby.impl.services.daemon.BasicDaemon.run(Unknown Source)
-	java.lang.Thread.run(Thread.java:722)
-
-Thread name=Signal Dispatcher id=4 priority=9 state=RUNNABLE isdaemon=true
-
-Thread name=TimerQueue id=19 priority=5 state=TIMED_WAITING isdaemon=true
-	sun.misc.Unsafe.park(Native Method)
-	java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
-	java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2082)
-	java.util.concurrent.DelayQueue.take(DelayQueue.java:220)
-	javax.swing.TimerQueue.run(TimerQueue.java:171)
-	java.lang.Thread.run(Thread.java:722)
-
-
----------------
-
-Cleanup action completed
-Mon Apr 16 21:08:25 CEST 2012 Thread[Thread-19,6,main] (XID = 9291), (SESSIONID = 5), (DATABASE = HedgeHogDB), (DRDAID = null), Cleanup action starting
-Mon Apr 16 21:08:25 CEST 2012 Thread[Thread-19,6,main] (XID = 9291), (SESSIONID = 5), (DATABASE = HedgeHogDB), (DRDAID = null), Failed Statement is: SELECT PATH, COMMENT FROM COMMENT
-ERROR 08000: Connection closed by unknown interrupt.
-	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
-	at org.apache.derby.iapi.util.InterruptStatus.setInterrupted(Unknown Source)
-	at org.apache.derby.iapi.util.InterruptStatus.throwIf(Unknown Source)
-	at org.apache.derby.impl.sql.execute.BasicNoPutResultSetImpl.checkCancellationFlag(Unknown Source)
-	at org.apache.derby.impl.sql.execute.BulkTableScanResultSet.getNextRowCore(Unknown Source)
-	at org.apache.derby.impl.sql.execute.BasicNoPutResultSetImpl.getNextRow(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedResultSet.movePosition(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedResultSet.next(Unknown Source)
-	at org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.processResultSet(DatabaseAccessor.java:713)
-	at org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.basicExecuteCall(DatabaseAccessor.java:621)
-	at org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.executeCall(DatabaseAccessor.java:535)
-	at org.eclipse.persistence.internal.sessions.AbstractSession.basicExecuteCall(AbstractSession.java:1717)
-	at org.eclipse.persistence.sessions.server.ServerSession.executeCall(ServerSession.java:566)
-	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeCall(DatasourceCallQueryMechanism.java:207)
-	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeCall(DatasourceCallQueryMechanism.java:193)
-	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeSelectCall(DatasourceCallQueryMechanism.java:264)
-	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.selectAllRows(DatasourceCallQueryMechanism.java:646)
-	at org.eclipse.persistence.internal.queries.ExpressionQueryMechanism.selectAllRowsFromTable(ExpressionQueryMechanism.java:2611)
-	at org.eclipse.persistence.internal.queries.ExpressionQueryMechanism.selectAllRows(ExpressionQueryMechanism.java:2570)
-	at org.eclipse.persistence.queries.ReadAllQuery.executeObjectLevelReadQuery(ReadAllQuery.java:420)
-	at org.eclipse.persistence.queries.ObjectLevelReadQuery.executeDatabaseQuery(ObjectLevelReadQuery.java:1081)
-	at org.eclipse.persistence.queries.DatabaseQuery.execute(DatabaseQuery.java:844)
-	at org.eclipse.persistence.queries.ObjectLevelReadQuery.execute(ObjectLevelReadQuery.java:1040)
-	at org.eclipse.persistence.queries.ReadAllQuery.execute(ReadAllQuery.java:392)
-	at org.eclipse.persistence.queries.ObjectLevelReadQuery.executeInUnitOfWork(ObjectLevelReadQuery.java:1128)
-	at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.internalExecuteQuery(UnitOfWorkImpl.java:2871)
-	at org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1516)
-	at org.eclipse.persistence.internal.sessions.AbstractSession.retryQuery(AbstractSession.java:1586)
-	at org.eclipse.persistence.sessions.server.ClientSession.retryQuery(ClientSession.java:593)
-	at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.retryQuery(UnitOfWorkImpl.java:5464)
-	at org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1552)
-	at org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1498)
-	at org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1463)
-	at org.eclipse.persistence.internal.jpa.EJBQueryImpl.executeReadQuery(EJBQueryImpl.java:485)
-	at org.eclipse.persistence.internal.jpa.EJBQueryImpl.getResultList(EJBQueryImpl.java:742)
-	at se.cth.hedgehogphoto.database.DatabaseHandler.searchComments(DatabaseHandler.java:116)
-	at se.cth.hedgehogphoto.search.SearchModel.getSearchObjects(SearchModel.java:36)
-	at se.cth.hedgehogphoto.search.SearchPreviewView.update(SearchPreviewView.java:52)
-	at java.util.Observable.notifyObservers(Observable.java:159)
-	at se.cth.hedgehogphoto.search.SearchModel.doSearch(SearchModel.java:42)
-	at se.cth.hedgehogphoto.search.SearchThread.run(SearchThread.java:22)
----------------
-Stack traces for all live threads:
-Thread name=Reference Handler id=2 priority=10 state=WAITING isdaemon=true
-	java.lang.Object.wait(Native Method)
-	java.lang.Object.wait(Object.java:503)
-	java.lang.ref.Reference$ReferenceHandler.run(Reference.java:133)
-
-Thread name=Finalizer id=3 priority=8 state=WAITING isdaemon=true
-	java.lang.Object.wait(Native Method)
-	java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:135)
-	java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:151)
-	java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:177)
-
-Thread name=Thread-19 id=37 priority=6 state=RUNNABLE isdaemon=false
-	java.lang.Thread.dumpThreads(Native Method)
-	java.lang.Thread.getAllStackTraces(Thread.java:1618)
-	org.apache.derby.iapi.error.ThreadDump.getStackDumpString(Unknown Source)
-	sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
-	sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	java.lang.reflect.Method.invoke(Method.java:601)
-	org.apache.derby.iapi.error.ExceptionUtil$1.run(Unknown Source)
-	java.security.AccessController.doPrivileged(Native Method)
-	org.apache.derby.iapi.error.ExceptionUtil.dumpThreads(Unknown Source)
-	org.apache.derby.iapi.services.context.ContextManager.cleanupOnError(Unknown Source)
-	org.apache.derby.impl.jdbc.TransactionResourceImpl.cleanupOnError(Unknown Source)
-	org.apache.derby.impl.jdbc.TransactionResourceImpl.handleException(Unknown Source)
-	org.apache.derby.impl.jdbc.EmbedConnection.handleException(Unknown Source)
-	org.apache.derby.impl.jdbc.ConnectionChild.handleException(Unknown Source)
-	org.apache.derby.impl.jdbc.EmbedResultSet.closeOnTransactionError(Unknown Source)
-	org.apache.derby.impl.jdbc.EmbedResultSet.movePosition(Unknown Source)
-	org.apache.derby.impl.jdbc.EmbedResultSet.next(Unknown Source)
-	org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.processResultSet(DatabaseAccessor.java:713)
-	org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.basicExecuteCall(DatabaseAccessor.java:621)
-	org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.executeCall(DatabaseAccessor.java:535)
-	org.eclipse.persistence.internal.sessions.AbstractSession.basicExecuteCall(AbstractSession.java:1717)
-	org.eclipse.persistence.sessions.server.ServerSession.executeCall(ServerSession.java:566)
-	org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeCall(DatasourceCallQueryMechanism.java:207)
-	org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeCall(DatasourceCallQueryMechanism.java:193)
-	org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeSelectCall(DatasourceCallQueryMechanism.java:264)
-	org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.selectAllRows(DatasourceCallQueryMechanism.java:646)
-	org.eclipse.persistence.internal.queries.ExpressionQueryMechanism.selectAllRowsFromTable(ExpressionQueryMechanism.java:2611)
-	org.eclipse.persistence.internal.queries.ExpressionQueryMechanism.selectAllRows(ExpressionQueryMechanism.java:2570)
-	org.eclipse.persistence.queries.ReadAllQuery.executeObjectLevelReadQuery(ReadAllQuery.java:420)
-	org.eclipse.persistence.queries.ObjectLevelReadQuery.executeDatabaseQuery(ObjectLevelReadQuery.java:1081)
-	org.eclipse.persistence.queries.DatabaseQuery.execute(DatabaseQuery.java:844)
-	org.eclipse.persistence.queries.ObjectLevelReadQuery.execute(ObjectLevelReadQuery.java:1040)
-	org.eclipse.persistence.queries.ReadAllQuery.execute(ReadAllQuery.java:392)
-	org.eclipse.persistence.queries.ObjectLevelReadQuery.executeInUnitOfWork(ObjectLevelReadQuery.java:1128)
-	org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.internalExecuteQuery(UnitOfWorkImpl.java:2871)
-	org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1516)
-	org.eclipse.persistence.internal.sessions.AbstractSession.retryQuery(AbstractSession.java:1586)
-	org.eclipse.persistence.sessions.server.ClientSession.retryQuery(ClientSession.java:593)
-	org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.retryQuery(UnitOfWorkImpl.java:5464)
-	org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1552)
-	org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1498)
-	org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1463)
-	org.eclipse.persistence.internal.jpa.EJBQueryImpl.executeReadQuery(EJBQueryImpl.java:485)
-	org.eclipse.persistence.internal.jpa.EJBQueryImpl.getResultList(EJBQueryImpl.java:742)
-	se.cth.hedgehogphoto.database.DatabaseHandler.searchComments(DatabaseHandler.java:116)
-	se.cth.hedgehogphoto.search.SearchModel.getSearchObjects(SearchModel.java:36)
-	se.cth.hedgehogphoto.search.SearchPreviewView.update(SearchPreviewView.java:52)
-	java.util.Observable.notifyObservers(Observable.java:159)
-	se.cth.hedgehogphoto.search.SearchModel.doSearch(SearchModel.java:42)
-	se.cth.hedgehogphoto.search.SearchThread.run(SearchThread.java:22)
-
-Thread name=Thread-25 id=43 priority=6 state=TIMED_WAITING isdaemon=false
-	java.lang.Thread.sleep(Native Method)
-	se.cth.hedgehogphoto.search.SearchThread.run(SearchThread.java:21)
-
-Thread name=AWT-EventQueue-0 id=15 priority=6 state=WAITING isdaemon=false
-	sun.misc.Unsafe.park(Native Method)
-	java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
-	java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
-	java.awt.EventQueue.getNextEvent(EventQueue.java:515)
-	java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:180)
-	java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:128)
-	java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:117)
-	java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:113)
-	java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:105)
-	java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-
-Thread name=DestroyJavaVM id=20 priority=5 state=RUNNABLE isdaemon=false
-
-Thread name=process reaper id=14 priority=10 state=TIMED_WAITING isdaemon=true
-	sun.misc.Unsafe.park(Native Method)
-	java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
-	java.util.concurrent.SynchronousQueue$TransferStack.awaitFulfill(SynchronousQueue.java:460)
-	java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:359)
-	java.util.concurrent.SynchronousQueue.poll(SynchronousQueue.java:942)
-	java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1043)
-	java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1103)
-	java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
-	java.lang.Thread.run(Thread.java:722)
-
-Thread name=Java2D Disposer id=11 priority=10 state=WAITING isdaemon=true
-	java.lang.Object.wait(Native Method)
-	java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:135)
-	java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:151)
-	sun.java2d.Disposer.run(Disposer.java:145)
-	java.lang.Thread.run(Thread.java:722)
-
-Thread name=Timer-0 id=8 priority=5 state=WAITING isdaemon=true
-	java.lang.Object.wait(Native Method)
-	java.lang.Object.wait(Object.java:503)
-	java.util.TimerThread.mainLoop(Timer.java:526)
-	java.util.TimerThread.run(Timer.java:505)
-
-Thread name=AWT-Shutdown id=16 priority=5 state=WAITING isdaemon=false
-	java.lang.Object.wait(Native Method)
-	java.lang.Object.wait(Object.java:503)
-	sun.awt.AWTAutoShutdown.run(AWTAutoShutdown.java:287)
-	java.lang.Thread.run(Thread.java:722)
-
-Thread name=AWT-XAWT id=13 priority=6 state=RUNNABLE isdaemon=true
-	sun.awt.X11.XWindow.handleKeyRelease(XWindow.java:1191)
-	sun.awt.X11.XWindow.handleKeyRelease(XWindow.java:1187)
-	sun.awt.X11.XBaseWindow.dispatchEvent(XBaseWindow.java:1102)
-	sun.awt.X11.XBaseWindow.dispatchToWindow(XBaseWindow.java:1066)
-	sun.awt.X11.XToolkit.dispatchEvent(XToolkit.java:565)
-	sun.awt.X11.XToolkit.run(XToolkit.java:674)
-	sun.awt.X11.XToolkit.run(XToolkit.java:595)
-	java.lang.Thread.run(Thread.java:722)
-
-Thread name=derby.rawStoreDaemon id=10 priority=5 state=TIMED_WAITING isdaemon=true
-	java.lang.Object.wait(Native Method)
-	org.apache.derby.impl.services.daemon.BasicDaemon.rest(Unknown Source)
-	org.apache.derby.impl.services.daemon.BasicDaemon.run(Unknown Source)
-	java.lang.Thread.run(Thread.java:722)
-
-Thread name=Signal Dispatcher id=4 priority=9 state=RUNNABLE isdaemon=true
-
-Thread name=TimerQueue id=19 priority=5 state=TIMED_WAITING isdaemon=true
-	sun.misc.Unsafe.park(Native Method)
-	java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
-	java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2082)
-	java.util.concurrent.DelayQueue.take(DelayQueue.java:220)
-	javax.swing.TimerQueue.run(TimerQueue.java:171)
-	java.lang.Thread.run(Thread.java:722)
-
-
----------------
-
-Cleanup action completed
