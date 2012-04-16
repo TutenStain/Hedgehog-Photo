@@ -18,16 +18,17 @@ import se.cth.hedgehogphoto.gui.WrapLayout;
  * @author Barnabas Sapan
  */
 
-public class TagCloudView extends JPanel implements Observer{
+public class TagCloudView extends JPanel implements Observer {
 	private Map<String, Integer> map = new HashMap<String, Integer>();
 	private Font baseFont = new Font("Serif", Font.PLAIN, 11);
 	private float fontMax = 20f;
 	private float fontMin = baseFont.getSize();
+	//getFontSize() helpers
 	private int removeFromMax = 0;
 	private int addToMin = 0;
 	
 	public TagCloudView(){
-		setLayout(new WrapLayout(FlowLayout.LEFT));
+		setLayout(new WrapLayout(FlowLayout.LEFT));	
 		//Default values
 		setPreferredSize(new Dimension(150, 75));
 	}
@@ -54,7 +55,7 @@ public class TagCloudView extends JPanel implements Observer{
 		if(arg != null){
 			TagCloudModel model = (TagCloudModel)arg;
 			map = model.getTagsOccurrence();
-		
+			
 			removeAll();
 			
 			for(Map.Entry<String, Integer> entry : map.entrySet()){

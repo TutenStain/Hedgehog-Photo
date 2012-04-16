@@ -23,6 +23,7 @@ public class Main {
 	//TODO Just a skeleton of the main
 	public static void main(String[] args) {
 		DatabaseHandler.deleteAll();
+		//Main
 		insertFileObjectsIntoDatabase();
 		MainModel model = new MainModel();
 		MainView view = new MainView();
@@ -47,6 +48,8 @@ public class Main {
 		sm.addObserver(spv);
 		new SearchController(sm, sv);
 		view.addToTopPanel(sv);
+		
+		Files.getInstance().addObserver(view);
 
 		model.testNotify();
 	}
@@ -62,7 +65,7 @@ public class Main {
 			f.setComment("Gutes bild");
 			f.setImageName("wei" + file.getName());
 			f.setDate("2012.12.02");
-			//Just som random tags to test the TagCloud
+			//Just some random tags to test the TagCloud
 			f.setTag("Fint");
 			if(i == 0){
 				f.setTag("Snyggt");

@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import se.cth.hedgehogphoto.FileObject;
+import se.cth.hedgehogphoto.Files;
 
 /**
  * @author Barnabas Sapan
@@ -20,9 +21,11 @@ public class SearchComponentController{
 		fo = _fo;
 		
 		view.addMouseListener(new MouseListener(){
+			
+			//TODO This needs to be done.
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Clicked on: " + fo.getImagePath());	
+				System.out.println("Clicked on: " + fo.getImagePath());
 			}
 
 			@Override

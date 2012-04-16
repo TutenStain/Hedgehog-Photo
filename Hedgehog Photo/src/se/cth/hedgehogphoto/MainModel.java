@@ -1,6 +1,5 @@
 package se.cth.hedgehogphoto;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -14,7 +13,7 @@ public class MainModel extends Observable {
 		try {
 			 images = DatabaseHandler.searchComments("Gutes bild");
 			
-		} catch(Exception e) {
+		} catch(Exception e) {	
 			//autoexception
 		}
 	}

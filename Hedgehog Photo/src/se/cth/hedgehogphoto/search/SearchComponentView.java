@@ -36,8 +36,7 @@ public class SearchComponentView extends JPanel{
 		image.setMinimumSize(new Dimension(50, 50));
 		image.setMaximumSize(new Dimension(50, 50));
 		image.setPreferredSize(new Dimension(50, 50));
-		//TODO Change path to fo.getImagePath();
-		image.setIcon(new ImageIcon("/home/tutenstain/Dropbox/dylan.jpg"));
+		image.setIcon(new ImageIcon(fo.getImagePath()));
 		add(image);
 		
 		//TODO Maybe a better implementation?
@@ -45,7 +44,8 @@ public class SearchComponentView extends JPanel{
 		Iterator<String> itr = fo.getTags().iterator();
 		while(itr.hasNext()){
 			str += itr.next() + " "; 
-		}	
+		}
+				
 		tags = new JTextArea(str);
 	    tags.setEditable(false);  
 	    tags.setCursor(null);  

@@ -21,6 +21,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import se.cth.hedgehogphoto.Files;
 import se.cth.hedgehogphoto.FileObject;
 import se.cth.hedgehogphoto.MainModel;
 public class MainView implements Observer {
@@ -134,8 +135,6 @@ public class MainView implements Observer {
 
 		JButton btnCalender = new JButton("Calender");
 		leftPanelView.add(btnCalender);
-
-		
 		
 		JScrollPane photoView = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		frame.getContentPane().add(photoView, BorderLayout.CENTER);
@@ -183,10 +182,20 @@ public class MainView implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
 		if(arg1 instanceof MainModel) {
 			MainModel model = (MainModel)arg1;
 			List<FileObject> images = model.getImages();
+			photoViewPanel.removeAll();
+			for(int i = 0; i<10; i++) {
+				PhotoPanel pp = new PhotoPanel(images.get(i));
+				photoPanels.add(i, pp);
+				photoViewPanel.add(pp);
+				frame.revalidate();
+			}
+		}
+		
+		if(arg1 instanceof Files){
+			List<FileObject> images = Files.getInstance().getList();
 			photoViewPanel.removeAll();
 			for(int i = 0; i<10; i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i));

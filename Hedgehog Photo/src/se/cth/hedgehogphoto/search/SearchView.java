@@ -22,7 +22,6 @@ import sun.print.resources.serviceui;
  */
 
 public class SearchView extends JPanel implements Observer{
-	private SearchPreviewView svp;
 	private String searchButtonText = "Search";
 	private String placeHolderText = "Search...";
 	private Dimension searchBoxSize = new Dimension(100, 30);
@@ -98,7 +97,6 @@ public class SearchView extends JPanel implements Observer{
 		if(spv == null){
 			SearchModel model = (SearchModel)arg;
 			System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());
-			//System.out.println(model.getSearchObjects());
 		}
 	}
 }

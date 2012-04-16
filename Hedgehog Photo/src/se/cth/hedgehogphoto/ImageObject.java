@@ -3,6 +3,10 @@ package se.cth.hedgehogphoto;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Julia
+ */
+
 public class ImageObject implements FileObject{
 	private List<String> tags = new ArrayList<String>();
 	private String date = "";

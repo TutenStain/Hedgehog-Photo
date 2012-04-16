@@ -31,8 +31,9 @@ public class SearchModel extends Observable{
 		//System.out.println(DatabaseHandler.getTags())
 		//System.out.println(DatabaseHandler.getLocationd"s());
 		//DatabaseHandler.getAlbumName("jaggillarelefanter.jpg");
+		
 		return DatabaseHandler.searchComments("Gutes bild");
-	
+		//return DatabaseHandler.searchComments(searchText);
 	}
 	
 	public void doSearch(){

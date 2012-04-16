@@ -7,6 +7,9 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 
+import se.cth.hedgehogphoto.Files;
+import se.cth.hedgehogphoto.database.DatabaseHandler;
+
 /**
  * @author Barnabas Sapan
  */
@@ -26,9 +29,9 @@ public class TagComponentController implements MouseListener{
 	public void mouseReleased(MouseEvent e) {
 	}
 	
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("Clicked on: " + tag.getText());
 	}
 	
 	@Override
@@ -47,5 +50,7 @@ public class TagComponentController implements MouseListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		System.out.println("Clicked on: " + tag.getText());
+		//Files.getInstance().setList(DatabaseHandler.searchTags(tag.getText()));
 	}
 }

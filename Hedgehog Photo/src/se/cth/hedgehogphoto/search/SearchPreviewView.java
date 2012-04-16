@@ -74,7 +74,6 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 			SearchComponentView view = new SearchComponentView(ob);
 			new SearchComponentController(view, ob);
 			panel.add(view);
-			System.out.println(view.getBounds());
 			i++;
 			//panel.add(new JSeparator());		
 		}
@@ -82,7 +81,5 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 		setPopupSize(250, (i * 70));
 
 		panel.revalidate();
-		
-		System.out.println(fo);
 	}
 }
