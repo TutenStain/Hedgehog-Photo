@@ -3,10 +3,14 @@ package se.cth.hedgehogphoto.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 /**
@@ -15,14 +19,25 @@ import javax.persistence.OneToOne;
  *
  */
 @Entity
-public class Picture {
+public class Picture extends File {
 	@Id
 	private String path;
-	private String date;
 	private String name;
-	private long album_ID;
 
+	@ManyToOne
+	 private Album album;
+
+	@ManyToOne
+	 private Location location;
 	
+	public Album getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(Album album) {
+		this.album = album;
+	}
+
 	public String getPath() {
 		return path;
 	}
@@ -32,35 +47,17 @@ public class Picture {
 		this.path = path;
 	}
 
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-	public long getAlbum_ID() {
-		return album_ID;
-	}
 
-	public void setAlbum_ID(long album_ID) {
-		this.album_ID = album_ID;
-	}
-
-	
 	@Override
 	public String toString() {
-		return "Pictures [Path=" + path + ", Date=" + date + "Name="+name+"Album_ID="+album_ID
+		return "Pictures [Path=" + path + ", Date=" + super.getDate() + "Name="+name
 				+ "]";
 	}
-
-
 
 }

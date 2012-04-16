@@ -19,17 +19,5 @@ public class Main {
 	public static void main(String[] args) {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
-		
-		FileObject f = new ImageObject();
-		f.setComment("lal");
-		f.setImageName("lallen");
-		f.setDate("d");
-		f.setTag("blubb");
-		f.setImagePath("BANANABASanananamaaaama");
-	DatabaseHandler.insert(f);
-		DatabaseHandler.addTag("Växjö","BANANABASanananamaaaama" );
-		
-	//DatabaseHandler.removeFileObject(f);
-	//DatabaseHandler.deletePath("BANANABASanananamaaaama");
-}
+	}
 }

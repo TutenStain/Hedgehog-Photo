@@ -1,9 +1,16 @@
 package se.cth.hedgehogphoto.database;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 /**
  * 
  * @author Julia
@@ -11,9 +18,40 @@ import javax.persistence.Id;
  */
 @Entity
 public class Location {
+
+
+@Id	
 private String location;
-@Id
-private String path;
+private double longitude, latitude;
+
+public double getLongitude() {
+	return latitude;
+}
+
+public void setLongitude(double lon) {
+	this.latitude = lon;
+}
+
+public double getLatitude() {
+	return latitude;
+}
+
+public void setLatitude(double lat) {
+	this.latitude = lat;
+}
+
+@OneToMany
+private List<Picture> picture;
+@OneToMany
+private List<Album> album;
+
+	public List<Picture> getPicture() {
+	return picture;
+}
+
+public void setPicture(List<Picture> picture) {
+	this.picture = picture;
+}
 
 	public void setLocation(String location) {
 		this.location = location;
@@ -22,16 +60,21 @@ private String path;
 	public String getLocation() {
 		return location;
 	}
-	public String getPath(){
-		return path;
-	}
-	public void setPath(String path) {
-		this.path = path;
-	}
 
 	@Override
 	public String toString() {
-		return "Locations [Path=" + path + ", Location=" + location+ "]";
+		return "Locations [Location=" + location+ "]";
+	}
+	public String getLocationasString(){
+		return location;
+	}
+
+	public List<Album> getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(List<Album> album) {
+		this.album = album;
 	}
 	
 }

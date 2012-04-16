@@ -38,7 +38,7 @@ public class Metadata {
 		return extractMetadata(file);
 	}
 	
-	private static IImageMetadata extractMetadata(File file) {
+	public static IImageMetadata extractMetadata(File file) {
 		Metadata.file = file;
 		IImageMetadata metadata = null;
 		try {
