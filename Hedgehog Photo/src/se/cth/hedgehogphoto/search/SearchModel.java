@@ -17,6 +17,10 @@ import se.cth.hedgehogphoto.database.DatabaseHandler;
 public class SearchModel extends Observable{
 	private String searchText = "";
 
+	public SearchModel(SearchView sv, SearchPreviewView spv){
+		this.addObserver(sv);
+		this.addObserver(spv);
+	}
 	public String getSearchQueryText(){
 		return searchText;
 	}
