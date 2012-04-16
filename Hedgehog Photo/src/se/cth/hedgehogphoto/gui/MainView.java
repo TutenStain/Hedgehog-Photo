@@ -90,37 +90,8 @@ public class MainView implements Observer {
 		bottomPanel.setLayout(gl_bottomPanel);
 
 		topPanel = new JPanel();
+		topPanel.setLayout(new BorderLayout());
 		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
-
-		/*searchField = new JTextField();
-		searchField.setText("Search..");
-		searchField.setColumns(10);
-
-		JLabel lblAlbum = new JLabel("Album");
-
-		JLabel lblicon = new JLabel("Igelkottsbild");
-		GroupLayout gl_topPanel = new GroupLayout(topPanel);
-		gl_topPanel.setHorizontalGroup(
-				gl_topPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_topPanel.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(lblicon)
-						.addGap(38)
-						.addComponent(lblAlbum)
-						.addPreferredGap(ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
-						.addComponent(searchField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGap(44))
-				);
-		gl_topPanel.setVerticalGroup(
-				gl_topPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_topPanel.createSequentialGroup()
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(gl_topPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(searchField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblAlbum)
-								.addComponent(lblicon)))
-				);
-		topPanel.setLayout(gl_topPanel);*/
 
 		leftPanelView = new JPanel();
 		frame.getContentPane().add(leftPanelView, BorderLayout.WEST);
@@ -128,9 +99,6 @@ public class MainView implements Observer {
 
 		JButton btnMaps = new JButton("Maps");
 		leftPanelView.add(btnMaps);
-
-		//JButton btnTags = new JButton("Tags");
-		//leftPanelView.add(btnTags);
 
 		JButton btnCalender = new JButton("Calender");
 		leftPanelView.add(btnCalender);
@@ -143,7 +111,6 @@ public class MainView implements Observer {
 		photoViewPanel = new JPanel();
 		photoView.setViewportView(photoViewPanel);
 		
-		//photoViewPanel.setLayout(new GridLayout(photoPanels.size()/2,2));
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 		
 		showHideComments.addActionListener(new ActionListener() {
@@ -177,8 +144,8 @@ public class MainView implements Observer {
 		leftPanelView.add(panel);
 	}
 	
-	public void addToTopPanel(JPanel panel){
-		topPanel.add(panel);
+	public void addToTopPanel(JPanel panel, String orientation){
+		topPanel.add(panel, orientation);
 	}
 
 	@Override

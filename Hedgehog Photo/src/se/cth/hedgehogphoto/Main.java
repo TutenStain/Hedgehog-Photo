@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
@@ -38,15 +39,12 @@ public class Main {
 		view.addToLeftPanel(tgv);
 		
 		//Search
-		SearchModel sm = new SearchModel();
-		SearchView sv = new SearchView();
-		sv.setPreferredSize(new Dimension(250, 30));
-		sm.addObserver(sv);
 		SearchPreviewView spv = new SearchPreviewView();
-		sv.setSearchPreview(spv);
-		sm.addObserver(spv);
+		SearchView sv = new SearchView(spv);
+		SearchModel sm = new SearchModel(sv, spv);
+		sv.setPreferredSize(new Dimension(250, 30));
 		new SearchController(sm, sv);
-		view.addToTopPanel(sv);
+		view.addToTopPanel(sv, BorderLayout.EAST);
 
 		model.testNotify();
 	}

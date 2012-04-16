@@ -22,7 +22,6 @@ import sun.print.resources.serviceui;
  */
 
 public class SearchView extends JPanel implements Observer{
-	private SearchPreviewView svp;
 	private String searchButtonText = "Search";
 	private String placeHolderText = "Search...";
 	private Dimension searchBoxSize = new Dimension(100, 30);
@@ -31,7 +30,7 @@ public class SearchView extends JPanel implements Observer{
 	private JButton searchButton;
 	private SearchPreviewView spv;
 	
-	public SearchView(){
+	public SearchView(SearchPreviewView spv){
 		setLayout(new FlowLayout());
 		searchButton = new JButton(searchButtonText);
 		searchButton.setPreferredSize(searchButtonSize);
@@ -39,6 +38,7 @@ public class SearchView extends JPanel implements Observer{
 		searchBox.setPreferredSize(searchBoxSize);
 		add(searchBox);
 		add(searchButton);
+		this.setSearchPreview(spv);
 	}
 	
 	public void setSearchBoxFocusListener(FocusListener fl){
