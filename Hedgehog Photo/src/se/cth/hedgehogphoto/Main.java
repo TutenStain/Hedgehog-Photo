@@ -46,8 +46,6 @@ public class Main {
 		sv.setPreferredSize(new Dimension(250, 30));
 		new SearchController(sm, sv);
 
-
-		
 		Files.getInstance().addObserver(view);
 
 		view.addToTopPanel(sv, BorderLayout.EAST);
