@@ -19,7 +19,7 @@ import javax.persistence.OneToOne;
  *
  */
 @Entity
-public class Picture extends File {
+public class Picture {
 	@Id
 	private String path;
 	private String name;
@@ -27,8 +27,43 @@ public class Picture extends File {
 	@ManyToOne
 	 private Album album;
 
+
+	@ManyToMany
+	private List<Tag> tags;
+	private String date;
 	@ManyToOne
-	 private Location location;
+	private Comment comment;
+	@ManyToOne
+	private Location location;
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+	protected void setTag(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public Comment getComment() {
+		return comment;
+	}
+	protected void setComment(Comment comment) {
+		this.comment = comment;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	protected void setLocation(Location location) {
+		this.location = location;
+	}
+	public String getDate() {
+		return date;
+	}
+
+	protected void setDate(String date) {
+		this.date = date;
+	}	
 	
 	public Album getAlbum() {
 		return album;
@@ -41,7 +76,6 @@ public class Picture extends File {
 	public String getPath() {
 		return path;
 	}
-
 
 	public void setPath(String path) {
 		this.path = path;
@@ -56,8 +90,9 @@ public class Picture extends File {
 
 	@Override
 	public String toString() {
-		return "Pictures [Path=" + path + ", Date=" + super.getDate() + "Name="+name
-				+ "]";
+
+		return "Pictures [Path= " + path + " Name="+name +"Date= " + date
+				+  album  + tags  + comment  +  location +"]";
 	}
 
 }

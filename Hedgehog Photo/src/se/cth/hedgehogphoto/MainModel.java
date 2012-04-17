@@ -11,8 +11,8 @@ public class MainModel extends Observable {
 	
 	public MainModel() {
 		try {
-			 images = DatabaseHandler.searchComments("Gutes bild");
-			
+			 images = DatabaseHandler.searchPicturesfromDates("2012.12.02");
+			System.out.print(images);
 		} catch(Exception e) {	
 			//autoexception
 		}

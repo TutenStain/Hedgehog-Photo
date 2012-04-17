@@ -2,16 +2,16 @@ package se.cth.hedgehogphoto.metadata;
 
 import java.util.List;
 
-import se.cth.hedgehogphoto.database.FileObject;
-import se.cth.hedgehogphoto.metadata.Location;
+import se.cth.hedgehogphoto.FileObject;
+import se.cth.hedgehogphoto.Location;
 
 
 
 public class ImageObject implements FileObject {
-	private String filePath, fileName, date, artist, comment, albumName;
+	private String filePath, fileName, date, artist, comment, albumName = "";
 	private List<String> tags;
 	private String longitude, latitude;
-	private se.cth.hedgehogphoto.metadata.Location location = new Location("");
+	private Location location = new Location("");
 	private boolean legitGPSInfo;
 	
 	public ImageObject() {
@@ -101,7 +101,7 @@ public class ImageObject implements FileObject {
 		this.fileName = fileName;
 	}
 	
-	public se.cth.hedgehogphoto.metadata.Location getLocation() {
+	public Location getLocation() {
 		return location;
 	}
 	
@@ -126,7 +126,24 @@ public class ImageObject implements FileObject {
 	}
 
 	@Override
-	public void setLocation(se.cth.hedgehogphoto.metadata.Location location) {
+	public void setLocation(Location location) {
 		this.location=location;
+	}
+
+	@Override
+	public String toString() {
+		return "[name=" + fileName + "] [location=" + location + "] [date=" + date + "] [tag=" + tags + "] [comments= " + comment +"] [albumName=" + albumName + "]" + "Path= " + filePath + "]";
+	}
+
+	@Override
+	public void setCoverPath(String path) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getCoverPath() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

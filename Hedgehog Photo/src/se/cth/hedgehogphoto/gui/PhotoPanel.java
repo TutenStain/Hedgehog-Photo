@@ -32,7 +32,7 @@ public class PhotoPanel extends JPanel {
 	 * @wbp.parser.constructor
 	 */
 	public PhotoPanel(FileObject f) {
-		this(f.getImagePath());
+		this(f.getFilePath());
 	}
 	
 	public PhotoPanel(String path) {

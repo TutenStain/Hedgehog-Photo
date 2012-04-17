@@ -3,11 +3,13 @@ package se.cth.hedgehogphoto;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.gui.MainView;
+import se.cth.hedgehogphoto.metadata.ImageObject;
 import se.cth.hedgehogphoto.search.SearchController;
 import se.cth.hedgehogphoto.search.SearchModel;
 import se.cth.hedgehogphoto.search.SearchPreviewView;
@@ -23,10 +25,11 @@ public class Main {
 
 	//TODO Just a skeleton of the main
 	public static void main(String[] args) {
-		DatabaseHandler.deleteAll();
+	//	DatabaseHandler.deleteAll();
 		//Main
 		insertFileObjectsIntoDatabase();
-		MainModel model = new MainModel();
+		System.out.print(DatabaseHandler.getAllPictures());
+		/*MainModel model = new MainModel();
 		MainView view = new MainView();
 		model.addObserver(view);
 		
@@ -51,7 +54,7 @@ public class Main {
 		view.addToTopPanel(sv, BorderLayout.EAST);
 
 		model.testNotify();
-	}
+*/	}
 	
 	private static void insertFileObjectsIntoDatabase() {
 		//TODO This is in the DB:
@@ -62,10 +65,10 @@ public class Main {
 		for(File file : files) {
 			FileObject f = new ImageObject();
 			f.setComment("Gutes bild");
-			f.setImageName("wei" + file.getName());
+			f.setFileName("wei" + file.getName());
 			f.setDate("2012.12.02");
 			//Just some random tags to test the TagCloud
-			f.setTag("Fint");
+	/*		f.setTag("Fint");
 			if(i == 0){
 				f.setTag("Snyggt");
 			}
@@ -74,13 +77,20 @@ public class Main {
 			}
 			if(i % 2 == 0){
 				f.setTag("Festligt");
+			}*/
+			try {
+				f.setFilePath(file.getCanonicalPath());
+				System.out.println(file.getCanonicalPath());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			f.setImagePath(file.getAbsolutePath());
 			f.setCoverPath("blo");
-			f.setLocation("Japan");
+			f.setLocation(new Location("Japan"));
 			f.setAlbumName("Bra bilder");
-			DatabaseHandler.insert(f);
+			DatabaseHandler.insertPicture(f);
 			i++;
+			
 		}
 	}
 

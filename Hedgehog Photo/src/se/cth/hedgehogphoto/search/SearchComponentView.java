@@ -36,7 +36,7 @@ public class SearchComponentView extends JPanel{
 		image.setMinimumSize(new Dimension(50, 50));
 		image.setMaximumSize(new Dimension(50, 50));
 		image.setPreferredSize(new Dimension(50, 50));
-		image.setIcon(new ImageIcon(fo.getImagePath()));
+		image.setIcon(new ImageIcon(fo.getFilePath()));
 		add(image);
 		
 		//TODO Maybe a better implementation?

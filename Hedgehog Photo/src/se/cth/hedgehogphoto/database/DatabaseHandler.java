@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import se.cth.hedgehogphoto.metadata.*;
+import se.cth.hedgehogphoto.FileObject;
 
 
 /**
@@ -18,6 +19,8 @@ import se.cth.hedgehogphoto.metadata.*;
 
 
 public class DatabaseHandler {
+	private static Files files = Files.getInstance();;
+	private static List<FileObject> list = files.getList(); 
 	private static final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
 	private static EntityManagerFactory factory = factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);;
 	static DatabaseHandler dh;
@@ -65,7 +68,8 @@ public class DatabaseHandler {
 	}
 
 	public static void updateSearchPictureNames(String search){
-		searchPictureNames(search);
+		list = searchPictureNames(search);
+		files.setList(list);
 	}
 	public static List<FileObject> searchPictureNames(String search){
 
@@ -83,10 +87,11 @@ public class DatabaseHandler {
 		}
 
 	}
-	public static void updateSearchDatesfromPictures(String search){
-		searchDatesfromPictures(search);
+	public static void updateSearchPicturesfromDates(String search){
+		list = searchPicturesfromDates(search);
+		files.setList(list);
 	}
-	public static List<FileObject> searchDatesfromPictures(String search){
+	public static List<FileObject> searchPicturesfromDates(String search){
 
 		Query q = em.createQuery("select t from Picture t where t.date=:date");
 		q.setParameter("date", search);
@@ -100,10 +105,11 @@ public class DatabaseHandler {
 			return null;
 		}
 	}
-	public static void updateSearchDatesfromAlbum(String search){
-		 searchDatesfromAlbum(search);
+	public static void updateSearchAlbumsfromDates(String search){
+		list = searchAlbumsfromDates(search);
+		files.setList(list);
 	}
-	public static List<FileObject> searchDatesfromAlbum(String search){
+	public static List<FileObject>  searchAlbumsfromDates(String search){
 
 		Query q = em.createQuery("select t from Album t where t.date=:date");
 		q.setParameter("date", search);
@@ -118,7 +124,8 @@ public class DatabaseHandler {
 		}
 	}
 	public static void updateSearchAlbumNames(String search){
-		searchAlbumNames(search);
+		list =searchAlbumNames(search);
+		files.setList(list);
 	}
 	public static List<FileObject> searchAlbumNames(String search){
 
@@ -134,12 +141,18 @@ public class DatabaseHandler {
 			return null;
 		}
 	}
-	public static void updatearchCommentsfromPictures(String search){
-		searchCommentsfromPictures(search);
+	public static void updateSearchPicturesfromComments(String search){
+		list = searchPicturesfromComments(search);
+		files.setList(list);
 	}
-	public static List<FileObject> searchCommentsfromPictures(String search){
-		Query q = em.createQuery("select t from Picture t where t.comment=:comment");
+	public static List<FileObject> searchPicturesfromComments(String search){
+		if(!(search.equals(""))){
+		Query q = em.createQuery("select t from Comment t where t.comment=:comment");
 		q.setParameter("comment", search);
+		try{
+			Comment com = (Comment)q.getSingleResult();
+		q = em.createQuery("select t from Picture t where t.comment=:comment");
+		q.setParameter("comment", com);
 		try{
 			List<Picture> pictures = q.getResultList();
 			List<FileObject> fileObjects = new ArrayList<FileObject>(); 
@@ -149,48 +162,105 @@ public class DatabaseHandler {
 		}catch(Exception e){
 
 		}
+		}
+		catch(Exception o){
+			
+		}
+		}
 		return null;
 	}
-	public static void updateSearchCommentsfromAlbum(String search){
-		searchCommentsfromAlbum(search);
+	public static void updateSearchAlbumsfromComments(String search){
+		list = searchCommentsfromAlbum(search);
+		files.setList(list);
 	}
 	public static List<FileObject> searchCommentsfromAlbum(String search){
-		Query q = em.createQuery("select t from Album t where t.comment=:comment");
-		q.setParameter("comment", search);
+		if(!(search.equals(""))){
+			Query q = em.createQuery("select t from Comment t where t.comment=:comment");
+			q.setParameter("comment", search);
+			try{
+				Comment com = (Comment)q.getSingleResult();
+		q = em.createQuery("select t from Album t where t.comment=:comment");
+		q.setParameter("comment", com);
 		try{
 			List<Album> albums = q.getResultList();
 			List<FileObject> fileObjects = new ArrayList<FileObject>();
 			for(Album album:albums)
 				fileObjects.add(makeFileObjectfromAlbumName(album.getName()));
 			return fileObjects;
-		}catch(Exception e){
-
+		}
+		catch(Exception e){
+		}
+			}catch(Exception f){
+				
+				
+			}
 		}
 		return null;
-	}
-	public static void updateSearchTagsfromPictures(String search){
-		 searchTagsfromPictures(search);
+		
 	}
 	
-	public static List<FileObject> searchTagsfromPictures(String search){
+	public static void updateSearchPicturesfromTags(String search){
+		list =searchPicturesfromTags(search);
+		files.setList(list);
+	}
+
+	public static List<FileObject> searchPicturesfromTags(String search){
 		Query q = em.createQuery("select t from Picture t where t.tag=:tag");
 		q.setParameter("tag", search);
 		try{
+			Tag tag = (Tag)q.getSingleResult();
+			 q = em.createQuery("select t from Picture t where t.tag=:tag");
+			q.setParameter("tag", tag);
+			try{
 			List<Picture> pictures = q.getResultList();
 			List<FileObject> fileObjects = new ArrayList<FileObject>(); 
 			for(Picture p:pictures)
 				fileObjects.add(makeFileObjectfromPath(p.getPath()));
 			return fileObjects;
 		}catch(Exception e){
-			return null;
+			
 		}
+	}catch(Exception g){
+		
 	}
-	public static void updateSearchTagsfromAlbums(String search){
-		 searchTagsfromAlbum(search);
+		return null;
+		}
+	public static void updateSearchPicturefromsLocations(String search){
+		list = searchPicturefromsLocations(search);
+		files.setList(list);
 	}
-	public static List<FileObject> searchTagsfromAlbum(String search){
-		Query q = em.createQuery("select t from Album t where t.tag=:tag");
+	public static List<FileObject> searchPicturefromsLocations(String search){
+		Query q = em.createQuery("select t from Location t where t.location=:locaion");
+		q.setParameter("location", search);
+		try{
+			Location loc = (Location)q.getSingleResult();
+			 q = em.createQuery("select t from Picture t where t.location=:location");
+			q.setParameter("location", loc);
+			try{
+			List<Picture> pictures = q.getResultList();
+			List<FileObject> fileObjects = new ArrayList<FileObject>(); 
+			for(Picture p:pictures)
+				fileObjects.add(makeFileObjectfromPath(p.getPath()));
+			return fileObjects;
+		}catch(Exception e){
+			
+		}
+	}catch(Exception g){
+		
+	}
+		return null;
+		}
+	public static void updateAlbumsfromSearchTags(String search){
+		list =  searchfromTagsAlbum(search);
+		files.setList(list);
+	}
+	public static List<FileObject> searchfromTagsAlbum(String search){
+		Query q = em.createQuery("select t from Tag t where t.tag=:tag");
 		q.setParameter("tag", search);
+		try{
+		Tag tag = (Tag)q.getSingleResult();
+		 q = em.createQuery("select t from Album t where t.tag=:tag");
+		q.setParameter("tag", tag);
 		try{
 			List<Album> albums = q.getResultList();
 			List<FileObject> fileObjects = new ArrayList<FileObject>();
@@ -198,11 +268,45 @@ public class DatabaseHandler {
 				fileObjects.add(makeFileObjectfromAlbumName(album.getName()));
 			return fileObjects;
 		}catch(Exception e){
-			return null;
+			
 		}
+		}catch(Exception o){
+			
+		}
+		return null;
+	}
+	public static void updateSearchAlbumsfromLocations(String search){
+		list =  searchAlbumsfromLocations(search);
+		files.setList(list);
+	}
+	public static List<FileObject> searchAlbumsfromLocations(String search){
+		Query q = em.createQuery("select t from Location t where t.location=:location");
+		q.setParameter("location", search);
+		try{
+		Location loc = (Location)q.getSingleResult();
+		 q = em.createQuery("select t from Album t where t.location=:location");
+		q.setParameter("location", loc);
+		try{
+			List<Album> albums = q.getResultList();
+			List<FileObject> fileObjects = new ArrayList<FileObject>();
+			for(Album album:albums)
+				fileObjects.add(makeFileObjectfromAlbumName(album.getName()));
+			return fileObjects;
+		}catch(Exception e){
+			
+		}
+		}catch(Exception o){
+			
+		}
+		return null;
 	}
 	public static void updateAllPictures(){
-		getAllPictures();
+		List<Picture> pictures = getAllPictures();
+		list = new ArrayList<FileObject>();
+		for(Picture picture:pictures)
+			list.add(makeFileObjectfromPath(picture.getPath()));
+
+		files.setList(list);
 	}
 	public static List<Picture> getAllPictures(){
 		Query p = em.createQuery("select t from Picture t");
@@ -210,7 +314,12 @@ public class DatabaseHandler {
 
 	}
 	public static void updateAllAlbums(){
-		getAllAlbums();
+		List<Album> albums = getAllAlbums();
+		list = new ArrayList<FileObject>();
+		for(Album album:albums)
+			list.add(makeFileObjectfromPath(album.getAlbumName()));
+
+		files.setList(list);
 	}
 	public static List<Album> getAllAlbums(){
 		Query p = em.createQuery("select t from Album t");
@@ -220,41 +329,33 @@ public class DatabaseHandler {
 
 
 
-	public static  FileObject makeFileObjectfromPath(String filePath){
+	public static FileObject makeFileObjectfromPath(String filePath){
 		String name = "";
 		String date = "";
+		String path ="";
 
-		se.cth.hedgehogphoto.metadata.Location location = new se.cth.hedgehogphoto.metadata.Location("");
+		se.cth.hedgehogphoto.Location location = new se.cth.hedgehogphoto.Location("");
 		String albumName = "";
 		String comment = "";
 		Picture picture = new Picture();
 		List<String> tags = new ArrayList<String>();
+	
 		Query p = em.createQuery("select t from Picture t where t.path=:path");
 		p.setParameter("path", filePath);
 		try{
 			Picture pic = (Picture) p.getSingleResult();
 			picture = pic;
+			//	path = pic.getPath();
 			name=pic.getName();
+			albumName = pic.getAlbum().getAlbumName();
 			date=pic.getDate();
 			albumName = pic.getName();
-
+			comment = pic.getComment().getCommentAsString();
+		
+		
 		}
 		catch(Exception e){
 			return null;
-		}
-
-		Query a = em.createQuery("select t from Album t where t.albumName=:albumName");
-		a.setParameter("albumName", picture.getAlbum().getName());
-		try{
-			Album album = (Album) a.getSingleResult();
-			//	coverPath =  album.getCoverPath();
-			albumName = album.getName();
-			System.out.print(picture.getName());
-			System.out.print( album.getName());
-			//albumID = picture.getAlbumID();
-		}catch(Exception e){
-			System.out.println(" ");
-			System.out.println("Hittar inget album");
 		}
 		Query t = em.createQuery("select t from Tag t where t.picture=:picture");
 		t.setParameter("picture",picture);
@@ -263,43 +364,28 @@ public class DatabaseHandler {
 			for(int i = 0; i < tlist.size();i++){
 				tags.add(tlist.get(i).getTagAsString());
 			}
+		
 		}
 		catch(Exception e){
 		}
+		FileObject f = new ImageObject(); 
+	
 
-		Query l = em.createQuery("select t from Location t where t.location=:location");
-		l.setParameter("location", picture.getLocation().getLocationasString());
-		try{
-			Location loc = (Location) l.getSingleResult();
-			location= new se.cth.hedgehogphoto.metadata.Location(loc.getLocation());
-			location.setLatitude(loc.getLatitude());
-			location.setLongitude(loc.getLongitude());
-		}catch(Exception e){
-		}
-		Query c = em.createQuery("select t from Comment t where t.comment=:comment");
-
-		try{
-			c.setParameter("comment", picture.getComment().getCommentAsString());
-			Comment com = (Comment) c.getSingleResult();
-			comment = com.getComment();
-		}catch(Exception e){
-
-		}
-
-		ImageObject f = new ImageObject(); 
 		f.setComment(comment);
 		f.setDate(date);
 		f.setFilePath(filePath);
 		f.setFileName(name);
 		f.setTags(tags);
+	
 		f.setLocation(location);
 		f.setAlbumName(albumName);
 		return f;
+	
 	}
 
 	public static FileObject makeFileObjectfromAlbumName(String albumName){
 		List<String> tags = new ArrayList<String>();
-		se.cth.hedgehogphoto.metadata.Location location = new se.cth.hedgehogphoto.metadata.Location("");
+		se.cth.hedgehogphoto.Location location = new se.cth.hedgehogphoto.Location("");
 		Album album = new Album();
 		String date = "";
 		String coverPath= "";
@@ -311,8 +397,7 @@ public class DatabaseHandler {
 			album = (Album) a.getSingleResult();
 			coverPath =  album.getCoverPath();
 		}catch(Exception e){
-			System.out.println(" ");
-			System.out.println("Hittar inget album");
+			
 			return null;
 		}
 		Query t = em.createQuery("select t from Tag t where t.album=:album");
@@ -331,7 +416,7 @@ public class DatabaseHandler {
 		try{
 
 			Location loc = (Location) l.getSingleResult();
-			location = new se.cth.hedgehogphoto.metadata.Location(loc.getLocation());
+			location = new se.cth.hedgehogphoto.Location(loc.getLocation());
 			location.setLatitude(loc.getLatitude());
 			location.setLongitude(loc.getLongitude());
 		}catch(Exception e){
@@ -345,49 +430,70 @@ public class DatabaseHandler {
 		}catch(Exception e){
 
 		}
-		AlbumObject f = new AlbumObject();
+		FileObject f = new AlbumObject();
 		f.setComment(comment);
 		f.setLocation(location);
 		f.setDate(date);
-		f.setName(albumName);
-		f.setFilePath(coverPath);
+		f.setAlbumName(albumName);
+		f.setCoverPath(coverPath);
 		f.setTags(tags);
 		return f;
 	}
 
-	public static void insertPicture(ImageObject f){
-		if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
+	public static void updateInsertPicture(ImageObject f){
 
+		boolean pictureExist = false;
+		boolean albumExist = false;
+		for(FileObject filesObject: list){
+			if(filesObject.getFilePath().equals(f.getFilePath())){
+				pictureExist = true;
+			}
+			if(filesObject.getAlbumName().equals(f.getAlbumName())){
+				albumExist =  true;
+			}
+		}
+		if(!(pictureExist))
+			list.add(f);
+
+		if(!(albumExist))
+			list.add(makeFileObjectfromAlbumName(f.getAlbumName()));
+		files.setList(list);
+		insertPicture(f);
+
+	}
+	public static void insertPicture(FileObject f){
+		if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
+			Album theAlbum = new Album();
 			//long albumID = -1;
-			Album theAlbum = new Album();	
-			boolean albumexist = false;
+			if(f.getAlbumName() != null || (!f.getAlbumName().equals(""))){
+				
 			Query a = em.createQuery("select t from Album t where t.albumName=:albumName");
 			a.setParameter("albumName", f.getAlbumName());
 			try{
 				theAlbum=  (Album) a.getSingleResult();
 				em.getTransaction().begin();	
+				if(theAlbum.getCoverPath().equals("")|| theAlbum.getCoverPath()==null)
+					theAlbum.setCoverPath(f.getFilePath());
 				em.persist(theAlbum);
 				em.getTransaction().commit();
 
-				albumexist = true;
-				if(theAlbum.getCoverPath().equals("")|| theAlbum.getCoverPath()==null)
-					theAlbum.setCoverPath(f.getFilePath());
+				
 
 			}catch(Exception e){
+		
+
 				em.getTransaction().begin();
 				theAlbum = new Album();	
 
-				if(f.getAlbumName() == null || (f.getAlbumName().equals(""))){
-
-				}else{
+				
 					theAlbum.setName(f.getAlbumName());
-				}
+				
 
 				theAlbum.setCoverPath(f.getFilePath());
 				em.persist(theAlbum);
 				em.getTransaction().commit();
 			}
-
+			}
 			Picture pic = new Picture();
 			boolean pictureExist = false;
 			Query t = em.createQuery("select t from Picture t where t.path=:path");
@@ -397,6 +503,8 @@ public class DatabaseHandler {
 
 				em.getTransaction().begin();
 				pic.setAlbum(theAlbum);
+				if(f.getDate().equals(""))
+				pic.setDate(f.getDate());
 
 				List<Picture> thePictures = theAlbum.getPicture();
 				if(!(thePictures.contains(pic)))
@@ -411,13 +519,14 @@ public class DatabaseHandler {
 				em.getTransaction().begin();
 				pic = new Picture();
 				pic.setPath(f.getFilePath());	
-				if(f.getDate() != "")
+				if(f.getDate().equals(""))
 					pic.setDate(f.getDate());
 				if(f.getFileName() != null ||(!f.getFileName().equals(""))){
 					pic.setName(f.getFileName());
 					pic.setAlbum(theAlbum);
 					List<Picture> thePictures = theAlbum.getPicture();
 					thePictures.add(pic);
+
 					theAlbum.setPictures(thePictures);
 					em.persist(theAlbum);
 					em.persist(pic);
@@ -434,32 +543,32 @@ public class DatabaseHandler {
 							Tag tag= (Tag) ta.getSingleResult();
 							em.getTransaction().begin();
 							List<Picture> ptag= tag.getPicture();
-							List<Album> atag = tag.getAlbum();
+							//List<Album> atag = tag.getAlbum();
 
-							if(!(atag.contains(theAlbum)))
+							/*if(!(atag.contains(theAlbum)))
 								atag.add(theAlbum);
-
+							*/	
 							if(!(ptag.contains(pic)))
 								ptag.add(pic);
 
-							List<Tag> aTags = theAlbum.getTag();
+							List<Tag> aTags = theAlbum.getTags();
 
-							if(!(aTags.contains(tag)))
+							/*if(!(aTags.contains(tag)))
 								aTags.add(tag);
-
-							List<Tag> pTags = pic.getTag();
+							*/
+							List<Tag> pTags = pic.getTags();
 
 							if(!(pTags.contains(tag)))
 								pTags.add(tag);
 
 							tag.setPicture(ptag);
-							tag.setAlbum(atag);
+							//tag.setAlbum(atag);
 
-							theAlbum.setTag(aTags);
+							//theAlbum.setTag(aTags);
 							pic.setTag(pTags);
 							em.persist(tag);
 							em.persist(pic);
-							em.persist(theAlbum);
+							//em.persist(theAlbum);
 							em.getTransaction().commit();
 						}
 						catch(Exception ee){
@@ -475,10 +584,10 @@ public class DatabaseHandler {
 							List<Picture> peg = new ArrayList<Picture>();
 							peg.add(pic);
 							tag.setPicture(peg);
-							List<Tag> aTags = theAlbum.getTag();
+							List<Tag> aTags = theAlbum.getTags();
 							if(aTags!=null)
 								aTags.add(tag);
-							List<Tag> pTags = pic.getTag();
+							List<Tag> pTags = pic.getTags();
 							if(pTags!=null)
 								pTags.add(tag);
 
@@ -495,14 +604,18 @@ public class DatabaseHandler {
 					}
 				}
 				try{
-					if(f.getComment()!=null ||(! f.getComment().equals(""))){
+					if((!f.getComment().equals(""))){
 						Query c = em.createQuery("select t from Comment t where t.comment=:comment");
 						c.setParameter("comment",f.getComment());
 						try{
 							Comment comment = (Comment)c.getSingleResult();
 							em.getTransaction().begin();
 							comment.setComment(f.getComment());
+							List<Picture> pics = comment.getPicture();
+							pics.add(pic);
+							comment.setPicture(pics);
 							pic.setComment(comment);
+							
 							em.persist(pic);
 							em.persist(comment);
 							em.getTransaction().commit();
@@ -510,9 +623,9 @@ public class DatabaseHandler {
 						}catch(Exception eee){				
 							em.getTransaction().begin();
 							Comment comment = new Comment();
-							if(f.getComment() != null ||(!f.getComment().equals(""))){
+							
 								comment.setComment(f.getComment());
-							}
+							
 							List<Picture> pics = new ArrayList<Picture>();
 							pics.add(pic);
 							comment.setPicture(pics);
@@ -521,8 +634,8 @@ public class DatabaseHandler {
 							em.persist(comment);
 							em.getTransaction().commit();
 						}
-						Query ca = em.createQuery("select t from Comment t where t.album=:album");
-							ca.setParameter("album", theAlbum);
+						/*Query ca = em.createQuery("select t from Comment t where t.album=:album");
+						ca.setParameter("album", theAlbum);
 						try{
 							Comment comment = (Comment)c.getSingleResult();
 							em.getTransaction().begin();
@@ -534,7 +647,7 @@ public class DatabaseHandler {
 						}catch(Exception d){				
 							em.getTransaction().begin();
 							Comment comment = new Comment();
-						
+
 							if(f.getComment() != null ||f.getComment().equals("")){
 								comment.setComment(f.getComment());
 							}
@@ -546,13 +659,14 @@ public class DatabaseHandler {
 							em.persist(comment);
 							em.getTransaction().commit();
 						}
-					}
+					}*/
+				}
 				}catch(Exception k){
 
 				}
 				try{
-					Query l = em.createQuery("select t from Location t where t.picture=:picture");
-					l.setParameter("location", f.getLocation());
+					Query l = em.createQuery("select t from Location t where t.location=:location");
+					l.setParameter("location", f.getLocation().getLocation());
 					try{
 						Location location = (Location)l.getSingleResult();
 						em.getTransaction().begin();
@@ -566,20 +680,23 @@ public class DatabaseHandler {
 					}catch(Exception b){
 						em.getTransaction().begin();
 						Location location = new Location();
-						if(f.getLocation() != null || f.getLocation().equals("")){
+						
 							location.setLatitude((f.getLocation().getLatitude()));
 							location.setLongitude(f.getLocation().getLongitude());
 
-						}
+						location.setLocation(f.getLocation().getLocation());
+						List<Picture> pics = new ArrayList<Picture>();
+						pics.add(pic);
+						location.setPicture(pics);
 						pic.setLocation(location);
 						em.persist(pic);
 						em.persist(location);
 						em.getTransaction().commit();
 					}
-					Query la = em.createQuery("select t from Location t where t.album=:album");
+					/*Query la = em.createQuery("select t from Location t where t.album=:album");
 					la.setParameter("album", theAlbum);
 					try{
-						
+
 					}catch(Exception b){
 						em.getTransaction().begin();
 						Location location = new Location();
@@ -596,14 +713,24 @@ public class DatabaseHandler {
 						em.persist(location);
 						em.getTransaction().commit();
 					}
-				}
-				catch(Exception j){
+				}*/
+				}catch(Exception j){
 				}	
 			}
+
 		}
+
 	}
 
-
+	public static void updateAddTagtoPicture(String tag, String filePath){
+		for(FileObject f:list){
+			if(f.getFilePath().equals(filePath))
+					list.remove(f);
+	}
+	addTagtoPicture(tag, filePath);
+	list.add(makeFileObjectfromPath(filePath));
+	files.setList(list);
+}
 
 	/**
 	 * a method that add a tag to a picture
@@ -643,7 +770,7 @@ public class DatabaseHandler {
 				List<Picture> pictures = new ArrayList<Picture>();
 				pictures.add(picture);
 				newTag.setPicture(pictures);
-				List<Tag> tags =picture.getTag();
+				List<Tag> tags =picture.getTags();
 				tags.add(newTag);
 				picture.setTag(tags);
 				em.persist(picture);
@@ -654,12 +781,21 @@ public class DatabaseHandler {
 		}
 
 	}
-	public static void addTagtoAlbum(String tag, String filePath){
+	public static void updateAddTagtoAlbum(String tag, String albumName){
+		for(FileObject f:list){
+			if(f.getAlbumName().equals(albumName))
+					list.remove(f);
+	}
+	addTagtoAlbum(tag, albumName);
+	list.add(makeFileObjectfromAlbumName(albumName));
+	files.setList(list);
+}
+	public static void addTagtoAlbum(String tag, String albumName){
 		Album album = new Album();
 
 		boolean pictureExist = true;
-		Query b = em.createQuery("select t from Album t where t.albumName=:path");
-		b.setParameter("path", filePath);
+		Query b = em.createQuery("select t from Album t where t.albumName=:albumName");
+		b.setParameter("albumName", albumName);
 		try{
 			Album alb =  (Album)b.getSingleResult();
 			album = alb; 
@@ -687,7 +823,7 @@ public class DatabaseHandler {
 				List<Album> albums = new ArrayList<Album>();
 				albums.add(album);
 				newTag.setAlbum(albums);
-				List<Tag> tags =album.getTag();
+				List<Tag> tags =album.getTags();
 				tags.add(newTag);
 				album.setTag(tags);
 				em.persist(album);
@@ -698,6 +834,15 @@ public class DatabaseHandler {
 		}
 
 	}
+	public static void updateaddCommenttoPicture(String comment, String filePath){
+		for(FileObject f:list){
+			if(f.getFilePath().equals(filePath))
+					list.remove(f);
+	}
+	addCommenttoPicture(comment, filePath);
+	list.add(makeFileObjectfromPath(filePath));
+	files.setList(list);
+}
 	/**
 	 * add a comment to a picture
 	 * @param comment
@@ -744,7 +889,16 @@ public class DatabaseHandler {
 			}
 		}
 	}
-	public static void addCommenttAlbum(String comment, String filePath){
+	public static void updateAddCommenttoAlbum(String comment, String albumName){
+		for(FileObject f:list){
+			if(f.getAlbumName().equals(albumName))
+					list.remove(f);
+	}
+	addCommenttoAlbum(comment, albumName);
+	list.add(makeFileObjectfromAlbumName(albumName));
+	files.setList(list);
+}
+	public static void addCommenttoAlbum(String comment, String filePath){
 		Album album= new Album();
 		Query b = em.createQuery("select t from Album t where t.albumName=:albumName");
 		b.setParameter("albumName", filePath);
@@ -785,7 +939,15 @@ public class DatabaseHandler {
 		}
 	}
 
-	// ADD TO ALBUM
+	public static void updateAddLocationtoPicture(String location, String filePath){
+		for(FileObject f:list){
+			if(f.getFilePath().equals(filePath))
+					list.remove(f);
+	}
+	addLocationtoPicture(location, filePath);
+	list.add(makeFileObjectfromPath(filePath));
+	files.setList(list);
+}
 	/**
 	 * 
 	 * @param location
@@ -839,6 +1001,15 @@ public class DatabaseHandler {
 		}
 
 	}
+	public static void updateAddLocationtoAlbum(String location, String albumName){
+		for(FileObject f:list){
+			if(f.getAlbumName().equals(albumName))
+					list.remove(f);
+	}
+	addLocationtoAlbum(location, albumName);
+	list.add(makeFileObjectfromAlbumName(albumName));
+	files.setList(list);
+}
 	public static void addLocationtoAlbum(String location, String albumName){
 		//REMOVA GAMMAL LOCATION
 		Album album = new Album();
@@ -888,14 +1059,23 @@ public class DatabaseHandler {
 	}
 	// 
 
-	/*public static void deleteAll(){
+	public static void deleteAll(){
 		Query b = em.createQuery("select t from Picture t");
 		List<Picture> allPictures = b.getResultList();
 		for(Picture pic:allPictures){
 			deletePicture(pic.getPath());
 		}
+	}
+	
+	public static void updateDeletePictures(String filePath){
+		deletePicture(filePath);
+		List<Picture> pictures = getAllPictures();
+		list = new ArrayList<FileObject>();
+		for(Picture picture:pictures)
+			list.add(makeFileObjectfromPath(picture.getPath()));
 
-	}*/
+		files.setList(list);
+	}
 	/**
 	 * Delete a picture
 	 * @param filePath
@@ -905,7 +1085,7 @@ public class DatabaseHandler {
 		Picture picture = em.find(Picture.class, filePath);
 
 		if(picture != null){
-			List<Tag> tags = picture.getTag();
+			List<Tag> tags = picture.getTags();
 			for(Tag tag: tags){
 
 				em.getTransaction().begin();
@@ -946,6 +1126,16 @@ public class DatabaseHandler {
 
 
 	}
+	
+	public static void updateDeleteTagsfromPictures(String filePath){
+		deleteTagsfromPicture(filePath);
+		for(FileObject f: list){
+			if(f.getFilePath().equals(filePath))
+				list.remove(f);
+		}
+		list.add(makeFileObjectfromPath(filePath));
+		files.setList(list);
+	}
 	/**
 	 * delete all tags from a picture
 	 * @param filePath
@@ -954,7 +1144,7 @@ public class DatabaseHandler {
 
 		Picture picture = em.find(Picture.class, filePath);
 		if(picture != null){
-			List<Tag> tags = picture.getTag();
+			List<Tag> tags = picture.getTags();
 			for(Tag tag: tags){
 
 				em.getTransaction().begin();
@@ -966,9 +1156,18 @@ public class DatabaseHandler {
 			}
 		}
 	}
+	public static void updateDeletePicturefromAlbum(String filePath){
+		 deletePicturefromAlbum(filePath);
+		for(FileObject f: list){
+			if(f.getFilePath().equals(filePath))
+				list.remove(f);
+		}
+		list.add(makeFileObjectfromPath(filePath));
+		files.setList(list);
+	}
 	/*
 	 * Delete a picture from an album
-	 */
+	 */	
 	public static void deletePicturefromAlbum(String filePath){
 		Picture picture = em.find(Picture.class, filePath);
 
@@ -982,6 +1181,16 @@ public class DatabaseHandler {
 			em.getTransaction().commit();	
 		}
 	}
+	public static void updateDeleteCommentfromPicture(String filePath){
+		 deleteCommentfromPicture(filePath);
+		for(FileObject f: list){
+			if(f.getFilePath().equals(filePath))
+				list.remove(f);
+		}
+		list.add(makeFileObjectfromPath(filePath));
+		files.setList(list);
+	}
+	
 	/**
 	 * Delete a pictures comment
 	 */
@@ -997,6 +1206,16 @@ public class DatabaseHandler {
 			em.getTransaction().commit();	
 		}
 	}
+	public static void updateDeleteLocationfromPicture(String filePath){
+		deleteLocationfromPicture(filePath);
+		for(FileObject f: list){
+			if(f.getFilePath().equals(filePath))
+				list.remove(f);
+		}
+		list.add(makeFileObjectfromPath(filePath));
+		files.setList(list);
+	}
+	
 	/**
 	 * Delete a pictures location
 	 * @param filePath
@@ -1011,6 +1230,85 @@ public class DatabaseHandler {
 			loc.setPicture(picts);
 			em.persist(loc);
 			em.getTransaction().commit();	
+		}
+	}
+	public static void updateDeleteCommentfromAlbum(String albumName){
+		 deleteCommentfromAlbum(albumName);
+		for(FileObject f: list){
+			if(f.getAlbumName().equals(albumName))
+				list.remove(f);
+		}
+		list.add(makeFileObjectfromAlbumName(albumName));
+		files.setList(list);
+	}
+	
+	/**
+	 * Delete a pictures comment
+	 */
+	public static void deleteCommentfromAlbum(String albumName){
+		Album album = em.find(Album.class, albumName);
+		if(album != null){
+			Comment com = album.getComment();
+			em.getTransaction().begin();
+			List<Album> albums = com.getAlbum();
+			albums.remove(album);
+			com.setAlbum(albums);
+			em.persist(com);
+			em.getTransaction().commit();	
+		}
+	}
+	public static void updateDeleteLocationfromAlbum(String albumName){
+		deleteLocationfromAlbum(albumName);
+		for(FileObject f: list){
+			if(f.getAlbumName().equals(albumName))
+				list.remove(f);
+		}
+		list.add(makeFileObjectfromAlbumName(albumName));
+		files.setList(list);
+	}
+	
+	/**
+	 * Delete a pictures location
+	 * @param filePath
+	 */
+	public static void deleteLocationfromAlbum(String albumName){
+		Album album = em.find(Album.class, albumName);
+		if(album!= null){
+			Location loc = album.getLocation();
+			em.getTransaction().begin();
+			List<Album> albums = loc.getAlbum();
+			albums.remove(album);
+			loc.setAlbum(albums);
+			em.persist(loc);
+			em.getTransaction().commit();	
+		}
+	}
+	public static void updateDeleteTagsfromAlbum(String albumName){
+		deleteTagsfromAlbum(albumName);
+		for(FileObject f: list){
+			if(f.getAlbumName().equals(albumName))
+				list.remove(f);
+		}
+		list.add(makeFileObjectfromAlbumName(albumName));
+		files.setList(list);
+	}
+	/**
+	 * delete all tags from a picture
+	 * @param filePath
+	 */
+	public static void deleteTagsfromAlbum(String albumName){
+		Album album = em.find(Album.class, albumName);
+		if(album!= null){
+			List<Tag> tags = album.getTags();
+			for(Tag tag: tags){
+
+				em.getTransaction().begin();
+				List<Album> albums =tag.getAlbum();
+				albums .remove(album);
+				tag.setAlbum(albums);
+				em.persist(tag);
+				em.getTransaction().commit();	
+			}
 		}
 	}
 }

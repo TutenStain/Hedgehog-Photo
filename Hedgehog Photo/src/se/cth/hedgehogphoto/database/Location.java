@@ -63,7 +63,7 @@ public void setPicture(List<Picture> picture) {
 
 	@Override
 	public String toString() {
-		return "Locations [Location=" + location+ "]";
+		return "[Location=" + location+ " Longitude= " + longitude + " Latitude= " + latitude+ "] ";
 	}
 	public String getLocationasString(){
 		return location;

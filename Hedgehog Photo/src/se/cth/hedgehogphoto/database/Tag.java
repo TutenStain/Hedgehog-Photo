@@ -54,7 +54,7 @@ private List<Album> album;
 	}
 	@Override
 	public String toString() {
-		return "Tags [Tag=" + tag+ "]";
+		return "[Tag=" + tag+ "] ";
 	}
 	public String getTagAsString(){
 		return tag;

@@ -4,11 +4,9 @@ package se.cth.hedgehogphoto.search;
 import java.util.List;
 import java.util.Observable;
 
-import javax.activation.DataHandler;
-
 import se.cth.hedgehogphoto.FileObject;
-import se.cth.hedgehogphoto.ImageObject;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
+
 
 /**
  * @author Barnabas Sapan
@@ -36,7 +34,7 @@ public class SearchModel extends Observable{
 		//System.out.println(DatabaseHandler.getLocationd"s());
 		//DatabaseHandler.getAlbumName("jaggillarelefanter.jpg");
 
-		return DatabaseHandler.searchComments("Gutes bild");
+		return DatabaseHandler.searchPicturesfromComments("Gutes bild");
 		//return DatabaseHandler.searchComments(searchText);
 	}
 	

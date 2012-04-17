@@ -23,7 +23,7 @@ public class SearchComponentController{
 			//TODO This needs to be done.
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Clicked on: " + fo.getImagePath());
+				System.out.println("Clicked on: " + fo.getFilePath());
 			}
 
 			@Override

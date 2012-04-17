@@ -46,7 +46,7 @@ public void setPicture(List<Picture> picture) {
 
 	@Override
 	public String toString() {
-		return "Comments [Comment=" + comment+ "]";
+		return " [Comment= " + comment+ "] ";
 	}
 
 	public List<Album> getAlbum() {
