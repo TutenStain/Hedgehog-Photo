@@ -11,15 +11,16 @@ import org.apache.sanselan.common.IImageMetadata;
 
 
 /**
- * A wrapper/test-class for the metadata extractor
+ * A wrapper-class for the metadata extractor
  * @author Florian
  */
 public class Metadata {
 	
-	private static File file = new File("finbild.jpg"); //default file
+	private static File file = new File("test3.jpg"); //default file
 	private static final String[] metadataTypes = 
 			{"Modify Date", "Artist", "XPComment", "XPAuthor", 
-					"XPKeywords", "Date Time Original"};
+					"XPKeywords", "Date Time Original", "Interop Index", 
+					"Interop Version", "Unknown Tag (0x3)", "Unknown Tag (0x4)"};
 	
 	public static void main(String [] args) {
 		try {
@@ -28,7 +29,7 @@ public class Metadata {
 			setFileProperties(io);
 			io.print();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			//IF POSSIBLE: Add exception handling
 			e.printStackTrace();
 		}
 	}
@@ -37,15 +38,17 @@ public class Metadata {
 		return extractMetadata(file);
 	}
 	
-	private static IImageMetadata extractMetadata(File file) {
+	public static IImageMetadata extractMetadata(File file) {
 		Metadata.file = file;
 		IImageMetadata metadata = null;
 		try {
 			metadata = Sanselan.getMetadata(file);
+//			System.out.println(metadata.toString());
 		} catch (ImageReadException e) {
-			// TODO Auto-generated catch block
+			//IF POSSIBLE: Add exception handling
 			e.printStackTrace();
 		} catch (IOException e) {
+			//IF POSSIBLE: Add exception handling
 			e.printStackTrace();
 		}
 		

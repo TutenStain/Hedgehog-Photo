@@ -45,7 +45,7 @@ public class SearchComponentView extends JPanel{
 		while(itr.hasNext()){
 			str += itr.next() + " "; 
 		}
-				
+		
 		tags = new JTextArea(str);
 	    tags.setEditable(false);  
 	    tags.setCursor(null);  

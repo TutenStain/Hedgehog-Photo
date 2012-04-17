@@ -6,14 +6,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
-
 import se.cth.hedgehogphoto.Files;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 
 /**
  * @author Barnabas Sapan
  */
-
 public class TagComponentController implements MouseListener{
 	private TagCloudView view;
 	private TagComponent tag;
@@ -28,7 +26,6 @@ public class TagComponentController implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
-	
 	
 	@Override
 	public void mousePressed(MouseEvent e) {

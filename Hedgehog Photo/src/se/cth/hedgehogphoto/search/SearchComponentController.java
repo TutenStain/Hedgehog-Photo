@@ -10,7 +10,6 @@ import se.cth.hedgehogphoto.Files;
 /**
  * @author Barnabas Sapan
  */
-
 public class SearchComponentController{
 	private SearchComponentView view;
 	private final FileObject fo;
@@ -21,7 +20,6 @@ public class SearchComponentController{
 		fo = _fo;
 		
 		view.addMouseListener(new MouseListener(){
-			
 			//TODO This needs to be done.
 			@Override
 			public void mouseClicked(MouseEvent e) {

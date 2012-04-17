@@ -1,9 +1,14 @@
 package se.cth.hedgehogphoto.database;
 
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 /**
  * 
  * @author Julia
@@ -11,9 +16,24 @@ import javax.persistence.Id;
  */
 @Entity
 public class Comment {
-private String comment;
+
 @Id
-private String path;
+private String comment;
+	
+@OneToMany
+private List<Picture> picture;
+
+@OneToMany
+private List<Album> album;
+
+	
+	public List<Picture> getPicture() {
+	return picture;
+}
+
+public void setPicture(List<Picture> picture) {
+	this.picture = picture;
+}
 
 	public void setComment(String comment) {
 		this.comment = comment;
@@ -22,15 +42,22 @@ private String path;
 	public String getComment() {
 		return comment;
 	}
-	public String getPath(){
-		return path;
-	}
-	public void setPath(String path) {
-		this.path = path;
-	}
+
+
 	@Override
 	public String toString() {
-		return "Comments [Path=" + path + ", Comment=" + comment+ "]";
+		return "Comments [Comment=" + comment+ "]";
+	}
+
+	public List<Album> getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(List<Album> album) {
+		this.album = album;
+	}
+	public String getCommentAsString(){
+		return comment;
 	}
 	
 }

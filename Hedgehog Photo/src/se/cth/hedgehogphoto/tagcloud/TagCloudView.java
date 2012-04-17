@@ -1,8 +1,11 @@
 package se.cth.hedgehogphoto.tagcloud;
 
 import java.awt.Dimension;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -17,7 +20,6 @@ import se.cth.hedgehogphoto.gui.WrapLayout;
  * !setPreferredSize should always be set!
  * @author Barnabas Sapan
  */
-
 public class TagCloudView extends JPanel implements Observer {
 	private Map<String, Integer> map = new HashMap<String, Integer>();
 	private Font baseFont = new Font("Serif", Font.PLAIN, 11);
@@ -55,7 +57,6 @@ public class TagCloudView extends JPanel implements Observer {
 		if(arg != null){
 			TagCloudModel model = (TagCloudModel)arg;
 			map = model.getTagsOccurrence();
-			
 			removeAll();
 			
 			for(Map.Entry<String, Integer> entry : map.entrySet()){

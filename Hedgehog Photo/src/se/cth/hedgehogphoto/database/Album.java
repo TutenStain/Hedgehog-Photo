@@ -1,35 +1,59 @@
 package se.cth.hedgehogphoto.database;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 /**
  * 
  * @author Julia
  *
  */
 @Entity
-public class Album {
+public class Album extends File {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long albumID;
+	private String albumName;
+	
 	private String coverPath;
-	private String name;
-
 	
-	public Long getAlbumID(){
-		return albumID;
+	@OneToMany
+	List<Picture> picture;
+
+	public List<Picture> getPicture() {
+		return picture;
+	}
+
+
+
+	protected void setPictures(List<Picture> picture) {
+		this.picture = picture;
+	}
+	public String getAlbumName() {
+		return albumName;
+	}
+
+
+
+	protected void setAlbumName(String albumName) {
+		this.albumName = albumName;
 	}
 	
-
-
 	public String getName() {
-		return name;
+		return albumName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String albumName) {
+		this.albumName = albumName;
 	}
 	public String getCoverPath() {
 		return coverPath;
@@ -41,6 +65,6 @@ public class Album {
 
 	@Override
 	public String toString() {
-		return "Pictures [CoverPath=" + coverPath+ ", Name=" + name + "AlbumID="+albumID+ "]";
+		return "Pictures [CoverPath=" + coverPath+ ", Name=" + albumName+ "]";
 	}
 }
