@@ -1,22 +1,37 @@
-package se.cth.hedgehogphoto.metadata;
+package se.cth.hedgehogphoto;
 
 import java.util.List;
 
-import se.cth.hedgehogphoto.FileObject;
-import se.cth.hedgehogphoto.Location;
-import se.cth.hedgehogphoto.Util;
 
 
 
 public class ImageObject implements FileObject {
-	private String filePath, fileName, date, artist, comment, albumName, coverPath = "";
 	private List<String> tags;
-	private String longitude, latitude; /* Unused? */
+	private String date = "";
+	private String comment = "";
+	private String fileName = "";
+	private String filePath = "";
+	private String coverPath = "";
+	private String albumName = "";
+	private String longitude = "";
+	private String latitude = "";
+	@Deprecated
+	private String artist; /* Keep this for now, even though it is not used in the database. */
 	private Location location = new Location("");
 	private boolean legitGPSInfo;
 	
 	public ImageObject() {
 		//init
+	}
+	
+	@Override
+	public String getAlbumName() {
+		return albumName;
+	}
+	
+	@Override
+	public void setAlbumName(String albumName) {
+		this.albumName = albumName;
 	}
 
 	public void setProperty(String property, String value) {
@@ -25,8 +40,8 @@ public class ImageObject implements FileObject {
 			case "Artist": setArtist(value); break;
 			case "XPComment": setComment(value); break;
 			case "XPKeywords": setTags(value); break;
-			case "File Path": setFilePath(value); break;
-			case "File Name": setFileName(value); break;
+			case "File Path": setImagePath(value); break;
+			case "File Name": setImageName(value); break;
 			case "Interop Index": setFirstGPSDirection(value); break;
 			case "Interop Version": setLatitude(value); break;
 			case "Unknown Tag (0x3)": setSecondGPSDirection(value); break;
@@ -45,30 +60,12 @@ public class ImageObject implements FileObject {
 		System.out.println("tags: " + tags);
 		System.out.println("location: " + location.toString());
 	}
-	
-	@Override
-	public String getAlbumName() {
-		return albumName;
-	}
-
-	@Override
-	public void setAlbumName(String albumName) {
-		this.albumName = albumName;
-	}
 
 	@Override
 	public List<String> getTags() {
 		return tags;
 	}
 
-	@Override
-	public void setTags(List<String> tags) {
-		this.tags = tags;
-	}
-	
-	/**
-	 * Assuming that multipel tags are separated by a semi-colon (';')
-	 */
 	@Override
 	public void setTags(String tags) {
 		List<String> tagList = Util.convertStringToList(tags, ";");
@@ -104,23 +101,33 @@ public class ImageObject implements FileObject {
 	}
 
 	@Override
-	public String getFilePath() {
+	public String getImagePath() {
 		return filePath;
 	}
 
 	@Override
-	public  void setFilePath(String filePath) {
+	public  void setImagePath(String filePath) {
 		this.filePath = filePath;
 	}
 	
 	@Override
-	public String getFileName() {
+	public String getImageName() {
 		return fileName;
 	}
 	
 	@Override
-	public void setFileName(String fileName) {
+	public void setImageName(String fileName) {
 		this.fileName = fileName;
+	}
+	
+	@Override
+	public String getCoverPath(){
+		return coverPath;
+	}
+	
+	@Override
+	public void setCoverPath(String coverPath){
+		this.coverPath = coverPath;
 	}
 	
 	@Override
@@ -152,19 +159,9 @@ public class ImageObject implements FileObject {
 	public void setLocation(Location location) {
 		this.location=location;
 	}
-
+	
 	@Override
-	public String toString() {
-		return "[name=" + fileName + "] [location=" + location + "] [date=" + date + "] [tag=" + tags + "] [comments= " + comment +"] [albumName=" + albumName + "]" + "Path= " + filePath + "]";
-	}
-
-	@Override
-	public void setCoverPath(String path) {
-		this.coverPath = path;
-	}
-
-	@Override
-	public String getCoverPath() {
-		return coverPath;
+	public String toString(){
+		return "[name=" + name + "] [location=" + longitude +", "+ latitude + "] [path=" + path + "] [date=" + date + "] [tag=" + tags.toString() + "] [comments= " + comment +"] [albumName=" + albumName + "] [coverPath=" + coverPath + "]";
 	}
 }

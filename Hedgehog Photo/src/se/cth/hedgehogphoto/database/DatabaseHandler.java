@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import se.cth.hedgehogphoto.metadata.*;
 import se.cth.hedgehogphoto.FileObject;
 
-
 /**
  * 
  * @author Julia
