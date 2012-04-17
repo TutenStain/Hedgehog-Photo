@@ -11,8 +11,8 @@ import se.cth.hedgehogphoto.Util;
 public class ImageObject implements FileObject {
 	private String filePath, fileName, date, artist, comment, albumName, coverPath = "";
 	private List<String> tags;
-	private String longitude, latitude; /* Unused? */
-	private Location location = new Location("");
+	private String longitude, latitude; /* TODO: Change dependency from these strings, to the location-class! */
+	private Location location = new Location(""); /* Should rely on this object. */
 	private boolean legitGPSInfo;
 	
 	public ImageObject() {
