@@ -69,7 +69,6 @@ public class ImageObject implements FileObject {
 	/**
 	 * Assuming that multipel tags are separated by a semi-colon (';')
 	 */
-	@Override
 	public void setTags(String tags) {
 		List<String> tagList = Util.convertStringToList(tags, ";");
 		this.tags = tagList;

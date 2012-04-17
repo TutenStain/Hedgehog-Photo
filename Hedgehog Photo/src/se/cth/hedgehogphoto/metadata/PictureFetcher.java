@@ -64,14 +64,14 @@ public class PictureFetcher {
 						if(dirFiles[j].isDirectory()==false){
 							int pos = dirFiles[j].getName().lastIndexOf(".");              //find the pos of the . in the filename
 							String end =	dirFiles[j].getName().substring(pos + 1);      // get extention name and place into string ext
-							if (end.equals("PNG") ||end.equals("png") || end.equals("jpg") || end.equals("gif")|| end.equals("JPG") || end.equals("GIF")  && dirFiles[j].isFile()){                                //check the file extension is a jpg file type
+							if (end.equalsIgnoreCase("png") || end.equalsIgnoreCase("jpg") || end.equalsIgnoreCase("gif") && dirFiles[j].isFile()){                                //check the file extension is a jpg file type
 								System.out.println(dirFiles[j]);      //send filename to client
 								ImageObject imageObject;
 								try {
 									if(dirFiles[j].isDirectory()==false){
 										IImageMetadata imageMetadata =	metadata.extractMetadata(dirFiles[j]);
 										if(imageMetadata != null){
-										imageObject = metadata.getImageObject(imageMetadata);
+										imageObject = metadata.getImageObject(imageMetadata); /*TODO: Decide exactly WHERE the ImageObject-class should be situated. */
 												imageObject.setAlbumName(album);
 												
 												imageObject.setFileName(dirFiles[j].getName());
@@ -94,7 +94,7 @@ public class PictureFetcher {
 					for(int k = 0; k < chooser.getSelectedFiles().length;k++){
 
 						try {
-							ImageObject  imageObject = Metadata.getImageObject(metadata.extractMetadata((chooser.getSelectedFiles()[k])));
+							ImageObject  imageObject = Metadata.getImageObject(metadata.extractMetadata((chooser.getSelectedFiles()[k]))); /* TODO: Right now we have two equal ImageObject-classes in different packages. Where to put it? */
 							imageObject.setAlbumName(chooser.getSelectedFiles()[k].getParentFile().getName());
 							imageObject.setFileName(chooser.getSelectedFiles()[k].getName());
 							
