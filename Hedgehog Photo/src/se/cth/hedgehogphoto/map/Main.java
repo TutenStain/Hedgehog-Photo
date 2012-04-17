@@ -72,7 +72,7 @@ public class Main {
 		mapPanel.enableInteraction(true);
 		
 		/* TODO: list is not even used... refactor!! */
-		List<Double> list = getCoordinatesList(mapPanel, locations);
+		List<Point> list = getCoordinatesList(mapPanel, locations);
 		mapPanel.setBounds(0, 0, WIDTH, HEIGHT);
 		mapPanel.setOpaque(true);
 		return mapPanel;
@@ -100,12 +100,13 @@ public class Main {
 	 * Put away the functionality to the mapPanel! */
 	@Deprecated
 	private static boolean coordinatesVisible(MapPanel map, List<Location> locations) {
-		List<Double> list = getCoordinatesList(map, locations);
+		List<Point> list = getCoordinatesList(map, locations);
 		boolean ok = true;
-		for(int i = 0; i<list.size(); i+=2) {
-			if (Math.abs(list.get(i)) > WIDTH / 2)
+		int nbrOfCoordinates = list.size();
+		for(int i = 0; i < nbrOfCoordinates; i++) {
+			if (Math.abs(list.get(i).x) > WIDTH / 2)
 				ok = false;
-			else if (Math.abs(list.get(i+1)) > HEIGHT / 2)
+			else if (Math.abs(list.get(i).y) > HEIGHT / 2)
 				ok = false;
 			
 			
@@ -115,15 +116,15 @@ public class Main {
 	
 	/* TODO: wtf does this method do? Better names please! */
 	private static void evaluateCoordinates(MapPanel map, List<Location> locations) {
-		List<Double> list = getCoordinatesList(map, locations);
+		List<Point> list = getCoordinatesList(map, locations);
 		//print out the "real" pixels
-		for (int j = 0; j<list.size(); j+=2)
-			System.out.println("x: " + (WIDTH/2.0 + list.get(j)) + "\t\ty: " + (HEIGHT/2.0 + list.get(j+1)));
+		for (int j = 0; j<list.size(); j++)
+			System.out.println("x: " + (WIDTH/2.0 + list.get(j).x) + "\t\ty: " + (HEIGHT/2.0 + list.get(j).y));
 			
 	}
 	
 	/* FIXME: Change name, and return type to List<Point> */
-	private static List<Double> getCoordinatesList(MapPanel map, List<Location> locations) {
+	private static List<Point> getCoordinatesList(MapPanel map, List<Location> locations) {
 		List<Point> coordinates = new ArrayList<Point>();
 		Point temp;
 		for(int i = 0; i<locations.size(); i++) {
