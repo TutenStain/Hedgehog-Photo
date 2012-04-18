@@ -154,8 +154,9 @@ public class MainView implements Observer {
 			MainModel model = (MainModel)arg1;
 			List<FileObject> images = model.getImages();
 			photoViewPanel.removeAll();
-			for(int i = 0; i<10; i++) {
+			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i));
+				pp.setComment(images.get(i).getComment());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 				frame.revalidate();
@@ -165,10 +166,10 @@ public class MainView implements Observer {
 		if(arg1 instanceof Files){
 			List<FileObject> images = Files.getInstance().getList();
 			photoViewPanel.removeAll();
-			for(int i = 0; i<10; i++) {
-				// pp = new PhotoPanel(images.get(i));
-		//		photoPanels.add(i, pp);
-			//	photoViewPanel.add(pp);
+			for(int i = 0; i<images.size(); i++) {
+				PhotoPanel pp = new PhotoPanel(images.get(i));
+				photoPanels.add(i, pp);
+				photoViewPanel.add(pp);
 				frame.revalidate();
 			}
 		}

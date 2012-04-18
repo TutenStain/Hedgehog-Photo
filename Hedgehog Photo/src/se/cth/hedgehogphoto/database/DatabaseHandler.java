@@ -207,24 +207,16 @@ public class DatabaseHandler {
 
 	public static List<FileObject> searchPicturesfromTags(String search){
 		if(!(search.equals(""))){
-		/*Query q = em.createQuery("select t from Tag t where t.tag=:tag");
-		q.setParameter("tag", search);
-		try{
-			Tag tag = (Tag)q.getSingleResult();*/
 			Query v = em.createQuery("select t from Picture t");
 			try{
 			List<Picture> pictures = v.getResultList();
-			System.out.println("********************"+pictures+"***************");
 			List<Picture> matchingpictures = new ArrayList<Picture>();
 			for(Picture p: pictures){
-				System.out.print("--------"+p.getTags()+"--------------");
 				for(Tag t:  p.getTags()){
 					if(t.getTag().equals(search)){
 						 matchingpictures.add(p);
 					}
-					
 				}
-				
 			}
 			
 			List<FileObject> fileObjects = new ArrayList<FileObject>(); 
@@ -234,8 +226,6 @@ public class DatabaseHandler {
 		}catch(Exception e){
 			
 		}
-	/*}catch(Exception g){
-	}*/
 	}
 		return null;
 		}

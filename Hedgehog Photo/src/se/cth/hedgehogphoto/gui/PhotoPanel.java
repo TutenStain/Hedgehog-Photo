@@ -68,6 +68,11 @@ public class PhotoPanel extends JPanel {
 		commentsPanel.add(commentsLabel, BorderLayout.CENTER);
 		
 	}
+	
+	public void setComment(String comment){
+		commentsLabel.setText(comment);
+	}
+	
 	public Icon getIcon(){
 		return this.iconLabel.getIcon();
 	}

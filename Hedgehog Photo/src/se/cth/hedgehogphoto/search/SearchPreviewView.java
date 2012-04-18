@@ -71,7 +71,7 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 		while(itr.hasNext() && i < 5){
 			FileObject ob = itr.next();
 			SearchComponentView view = new SearchComponentView(ob);
-			new SearchComponentController(view, ob);
+			new SearchComponentController(view, ob, model);
 			panel.add(view);
 			i++;
 			//panel.add(new JSeparator());		

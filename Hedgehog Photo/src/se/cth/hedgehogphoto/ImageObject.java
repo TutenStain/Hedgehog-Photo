@@ -153,11 +153,6 @@ public class ImageObject implements FileObject {
 	}
 
 	@Override
-	public String toString() {
-		return "[name=" + fileName + "] [location=" + location + "] [date=" + date + "] [tag=" + tags + "] [comments= " + comment +"] [albumName=" + albumName + "]" + "Path= " + filePath + "]";
-	}
-
-	@Override
 	public void setCoverPath(String path) {
 		this.coverPath = path;
 	}
@@ -165,5 +160,10 @@ public class ImageObject implements FileObject {
 	@Override
 	public String getCoverPath() {
 		return coverPath;
+	}
+	
+	@Override
+	public String toString() {
+		return "[name=" + fileName + "] [location=" + location + "] [date=" + date + "] [tag=" + tags + "] [comments= " + comment +"] [albumName=" + albumName + "]" + "[Path= " + filePath + "]";
 	}
 }

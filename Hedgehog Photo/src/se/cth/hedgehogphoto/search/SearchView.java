@@ -95,6 +95,7 @@ public class SearchView extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
+		//TODO This gets called when we dont have a spv specified. Make search here.
 		if(spv == null){
 			SearchModel model = (SearchModel)arg;
 			System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());

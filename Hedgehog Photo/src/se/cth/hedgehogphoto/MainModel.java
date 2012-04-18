@@ -11,17 +11,14 @@ public class MainModel extends Observable {
 	
 	public MainModel() {
 		try {
-			 //images = DatabaseHandler.searchPicturesfromDates("2012.12.02");
-			//images = DatabaseHandler.searchPicturesfromComments("Gutes bild");
-			images = DatabaseHandler.searchPicturesfromTags("Snyggt");
-			//System.out.print("IMAGES SIZE-------------------------------------------------------: + " + images.size() + images);
+			images = DatabaseHandler.getAllPicturesasFileObject();
 		} catch(Exception e) {	
-			//autoexception
+			//TODO Do something if we fail to get the pictures.
 		}
 	}
 	
 	public List<FileObject> getImages() {
-		for(int i = 0; i<images.size(); i++) {
+		for(int i = 0; i < images.size(); i++) {
 			System.out.println(images.get(i));
 		}
 		return images;

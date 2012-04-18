@@ -126,10 +126,6 @@ public class LocationObject {
 		return location.equalsIgnoreCase(secondLocation);
 	}
 	
-	public String toString() {
-		return location + "\nlong: " + longitude + "\tlatitude: " + latitude;
-	}
-	
 	public double getLatitude() {
 		return latitude;
 	}
@@ -139,6 +135,11 @@ public class LocationObject {
 	}
 	public String getLocation() {
 		return location;
+	}
+	
+	@Override
+	public String toString() {
+		return location + "long: " + longitude + " latitude: " + latitude;
 	}
 	
 }
