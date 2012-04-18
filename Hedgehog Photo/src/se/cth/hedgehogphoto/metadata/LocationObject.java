@@ -1,14 +1,14 @@
 package se.cth.hedgehogphoto.metadata;
 
-public class Location {
+public class LocationObject {
 	private String location;
 	private double longitude, latitude;
 	
-	public Location(String place) {
+	public LocationObject(String place) {
 		setLocation(place);
 	}
 	
-	public Location(double longitude, double latitude) {
+	public LocationObject(double longitude, double latitude) {
 		setLocation(longitude, latitude);
 	}
 	
@@ -121,7 +121,7 @@ public class Location {
 		return sb.toString();
 	}
 	
-	public boolean equals(Location otherLocation) {
+	public boolean equals(LocationObject otherLocation) {
 		String secondLocation = otherLocation.toString();
 		return location.equalsIgnoreCase(secondLocation);
 	}
