@@ -8,7 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import se.cth.hedgehogphoto.metadata.ImageObject;
+import se.cth.hedgehogphoto.ImageObject;
 import se.cth.hedgehogphoto.Location;
 
 /**

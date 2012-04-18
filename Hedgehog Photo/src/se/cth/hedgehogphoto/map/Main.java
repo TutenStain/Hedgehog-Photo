@@ -123,7 +123,6 @@ public class Main {
 			
 	}
 	
-	/* FIXME: Change name, and return type to List<Point> */
 	private static List<Point> getCoordinatesList(MapPanel map, List<Location> locations) {
 		List<Point> coordinates = new ArrayList<Point>();
 		Point temp;

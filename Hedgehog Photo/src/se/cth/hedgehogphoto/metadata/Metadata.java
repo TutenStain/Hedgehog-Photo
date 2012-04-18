@@ -36,6 +36,11 @@ public class Metadata {
 		}
 	}
 	
+	public static ImageObject getImageObject(File file) throws IOException{
+		IImageMetadata metadata = extractMetadata();
+		return getImageObject(metadata); /* may return a IOException if metadata == null */
+	}
+	
 	private static IImageMetadata extractMetadata() {
 		return extractMetadata(file);
 	}

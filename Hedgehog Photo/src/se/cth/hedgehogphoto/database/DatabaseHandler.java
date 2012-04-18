@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import se.cth.hedgehogphoto.metadata.*;
 import se.cth.hedgehogphoto.FileObject;
+import se.cth.hedgehogphoto.ImageObject;
 
 /**
  * 

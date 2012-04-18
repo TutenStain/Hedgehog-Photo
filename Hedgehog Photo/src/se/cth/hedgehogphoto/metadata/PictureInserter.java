@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
+import se.cth.hedgehogphoto.ImageObject;
 
 /**
  * 
