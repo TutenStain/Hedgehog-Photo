@@ -269,24 +269,37 @@ public class DatabaseHandler {
 		files.setList(list);
 	}
 	public static List<FileObject> searchfromTagsAlbum(String search){
-		Query q = em.createQuery("select t from Tag t where t.tag=:tag");
+		if(!(search.equals(""))){
+		/*Query q = em.createQuery("select t from Tag t where t.tag=:tag");
 		q.setParameter("tag", search);
 		try{
-		Tag tag = (Tag)q.getSingleResult();
-		 q = em.createQuery("select t from Album t where t.tag=:tag");
-		q.setParameter("tag", tag);
-		try{
-			List<Album> albums = q.getResultList();
-			List<FileObject> fileObjects = new ArrayList<FileObject>();
-			for(Album album:albums)
-				fileObjects.add(makeFileObjectfromAlbumName(album.getName()));
+			Tag tag = (Tag)q.getSingleResult();*/
+			Query v = em.createQuery("select t from Album t");
+			try{
+			List<Album> albums = v.getResultList();
+			
+			List<Album> matchingAlbums = new ArrayList<Album>();
+			for(Album p: albums){
+			
+				for(Tag t:  p.getTags()){
+					if(t.getTag().equals(search)){
+						 matchingAlbums.add(p);
+					}
+					
+				}
+				
+			}
+			
+			List<FileObject> fileObjects = new ArrayList<FileObject>(); 
+			for(Album p: matchingAlbums)
+				fileObjects.add(makeFileObjectfromAlbumName(p.getAlbumName()));
 			return fileObjects;
 		}catch(Exception e){
 			
 		}
-		}catch(Exception o){
-			
-		}
+	/*}catch(Exception g){
+	}*/
+	}
 		return null;
 	}
 	public static void updateSearchAlbumsfromLocations(String search){
