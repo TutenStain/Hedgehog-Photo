@@ -12,13 +12,12 @@ public class MapWrapper extends JLayeredPane {
 	private JPanel map = Main.getMapPanel();
 
 	public static void main(String[] args) {
-
+		
 	}
 	
 	public MapWrapper(List<Point> locationPoints) {
 		add(map, new Integer(0), 0);
 		addLocationMarkers(locationPoints);
-		
 	}
 	
 	private void addLocationMarkers(List<Point> locationPoints) {

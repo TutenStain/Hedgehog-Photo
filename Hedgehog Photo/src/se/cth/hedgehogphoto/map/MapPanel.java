@@ -173,8 +173,8 @@ public class MapPanel extends JPanel {
     //The Preferred width and height of the panel. Doesn't change the actual map size, but is important for
     //calculations right now.
     //TODO: Let the map size be a constant OUTSIDE of this class (or package?)
-    private static final int PREFERRED_WIDTH = 400;
-    private static final int PREFERRED_HEIGHT = 700;
+    private static final int PREFERRED_WIDTH = se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_WIDTH;
+    private static final int PREFERRED_HEIGHT = se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_HEIGHT;
 
     //TODO: Erase this IF we don't want to cruise around on the map, leave it otherwise.
     private static final int ANIMATION_FPS = 15, ANIMATION_DURARTION_MS = 500;
@@ -1184,7 +1184,7 @@ public class MapPanel extends JPanel {
                 add(componentTwo);
         }
     }
-
+    
     private class DragListener extends MouseAdapter implements MouseMotionListener, MouseWheelListener {
         private Point mouseCoords;
         private Point downCoords;
@@ -1232,7 +1232,7 @@ public class MapPanel extends JPanel {
             handlePosition(e);
             handleDrag(e);
         }
- 
+
         /* IF POSSIBLE: use another cursor if mouse is over a certain location on map? */
         public void mouseExited(MouseEvent e) {
             //setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));

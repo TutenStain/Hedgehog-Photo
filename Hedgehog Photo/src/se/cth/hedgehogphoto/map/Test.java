@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
+@Deprecated
 public class Test {
     private JFrame frame = new JFrame();
     private JLayeredPane map;
