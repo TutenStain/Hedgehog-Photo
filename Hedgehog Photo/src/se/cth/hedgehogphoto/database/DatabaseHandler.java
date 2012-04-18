@@ -72,7 +72,7 @@ public class DatabaseHandler {
 		files.setList(list);
 	}
 	public static List<FileObject> searchPictureNames(String search){
-		if(!(search.equals(""))){
+
 		Query q = em.createQuery("select t from Picture t where t.name=:name");
 		q.setParameter("name", search);
 		try{
@@ -83,17 +83,16 @@ public class DatabaseHandler {
 			return fileObjects;
 
 		}catch(Exception e){
-			
+			return null;
 		}
-		}
-		return null;
+
 	}
 	public static void updateSearchPicturesfromDates(String search){
 		list = searchPicturesfromDates(search);
 		files.setList(list);
 	}
 	public static List<FileObject> searchPicturesfromDates(String search){
-		if(!(search.equals(""))){
+
 		Query q = em.createQuery("select t from Picture t where t.date=:date");
 		q.setParameter("date", search);
 		try{
@@ -103,17 +102,15 @@ public class DatabaseHandler {
 				fileObjects.add(makeFileObjectfromPath(p.getPath()));
 			return fileObjects;
 		}catch(Exception e){
+			return null;
 		}
-		}
-		return null;
-	
 	}
 	public static void updateSearchAlbumsfromDates(String search){
 		list = searchAlbumsfromDates(search);
 		files.setList(list);
 	}
 	public static List<FileObject>  searchAlbumsfromDates(String search){
-		if(!(search.equals(""))){
+
 		Query q = em.createQuery("select t from Album t where t.date=:date");
 		q.setParameter("date", search);
 		try{
@@ -123,17 +120,15 @@ public class DatabaseHandler {
 				fileObjects.add(makeFileObjectfromAlbumName(album.getName()));
 			return fileObjects;
 		}catch(Exception e){
-		
+			return null;
 		}
-		}
-		return null;
 	}
 	public static void updateSearchAlbumNames(String search){
 		list =searchAlbumNames(search);
 		files.setList(list);
 	}
 	public static List<FileObject> searchAlbumNames(String search){
-		if(!(search.equals(""))){
+
 		Query q = em.createQuery("select t from Album t where t.albumName=:albumName");
 		q.setParameter("albumName", search);
 		try{
@@ -143,10 +138,8 @@ public class DatabaseHandler {
 				fileObjects.add(makeFileObjectfromAlbumName(album.getName()));
 			return fileObjects;
 		}catch(Exception e){
-			
+			return null;
 		}
-		}
-		return null;
 	}
 	public static void updateSearchPicturesfromComments(String search){
 		list = searchPicturesfromComments(search);
@@ -212,7 +205,6 @@ public class DatabaseHandler {
 	}
 
 	public static List<FileObject> searchPicturesfromTags(String search){
-		if(!(search.equals(""))){
 		Query q = em.createQuery("select t from Picture t where t.tag=:tag");
 		q.setParameter("tag", search);
 		try{
@@ -231,16 +223,13 @@ public class DatabaseHandler {
 	}catch(Exception g){
 		
 	}
-		}
 		return null;
 		}
-		
 	public static void updateSearchPicturefromsLocations(String search){
 		list = searchPicturefromsLocations(search);
 		files.setList(list);
 	}
 	public static List<FileObject> searchPicturefromsLocations(String search){
-		if(!(search.equals(""))){
 		Query q = em.createQuery("select t from Location t where t.location=:locaion");
 		q.setParameter("location", search);
 		try{
@@ -257,7 +246,7 @@ public class DatabaseHandler {
 			
 		}
 	}catch(Exception g){
-	}
+		
 	}
 		return null;
 		}
@@ -266,7 +255,6 @@ public class DatabaseHandler {
 		files.setList(list);
 	}
 	public static List<FileObject> searchfromTagsAlbum(String search){
-		if(!(search.equals(""))){
 		Query q = em.createQuery("select t from Tag t where t.tag=:tag");
 		q.setParameter("tag", search);
 		try{
@@ -283,7 +271,7 @@ public class DatabaseHandler {
 			
 		}
 		}catch(Exception o){
-		}
+			
 		}
 		return null;
 	}
@@ -292,7 +280,6 @@ public class DatabaseHandler {
 		files.setList(list);
 	}
 	public static List<FileObject> searchAlbumsfromLocations(String search){
-		if(!(search.equals(""))){
 		Query q = em.createQuery("select t from Location t where t.location=:location");
 		q.setParameter("location", search);
 		try{
@@ -309,7 +296,7 @@ public class DatabaseHandler {
 			
 		}
 		}catch(Exception o){
-		}
+			
 		}
 		return null;
 	}
@@ -362,7 +349,7 @@ public class DatabaseHandler {
 			name=pic.getName();
 			albumName = pic.getAlbum().getAlbumName();
 			date=pic.getDate();
-			albumName = pic.getName();
+			albumName = pic.getAlbum().getName();
 			comment = pic.getComment().getCommentAsString();
 		
 		
@@ -516,7 +503,7 @@ public class DatabaseHandler {
 
 				em.getTransaction().begin();
 				pic.setAlbum(theAlbum);
-				if(f.getDate().equals(""))
+				if(!(f.getDate().equals("")))
 				pic.setDate(f.getDate());
 
 				List<Picture> thePictures = theAlbum.getPicture();
@@ -532,7 +519,6 @@ public class DatabaseHandler {
 				em.getTransaction().begin();
 				pic = new Picture();
 				pic.setPath(f.getFilePath());	
-				if(f.getDate().equals(""))
 					pic.setDate(f.getDate());
 				if(f.getFileName() != null ||(!f.getFileName().equals(""))){
 					pic.setName(f.getFileName());
