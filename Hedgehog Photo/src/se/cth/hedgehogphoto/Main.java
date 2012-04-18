@@ -86,7 +86,7 @@ public class Main {
 				e.printStackTrace();
 			}
 			f.setCoverPath("blo");
-			f.setLocation(new Location("Japan"));
+			f.setLocation(new LocationObject("Japan"));
 			f.setAlbumName("Bra bilder");
 			DatabaseHandler.insertPicture(f);
 			i++;

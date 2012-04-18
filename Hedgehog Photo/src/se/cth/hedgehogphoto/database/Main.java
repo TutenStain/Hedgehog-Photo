@@ -9,7 +9,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import se.cth.hedgehogphoto.ImageObject;
-import se.cth.hedgehogphoto.Location;
+import se.cth.hedgehogphoto.LocationObject;
 
 /**
  * 

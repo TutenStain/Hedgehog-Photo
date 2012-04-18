@@ -2,7 +2,7 @@ package se.cth.hedgehogphoto.database;
 
 import java.util.ArrayList;
 import java.util.List;
-import se.cth.hedgehogphoto.Location;
+import se.cth.hedgehogphoto.LocationObject;
 import se.cth.hedgehogphoto.FileObject;
 /**
  * @author Julia
@@ -11,7 +11,7 @@ public class AlbumObject implements FileObject{
 	List<String> tags = new ArrayList<String>();
 	String date = "";
 	String comment = "";
-	se.cth.hedgehogphoto.Location location;
+	se.cth.hedgehogphoto.LocationObject location;
 	String name = "";
 	String coverPath = "";
 	String albumName = "";
@@ -45,7 +45,7 @@ public class AlbumObject implements FileObject{
 	public String getComment(){
 		return comment;
 	}
-	public Location getLocation(){
+	public LocationObject getLocation(){
 		return location;
 	}
 
@@ -69,7 +69,7 @@ public class AlbumObject implements FileObject{
 	}
 
 	@Override
-	public void setLocation(Location location) {
+	public void setLocation(LocationObject location) {
 		 this.location = location;
 		
 	}

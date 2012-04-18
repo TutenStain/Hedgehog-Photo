@@ -7,9 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import se.cth.hedgehogphoto.metadata.*;
 import se.cth.hedgehogphoto.FileObject;
 import se.cth.hedgehogphoto.ImageObject;
+import se.cth.hedgehogphoto.LocationObject;
 
 /**
  * 
@@ -347,7 +347,7 @@ public class DatabaseHandler {
 		String date = "";
 		String path ="";
 
-		se.cth.hedgehogphoto.Location location = new se.cth.hedgehogphoto.Location("");
+		LocationObject location = new LocationObject("");
 		String albumName = "";
 		String comment = "";
 		Picture picture = new Picture();
@@ -398,7 +398,7 @@ public class DatabaseHandler {
 
 	public static FileObject makeFileObjectfromAlbumName(String albumName){
 		List<String> tags = new ArrayList<String>();
-		se.cth.hedgehogphoto.Location location = new se.cth.hedgehogphoto.Location("");
+		LocationObject location = new LocationObject("");
 		Album album = new Album();
 		String date = "";
 		String coverPath= "";
@@ -429,7 +429,7 @@ public class DatabaseHandler {
 		try{
 
 			Location loc = (Location) l.getSingleResult();
-			location = new se.cth.hedgehogphoto.Location(loc.getLocation());
+			location = new LocationObject(loc.getLocation());
 			location.setLatitude(loc.getLatitude());
 			location.setLongitude(loc.getLongitude());
 		}catch(Exception e){

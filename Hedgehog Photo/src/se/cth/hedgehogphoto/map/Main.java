@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import se.cth.hedgehogphoto.Location;
+import se.cth.hedgehogphoto.LocationObject;
 
 /**
  * 
@@ -37,11 +37,11 @@ public class Main {
 	
 	public static JPanel getMapPanel() {
 		MapPanel mapPanel = new MapPanel();
-		List<Location> locations = new ArrayList<Location>();
-		locations.add(new Location(57.0,10.0));
-		locations.add(new Location(56.0,11.0));
-		locations.add(new Location(55.0,12.0));
-		Location center = getCenterLocation(locations);
+		List<LocationObject> locations = new ArrayList<LocationObject>();
+		locations.add(new LocationObject(57.0,10.0));
+		locations.add(new LocationObject(56.0,11.0));
+		locations.add(new LocationObject(55.0,12.0));
+		LocationObject center = getCenterLocation(locations);
 		
 		Point position = computePosition(mapPanel, center);
 		mapPanel.setCenterPosition(position); 
@@ -99,7 +99,7 @@ public class Main {
 	/* FIXME: Refactor all the methods! Add new classes! 
 	 * Put away the functionality to the mapPanel! */
 	@Deprecated
-	private static boolean coordinatesVisible(MapPanel map, List<Location> locations) {
+	private static boolean coordinatesVisible(MapPanel map, List<LocationObject> locations) {
 		List<Point> list = getCoordinatesList(map, locations);
 		boolean ok = true;
 		int nbrOfCoordinates = list.size();
@@ -115,7 +115,7 @@ public class Main {
 	}
 	
 	/* TODO: wtf does this method do? Better names please! */
-	private static void evaluateCoordinates(MapPanel map, List<Location> locations) {
+	private static void evaluateCoordinates(MapPanel map, List<LocationObject> locations) {
 		List<Point> list = getCoordinatesList(map, locations);
 		//print out the "real" pixels
 		for (int j = 0; j<list.size(); j++)
@@ -123,7 +123,7 @@ public class Main {
 			
 	}
 	
-	private static List<Point> getCoordinatesList(MapPanel map, List<Location> locations) {
+	private static List<Point> getCoordinatesList(MapPanel map, List<LocationObject> locations) {
 		List<Point> coordinates = new ArrayList<Point>();
 		Point temp;
 		for(int i = 0; i<locations.size(); i++) {
@@ -135,14 +135,14 @@ public class Main {
 		return coordinates;
 	}
 	
-	private static Point computePosition(MapPanel map, Location location) {
+	private static Point computePosition(MapPanel map, LocationObject location) {
 		return map.computePosition(new Point2D.Double(location.getLatitude(), location.getLongitude()));
 	}
 	
-	private static void adjustZoom(MapPanel map, List<Location> locations) {
+	private static void adjustZoom(MapPanel map, List<LocationObject> locations) {
 		int zoom = 18;
 		map.setZoom(zoom);
-		Location center = getCenterLocation(locations);
+		LocationObject center = getCenterLocation(locations);
 		Point position = computePosition(map, center);
 		map.setCenterPosition(position);
 //		while (coordinatesVisible(map, locations) && zoom != 18) {
@@ -162,7 +162,7 @@ public class Main {
 		evaluateCoordinates(map,locations);
 	}
 	
-	private static boolean allLocationsVisible(MapPanel map, List<Location> locations) {
+	private static boolean allLocationsVisible(MapPanel map, List<LocationObject> locations) {
 		double outermostPointLongitude = averageLongitude(locations) + greatestLongitudeDiff(locations);
 		double outermostPointLatitude = averageLatitude(locations) - greatestLatitudeDiff(locations);
 		/* IF POSSIBLE: Create a local method called computePosition(double, double) */
@@ -181,18 +181,18 @@ public class Main {
 		return (greaterThanCorner && smallerThanCenter);
 	}
 	
-	private static Location getCenterLocation(List<Location> locations) {
+	private static LocationObject getCenterLocation(List<LocationObject> locations) {
 		double lon = averageLongitude(locations);
 		double lat = averageLatitude(locations);
-		return new Location(lon, lat);
+		return new LocationObject(lon, lat);
 	}
 	
 	/**
 	 * Returns the biggest difference in latitude plus a margin 
 	 * between the center and a the farthest location away (seen in latitude). 
 	 */
-	private static double greatestLatitudeDiff(List<Location> locations) {
-		Location center = getCenterLocation(locations);
+	private static double greatestLatitudeDiff(List<LocationObject> locations) {
+		LocationObject center = getCenterLocation(locations);
 		double latitudeDiff = Math.abs(center.getLatitude() - locations.get(0).getLatitude());
 		double temp;
 		double nbrOfLocations = locations.size();
@@ -206,8 +206,8 @@ public class Main {
 		return addMargin(latitudeDiff); 
 	}
 	
-	private static double greatestLongitudeDiff(List<Location> locations) {
-		Location center = getCenterLocation(locations);
+	private static double greatestLongitudeDiff(List<LocationObject> locations) {
+		LocationObject center = getCenterLocation(locations);
 		double longitudeDiff = Math.abs(center.getLongitude() - locations.get(0).getLongitude());
 		double temp;
 		double nbrOfLocations = locations.size();
@@ -229,7 +229,7 @@ public class Main {
 		return distance * 1.2; 
 	}
 	
-	private static double averageLatitude(List<Location> locations) {
+	private static double averageLatitude(List<LocationObject> locations) {
 		double totalLatitude = 0.0;
 		double nbrOfLocations = locations.size();
 		for(int i = 0; i < nbrOfLocations; i++) {
@@ -241,7 +241,7 @@ public class Main {
 		return averageLatitude;
 	}
 	
-	private static double averageLongitude(List<Location> locations) {
+	private static double averageLongitude(List<LocationObject> locations) {
 		double totalLongitude = 0.0;
 		double nbrOfLocations = locations.size();
 		for(int i = 0; i < nbrOfLocations; i++) {
@@ -257,7 +257,7 @@ public class Main {
 	// CURRENTLY UNUSED METHODS, 	which may be useful at a later stage. 
 	
 	@Deprecated
-	private static double getLocationsInfo(String maxMin, String latLong, List<Location> locations) {
+	private static double getLocationsInfo(String maxMin, String latLong, List<LocationObject> locations) {
 		String wantedInfo = maxMin + latLong;
 		switch(wantedInfo) {
 			case "maxLatitude": return getLocationsMaxLatitude(locations);
@@ -269,9 +269,9 @@ public class Main {
 	}
 	
 	@Deprecated
-	private static double getLocationsMaxLatitude(List<Location> locations) {
+	private static double getLocationsMaxLatitude(List<LocationObject> locations) {
 		double maxLatitude = locations.get(0).getLatitude();
-		for(Location location : locations) { //does one loop too much, nvm
+		for(LocationObject location : locations) { //does one loop too much, nvm
 			if(location.getLatitude() > maxLatitude) {
 				maxLatitude = location.getLatitude();
 			}
@@ -280,9 +280,9 @@ public class Main {
 	}
 	
 	@Deprecated
-	private static double getLocationsMinLatitude(List<Location> locations) {
+	private static double getLocationsMinLatitude(List<LocationObject> locations) {
 		double minLatitude = locations.get(0).getLatitude();
-		for(Location location : locations) { //does one loop too much, nvm
+		for(LocationObject location : locations) { //does one loop too much, nvm
 			if(location.getLatitude() < minLatitude) {
 				minLatitude = location.getLatitude();
 			}
@@ -291,9 +291,9 @@ public class Main {
 	}
 	
 	@Deprecated
-	private static double getLocationsMaxLongitude(List<Location> locations) {
+	private static double getLocationsMaxLongitude(List<LocationObject> locations) {
 		double maxLongitude = locations.get(0).getLongitude();
-		for(Location location : locations) { //does one loop too much, nvm
+		for(LocationObject location : locations) { //does one loop too much, nvm
 			if(location.getLongitude() > maxLongitude) {
 				maxLongitude = location.getLongitude();
 			}
@@ -302,9 +302,9 @@ public class Main {
 	}
 	
 	@Deprecated
-	private static double getLocationsMinLongitude(List<Location> locations) {
+	private static double getLocationsMinLongitude(List<LocationObject> locations) {
 		double minLongitude = locations.get(0).getLongitude();
-		for(Location location : locations) { //does one loop too much, nvm
+		for(LocationObject location : locations) { //does one loop too much, nvm
 			if(location.getLongitude() < minLongitude) {
 				minLongitude = location.getLongitude();
 			}

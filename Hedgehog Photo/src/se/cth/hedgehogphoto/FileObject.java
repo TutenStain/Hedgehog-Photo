@@ -1,7 +1,7 @@
 package se.cth.hedgehogphoto;
 
 import java.util.List;
-import se.cth.hedgehogphoto.Location;
+import se.cth.hedgehogphoto.LocationObject;
 /**
  * @author Julia
  */
@@ -12,12 +12,12 @@ public interface FileObject {
 	public void setFileName(String name);
 	public void setFilePath(String path);
 	public void setCoverPath(String path);
-	public void setLocation(Location location);
+	public void setLocation(LocationObject location);
 	public void setAlbumName(String albumName);
 	public List<String> getTags();
 	public String getDate();
 	public String getComment();
-	public Location getLocation();
+	public LocationObject getLocation();
 	public String getFileName();
 	public String getFilePath();
 	public String getCoverPath();

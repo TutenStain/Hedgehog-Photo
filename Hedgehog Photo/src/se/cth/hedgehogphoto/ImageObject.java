@@ -3,7 +3,7 @@ package se.cth.hedgehogphoto;
 import java.util.List;
 
 import se.cth.hedgehogphoto.FileObject;
-import se.cth.hedgehogphoto.Location;
+import se.cth.hedgehogphoto.LocationObject;
 import se.cth.hedgehogphoto.Util;
 
 
@@ -12,7 +12,7 @@ public class ImageObject implements FileObject {
 	private String filePath, fileName, date, artist, comment, albumName, coverPath = "";
 	private List<String> tags;
 	private String longitude, latitude; /* TODO: Change dependency from these strings, to the location-class! */
-	private Location location = new Location(""); /* Should rely on this object. */
+	private LocationObject location = new LocationObject(""); /* Should rely on this object. */
 	private boolean legitGPSInfo;
 	
 	public ImageObject() {
@@ -123,7 +123,7 @@ public class ImageObject implements FileObject {
 	}
 	
 	@Override
-	public Location getLocation() {
+	public LocationObject getLocation() {
 		return location;
 	}
 	
@@ -148,7 +148,7 @@ public class ImageObject implements FileObject {
 	}
 
 	@Override
-	public void setLocation(Location location) {
+	public void setLocation(LocationObject location) {
 		this.location=location;
 	}
 
