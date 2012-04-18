@@ -7,15 +7,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
 import se.cth.hedgehogphoto.FileObject;
 import se.cth.hedgehogphoto.ImageObject;
-import se.cth.hedgehogphoto.LocationObject;
+
 
 /**
  * 
  * @author Julia
  *
  */
+
 
 public class DatabaseHandler {
 	private static Files files = Files.getInstance();;
@@ -204,31 +206,36 @@ public class DatabaseHandler {
 	}
 
 	public static List<FileObject> searchPicturesfromTags(String search){
-		System.out.println("searchPicturesfromTags");
 		if(!(search.equals(""))){
-			
-		Query q = em.createQuery("select t from Tag t where t.tag=:tag");
+		/*Query q = em.createQuery("select t from Tag t where t.tag=:tag");
 		q.setParameter("tag", search);
-		System.out.println("search Tags");
-		
 		try{
-			Tag tag = (Tag)q.getSingleResult();
-			System.out.println(tag);
-			 q = em.createQuery("select t from Picture t where t.tag=:tag");
-			q.setParameter("tag", tag);
+			Tag tag = (Tag)q.getSingleResult();*/
+			Query v = em.createQuery("select t from Picture t");
 			try{
-				System.out.println("search pictures");
-			List<Picture> pictures = q.getResultList();
+			List<Picture> pictures = v.getResultList();
+			System.out.println("********************"+pictures+"***************");
+			List<Picture> matchingpictures = new ArrayList<Picture>();
+			for(Picture p: pictures){
+				System.out.print("--------"+p.getTags()+"--------------");
+				for(Tag t:  p.getTags()){
+					if(t.getTag().equals(search)){
+						 matchingpictures.add(p);
+					}
+					
+				}
+				
+			}
 			
 			List<FileObject> fileObjects = new ArrayList<FileObject>(); 
-			for(Picture p:pictures)
+			for(Picture p: matchingpictures)
 				fileObjects.add(makeFileObjectfromPath(p.getPath()));
 			return fileObjects;
 		}catch(Exception e){
 			
 		}
-	}catch(Exception g){
-	}
+	/*}catch(Exception g){
+	}*/
 	}
 		return null;
 		}
@@ -237,7 +244,6 @@ public class DatabaseHandler {
 		files.setList(list);
 	}
 	public static List<FileObject> searchPicturefromsLocations(String search){
-		if(!(search.equals(""))){
 		Query q = em.createQuery("select t from Location t where t.location=:locaion");
 		q.setParameter("location", search);
 		try{
@@ -256,7 +262,6 @@ public class DatabaseHandler {
 	}catch(Exception g){
 		
 	}
-		}
 		return null;
 		}
 	public static void updateAlbumsfromSearchTags(String search){
@@ -322,6 +327,17 @@ public class DatabaseHandler {
 		return (List<Picture>)p.getResultList();
 
 	}
+	public static List<FileObject> getAllPicturesasFileObject(){
+		Query p = em.createQuery("select t from Picture t");
+		List<Picture> pictures =  p.getResultList();
+		List<FileObject> fileObjects = new ArrayList<FileObject>();
+		for(Picture picture:pictures)
+			fileObjects.add(makeFileObjectfromPath(picture.getPath()));
+		return fileObjects;
+
+		
+
+	}
 	public static void updateAllAlbums(){
 		List<Album> albums = getAllAlbums();
 		list = new ArrayList<FileObject>();
@@ -343,7 +359,7 @@ public class DatabaseHandler {
 		String date = "";
 		String path ="";
 
-		LocationObject location = new LocationObject("");
+		se.cth.hedgehogphoto.LocationObject location = new se.cth.hedgehogphoto.LocationObject("");
 		String albumName = "";
 		String comment = "";
 		Picture picture = new Picture();
@@ -394,7 +410,7 @@ public class DatabaseHandler {
 
 	public static FileObject makeFileObjectfromAlbumName(String albumName){
 		List<String> tags = new ArrayList<String>();
-		LocationObject location = new LocationObject("");
+		se.cth.hedgehogphoto.LocationObject location = new se.cth.hedgehogphoto.LocationObject("");
 		Album album = new Album();
 		String date = "";
 		String coverPath= "";
@@ -425,7 +441,7 @@ public class DatabaseHandler {
 		try{
 
 			Location loc = (Location) l.getSingleResult();
-			location = new LocationObject(loc.getLocation());
+			location = new se.cth.hedgehogphoto.LocationObject(loc.getLocation());
 			location.setLatitude(loc.getLatitude());
 			location.setLongitude(loc.getLongitude());
 		}catch(Exception e){

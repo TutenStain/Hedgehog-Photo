@@ -70,7 +70,7 @@ public class Main {
 			//Just some random tags to test the TagCloud
 			List<String> l = new ArrayList<String>();
 			l.add("Snyggt");
-			/*if(i == 0){
+			if(i == 0){
 				l.add("Snyggt");
 			}
 			if(i == 3 || i == 4){
@@ -78,7 +78,7 @@ public class Main {
 			}
 			if(i % 2 == 0){
 				l.add("Festligt");
-			}*/
+			}
 			f.setTags(l);
 			
 			try {
