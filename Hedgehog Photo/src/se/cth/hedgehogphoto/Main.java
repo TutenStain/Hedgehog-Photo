@@ -25,11 +25,11 @@ public class Main {
 
 	//TODO Just a skeleton of the main
 	public static void main(String[] args) {
-	//	DatabaseHandler.deleteAll();
+		DatabaseHandler.deleteAll();
 		//Main
 		insertFileObjectsIntoDatabase();
 		System.out.print(DatabaseHandler.getAllPictures());
-		/*MainModel model = new MainModel();
+		MainModel model = new MainModel();
 		MainView view = new MainView();
 		model.addObserver(view);
 		
@@ -54,7 +54,7 @@ public class Main {
 		view.addToTopPanel(sv, BorderLayout.EAST);
 
 		model.testNotify();
-*/	}
+	}
 	
 	private static void insertFileObjectsIntoDatabase() {
 		//TODO This is in the DB:
@@ -68,16 +68,19 @@ public class Main {
 			f.setFileName("wei" + file.getName());
 			f.setDate("2012.12.02");
 			//Just some random tags to test the TagCloud
-	/*		f.setTag("Fint");
-			if(i == 0){
-				f.setTag("Snyggt");
+			List<String> l = new ArrayList<String>();
+			l.add("Snyggt");
+			/*if(i == 0){
+				l.add("Snyggt");
 			}
 			if(i == 3 || i == 4){
-				f.setTag("Trevligt");
+				l.add("Trevligt");
 			}
 			if(i % 2 == 0){
-				f.setTag("Festligt");
+				l.add("Festligt");
 			}*/
+			f.setTags(l);
+			
 			try {
 				f.setFilePath(file.getCanonicalPath());
 				System.out.println(file.getCanonicalPath());

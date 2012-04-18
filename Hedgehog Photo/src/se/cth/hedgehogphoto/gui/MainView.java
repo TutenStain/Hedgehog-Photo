@@ -154,7 +154,7 @@ public class MainView implements Observer {
 			MainModel model = (MainModel)arg1;
 			List<FileObject> images = model.getImages();
 			photoViewPanel.removeAll();
-			for(int i = 0; i<2; i++) {
+			for(int i = 0; i<10; i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i));
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);

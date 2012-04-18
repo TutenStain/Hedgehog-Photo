@@ -11,8 +11,10 @@ public class MainModel extends Observable {
 	
 	public MainModel() {
 		try {
-			 images = DatabaseHandler.searchPicturesfromDates("2012.12.02");
-			System.out.print(images);
+			 //images = DatabaseHandler.searchPicturesfromDates("2012.12.02");
+			images = DatabaseHandler.searchPicturesfromComments("Gutes bild");
+			//images = DatabaseHandler.searchPicturesfromTags("Snyggt");
+			//System.out.print("IMAGES SIZE-------------------------------------------------------: + " + images.size() + images);
 		} catch(Exception e) {	
 			//autoexception
 		}

@@ -17,7 +17,6 @@ import se.cth.hedgehogphoto.LocationObject;
  *
  */
 
-
 public class DatabaseHandler {
 	private static Files files = Files.getInstance();;
 	private static List<FileObject> list = files.getList(); 
@@ -205,14 +204,22 @@ public class DatabaseHandler {
 	}
 
 	public static List<FileObject> searchPicturesfromTags(String search){
-		Query q = em.createQuery("select t from Picture t where t.tag=:tag");
+		System.out.println("searchPicturesfromTags");
+		if(!(search.equals(""))){
+			
+		Query q = em.createQuery("select t from Tag t where t.tag=:tag");
 		q.setParameter("tag", search);
+		System.out.println("search Tags");
+		
 		try{
 			Tag tag = (Tag)q.getSingleResult();
+			System.out.println(tag);
 			 q = em.createQuery("select t from Picture t where t.tag=:tag");
 			q.setParameter("tag", tag);
 			try{
+				System.out.println("search pictures");
 			List<Picture> pictures = q.getResultList();
+			
 			List<FileObject> fileObjects = new ArrayList<FileObject>(); 
 			for(Picture p:pictures)
 				fileObjects.add(makeFileObjectfromPath(p.getPath()));
@@ -221,7 +228,7 @@ public class DatabaseHandler {
 			
 		}
 	}catch(Exception g){
-		
+	}
 	}
 		return null;
 		}
@@ -230,6 +237,7 @@ public class DatabaseHandler {
 		files.setList(list);
 	}
 	public static List<FileObject> searchPicturefromsLocations(String search){
+		if(!(search.equals(""))){
 		Query q = em.createQuery("select t from Location t where t.location=:locaion");
 		q.setParameter("location", search);
 		try{
@@ -248,6 +256,7 @@ public class DatabaseHandler {
 	}catch(Exception g){
 		
 	}
+		}
 		return null;
 		}
 	public static void updateAlbumsfromSearchTags(String search){
