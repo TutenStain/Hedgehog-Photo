@@ -25,8 +25,9 @@ public class PictureFetcher {
 	//private static Map<String, ArrayList<File>> files = new HashMap<String, ArrayList<File>>();
 	private static List<ImageObject> imageObjects = new ArrayList<ImageObject>(); 
 	private static Metadata metadata = new Metadata();
+	private static String [] validFileExtensions = {"png", "jpg", "gif"};
 
-	public PictureFetcher(){
+	public PictureFetcher() {
 
 		chooser = new JFileChooser();
 		chooser.setDialogTitle("Choose pictures");
@@ -46,8 +47,7 @@ public class PictureFetcher {
 
 	}
 
-	public  static void fetchFiles(){
-		;
+	public static void fetchFiles() {
 		int returnVal = chooser.showOpenDialog(null);
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
 
@@ -65,25 +65,17 @@ public class PictureFetcher {
 						if(dirFiles[j].isDirectory()==false){
 							int pos = dirFiles[j].getName().lastIndexOf(".");              //find the pos of the . in the filename
 							String end =	dirFiles[j].getName().substring(pos + 1);      // get extention name and place into string ext
-							if (end.equalsIgnoreCase("png") || end.equalsIgnoreCase("jpg") || end.equalsIgnoreCase("gif") && dirFiles[j].isFile()){                                //check the file extension is a jpg file type
+							if (isValidFileExtension(end) && dirFiles[j].isFile()){                                //check the file extension is a jpg file type
 								System.out.println(dirFiles[j]);      //send filename to client
 								ImageObject imageObject;
-								try {
-									if(dirFiles[j].isDirectory()==false){
-										IImageMetadata imageMetadata =	metadata.extractMetadata(dirFiles[j]);
-										if(imageMetadata != null){
-										imageObject = metadata.getImageObject(imageMetadata); /*TODO: Decide exactly WHERE the ImageObject-class should be situated. */
-												imageObject.setAlbumName(album);
-												
-												imageObject.setFileName(dirFiles[j].getName());
-												imageObject.setFilePath(dirFiles[j].getPath());
-												imageObjects.add(imageObject);
-									} 
-									}
-								}catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
+								if(dirFiles[j].isDirectory()==false){
+									imageObject = metadata.getImageObject(dirFiles[j]);
+									imageObject.setAlbumName(album);
+									
+									imageObject.setFileName(dirFiles[j].getName());
+									imageObject.setFilePath(dirFiles[j].getPath());
+									imageObjects.add(imageObject);
+								} 
 							}
 						}
 					}
@@ -93,19 +85,12 @@ public class PictureFetcher {
 				else{
 
 					for(int k = 0; k < chooser.getSelectedFiles().length;k++){
-
-						try {
-							ImageObject  imageObject = Metadata.getImageObject(metadata.extractMetadata((chooser.getSelectedFiles()[k]))); /* TODO: Right now we have two equal ImageObject-classes in different packages. Where to put it? */
-							imageObject.setAlbumName(chooser.getSelectedFiles()[k].getParentFile().getName());
-							imageObject.setFileName(chooser.getSelectedFiles()[k].getName());
-							
-							imageObject.setFilePath(chooser.getSelectedFiles()[k].getPath());
-							imageObjects.add(imageObject);
-
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						ImageObject  imageObject = Metadata.getImageObject(metadata.extractMetadata((chooser.getSelectedFiles()[k]))); /* TODO: Right now we have two equal ImageObject-classes in different packages. Where to put it? */
+						imageObject.setAlbumName(chooser.getSelectedFiles()[k].getParentFile().getName());
+						imageObject.setFileName(chooser.getSelectedFiles()[k].getName());
+						
+						imageObject.setFilePath(chooser.getSelectedFiles()[k].getPath());
+						imageObjects.add(imageObject);
 
 					}
 				}
@@ -115,6 +100,17 @@ public class PictureFetcher {
 
 	public  List<ImageObject> getImageObjects(){
 		return imageObjects;
-
+	}
+	
+	private static boolean isValidFileExtension(String fileExtension) {
+		boolean isValid = false;
+		int nbrOfFileExtensions = validFileExtensions.length;
+		for (int i = 0; i < nbrOfFileExtensions; i++) {
+			if (fileExtension.equalsIgnoreCase(validFileExtensions[i])) {
+				isValid = true;
+				break;
+			}
+		}
+		return isValid;
 	}
 }

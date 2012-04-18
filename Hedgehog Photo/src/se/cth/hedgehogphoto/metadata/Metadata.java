@@ -24,19 +24,15 @@ public class Metadata {
 					"XPKeywords", "Date Time Original", "Interop Index", 
 					"Interop Version", "Unknown Tag (0x3)", "Unknown Tag (0x4)"};
 	
+	@Deprecated
 	public static void main(String [] args) {
-		try {
-			IImageMetadata metadata = extractMetadata();
-			ImageObject io = getImageObject(metadata);
-			setFileProperties(io);
-			io.print();
-		} catch (IOException e) {
-			//IF POSSIBLE: Add exception handling
-			e.printStackTrace();
-		}
+		IImageMetadata metadata = extractMetadata();
+		ImageObject io = getImageObject(metadata);
+		setFileProperties(io);
+		io.print();
 	}
 	
-	public static ImageObject getImageObject(File file) throws IOException{
+	public static ImageObject getImageObject(File file) {
 		IImageMetadata metadata = extractMetadata();
 		return getImageObject(metadata); /* may return a IOException if metadata == null */
 	}
@@ -62,16 +58,22 @@ public class Metadata {
 		return metadata;
 	}
 	
-	public static ImageObject getImageObject(IImageMetadata imageMetadata) throws IOException {
-		String metadata = imageMetadata.toString();
-		BufferedReader br = new BufferedReader( new StringReader(metadata) );
+	public static ImageObject getImageObject(IImageMetadata imageMetadata) {
 		ImageObject imageObject = new ImageObject();
-		
-		String line;
-		while((line = br.readLine()) != null) {		
-			if (containsTargetMetadata(line)) {
-				setPropertyFromString(imageObject, line);
-			}
+		if (imageMetadata != null) {
+			String metadata = imageMetadata.toString(); /* Could this cause a null-pointer exception? */
+			
+			/* New Feature in java 1.7 - closes stream automatically */
+			try (BufferedReader br = new BufferedReader( new StringReader(metadata) )) {
+				String line;
+				while((line = br.readLine()) != null) {		
+					if (containsTargetMetadata(line)) {
+						setPropertyFromString(imageObject, line);
+					}
+				}
+			} catch (IOException io) {
+				
+			} 
 		}
 		
 		return imageObject;
@@ -104,6 +106,7 @@ public class Metadata {
 		return line.substring(indexOfValueStarts);
 	}
 	
+	@Deprecated
 	private static void setFileProperties(ImageObject io) {
 		io.setProperty("fileName", file.getName());
 		io.setProperty("filePath", file.getPath());
