@@ -5,8 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import se.cth.hedgehogphoto.FileObject;
-import se.cth.hedgehogphoto.Files;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
+import se.cth.hedgehogphoto.database.Files;
 
 /**
  * @author Barnabas Sapan
@@ -27,7 +27,7 @@ public class SearchComponentController{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("Clicked on: " + fo.getFilePath());
-				//Files.getInstance().setList(DatabaseHandler.searchPicturesfromTags(fo.getTags().get(0)));
+			//	Files.getInstance().setPictureList((DatabaseHandler.searchPicturesfromTags(fo.getTags().get(0))));
 			}
 
 			@Override

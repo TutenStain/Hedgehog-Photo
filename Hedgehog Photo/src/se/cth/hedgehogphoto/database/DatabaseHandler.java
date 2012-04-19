@@ -64,7 +64,7 @@ public class DatabaseHandler {
 		albumList = searchAlbumsfromDates(search);
 		files.setAlbumList(albumList);
 	}
-	public static List<Album>  searchAlbumsfromDates(String search){
+	public static List<Album> searchAlbumsfromDates(String search){
 		return AlbumHandler.searchfromDates(search);
 
 	}

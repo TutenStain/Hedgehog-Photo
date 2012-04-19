@@ -21,9 +21,10 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import se.cth.hedgehogphoto.Files;
+import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.FileObject;
 import se.cth.hedgehogphoto.MainModel;
+import se.cth.hedgehogphoto.database.Picture;
 
 public class MainView implements Observer {
 
@@ -152,11 +153,11 @@ public class MainView implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		if(arg1 instanceof MainModel) {
 			MainModel model = (MainModel)arg1;
-			List<FileObject> images = model.getImages();
+			List<Picture> images = model.getImages();
 			photoViewPanel.removeAll();
 			for(int i = 0; i<images.size(); i++) {
-				PhotoPanel pp = new PhotoPanel(images.get(i));
-				pp.setComment(images.get(i).getComment());
+				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
+			//	pp.setComment(images.get(i).getComment());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 				frame.revalidate();
@@ -164,10 +165,10 @@ public class MainView implements Observer {
 		}
 		
 		if(arg1 instanceof Files){
-			List<FileObject> images = Files.getInstance().getList();
+			List<Picture> images = Files.getInstance().getPictureList();
 			photoViewPanel.removeAll();
 			for(int i = 0; i<images.size(); i++) {
-				PhotoPanel pp = new PhotoPanel(images.get(i));
+				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 				frame.revalidate();

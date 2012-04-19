@@ -42,6 +42,8 @@ public class Files extends Observable{
 	
 	public void setPictureList(List<Picture> list){
 		pictureList = list;
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	public List<Picture> getPictureList(){
@@ -50,6 +52,8 @@ public class Files extends Observable{
 	
 	public void setAlbumList(List <Album> list){
 		albumList = list;
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	public List<Album> getAlbumList(){

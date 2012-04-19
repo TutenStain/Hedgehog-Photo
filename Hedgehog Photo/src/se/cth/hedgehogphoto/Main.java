@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
+import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.gui.MainView;
-import se.cth.hedgehogphoto.ImageObject;
 import se.cth.hedgehogphoto.search.SearchController;
 import se.cth.hedgehogphoto.search.SearchModel;
 import se.cth.hedgehogphoto.search.SearchPreviewView;
