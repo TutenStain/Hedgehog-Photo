@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/derby.jar"/>
+	<classpathentry kind="lib" path="lib/derbyclient.jar"/>
+	<classpathentry kind="lib" path="lib/derbynet.jar"/>
+	<classpathentry kind="lib" path="lib/derbytools.jar"/>
+	<classpathentry kind="lib" path="lib/eclipselink.jar"/>
+	<classpathentry kind="lib" path="lib/jpa/eclipselink-jpa-modelgen_2.3.2.v20111125-r10461.jar"/>
+	<classpathentry kind="lib" path="lib/jpa/javax.persistence_1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/jpa/javax.persistence_2.0.3.v201010191057.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

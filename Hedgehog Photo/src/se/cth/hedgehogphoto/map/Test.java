@@ -2,24 +2,25 @@ package se.cth.hedgehogphoto.map;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
+import se.cth.hedgehogphoto.LocationObject;
+
 @Deprecated
 public class Test {
     private JFrame frame = new JFrame();
     private JLayeredPane map;
     
-    public Test(List<Point> locationPoints)
+    public Test(List<LocationObject> locations)
     {
-        frame.setPreferredSize(new Dimension(500, 800));
+        frame.setPreferredSize(new Dimension(520, 520));
         frame.setLayout(new BorderLayout());
         
-        map = new MapWrapper(locationPoints);
+        map = new MapWrapper(locations);
         
         frame.add(map, BorderLayout.CENTER);
         frame.pack();
@@ -31,11 +32,11 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    	ArrayList<Point> points = new ArrayList<Point>();
-    	points.add(new Point(109, 185));
-    	points.add(new Point(200, 350));
-    	points.add(new Point(291, 511));
-        new Test(points);
+    	ArrayList<LocationObject> locations = new ArrayList<LocationObject>();
+    	locations.add(new LocationObject(20.0, 30.0));
+    	locations.add(new LocationObject(15.0, 40.0));
+    	locations.add(new LocationObject(10.0, 20.0));
+        new Test(locations);
     }
 
 }

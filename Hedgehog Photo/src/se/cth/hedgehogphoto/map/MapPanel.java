@@ -53,6 +53,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -212,11 +214,24 @@ public class MapPanel extends JPanel {
 
     //-------------------------------------------------------------------------
     // map impl.
+    
+    protected class MapState extends Observable {
+    	protected Point mapPosition;
+        protected int zoom;
+        
+        public MapState() {
+        	mapPosition = new Point(0, 0);
+        }
+        
+        public void update() {
+        	setChanged();
+        	notifyObservers();
+        }
+    }
 
+    private MapState mapState = new MapState();
     private Dimension mapSize = new Dimension(0, 0);
-    private Point mapPosition = new Point(0, 0);
     private Point centerPosition = new Point(0, 0);
-    private int zoom;
 
     private TileServer tileServer = TILESERVERS[0];
 
@@ -268,6 +283,10 @@ public class MapPanel extends JPanel {
         checkTileServers();
         checkActiveTileServer();
         interactionEnabled = false; //will prevent listener to work correctly
+    }
+    
+    public void addObserver(Observer observer) {
+    	mapState.addObserver(observer);
     }
 
     /* IF POSSIBLE: This method does one thing - it sets the tileServer
@@ -352,7 +371,7 @@ public class MapPanel extends JPanel {
     }
 
     public Point getMapPosition() {
-        return new Point(mapPosition.x, mapPosition.y);
+        return new Point(mapState.mapPosition.x, mapState.mapPosition.y);
     }
 
     public void setMapPosition(Point mapPosition) {
@@ -360,32 +379,32 @@ public class MapPanel extends JPanel {
     }
 
     public void setMapPosition(int x, int y) {
-        if (mapPosition.x == x && mapPosition.y == y)
+        if (mapState.mapPosition.x == x && mapState.mapPosition.y == y)
             return;
         Point oldMapPosition = getMapPosition();
-        mapPosition.x = x;
-        mapPosition.y = y;
-        centerPosition.x = mapPosition.x + PREFERRED_WIDTH / 2;
-        centerPosition.y = mapPosition.y + PREFERRED_HEIGHT / 2;
-        firePropertyChange("mapPosition", oldMapPosition, getMapPosition());
+        mapState.mapPosition.x = x;
+        mapState.mapPosition.y = y;
+        centerPosition.x = mapState.mapPosition.x + PREFERRED_WIDTH / 2;
+        centerPosition.y = mapState.mapPosition.y + PREFERRED_HEIGHT / 2;
+        mapState.update();
     }
 
     public void translateMapPosition(int tx, int ty) {
-        setMapPosition(mapPosition.x + tx, mapPosition.y + ty);
+        setMapPosition(mapState.mapPosition.x + tx, mapState.mapPosition.y + ty);
     }
 
     public int getZoom() {
-        return zoom;
+        return mapState.zoom;
     }
 
     public void setZoom(int zoom) {
-        if (zoom == this.zoom)
+        if (zoom == this.mapState.zoom)
             return;
-        int oldZoom = this.zoom;
-        this.zoom = Math.min(getTileServer().getMaxZoom(), zoom);
+        int oldZoom = this.mapState.zoom;
+        this.mapState.zoom = Math.min(getTileServer().getMaxZoom(), zoom);
         mapSize.width = getXMax();
         mapSize.height = getYMax();
-        firePropertyChange("zoom", oldZoom, zoom);
+        mapState.update();
     }
 
     /** Enables/disables map interaction
@@ -434,7 +453,7 @@ public class MapPanel extends JPanel {
             }
 
         };
-        smoothPosition = new Point(mapPosition.x, mapPosition.y);
+        smoothPosition = new Point(mapState.mapPosition.x, mapState.mapPosition.y);
         smoothPivot = new Point(pivot.x, pivot.y);
         smoothOffset = -1;
         zoomIn(pivot);
@@ -463,7 +482,7 @@ public class MapPanel extends JPanel {
             }
 
         };
-        smoothPosition = new Point(mapPosition.x, mapPosition.y);
+        smoothPosition = new Point(mapState.mapPosition.x, mapState.mapPosition.y);
         smoothPivot = new Point(pivot.x, pivot.y);
         smoothOffset = 1;
         zoomOut(pivot);
@@ -493,11 +512,11 @@ public class MapPanel extends JPanel {
     }
 
     public int getXTileCount() {
-        return (1 << zoom);
+        return (1 << mapState.zoom);
     }
 
     public int getYTileCount() {
-        return (1 << zoom);
+        return (1 << mapState.zoom);
     }
 
     public int getXMax() {
@@ -509,7 +528,7 @@ public class MapPanel extends JPanel {
     }
 
     public Point getCursorPosition() {
-        return new Point(mapPosition.x + mouseListener.mouseCoords.x, mapPosition.y + mouseListener.mouseCoords.y);
+        return new Point(mapState.mapPosition.x + mouseListener.mouseCoords.x, mapState.mapPosition.y + mouseListener.mouseCoords.y);
     }
 
     public Point getTile(Point position) {
@@ -518,31 +537,28 @@ public class MapPanel extends JPanel {
 
     public Point getCenterPosition() {
     	if (getWidth() != 0 && getHeight() != 0)
-    		return new Point(mapPosition.x + getWidth() / 2, mapPosition.y + getHeight() / 2);
-    	return new Point(mapPosition.x + PREFERRED_WIDTH / 2, mapPosition.y + PREFERRED_HEIGHT / 2);
+    		return new Point(mapState.mapPosition.x + getWidth() / 2, mapState.mapPosition.y + getHeight() / 2);
+    	return new Point(mapState.mapPosition.x + PREFERRED_WIDTH / 2, mapState.mapPosition.y + PREFERRED_HEIGHT / 2);
     }
     
-    /* IF POSSIBLE: Delete this method, isn't used.
-     * But MIGHT be useful? */
-    @Deprecated
     public Point getStoredCenterPosition() {
     	return centerPosition;
     }
 
     public void setCenterPosition(Point p) {
-        setMapPosition(p.x - getWidth() / 2, p.y - getHeight() / 2);
+        setMapPosition(p.x - PREFERRED_WIDTH / 2, p.y - PREFERRED_HEIGHT / 2);
         centerPosition = p; /* IF POSSIBLE: Delete this line if getStoredCenterPosition() gets removed. */
     }
 
     public Point.Double getLongitudeLatitude(Point position) {
         return new Point.Double(
-                position2lon(position.x, getZoom()),
-                position2lat(position.y, getZoom()));
+                position2lon(position.x),
+                position2lat(position.y));
     }
 
     public Point computePosition(Point.Double coords) {
-        int x = lon2position(coords.x, getZoom());
-        int y = lat2position(coords.y, getZoom());
+        int x = lon2position(coords.x);
+        int y = lat2position(coords.y);
         return new Point(x, y);
     }
 
@@ -715,7 +731,7 @@ public class MapPanel extends JPanel {
          * 	Though one should care for the possibility of an eternity loop as the maps
          * 	width and height are REALLY 0. This is also handled by checking if size is legit.
          **/
-        if (centerPosition.equals(mapPosition) && legitMapSize()) {
+        if (centerPosition.equals(mapState.mapPosition) && legitMapSize()) {
         	setCenterPosition(centerPosition); 
         	paintInternal(g); /* calls itself */
         }
@@ -759,6 +775,14 @@ public class MapPanel extends JPanel {
         double ymax = TILE_SIZE * (1 << z);
         return Math.toDegrees(Math.atan(Math.sinh(Math.PI - (2.0 * Math.PI * y) / ymax)));
     }
+    
+    public double position2lon(int x) {
+        return position2lon(x, mapState.zoom);
+    }
+
+    public double position2lat(int y) {
+        return position2lat(y, mapState.zoom);
+    }
 
     public static double tile2lon(int x, int z) {
         return x / Math.pow(2.0, z) * 360.0 - 180;
@@ -776,6 +800,14 @@ public class MapPanel extends JPanel {
     public static int lat2position(double lat, int z) {
         double ymax = TILE_SIZE * (1 << z);
         return (int) Math.floor((1 - Math.log(Math.tan(Math.toRadians(lat)) + 1 / Math.cos(Math.toRadians(lat))) / Math.PI) / 2 * ymax);
+    }
+    
+    public int lon2position(double lon) {
+        return lon2position(lon, mapState.zoom);
+    }
+
+    public int lat2position(double lat) {
+        return lat2position(lat, mapState.zoom);
     }
 
     public static String getTileNumber(TileServer tileServer, double lat, double lon, int zoom) {
@@ -1299,10 +1331,10 @@ public class MapPanel extends JPanel {
             g.setColor(Color.black);
             drawString(g, 0, "Zoom", Integer.toString(getZoom()));
             drawString(g, 1, "MapSize", mapSize.width + ", " + mapSize.height);
-            drawString(g, 2, "MapPosition", mapPosition.x + ", " + mapPosition.y);
+            drawString(g, 2, "MapPosition", mapState.mapPosition.x + ", " + mapState.mapPosition.y);
             drawString(g, 3, "CursorPosition", (getCursorPosition().x + ", " + getCursorPosition().y)); //removed mapPosition.x & mapPosition.y
-//            drawString(g, 4, "CenterPosition", (mapPosition.x + getWidth() / 2) + ", " + (mapPosition.y + getHeight() / 2));
-            drawString(g, 4, "CenterPosition", (mapPosition.x + MapPanel.PREFERRED_WIDTH / 2) + ", " + (mapPosition.y + MapPanel.PREFERRED_HEIGHT / 2));
+//            drawString(g, 4, "CenterPosition", (mapState.mapPosition.x + getWidth() / 2) + ", " + (mapState.mapPosition.y + getHeight() / 2));
+            drawString(g, 4, "CenterPosition", (mapState.mapPosition.x + MapPanel.PREFERRED_WIDTH / 2) + ", " + (mapState.mapPosition.y + MapPanel.PREFERRED_HEIGHT / 2));
             drawString(g, 5, "Tilescount", getXTileCount() + ", " + getYTileCount() + " (" + (NumberFormat.getIntegerInstance().format((long)getXTileCount() * getYTileCount())) + " total)");
             drawString(g, 6, "Painted-Tilescount", Integer.toString(stats.tileCount));
             drawString(g, 7, "Paint-Time", stats.dt + " ms.");
