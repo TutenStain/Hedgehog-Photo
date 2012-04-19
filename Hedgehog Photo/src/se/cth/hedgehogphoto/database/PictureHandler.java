@@ -35,7 +35,7 @@ public class PictureHandler {
 		}
 		return null;
 }
-	public static Picture makePicture(FileObject f, Album theAlbum){
+/*	public static Picture makePicture(FileObject f, Album theAlbum){
 		em.getTransaction().begin();
 		
 		Picture pic = new Picture();
@@ -69,7 +69,7 @@ public class PictureHandler {
 		em.persist(theAlbum);
 		em.persist(pic);
 		em.getTransaction().commit();
-	}
+	}*/
 	public static List<Picture> searchfromNames(String search){
 	Query q = em.createQuery("select t from Picture t where t.name=:name");
 	q.setParameter("name", search);
@@ -315,7 +315,7 @@ public class PictureHandler {
 				em.getTransaction().commit();	
 			}
 		}
-		public static Picture dothis(FileObject f, Album theAlbum){
+	/*	public static Picture dothis(FileObject f, Album theAlbum){
 		Picture pic = new Picture();
 		boolean pictureExist = false;
 		Query t = em.createQuery("select t from Picture t where t.path=:path");
@@ -363,5 +363,5 @@ public class PictureHandler {
 				return pic;
 			}
 		}return null;
-	}
+	}*/
 }

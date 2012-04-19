@@ -38,7 +38,7 @@ public class AlbumHandler {
 
 	}
 	
-	public static Album makeAlbum(FileObject f){
+	/*public static Album makeAlbum(FileObject f){
 	em.getTransaction().begin();
 	Album theAlbum = new Album();	
 	theAlbum.setAlbumName(f.getAlbumName());
@@ -53,7 +53,7 @@ public class AlbumHandler {
 			theAlbum.setCoverPath(f.getFilePath());
 		em.persist(theAlbum);
 		em.getTransaction().commit();
-	}
+	}*/
 	public static List<Album> searchfromComments(String search){
 		if(!(search.equals(""))){
 			Query q = em.createQuery("select t from Comment t where t.comment=:comment");
@@ -300,7 +300,7 @@ public static void deleteTags(String albumName){
 		}
 	}
 }
-public static Album dothis(FileObject f){
+/*public static Album dothis(FileObject f){
 Album theAlbum = new Album();
 if(f.getAlbumName() != null || (!f.getAlbumName().equals(""))){
 Query a = em.createQuery("select t from Album t where t.albumName=:albumName");
@@ -323,5 +323,5 @@ try{
 return theAlbum;
 }
 return null;
-}
+}*/
 }
