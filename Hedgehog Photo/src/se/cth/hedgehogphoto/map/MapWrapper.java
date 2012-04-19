@@ -97,6 +97,8 @@ public class MapWrapper extends JLayeredPane implements Observer {
 		map.setCenterPosition(position);
 	}
 	
+	/** Calculates the proper zoom so that every location fits on the 
+	 *  visible part of the map. */
 	private void computeRecquiredZoom() {
 		int zoom = 16;
 		map.setZoom(zoom);
@@ -163,20 +165,6 @@ public class MapWrapper extends JLayeredPane implements Observer {
 		return result;
 	}
 	
-//	@Deprecated
-//	private boolean allLocationsVisible2() {
-//		boolean result = true;
-//		int nbrOfLocations = locations.size();
-//		for (int i = 0; i < nbrOfLocations; i++) {
-//			if (!withinBounds(locations.get(i))) {
-//				result = false;
-//				break;
-//			}
-//		}
-//		
-//		return result;
-//	}
-	
 	/** Returns true if the passed pixel p is: 0 < p < SIZE.
 	 *  ie if it is part of the map. Returns false otherwise. */
 	private boolean validPixelCoordinate(Point pixelCoordinate) {
@@ -184,24 +172,6 @@ public class MapWrapper extends JLayeredPane implements Observer {
 		boolean latitudeOK = (pixelCoordinate.y > 0 && pixelCoordinate.y < HEIGHT);
 		return (longitudeOK && latitudeOK);
 	}
-	
-//		/** Won't use this. */
-//	@Deprecated
-//	private boolean withinBounds(LocationObject location) {
-//		double longitude = location.getLongitude();
-//		double latitude = location.getLatitude();
-//		Point topLeft = map.getMapPosition();
-//		double topLeftLongitude = map.position2lon(topLeft.x);
-//		double topLeftLatitude = map.position2lat(topLeft.y);
-//		Point bottomRight = new Point(topLeft.x + WIDTH, topLeft.y + HEIGHT);
-//		double bottomRightLongitude = map.position2lon(bottomRight.x);
-//		double bottomRightLatitude = map.position2lat(bottomRight.y);
-//		
-//		boolean longitudeWithinBounds = (longitude > topLeftLongitude && longitude < bottomRightLongitude);
-//		boolean latitudeWithinBounds = (latitude > topLeftLatitude && latitude < bottomRightLatitude);
-//		
-//		return (longitudeWithinBounds && latitudeWithinBounds);
-//	}
 	
 	/** Returns the average Latitude for the stored locations.
 	 *  If there are no locations, 0.0 is returned. */
