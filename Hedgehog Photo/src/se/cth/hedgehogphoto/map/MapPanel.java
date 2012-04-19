@@ -1264,7 +1264,7 @@ public class MapPanel extends JPanel {
 
         public void mouseEntered(MouseEvent me) {
             super.mouseEntered(me);
-            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
         }
 
         private void handlePosition(MouseEvent e) {
