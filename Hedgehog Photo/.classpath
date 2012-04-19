@@ -10,5 +10,8 @@
 	<classpathentry kind="lib" path="lib/jpa/eclipselink-jpa-modelgen_2.3.2.v20111125-r10461.jar"/>
 	<classpathentry kind="lib" path="lib/jpa/javax.persistence_1.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/jpa/javax.persistence_2.0.3.v201010191057.jar"/>
+	<classpathentry kind="lib" path="lib/sanselan-0.97-incubator-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/sanselan-0.97-incubator-sources.jar"/>
+	<classpathentry kind="lib" path="lib/sanselan-0.97-incubator.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
