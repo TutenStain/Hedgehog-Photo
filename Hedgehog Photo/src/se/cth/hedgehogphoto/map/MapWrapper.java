@@ -118,11 +118,6 @@ public class MapWrapper extends JLayeredPane implements Observer {
 			temp = computeMapPosition(locations.get(i));
 			temp.x = temp.x - map.getMapPosition().x;
 			temp.y = temp.y - map.getMapPosition().y;
-//			System.out.println(locations.get(i).toString());
-//			System.out.println(temp.x + ", " + temp.y);
-			double lon = map.position2lon(map.getMapPosition().x);
-			double lat = map.position2lat(map.getMapPosition().y);
-//			System.out.println(lon + "," + lat + "  vs  " + locations.get(i).getLongitude() + "," + locations.get(i).getLatitude());
 			pixelCoordinates.add(temp);
 		}
 		System.out.println("");

@@ -374,7 +374,6 @@ public class MapPanel extends JPanel {
     public void setMapPosition(int x, int y) {
         if (mapState.mapPosition.x == x && mapState.mapPosition.y == y)
             return;
-        Point oldMapPosition = getMapPosition();
         mapState.mapPosition.x = x;
         mapState.mapPosition.y = y;
         centerPosition.x = mapState.mapPosition.x + PREFERRED_WIDTH / 2;
@@ -393,7 +392,6 @@ public class MapPanel extends JPanel {
     public void setZoom(int zoom) {
         if (zoom == this.mapState.zoom)
             return;
-        int oldZoom = this.mapState.zoom;
         this.mapState.zoom = Math.min(getTileServer().getMaxZoom(), zoom);
         mapSize.width = getXMax();
         mapSize.height = getYMax();
@@ -1684,7 +1682,6 @@ public class MapPanel extends JPanel {
                     private StringBuilder chars;
                     public void startElement(String uri, String localName, String qName, Attributes attributes) {
                         pathStack.add(qName);
-                        String path = getPath();
                         if ("named".equals(qName)) {
                             SearchResult result = new SearchResult();
                             result.setType(attributes.getValue("type"));
@@ -1712,12 +1709,6 @@ public class MapPanel extends JPanel {
                     public void characters(char[] ch, int start, int length) throws SAXException {
                         if(chars != null)
                             chars.append(ch, start, length);
-                    }
-                    private String getPath() {
-                        StringBuilder sb = new StringBuilder();
-                        for (String p : pathStack)
-                            sb.append("/").append(p);
-                        return sb.toString();
                     }
                     private double tryDouble(String s) {
                         try {
