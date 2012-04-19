@@ -34,7 +34,7 @@ public class Metadata {
 	
 	public static ImageObject getImageObject(File file) {
 		IImageMetadata metadata = extractMetadata();
-		return getImageObject(metadata); /* may return a IOException if metadata == null */
+		return getImageObject(metadata); 
 	}
 	
 	private static IImageMetadata extractMetadata() {
@@ -46,14 +46,9 @@ public class Metadata {
 		IImageMetadata metadata = null;
 		try {
 			metadata = Sanselan.getMetadata(file);
-//			System.out.println(metadata.toString());
-		} catch (ImageReadException e) {
-			//IF POSSIBLE: Add exception handling
-			e.printStackTrace();
-		} catch (IOException e) {
-			//IF POSSIBLE: Add exception handling
-			e.printStackTrace();
-		}
+			/* TODO: Add exception handling. */
+		} catch (ImageReadException e) {} 
+		catch (IOException e) {}
 		
 		return metadata;
 	}
@@ -61,7 +56,7 @@ public class Metadata {
 	public static ImageObject getImageObject(IImageMetadata imageMetadata) {
 		ImageObject imageObject = new ImageObject();
 		if (imageMetadata != null) {
-			String metadata = imageMetadata.toString(); /* Could this cause a null-pointer exception? */
+			String metadata = imageMetadata.toString(); 
 			
 			/* New Feature in java 1.7 - closes stream automatically */
 			try (BufferedReader br = new BufferedReader( new StringReader(metadata) )) {

@@ -92,8 +92,14 @@ public class LocationObject {
 		data = data.trim();
 		int startParenthesisIndex = data.indexOf('(');
 		if (startParenthesisIndex != -1) {
-			int endParenthesisIndex = data.indexOf(')'); //IF POSSIBLE: Add handling of the unprobable case that there is no end parenthesis
-			data = data.substring(startParenthesisIndex + 1, endParenthesisIndex);
+			int endParenthesisIndex = data.indexOf(')'); 
+			try {
+				data = data.substring(startParenthesisIndex + 1, endParenthesisIndex);
+			} catch (IndexOutOfBoundsException e) {
+				/* If the endParenthesis does not exist, remove what comes after the first parenthesis. */
+				data = data.substring(0, startParenthesisIndex);
+			}
+			
 		}
 		return data;
 	}

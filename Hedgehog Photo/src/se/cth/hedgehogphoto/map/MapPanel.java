@@ -168,17 +168,14 @@ public class MapPanel extends JPanel {
     /* constants ... */
     private static final TileServer[] TILESERVERS = {
         new TileServer("http://tile.openstreetmap.org/", 18),
-        new TileServer("http://tah.openstreetmap.org/Tiles/tile/", 17),
+        /*new TileServer("http://tah.openstreetmap.org/Tiles/tile/", 17),*/ /*This TileServer appears to be broken. */
     };
 
     private static final String NAMEFINDER_URL = "http://gazetteer.openstreetmap.org/namefinder/search.xml";
-    //The Preferred width and height of the panel. Doesn't change the actual map size, but is important for
-    //calculations right now.
-    //TODO: Let the map size be a constant OUTSIDE of this class (or package?)
+    /* The Preferred width and height of the panel. Doesn't change the actual map size, but is important for calculations. */
     private static final int PREFERRED_WIDTH = se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_WIDTH;
     private static final int PREFERRED_HEIGHT = se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_HEIGHT;
 
-    //TODO: Erase this IF we don't want to cruise around on the map, leave it otherwise.
     private static final int ANIMATION_FPS = 15, ANIMATION_DURARTION_MS = 500;
     
 
@@ -289,9 +286,6 @@ public class MapPanel extends JPanel {
     	mapState.addObserver(observer);
     }
 
-    /* IF POSSIBLE: This method does one thing - it sets the tileServer
-     * to "broken" if an exception is thrown.
-     * One exception is thrown EVERY time one starts the program. Look it up! */
     private void checkTileServers() {
         for (TileServer tileServer : TILESERVERS) {
             String urlstring = getTileString(tileServer, 1, 1, 1);
@@ -546,7 +540,7 @@ public class MapPanel extends JPanel {
 
     public void setCenterPosition(Point p) {
         setMapPosition(p.x - PREFERRED_WIDTH / 2, p.y - PREFERRED_HEIGHT / 2);
-        centerPosition = p; /* IF POSSIBLE: Delete this line if getStoredCenterPosition() gets removed. */
+        centerPosition = p; 
     }
 
     public Point.Double getLongitudeLatitude(Point position) {
@@ -1264,13 +1258,13 @@ public class MapPanel extends JPanel {
             handleDrag(e);
         }
 
-        /* IF POSSIBLE: use another cursor if mouse is over a certain location on map? */
         public void mouseExited(MouseEvent e) {
-            //setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
 
         public void mouseEntered(MouseEvent me) {
             super.mouseEntered(me);
+            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
 
         private void handlePosition(MouseEvent e) {
