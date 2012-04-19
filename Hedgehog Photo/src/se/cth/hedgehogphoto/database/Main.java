@@ -23,7 +23,7 @@ public class Main {
 	public static void main(String[] args) {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
-		DatabaseHandler.makeFileObjectfromPath("C:\\Users\\Julia\\Pictures\\20111229\\IMG_0175.JPG");
+		//DatabaseHandler.makeFileObjectfromPath("C:\\Users\\Julia\\Pictures\\20111229\\IMG_0175.JPG");
 	//System.out.print(DatabaseHandler.getAllPictures());	
 	/*
 		FileObject f = new ImageObject();

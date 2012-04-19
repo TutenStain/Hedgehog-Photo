@@ -11,7 +11,7 @@ public class MainModel extends Observable {
 	
 	public MainModel() {
 		try {
-			images = DatabaseHandler.getAllPicturesasFileObject();
+		//	images = DatabaseHandler.getAllPicturesasFileObject();
 		} catch(Exception e) {	
 			//TODO Do something if we fail to get the pictures.
 		}

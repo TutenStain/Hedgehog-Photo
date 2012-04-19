@@ -48,6 +48,6 @@ public class TagComponentController implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("Clicked on: " + tag.getText());
-		Files.getInstance().setList(DatabaseHandler.searchPicturesfromTags(tag.getText()));
+		//Files.getInstance().setList(DatabaseHandler.searchPicturesfromTags(tag.getText()));
 	}
 }

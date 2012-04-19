@@ -34,7 +34,7 @@ public class SearchModel extends Observable{
 		//System.out.println(DatabaseHandler.getLocationd"s());
 		//DatabaseHandler.getAlbumName("jaggillarelefanter.jpg");
 
-		return DatabaseHandler.searchPicturesfromComments("Gutes bild");
+		return null; //DatabaseHandler.searchPicturesfromComments("Gutes bild");
 		//return DatabaseHandler.searchComments(searchText);
 	}
 	

@@ -85,13 +85,6 @@ public class Album {
 		this.albumName = albumName;
 	}
 	
-	public String getName() {
-		return albumName;
-	}
-
-	public void setName(String albumName) {
-		this.albumName = albumName;
-	}
 	public String getCoverPath() {
 		return coverPath;
 	}
