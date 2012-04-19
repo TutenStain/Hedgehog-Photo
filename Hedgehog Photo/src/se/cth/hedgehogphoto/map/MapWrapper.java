@@ -12,6 +12,9 @@ import javax.swing.JLayeredPane;
 
 import se.cth.hedgehogphoto.LocationObject;
 
+/**
+ * @author Florian
+ */
 public class MapWrapper extends JLayeredPane implements Observer {
 	
 	private MapPanel map;
@@ -54,7 +57,10 @@ public class MapWrapper extends JLayeredPane implements Observer {
 		map.enableInteraction(true);
 		map.setBounds(0, 0, WIDTH, HEIGHT);
 		map.setOpaque(true);
-		//TODO: Add handling for resizing of the map-window.
+		/* TODO: Add handling for resizing of the map-window.
+		   This will not be superimportant, though right now there is no 
+		   "real" center if the canvas-borders change size. */
+		
 	}
 	
 	private void addLocationMarkers() {

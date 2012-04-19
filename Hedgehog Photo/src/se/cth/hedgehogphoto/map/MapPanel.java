@@ -254,11 +254,11 @@ public class MapPanel extends JPanel {
      *  If false, it's a static map. */
     private boolean interactionEnabled;
 
-    public MapPanel() {
+    protected MapPanel() {
         this(new Point(8282, 5179), 6);
     }
 
-    public MapPanel(Point mapPosition, int zoom) {
+    protected MapPanel(Point mapPosition, int zoom) {
         
         try {
             // disable animation on windows7 for now
@@ -298,7 +298,6 @@ public class MapPanel extends JPanel {
             try {
                 URL url = new URL(urlstring);
                 Object content = url.getContent();
-                //System.err.println(content);
             } catch (Exception e) {
                 log.log(Level.SEVERE, "failed to get content from url " + urlstring);
                 tileServer.setBroken(true);

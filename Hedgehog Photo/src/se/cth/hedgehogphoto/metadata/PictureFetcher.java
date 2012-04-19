@@ -59,8 +59,8 @@ public class PictureFetcher {
 					for(int j = 0; j < dirFiles.length; j++ ){
 						if(dirFiles[j].isDirectory()==false){
 							int pos = dirFiles[j].getName().lastIndexOf(".");              //find the pos of the . in the filename
-							String end =	dirFiles[j].getName().substring(pos + 1);      // get extention name and place into string ext
-							if (isValidFileExtension(end) && dirFiles[j].isFile()){                                //check the file extension is a jpg file type
+							String end =	dirFiles[j].getName().substring(pos + 1);      // get extension name and place into string ext
+							if (isValidFileExtension(end) && dirFiles[j].isFile()){ 
 								System.out.println(dirFiles[j]);      //send filename to client
 								ImageObject imageObject;
 								if(dirFiles[j].isDirectory()==false){
@@ -80,7 +80,7 @@ public class PictureFetcher {
 				else{
 
 					for(int k = 0; k < chooser.getSelectedFiles().length;k++){
-						ImageObject  imageObject = Metadata.getImageObject(metadata.extractMetadata((chooser.getSelectedFiles()[k]))); /* TODO: Right now we have two equal ImageObject-classes in different packages. Where to put it? */
+						ImageObject  imageObject = Metadata.getImageObject(chooser.getSelectedFiles()[k]); 
 						imageObject.setAlbumName(chooser.getSelectedFiles()[k].getParentFile().getName());
 						imageObject.setFileName(chooser.getSelectedFiles()[k].getName());
 						
