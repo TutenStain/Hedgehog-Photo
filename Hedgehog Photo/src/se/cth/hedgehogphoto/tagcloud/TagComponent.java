@@ -1,7 +1,5 @@
 package se.cth.hedgehogphoto.tagcloud;
 
-import java.util.Observable;
-import java.util.Observer;
 import javax.swing.JLabel;
 
 /**

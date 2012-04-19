@@ -1,6 +1,5 @@
 package se.cth.hedgehogphoto.search;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -9,13 +8,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
-
-import sun.print.resources.serviceui;
 
 /**
  * @author Barnabas Sapan

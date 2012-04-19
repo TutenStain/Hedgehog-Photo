@@ -1,6 +1,5 @@
 package se.cth.hedgehogphoto.metadata;
 
-import se.cth.hedgehogphoto.database.DatabaseHandler;
 
 public class Main {
 

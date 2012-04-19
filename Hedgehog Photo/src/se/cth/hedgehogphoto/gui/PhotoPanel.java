@@ -1,20 +1,14 @@
 package se.cth.hedgehogphoto.gui;
 
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Label;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 
 import se.cth.hedgehogphoto.FileObject;
 

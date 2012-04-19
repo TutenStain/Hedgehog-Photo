@@ -1,7 +1,5 @@
 package se.cth.hedgehogphoto.search;
 
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * @author Barnabas Sapan

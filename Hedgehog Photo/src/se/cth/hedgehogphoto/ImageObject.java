@@ -2,10 +2,6 @@ package se.cth.hedgehogphoto;
 
 import java.util.List;
 
-import se.cth.hedgehogphoto.FileObject;
-import se.cth.hedgehogphoto.LocationObject;
-import se.cth.hedgehogphoto.Util;
-
 
 
 public class ImageObject implements FileObject {

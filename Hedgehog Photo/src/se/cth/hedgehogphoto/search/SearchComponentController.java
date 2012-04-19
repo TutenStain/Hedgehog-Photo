@@ -5,8 +5,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import se.cth.hedgehogphoto.FileObject;
-import se.cth.hedgehogphoto.database.DatabaseHandler;
-import se.cth.hedgehogphoto.database.Files;
 
 /**
  * @author Barnabas Sapan

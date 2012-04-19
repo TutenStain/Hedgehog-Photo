@@ -1,11 +1,8 @@
 package se.cth.hedgehogphoto.tagcloud;
 
 import java.awt.Dimension;
-import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;

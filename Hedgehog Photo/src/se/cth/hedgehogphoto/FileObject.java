@@ -1,7 +1,6 @@
 package se.cth.hedgehogphoto;
 
 import java.util.List;
-import se.cth.hedgehogphoto.LocationObject;
 /**
  * @author Julia
  */

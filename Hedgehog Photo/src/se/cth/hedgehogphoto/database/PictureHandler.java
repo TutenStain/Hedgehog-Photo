@@ -8,8 +8,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import se.cth.hedgehogphoto.FileObject;
-
 public class PictureHandler {
 	private static final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
 

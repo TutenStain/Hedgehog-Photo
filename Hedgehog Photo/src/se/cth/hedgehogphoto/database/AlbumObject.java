@@ -2,8 +2,9 @@ package se.cth.hedgehogphoto.database;
 
 import java.util.ArrayList;
 import java.util.List;
-import se.cth.hedgehogphoto.LocationObject;
+
 import se.cth.hedgehogphoto.FileObject;
+import se.cth.hedgehogphoto.LocationObject;
 /**
  * @author Julia
  */

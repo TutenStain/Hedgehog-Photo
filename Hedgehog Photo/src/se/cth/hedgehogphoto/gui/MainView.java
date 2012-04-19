@@ -1,7 +1,6 @@
 package se.cth.hedgehogphoto.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -18,12 +17,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import se.cth.hedgehogphoto.database.Files;
-import se.cth.hedgehogphoto.FileObject;
 import se.cth.hedgehogphoto.MainModel;
+import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
 
 public class MainView implements Observer {

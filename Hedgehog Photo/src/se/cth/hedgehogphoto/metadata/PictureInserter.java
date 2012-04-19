@@ -1,12 +1,7 @@
 package se.cth.hedgehogphoto.metadata;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.ImageObject;
 
 /**
