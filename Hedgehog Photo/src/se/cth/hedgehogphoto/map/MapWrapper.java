@@ -182,10 +182,6 @@ public class MapWrapper extends JLayeredPane implements Observer {
 //		return (longitudeWithinBounds && latitudeWithinBounds);
 //	}
 	
-	private LocationObject getCenterLocation() {
-		return centerLocation.clone();
-	}
-	
 	private double averageLatitude() {
 		double totalLatitude = 0.0;
 		double nbrOfLocations = locations.size();
