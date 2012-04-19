@@ -3,6 +3,7 @@ package se.cth.hedgehogphoto.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -72,6 +73,7 @@ public class DatabaseHandler {
 		list = searchPictureNames(search);
 		files.setList(list);
 	}
+	
 	public static List<FileObject> searchPictureNames(String search){
 
 		Query q = em.createQuery("select t from Picture t where t.name=:name");
@@ -88,6 +90,7 @@ public class DatabaseHandler {
 		}
 
 	}
+	
 	public static void updateSearchPicturesfromDates(String search){
 		list = searchPicturesfromDates(search);
 		files.setList(list);
