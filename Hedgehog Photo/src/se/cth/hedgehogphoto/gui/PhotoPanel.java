@@ -64,7 +64,6 @@ public class PhotoPanel extends JPanel {
 		commentsPanel.add(commentsLabel, BorderLayout.CENTER);
 		
 	}
-	
 	public ImageIcon getIcon(){
 		return this.icon;
 	}

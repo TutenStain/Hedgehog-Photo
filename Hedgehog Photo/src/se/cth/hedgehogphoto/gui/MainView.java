@@ -43,7 +43,7 @@ public class MainView implements Observer {
 	public MainView() {
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -186,7 +186,7 @@ public class MainView implements Observer {
 			photoViewPanel.removeAll();
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
-				//	pp.setComment(images.get(i).getComment());
+				pp.setComment(images.get(i).getComment().getComment());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 				frame.revalidate();
@@ -195,9 +195,11 @@ public class MainView implements Observer {
 
 		if(arg1 instanceof Files){
 			List<Picture> images = Files.getInstance().getPictureList();
+			//TODO Maybe refresh in another way than removing the PhotoPanels?
 			photoViewPanel.removeAll();
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
+				pp.setComment(images.get(i).getComment().getComment());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 				frame.revalidate();
