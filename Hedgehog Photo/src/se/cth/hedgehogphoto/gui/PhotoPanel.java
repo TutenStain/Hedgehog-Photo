@@ -21,6 +21,7 @@ public class PhotoPanel extends JPanel {
 	JLabel tagsLabel = new JLabel("Tags:");
 	JLabel locationLabel = new JLabel("Location:");
 	JLabel iconLabel = new JLabel("");
+	ImageIcon icon;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -57,19 +58,25 @@ public class PhotoPanel extends JPanel {
 		add(commentsPanel, BorderLayout.CENTER);
 		commentsPanel.setLayout(new BorderLayout(0, 0));
 		
-		iconLabel.setIcon(new ImageIcon(path));
+		icon = new ImageIcon(path);
+		iconLabel.setIcon(icon);
 		commentsPanel.add(iconLabel, BorderLayout.WEST);
 		commentsPanel.add(commentsLabel, BorderLayout.CENTER);
 		
+	}
+	
+	public ImageIcon getIcon(){
+		return this.icon;
+	}
+	
+	public void setIcon(ImageIcon icon){
+		this.iconLabel.setIcon(icon);
 	}
 	
 	public void setComment(String comment){
 		commentsLabel.setText(comment);
 	}
 	
-	public Icon getIcon(){
-		return this.iconLabel.getIcon();
-	}
 	public void displayComments(Boolean b){
 		this.commentsLabel.setVisible(b);
 	}

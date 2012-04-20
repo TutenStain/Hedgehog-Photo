@@ -2,9 +2,12 @@ package se.cth.hedgehogphoto.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -12,12 +15,15 @@ import java.util.Observer;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import se.cth.hedgehogphoto.MainModel;
 import se.cth.hedgehogphoto.database.Files;
@@ -29,8 +35,8 @@ public class MainView implements Observer {
 	private JPanel photoViewPanel;
 	private	JPanel leftPanelView;
 	private JPanel topPanel;
-	List<PhotoPanel> photoPanels = new ArrayList<PhotoPanel>();
-
+	private static List<PhotoPanel> photoPanels = new ArrayList<PhotoPanel>();
+	
 	/**
 	 * Create the application.
 	 */
@@ -43,7 +49,7 @@ public class MainView implements Observer {
 	 */
 	private void initialize() {
 		frame =  new JFrame();
-		
+
 		//TODO Minimum size?
 		frame.setExtendedState(frame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +62,7 @@ public class MainView implements Observer {
 
 		JButton btnShowhideLocation = new JButton("Show/Hide location");
 
-		JSlider slider = new JSlider();
+		JSlider slider = new JSlider(50, 200);
 
 		JButton showHideComments = new JButton("Show/Hide comments");
 
@@ -102,15 +108,15 @@ public class MainView implements Observer {
 
 		JButton btnCalender = new JButton("Calender");
 		leftPanelView.add(btnCalender);
-		
+
 		JScrollPane photoView = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		frame.getContentPane().add(photoView, BorderLayout.CENTER);
 
 		photoViewPanel = new JPanel();
 		photoView.setViewportView(photoViewPanel);
-		
+
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
-		
+
 		showHideComments.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				for(int i=0;i<photoPanels.size();i++){
@@ -134,14 +140,40 @@ public class MainView implements Observer {
 
 			}
 		});
-		
+		slider.addChangeListener(new ChangeListener(){
+
+			public void stateChanged(ChangeEvent arg0) {
+				JSlider slider = (JSlider)arg0.getSource();
+				float scale = (float)slider.getValue()/100;
+				
+				for(int i=0;i<photoPanels.size();i++){
+					Image image = photoPanels.get(i).getIcon().getImage();
+					BufferedImage bi = resize(image, Math.round(image.getWidth(null)*scale),
+							Math.round(image.getHeight(null)*scale));
+					ImageIcon icon2 = new ImageIcon(bi);
+					
+					photoPanels.get(i).setIcon(icon2);
+				}
+			}
+
+		});
+
 		frame.setVisible(true);
 	}
-	
+
+	public static BufferedImage resize(Image image, int width, int height) {
+		BufferedImage resizedImage = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(image, 0, 0, width, height, null);
+		g.dispose();
+		return resizedImage;
+	}
+
 	public void addToLeftPanel(JPanel panel){
 		leftPanelView.add(panel);
 	}
-	
+
 	public void addToTopPanel(JPanel panel, String orientation){
 		topPanel.add(panel, orientation);
 	}
@@ -154,13 +186,13 @@ public class MainView implements Observer {
 			photoViewPanel.removeAll();
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
-			//	pp.setComment(images.get(i).getComment());
+				//	pp.setComment(images.get(i).getComment());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 				frame.revalidate();
 			}
 		}
-		
+
 		if(arg1 instanceof Files){
 			List<Picture> images = Files.getInstance().getPictureList();
 			photoViewPanel.removeAll();
