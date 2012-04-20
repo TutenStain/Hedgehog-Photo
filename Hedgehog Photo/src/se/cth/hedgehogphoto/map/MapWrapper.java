@@ -17,9 +17,10 @@ import se.cth.hedgehogphoto.LocationObject;
  * THIS is the class to instantiate if one wants a map.
  * @author Florian
  */
-public class MapWrapper extends JLayeredPane implements Observer {
+public class MapWrapper extends JLayeredPane {
 	
 	private MapPanel map;
+	private List<LocationMarker> locationMarkers;
 	private List<LocationObject> locations;
 	private LocationObject centerLocation;
 	private final int WIDTH = se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_WIDTH;
@@ -50,7 +51,7 @@ public class MapWrapper extends JLayeredPane implements Observer {
 	private void createMapPanel() {
 		map = new MapPanel();
 		calibrateMap();
-		map.addObserver(this);
+//		map.addObserver(this); use propertychangelistener instead.
 	}
 	
 	/** Adds the map to the pane. */
@@ -76,10 +77,11 @@ public class MapWrapper extends JLayeredPane implements Observer {
 	private void addLocationMarkers() {
 		List<Point> locationPoints = getPixelCoordinates();
 		int nbrOfLocations = locationPoints.size();
-        JLabel [] markers = new JLabel[nbrOfLocations];
+        LocationMarker [] markers = new LocationMarker[nbrOfLocations];
         for(int i = 0; i < nbrOfLocations; i++) {
         	markers[i] = new LocationMarker(locationPoints.get(i));
         	int layer = new Integer(locationPoints.get(i).y);
+        	map.addObserver(markers[i]);
         	add(markers[i], layer, 1);
         }
 	}
@@ -198,10 +200,4 @@ public class MapWrapper extends JLayeredPane implements Observer {
 		double averageLongitude = nbrOfLocations != 0 ? totalLongitude / nbrOfLocations : 0.0; 
 		return averageLongitude;
 	}
-
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		cleanBuild();
-	}
-
 }

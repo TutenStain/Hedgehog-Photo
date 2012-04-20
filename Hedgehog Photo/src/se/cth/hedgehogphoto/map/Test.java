@@ -17,7 +17,7 @@ public class Test {
     
     public Test(List<LocationObject> locations)
     {
-        frame.setPreferredSize(new Dimension(520, 520));
+        frame.setPreferredSize(new Dimension(600, 600));
         frame.setLayout(new BorderLayout());
         
         map = new MapWrapper(locations);

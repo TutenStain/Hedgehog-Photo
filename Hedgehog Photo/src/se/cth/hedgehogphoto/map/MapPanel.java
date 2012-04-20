@@ -53,8 +53,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -212,18 +210,14 @@ public class MapPanel extends JPanel {
     //-------------------------------------------------------------------------
     // map impl.
     
-    protected class MapState extends Observable {
+    protected class MapState {
     	protected Point mapPosition;
         protected int zoom;
         
         public MapState() {
         	mapPosition = new Point(0, 0);
         }
-        
-        public void update() {
-        	setChanged();
-        	notifyObservers();
-        }
+
     }
 
     private MapState mapState = new MapState();
@@ -282,8 +276,8 @@ public class MapPanel extends JPanel {
         interactionEnabled = false; //will prevent listener to work correctly
     }
     
-    public void addObserver(Observer observer) {
-    	mapState.addObserver(observer);
+    public void addObserver(PropertyChangeListener listener) {
+    	addPropertyChangeListener(listener);
     }
 
     private void checkTileServers() {
@@ -374,11 +368,18 @@ public class MapPanel extends JPanel {
     public void setMapPosition(int x, int y) {
         if (mapState.mapPosition.x == x && mapState.mapPosition.y == y)
             return;
-        mapState.mapPosition.x = x;
+        Point oldValue = new Point(mapState.mapPosition.x, mapState.mapPosition.y);
+        updateMapPositionWithoutFire(x, y);
+        firePropertyChange("mapPosition", oldValue, mapState.mapPosition);
+    }
+    
+    public void updateMapPositionWithoutFire(int x, int y) {
+    	if (mapState.mapPosition.x == x && mapState.mapPosition.y == y)
+            return;
+    	mapState.mapPosition.x = x;
         mapState.mapPosition.y = y;
         centerPosition.x = mapState.mapPosition.x + PREFERRED_WIDTH / 2;
         centerPosition.y = mapState.mapPosition.y + PREFERRED_HEIGHT / 2;
-        mapState.update();
     }
 
     public void translateMapPosition(int tx, int ty) {
@@ -395,7 +396,6 @@ public class MapPanel extends JPanel {
         this.mapState.zoom = Math.min(getTileServer().getMaxZoom(), zoom);
         mapSize.width = getXMax();
         mapSize.height = getYMax();
-        mapState.update();
     }
 
     /** Enables/disables map interaction
@@ -483,23 +483,29 @@ public class MapPanel extends JPanel {
     public void zoomIn(Point pivot) {
         if (getZoom() >= getTileServer().getMaxZoom())
             return;
+        Dimension oldValue = new Dimension(mapSize.width, mapSize.height);
         Point mapPosition = getMapPosition();
         int dx = pivot.x;
         int dy = pivot.y;
         setZoom(getZoom() + 1);
-        setMapPosition(mapPosition.x * 2 + dx, mapPosition.y * 2 + dy);
+        updateMapPositionWithoutFire(mapPosition.x * 2 + dx, mapPosition.y * 2 + dy);
+//        setMapPosition(mapPosition.x + dx, mapPosition.y + dy);
         repaint();
+        firePropertyChange("zoomIn", oldValue, mapSize);
     }
 
     public void zoomOut(Point pivot) {
         if (getZoom() <= 1)
             return;
+        Dimension oldValue = new Dimension(mapSize.width, mapSize.height);
         Point mapPosition = getMapPosition();
         int dx = pivot.x;
         int dy = pivot.y;
         setZoom(getZoom() - 1);
-        setMapPosition((mapPosition.x - dx) / 2, (mapPosition.y - dy) / 2);
+        updateMapPositionWithoutFire((mapPosition.x - dx) / 2, (mapPosition.y - dy) / 2);
+//        setMapPosition(mapPosition.x - dx / 2, mapPosition.y - dy / 2);
         repaint();
+        firePropertyChange("zoomIn", oldValue, mapSize);
     }
 
     public int getXTileCount() {
