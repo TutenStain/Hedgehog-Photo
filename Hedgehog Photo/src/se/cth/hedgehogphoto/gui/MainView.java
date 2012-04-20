@@ -186,7 +186,9 @@ public class MainView implements Observer {
 			photoViewPanel.removeAll();
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
-				pp.setComment(images.get(i).getComment().getComment());
+				/*pp.setComment(images.get(i).getComment().getComment());
+				pp.setTags(images.get(i).getTags().get(i).getTag());
+				pp.setLocation(images.get(i).getLocation().getLocation());*/
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 				frame.revalidate();
@@ -199,7 +201,9 @@ public class MainView implements Observer {
 			photoViewPanel.removeAll();
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
-				pp.setComment(images.get(i).getComment().getComment());
+				/*pp.setComment(images.get(i).getComment().getComment());
+				pp.setTags(images.get(i).getTags().get(i).getTag());
+				pp.setLocation(images.get(i).getLocation().getLocation());*/
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 				frame.revalidate();
