@@ -4,10 +4,7 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import se.cth.hedgehogphoto.LocationObject;

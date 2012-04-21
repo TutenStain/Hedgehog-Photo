@@ -3,11 +3,13 @@ package se.cth.hedgehogphoto.map;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -16,8 +18,8 @@ import se.cth.hedgehogphoto.LocationObject;
 
 public class LocationMarker extends JLabel implements PropertyChangeListener {
 	private ImageIcon icon = new ImageIcon("marker2.png");
-	private final int WIDTH = icon.getIconWidth();
-	private final int HEIGHT = icon.getIconHeight();
+	private int WIDTH = icon.getIconWidth();
+	private int HEIGHT = icon.getIconHeight();
 	private LocationObject locations;
 	/* TODO: Add implementation of the LocationObject. */
 	
@@ -47,10 +49,11 @@ public class LocationMarker extends JLabel implements PropertyChangeListener {
     };
 	
 	public LocationMarker(Point p) {
-		int fromLeft = p.x - WIDTH / 2;
-		int fromTop = p.y - HEIGHT;
 		setIcon(icon);
 		setOpaque(false);
+		int fromLeft = p.x - WIDTH / 2;
+		int fromTop = p.y - HEIGHT;
+		
 		setBounds(fromLeft, fromTop, WIDTH, HEIGHT);
 		addMouseListener(mouseListener);
 	}
@@ -64,21 +67,28 @@ public class LocationMarker extends JLabel implements PropertyChangeListener {
 		revalidate();
 	}
 	
+	public Point getPoint() {
+		return new Point(getXCoordinate(), getYCoordinate());
+	}
+	
+	/** Returns the x-coordinate of where the marker points. */
 	public int getXCoordinate() {
 		Point p = getLocation();
 		return p.x + WIDTH / 2;
 	}
 	
+	/** Returns the y-coordinate of where the marker points. */
 	public int getYCoordinate() {
 		Point p = getLocation();
 		return p.y + HEIGHT;
 	}
 	
 	/** Places the marker so that it points to the given coordinates. */
-	private void setPixelCoordinates(int x, int y) {
+	void setPixelCoordinates(int x, int y) {
 		x = x - WIDTH / 2;
 		y = y - HEIGHT;
 		setBounds(x, y, WIDTH, HEIGHT);
+		/* TODO: Make more general - ie doesn't always have to point to the mid-bottom, might wanna be mid-mid sometimes of left- bot. */
 	}
 	
 	/** Handles input "zoomIn" and "zoomOut" only. 
@@ -168,6 +178,25 @@ public class LocationMarker extends JLabel implements PropertyChangeListener {
 //			moveAround(dx, dy);
 //		}
 		
+	}
+	
+	@Override
+	public void setIcon(Icon icon) {
+		super.setIcon(icon);
+		setProperIconSize();
+	}
+	
+	public void setProperIconSize() {
+		WIDTH = this.getIcon().getIconWidth();
+		HEIGHT = this.getIcon().getIconHeight();
+	}
+	
+	public boolean intersects(JLabel label) {
+		Rectangle r = label.getBounds();
+		boolean intersects = false;
+		/* TODO: Add calculation of when two labels intersect! */
+		
+		return intersects;
 	}
 	
 }

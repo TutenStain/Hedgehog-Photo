@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import se.cth.hedgehogphoto.LocationObject;
@@ -19,12 +20,16 @@ public class Test {
     {
         frame.setPreferredSize(new Dimension(600, 600));
         frame.setLayout(new BorderLayout());
+        JLabel loading = new JLabel("loading map...");
         
-        map = new MapWrapper(locations);
         
-        frame.add(map, BorderLayout.CENTER);
+        frame.add(loading, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
+        map = new MapWrapper(locations);
+        frame.removeAll();
+        frame.add(map, BorderLayout.CENTER);
+        frame.pack();
     }
 
 

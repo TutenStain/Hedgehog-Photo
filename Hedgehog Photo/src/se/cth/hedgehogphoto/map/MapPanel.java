@@ -279,6 +279,14 @@ public class MapPanel extends JPanel {
     public void addObserver(PropertyChangeListener listener) {
     	addPropertyChangeListener(listener);
     }
+    
+//    public class TileServerException extends Exception {
+//    	public TileServerException() { }
+//    	@Override
+//    	public String toString() {
+//    		return "The tileserver \"" + getTileServer().getURL() + "\" could not be reached.\r\nMaybe configuring a http-proxy is required.";
+//    	}
+//    }
 
     private void checkTileServers() {
         for (TileServer tileServer : TILESERVERS) {
@@ -303,6 +311,7 @@ public class MapPanel extends JPanel {
                             SwingUtilities.getWindowAncestor(MapPanel.this),
                             "The tileserver \"" + getTileServer().getURL() + "\" could not be reached.\r\nMaybe configuring a http-proxy is required.",
                             "TileServer not reachable.", JOptionPane.ERROR_MESSAGE);
+//                    throw new TileServerException();
                 }
             });
         }
