@@ -33,7 +33,9 @@ public class MapWrapper extends JLayeredPane {
 	private void init(List<LocationObject> locations) {
 		setLocations(locations);
 		addMap();
+		System.out.println("map created");
 		addLocationMarkers();
+		System.out.println("markers added");
 	}
 	
 	/** Returns the map, OR if it doesn't exist yet, creates it. */

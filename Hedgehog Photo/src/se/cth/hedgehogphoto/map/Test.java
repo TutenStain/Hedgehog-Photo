@@ -27,9 +27,14 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
         map = new MapWrapper(locations);
-        frame.removeAll();
+//        frame.removeAll();
+        frame.remove(loading);
+        frame.setLayout(new BorderLayout());
         frame.add(map, BorderLayout.CENTER);
         frame.pack();
+        frame.revalidate();
+        frame.repaint();
+        System.out.println("Constructor done");
     }
 
 

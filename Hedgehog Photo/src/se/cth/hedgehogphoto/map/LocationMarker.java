@@ -180,12 +180,6 @@ public class LocationMarker extends JLabel implements PropertyChangeListener {
 		
 	}
 	
-	@Override
-	public void setIcon(Icon icon) {
-		super.setIcon(icon);
-		setProperIconSize();
-	}
-	
 	public void setProperIconSize() {
 		WIDTH = this.getIcon().getIconWidth();
 		HEIGHT = this.getIcon().getIconHeight();
