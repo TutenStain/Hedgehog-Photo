@@ -17,7 +17,7 @@ import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.LocationObject;
 
 public class LocationMarker extends JLabel implements PropertyChangeListener {
-	private ImageIcon icon = new ImageIcon("marker2.png");
+	private ImageIcon icon = new ImageIcon("Pictures/markers/marker2.png");
 	private int WIDTH = icon.getIconWidth();
 	private int HEIGHT = icon.getIconHeight();
 	private LocationObject locations;
