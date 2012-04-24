@@ -10,7 +10,7 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import se.cth.hedgehogphoto.gui.WrapLayout;
+import se.cth.hedgehogphoto.view.WrapLayout;
 
 /**
  * The view representation of the tagcloud.

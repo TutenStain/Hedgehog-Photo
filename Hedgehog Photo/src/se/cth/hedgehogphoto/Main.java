@@ -9,13 +9,13 @@ import java.util.List;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.Files;
-import se.cth.hedgehogphoto.gui.MainView;
 import se.cth.hedgehogphoto.search.SearchController;
 import se.cth.hedgehogphoto.search.SearchModel;
 import se.cth.hedgehogphoto.search.SearchPreviewView;
 import se.cth.hedgehogphoto.search.SearchView;
 import se.cth.hedgehogphoto.tagcloud.TagCloudModel;
 import se.cth.hedgehogphoto.tagcloud.TagCloudView;
+import se.cth.hedgehogphoto.view.MainView;
 
 /**
  * @author Barnabas Sapan
