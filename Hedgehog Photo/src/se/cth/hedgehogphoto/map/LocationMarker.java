@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.LocationObject;
 
+@Deprecated
 public class LocationMarker extends JLabel implements PropertyChangeListener {
 	private ImageIcon icon = new ImageIcon("Pictures/markers/marker2.png");
 	private int WIDTH = icon.getIconWidth();
