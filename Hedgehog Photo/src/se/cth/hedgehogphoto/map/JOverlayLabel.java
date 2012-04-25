@@ -25,7 +25,6 @@ public abstract class JOverlayLabel extends JLabel implements PropertyChangeList
 	private int iconHeight;
 
 	void init() {
-		setIcon(imageIcon);
 		setOpaque(false);
 		setBounds(labelPointsFromLeft(), labelPointsFromTop(), iconWidth, iconHeight);
 		addMouseListener(getMouseListener());
@@ -129,8 +128,11 @@ public abstract class JOverlayLabel extends JLabel implements PropertyChangeList
 		return imageIcon;
 	}
 
+	/** Sets the imageIcon and the proper icon size. */
 	public void setImageIcon(ImageIcon imageIcon) {
 		this.imageIcon = imageIcon;
+		setIcon(imageIcon);
+		setProperIconSize();
 	}
 
 	public int getIconHeight() {
@@ -153,8 +155,10 @@ public abstract class JOverlayLabel extends JLabel implements PropertyChangeList
 	 *  haven't been updated after the change of the icon, this
 	 *  is the method to call. */
 	public void setProperIconSize() {
-		setIconWidth(getIconWidth());
-		setIconHeight(getIconHeight());
+		int width = getImageIcon().getIconWidth();
+		int height = getImageIcon().getIconHeight();
+		setIconWidth(width);
+		setIconHeight(height);
 	}
 	
 	/** Checks if this label intersects with a given JComponent. */

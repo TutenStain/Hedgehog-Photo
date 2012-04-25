@@ -1,5 +1,7 @@
 package se.cth.hedgehogphoto.map;
 
+import java.awt.event.MouseEvent;
+
 import javax.swing.ImageIcon;
 
 import se.cth.hedgehogphoto.ImageObject;
@@ -14,6 +16,7 @@ public class JMarker extends JOverlayLabel {
 	/* TODO: Write constructor. */
 	public JMarker() {
 		setImageIcon(new ImageIcon("Pictures/markers/marker2.png"));
+		init();
 	}
 	
 	@Override
@@ -42,8 +45,17 @@ public class JMarker extends JOverlayLabel {
 
 	@Override
 	MouseListener getMouseListener() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				/* TODO: Add event-handling. */
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				/* TODO: Add event-handling. */
+			}
+		};
 	}
 
 }
