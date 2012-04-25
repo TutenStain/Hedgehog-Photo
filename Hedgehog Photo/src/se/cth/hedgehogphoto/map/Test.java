@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.LocationObject;
 
@@ -22,15 +23,18 @@ public class Test {
         frame.setLayout(new BorderLayout());
         JLabel loading = new JLabel("loading map...");
         
+        JPanel panel = new JPanel();
         
-        frame.add(loading, BorderLayout.CENTER);
+        panel.add(loading, BorderLayout.CENTER);
+        frame.add(panel);
         frame.pack();
         frame.setVisible(true);
         map = new MapWrapper(locations);
 //        frame.removeAll();
-        frame.remove(loading);
+        panel.remove(loading);
         frame.setLayout(new BorderLayout());
-        frame.add(map, BorderLayout.CENTER);
+        panel.add(map, BorderLayout.CENTER);
+        map.setVisible(true);
         frame.pack();
         frame.revalidate();
         frame.repaint();

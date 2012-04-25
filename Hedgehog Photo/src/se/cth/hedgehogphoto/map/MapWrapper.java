@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto.map;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class MapWrapper extends JLayeredPane {
 	
 	/** The initialization of this class. Called from constructor. */
 	private void init(List<LocationObject> locations) {
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setLocations(locations);
 		addMap();
 		System.out.println("map created");
