@@ -94,22 +94,35 @@ public class JMarkerTest {
 
 	@Test
 	public void testGetPoint() {
-		//fail("Not yet implemented");
+		Point p = label.getLocation();
+		p.x += label.getXOffset();
+		p.y += label.getYOffset();
+		assertTrue(p.equals(label.getPoint()));
+		label.setBounds(55, 100);
+		p = new Point(55,100);
+		p.x += label.getXOffset();
+		p.y += label.getYOffset();
+		assertTrue(p.equals(label.getPoint()));
 	}
 
 	@Test
 	public void testGetXPosition() {
-		//fail("Not yet implemented");
+		int x = label.getX();
+		assertTrue(x + label.getXOffset() == label.getXPosition());
 	}
 
 	@Test
 	public void testGetYPosition() {
-		//fail("Not yet implemented");
+		int y = label.getY();
+		assertTrue(y + label.getYOffset() == label.getYPosition());
 	}
 
 	@Test
 	public void testSetPixelPosition() {
-		//fail("Not yet implemented");
+		Point p = label.getLocation();
+		label.setPixelPosition(xPos, yPos);
+		assertTrue(p.equals(label.getLocation()));
+		assertTrue(!label.getLocation().equals(new Point(xPos, yPos)));
 	}
 
 	@Test
