@@ -18,26 +18,12 @@ public class JMultipleMarker extends JOverlayLabel {
 	
 	@Override
 	int getXOffset() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getIconWidth() / 2;
 	}
 
 	@Override
 	int getYOffset() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	int labelPointsFromLeft() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	int labelPointsFromTop() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getIconHeight() / 2;
 	}
 
 	@Override

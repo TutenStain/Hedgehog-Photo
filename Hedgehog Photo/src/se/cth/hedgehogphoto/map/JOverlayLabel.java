@@ -26,7 +26,7 @@ public abstract class JOverlayLabel extends JLabel implements PropertyChangeList
 
 	void init() {
 		setOpaque(false);
-		setBounds(labelPointsFromLeft(), labelPointsFromTop(), iconWidth, iconHeight);
+		setBounds(getXOffset(), getYOffset(), iconWidth, iconHeight);
 		addMouseListener(getMouseListener());
 	}
 	
@@ -70,12 +70,6 @@ public abstract class JOverlayLabel extends JLabel implements PropertyChangeList
 		y = y - getYOffset();
 		setBounds(x, y);
 	}
-	
-	/** Returns the distance in pixels from the top left
-	 *  corner of this label, to the point where the label
-	 *  'points' towards, ie where the marker points towards. */
-	abstract int labelPointsFromLeft();
-	abstract int labelPointsFromTop();
 	
 	/** Sets the new position in case of a zoom. 
 	 *  @param zoomMultiplier a value of 2 corresponds to a 'zoomIn'-event
