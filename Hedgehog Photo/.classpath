@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="lib/sanselan-0.97-incubator-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/sanselan-0.97-incubator-sources.jar"/>
 	<classpathentry kind="lib" path="lib/sanselan-0.97-incubator.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
