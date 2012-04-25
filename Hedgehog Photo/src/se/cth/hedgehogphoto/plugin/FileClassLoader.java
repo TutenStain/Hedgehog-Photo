@@ -15,6 +15,7 @@ import com.sun.org.apache.xalan.internal.xsltc.runtime.Parameter;
  * A custom class loader that loads classes and compiles them if necessary.
  * @author Barnabas
  */
+
 public class FileClassLoader extends URLClassLoader{
 	String pluginRootDirectory;
 
@@ -89,7 +90,7 @@ public class FileClassLoader extends URLClassLoader{
 		 }
 		
 		try {
-			c = super.loadClass(file);
+			c = super.loadClass(file); //file
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -102,17 +103,21 @@ public class FileClassLoader extends URLClassLoader{
 		    int ret = -1;
 
 		    //Copy our API to plugin dir
-		    System.out.println("Copying API.jar to: " + pluginRootDirectory + "...");
-		    Path source = Paths.get(System.getProperty("user.dir") + "/API.jar");
-		    Path target = Paths.get(pluginRootDirectory + "API.jar");
-		    Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+		 	Path target = Paths.get(pluginRootDirectory + "API.jar");
+		    if(Files.exists(target) == false){
+		    	System.out.println("Copying API.jar to: " + pluginRootDirectory + "...");
+		    	Path source = Paths.get(System.getProperty("user.dir") + "/API.jar");
+				Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+		    } else {
+		    	System.out.println("API.jar allready in place, skipping copying...");
+		    }
+		 
 		   
-		    
 		    Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar " + path);
 		    
 		    try {
 		    	ret = p.waitFor();
-		    } catch(InterruptedException ie) { 
+		    } catch(InterruptedException ie) {
 		    	System.out.println("We got interrupted, compilation failed!");
 		    	System.out.println(ie);
 		    }
