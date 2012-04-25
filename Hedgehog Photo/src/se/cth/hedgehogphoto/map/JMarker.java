@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto.map;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
@@ -14,9 +15,9 @@ public class JMarker extends JOverlayLabel {
 	private ImageObject image;
 	
 	/* TODO: Write constructor. */
-	public JMarker() {
-		setImageIcon(new ImageIcon("Pictures/markers/marker2.png"));
-		init();
+	public JMarker(Point p) {
+		setImageIcon(new ImageIcon("Pictures/markers/marker2.png")); //26x26
+		init(p);
 	}
 	
 	@Override

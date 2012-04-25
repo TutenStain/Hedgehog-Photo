@@ -4,40 +4,44 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Point;
 
+import javax.swing.ImageIcon;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class JMarkerTest {
 	private JOverlayLabel label;
+	private int xPos = 50;
+	private int yPos = 70;
 
 	@Before
 	public void setUp() throws Exception {
-		label = new JMarker();
+		label = new JMarker(new Point(xPos, yPos));
 	}
 
 	@Test
 	public void testGetXOffset() {
-		//fail("Not yet implemented");
+		int x = label.getXOffset();
+		assertTrue(x == 13); //19x19-icon
+		
+		label.setImageIcon(new ImageIcon("Pictures/markers/marker.png")); //change icon to one sized 19x19
+		x = label.getXOffset();
+		assertTrue(x == 9);
 	}
 
 	@Test
 	public void testGetYOffset() {
-		//fail("Not yet implemented");
-	}
-
-	@Test
-	public void testLabelPointsFromLeft() {
-		//fail("Not yet implemented");
-	}
-
-	@Test
-	public void testLabelPointsFromTop() {
-		//fail("Not yet implemented");
+		int y = label.getYOffset();
+		assertTrue(y == 26); //26x26-icon
+		
+		label.setImageIcon(new ImageIcon("Pictures/markers/marker.png")); //change icon to one sized 19x19
+		y = label.getYOffset();
+		assertTrue(y == 19);
 	}
 
 	@Test
 	public void testGetMouseListener() {
-		//fail("Not yet implemented");
+		/* Not testable? */
 	}
 
 	@Test
@@ -56,11 +60,36 @@ public class JMarkerTest {
 		p.y = p.y + y;
 		label.move(x, y);
 		assertTrue(p.equals(label.getLocation()));
+		
+		x = -1;
+		y = 5;
+		p.x = p.x + x;
+		p.y = p.y + y;
+		label.move(x, y);
+		assertTrue(p.equals(label.getLocation()));
+		
+		x = -4;
+		y = -5;
+		p.x = p.x + x;
+		p.y = p.y + y;
+		label.move(x, y);
+		assertTrue(p.equals(label.getLocation()));
+		
+		x = 0;
+		y = 0;
+		p.x = p.x + x;
+		p.y = p.y + y;
+		label.move(x, y);
+		assertTrue(p.equals(label.getLocation()));
 	}
 
 	@Test
 	public void testInit() {
-		//fail("Not yet implemented");
+		Point p = new Point(xPos, yPos);
+		assertTrue(!label.getLocation().equals(p));
+		p.x -= label.getXOffset();
+		p.y -= label.getYOffset();
+		assertTrue(label.getLocation().equals(p));
 	}
 
 	@Test

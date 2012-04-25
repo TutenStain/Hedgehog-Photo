@@ -23,10 +23,12 @@ public abstract class JOverlayLabel extends JLabel implements PropertyChangeList
 	private ImageIcon imageIcon;
 	private int iconWidth;
 	private int iconHeight;
-
-	void init() {
+	
+	void init(Point p) {
 		setOpaque(false);
-		setBounds(getXOffset(), getYOffset(), iconWidth, iconHeight);
+		int xPos = p.x - getXOffset();
+		int yPos = p.y - getYOffset();
+		setBounds(xPos, yPos, iconWidth, iconHeight);
 		addMouseListener(getMouseListener());
 	}
 	
@@ -173,7 +175,7 @@ public abstract class JOverlayLabel extends JLabel implements PropertyChangeList
 	/** Abstract MouseListener-class.
 	 *  'Empty' Modifier - subclasses may instantiate it. */
 	abstract class MouseListener extends MouseAdapter {
-
+		/* TODO: Put this class in the controller-map and separate it from the MODEL? */
 		@Override
 		public void mouseReleased(MouseEvent arg0) {}
 		public abstract void mouseClicked(MouseEvent arg0);

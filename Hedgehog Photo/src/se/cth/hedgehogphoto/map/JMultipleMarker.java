@@ -13,7 +13,7 @@ public class JMultipleMarker extends JOverlayLabel {
 	
 	/* TODO: Write constructor. */
 	public JMultipleMarker() {
-		setImageIcon(new ImageIcon("Pictures/markers/marker.png"));
+		setImageIcon(new ImageIcon("Pictures/markers/marker.png")); //19x19
 	}
 	
 	@Override
