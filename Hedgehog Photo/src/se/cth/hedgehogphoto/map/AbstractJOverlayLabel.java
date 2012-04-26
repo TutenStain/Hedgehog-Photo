@@ -19,7 +19,7 @@ import se.cth.hedgehogphoto.Constants;
  * TODO: Add class-description here.
  * @author Florian
  */
-public abstract class JOverlayLabel extends JLabel implements PropertyChangeListener {
+public abstract class AbstractJOverlayLabel extends JLabel implements PropertyChangeListener {
 	private ImageIcon imageIcon;
 	private int iconWidth;
 	private int iconHeight;

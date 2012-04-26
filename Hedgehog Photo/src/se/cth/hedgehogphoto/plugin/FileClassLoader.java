@@ -9,8 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import com.sun.org.apache.xalan.internal.xsltc.runtime.Parameter;
-
 /**
  * A custom class loader that loads classes and compiles them if necessary.
  * @author Barnabas

@@ -10,13 +10,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class JMarkerTest {
-	private JOverlayLabel label;
+	private AbstractJOverlayLabel label;
 	private int xPos = 50;
 	private int yPos = 70;
 
 	@Before
 	public void setUp() throws Exception {
-		label = new JMarker(new Point(xPos, yPos));
+		label = new JOverlayMarker(new Point(xPos, yPos));
 	}
 
 	@Test

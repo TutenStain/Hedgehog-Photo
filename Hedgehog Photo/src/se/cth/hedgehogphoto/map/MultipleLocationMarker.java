@@ -1,9 +1,7 @@
 package se.cth.hedgehogphoto.map;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import javax.swing.ImageIcon;

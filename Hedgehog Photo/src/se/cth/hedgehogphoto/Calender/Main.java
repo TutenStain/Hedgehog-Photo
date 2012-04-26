@@ -3,7 +3,6 @@ package se.cth.hedgehogphoto.Calender;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.util.GregorianCalendar;
 import java.util.Observable;
 import java.util.Observer;

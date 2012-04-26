@@ -11,11 +11,11 @@ import se.cth.hedgehogphoto.ImageObject;
  * TODO: Add class-description here.
  * @author Florian
  */
-public class JMarker extends JOverlayLabel {
+public class JOverlayMarker extends AbstractJOverlayLabel {
 	private ImageObject image;
 	
 	/* TODO: Write constructor. */
-	public JMarker(Point p) {
+	public JOverlayMarker(Point p) {
 		setImageIcon(new ImageIcon("Pictures/markers/marker2.png")); //26x26
 		init(p);
 	}

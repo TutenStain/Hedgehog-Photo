@@ -8,11 +8,11 @@ import javax.swing.ImageIcon;
  * Represents a label containing multiple other JOverlayLabels.
  * @author Florian
  */
-public class JMultipleMarker extends JOverlayLabel {
-	private List<JOverlayLabel> overlayLabels;
+public class JMultipleOverlayMarker extends AbstractJOverlayLabel {
+	private List<AbstractJOverlayLabel> overlayLabels;
 	
 	/* TODO: Write constructor. */
-	public JMultipleMarker() {
+	public JMultipleOverlayMarker() {
 		setImageIcon(new ImageIcon("Pictures/markers/marker.png")); //19x19
 	}
 	
