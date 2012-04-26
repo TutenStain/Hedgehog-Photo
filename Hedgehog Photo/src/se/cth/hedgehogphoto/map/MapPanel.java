@@ -18,7 +18,6 @@ import java.awt.Composite;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -31,26 +30,16 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
-import java.io.StringReader;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
@@ -59,36 +48,13 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.UIManager;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 
 /**
@@ -238,7 +204,7 @@ public class MapPanel extends JPanel {
     protected double smoothScale = 1.0D;
     private int smoothOffset = 0;
     private Point smoothPosition, smoothPivot;
-    private SearchPanel searchPanel;
+//    private SearchPanel searchPanel;
     private Rectangle magnifyRegion;
     
     /** If true, it's possible to move around and scroll in the map. 
@@ -270,7 +236,7 @@ public class MapPanel extends JPanel {
         setZoom(zoom);
         setMapPosition(mapPosition);
 
-        searchPanel = new SearchPanel(); /* IF POSSIBLE: check if it is possible to remove this panel, since it is not used right now */
+//        searchPanel = new SearchPanel(); /* IF POSSIBLE: check if it is possible to remove this panel, since it is not used right now */
         checkTileServers();
         checkActiveTileServer();
         interactionEnabled = false; //will prevent listener to work correctly
@@ -353,10 +319,10 @@ public class MapPanel extends JPanel {
     public ControlPanel getControlPanel() {
         return controlPanel;
     }
-
+    /*
     public SearchPanel getSearchPanel() {
         return searchPanel;
-    }
+    }*/
     
     public TileCache getCache() {
         return cache;
@@ -1512,7 +1478,7 @@ public class MapPanel extends JPanel {
             }
         }
     }
-
+    /*
     private static final class EditorPane extends JEditorPane {
 
         private final Font font = new JLabel().getFont(); //new Font(Font.DIALOG, Font.PLAIN, 12);
@@ -2007,6 +1973,7 @@ public class MapPanel extends JPanel {
             }
         });
     }
+    */
 }
 
 
