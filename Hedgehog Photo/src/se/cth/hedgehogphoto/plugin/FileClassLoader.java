@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+
 /**
  * A custom class loader that loads classes and compiles them if necessary.
  * @author Barnabas
@@ -64,7 +65,7 @@ public class FileClassLoader extends URLClassLoader{
 		String fileStub = file.replace( '.', '/' );
 		
 		String javaFilenamePath = pluginRootDirectory + fileStub + ".java";
-		String classFilenamePath = pluginRootDirectory + fileStub+ ".class";
+		String classFilenamePath = pluginRootDirectory + fileStub + ".class";
 		
 		File javaFile = new File(javaFilenamePath);
 		File classFile = new File(classFilenamePath);
@@ -88,7 +89,7 @@ public class FileClassLoader extends URLClassLoader{
 		 }
 		
 		try {
-			c = super.loadClass(file); //file
+			c = super.loadClass(file);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -102,15 +103,14 @@ public class FileClassLoader extends URLClassLoader{
 
 		    //Copy our API to plugin dir
 		 	Path target = Paths.get(pluginRootDirectory + "API.jar");
-		    if(Files.exists(target) == false){
+		    if(Files.exists(target) == false) {
 		    	System.out.println("Copying API.jar to: " + pluginRootDirectory + "...");
-		    	Path source = Paths.get(System.getProperty("user.dir") + "/API.jar");
+		    	Path source = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "API.jar");
 				Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
 		    } else {
 		    	System.out.println("API.jar allready in place, skipping copying...");
 		    }
 		 
-		   
 		    Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar " + path);
 		    
 		    try {

@@ -17,8 +17,7 @@
 			
 
 			<!-- EclipseLink should create the database schema automatically -->
-			<property name="eclipselink.ddl-generation.output-mode"
-				value="database" />
+			<property name="eclipselink.ddl-generation.output-mode" value="database" />
 		</properties>
 
 	</persistence-unit>

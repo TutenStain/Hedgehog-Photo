@@ -1,8 +1,8 @@
 package se.cth.hedgehogphoto.plugin;
 
-
 import java.io.File;
 import java.io.FileFilter;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.net.URL;
 
@@ -12,16 +12,15 @@ import javax.swing.JComponent;
  * A class that handles the plugin-loading. 
  * To see how to write plugins that will work with Headgehog Photo
  * please see the available annotations.
- * @author Barnabas
+ * @author Barnabas Sapan
  */
 
 public class Main {
-
 	public static void main(String[] args) {
 		//Searches for @InitializePlugin to initialize everything, 
 		//hen @Panel to get the JPanel (JComponent) back.
 		try {	
-			String pluginRootDir = System.getProperty("user.home") + "/plugin";
+			String pluginRootDir = System.getProperty("user.home") + System.getProperty("file.separator") + "plugin";
 			File f = new File(pluginRootDir);
 			URL url = f.toURI().toURL(); 
 			URL[] urls = new URL[]{url}; 
@@ -30,6 +29,7 @@ public class Main {
 			File directory = new File(pluginRootDir);
 			File[] files = directory.listFiles(new FileFilter() {
 				
+				//Only accept .java files
 				@Override
 				public boolean accept(File pathname) {
 					return (pathname.toString().endsWith(".java"));
@@ -63,6 +63,13 @@ public class Main {
 						}				
 					}
 				}
+				
+				if(c.isAnnotationPresent(Plugin.class)){
+					Plugin p = c.getAnnotation(Plugin.class);
+					System.out.println("[Plugin: " + p.name() + ", Version: " + p.version() + 
+						", Author: " + p.author() + ", Description: " + p.description() + "]");	
+				}
+				
 			}
 		} catch (Throwable e) {
 			e.printStackTrace();
