@@ -35,7 +35,7 @@ public class MainView implements Observer {
 	private JPanel photoViewPanel;
 	private	JPanel leftPanelView;
 	private JPanel topPanel;
-	private static List<PhotoPanel> photoPanels = new ArrayList<PhotoPanel>();
+	private static List<PhotoPanel> photoPanels;
 	
 	/**
 	 * Create the application.
@@ -161,7 +161,11 @@ public class MainView implements Observer {
 		frame.setVisible(true);
 	}
 
-	public static BufferedImage resize(Image image, int width, int height) {
+	private static BufferedImage resize(Image image, int width, int height) {
+		//TODO added to skip the picture with an illegal name
+		if(width <= 0 || height <= 0){
+			return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+		}
 		BufferedImage resizedImage = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = resizedImage.createGraphics();
@@ -180,6 +184,7 @@ public class MainView implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		photoPanels = new ArrayList<PhotoPanel>();
 		if(arg1 instanceof MainModel) {
 			MainModel model = (MainModel)arg1;
 			List<Picture> images = model.getImages();
