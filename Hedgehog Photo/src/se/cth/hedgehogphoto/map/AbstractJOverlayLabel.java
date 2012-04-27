@@ -24,12 +24,19 @@ public abstract class AbstractJOverlayLabel extends JLabel implements PropertyCh
 	private int iconWidth;
 	private int iconHeight;
 	
+	void init() {
+		setOpaque(false);
+		addMouseListener();
+		setBounds(0, 0);
+	}
+	
+	@Deprecated
 	void init(Point p) {
 		setOpaque(false);
 		int xPos = p.x - getXOffset();
 		int yPos = p.y - getYOffset();
 		setBounds(xPos, yPos, iconWidth, iconHeight);
-		addMouseListener(getMouseListener());
+		setVisible(true);
 	}
 	
 	/** Moves the label by a given length. MIGHT want to use 
@@ -67,16 +74,24 @@ public abstract class AbstractJOverlayLabel extends JLabel implements PropertyCh
 	abstract int getYOffset();
 	
 	/** Places the marker so that it points to the given coordinates. */
+	public void setPixelPosition(Point p) {
+		setPixelPosition(p.x, p.y);
+	}
+	
+	/** Places the marker so that it points to the given coordinates. */
 	public void setPixelPosition(int x, int y) {
 		x = x - getXOffset();
 		y = y - getYOffset();
 		setBounds(x, y);
+		setVisible(true);
 	}
 	
 	/** Sets the new position in case of a zoom. 
 	 *  @param zoomMultiplier a value of 2 corresponds to a 'zoomIn'-event
 	 *  and a value of 0.5 represents a 'zoomOut'-event. */
 	private void handleZoom(double zoomMultiplier) {
+		int factor = zoomMultiplier < 1 ? -2 : 4;
+		move(se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_WIDTH / factor, se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_HEIGHT / factor);
 		int x = (int) ((1 - zoomMultiplier) * getCenterXPixel() + zoomMultiplier * getXPosition());
 		int y = (int) ((1 - zoomMultiplier) * getCenterYPixel() + zoomMultiplier * getYPosition());
 		setPixelPosition(x, y);
@@ -116,10 +131,6 @@ public abstract class AbstractJOverlayLabel extends JLabel implements PropertyCh
 		return Constants.PREFERRED_MODULE_HEIGHT / 2;
 	}
 	
-	/** Returns each subclass' own implementation of their
-	 *  MouseListener. */
-	abstract MouseListener getMouseListener();
-
 	public ImageIcon getImageIcon() {
 		return imageIcon;
 	}
@@ -171,6 +182,14 @@ public abstract class AbstractJOverlayLabel extends JLabel implements PropertyCh
 	public void setBounds(int x, int y) {
 		setBounds(x, y, iconWidth, iconHeight);
 	}
+	
+	public void addMouseListener() {
+		addMouseListener(getMouseListener());
+	}
+	
+	/** Returns each subclass' own implementation of their
+	 *  MouseListener. */
+	abstract MouseListener getMouseListener();
 	
 	/** Abstract MouseListener-class.
 	 *  'Empty' Modifier - subclasses may instantiate it. */

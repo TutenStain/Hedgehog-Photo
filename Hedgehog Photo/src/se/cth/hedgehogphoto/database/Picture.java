@@ -47,7 +47,7 @@ public class Picture {
 		return location;
 	}
 
-	protected void setLocation(Location location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 	public String getDate() {

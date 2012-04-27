@@ -19,11 +19,11 @@ private String location;
 private double longitude, latitude;
 
 public double getLongitude() {
-	return latitude;
+	return longitude;
 }
 
 public void setLongitude(double lon) {
-	this.latitude = lon;
+	this.longitude = lon;
 }
 
 public double getLatitude() {

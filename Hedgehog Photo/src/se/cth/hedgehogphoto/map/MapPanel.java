@@ -8,6 +8,7 @@ package se.cth.hedgehogphoto.map;
  *
  * Contributors:
  *    Stepan Rutz - initial implementation
+ *    Florian Minges - modifier
  *******************************************************************************/
 
 import java.awt.AlphaComposite;
@@ -36,12 +37,14 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,6 +58,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+
+import se.cth.hedgehogphoto.database.Location;
 
 
 /**
@@ -246,6 +251,143 @@ public class MapPanel extends JPanel {
     	addPropertyChangeListener(listener);
     }
     
+    /*---------------------------------------------------------------------
+    					HERE COMES SOME IMPORTANT CODE
+    ---------------------------------------------------------------------*/
+    
+    private List<Location> locations;
+    private Location centerLocation;
+    
+    public void calibrate(List<Location> locations) {
+    	setBounds(0, 0, PREFERRED_WIDTH, PREFERRED_HEIGHT);
+    	this.locations = locations;
+    	updateCenterLocation();
+    	adjustZoom();
+    	enableOverlayPanel(true);
+		enableControlPanel(true);
+		enableInteraction(true);
+		setOpaque(true);
+    }
+    
+    /** Calculates the proper zoom so that every location fits on the 
+	 *  visible part of the map. */
+	private void adjustZoom() {
+		int zoom = 16;
+		setZoom(zoom);
+		centerMap();
+		while (!allLocationsVisible() && zoom != 1) {
+			setZoom(--zoom);
+			centerMap();
+		} 
+	}
+	
+	/** Internal method for updating the centerLocation-variable. */
+	private void updateCenterLocation() {
+		Location location = new Location();
+		location.setLongitude(averageLongitude());
+		location.setLatitude(averageLatitude());
+		centerLocation = location;
+	}
+	
+	/** Tells the map to center its' view to the specified centerLocation. */
+	private void centerMap() {
+		Point position = computeMapPosition(centerLocation);
+		setCenterPosition(position);
+	}
+	
+	/** Returns true if all Locations are visible on the map. */
+	private boolean allLocationsVisible() {
+		boolean result = true;
+		int nbrOfLocations = locations.size();
+		for (int index = 0; index < nbrOfLocations; index++) {
+			Point pixelPosition = getPixelPosition(locations.get(index));
+			if (!validPixelPosition(pixelPosition)) {
+				result = false;
+				break;
+			}
+		}
+		
+		return result;
+	}
+	
+	/** Returns true if the passed pixel p is: 0 < p < SIZE.
+	 *  ie if it is part of the map. Returns false otherwise. */
+	private boolean validPixelPosition(Point pixelPosition) {
+		boolean longitudeOK = (pixelPosition.x > 0 && pixelPosition.x < MapPanel.PREFERRED_WIDTH);
+		boolean latitudeOK = (pixelPosition.y > 0 && pixelPosition.y < MapPanel.PREFERRED_HEIGHT);
+		return (longitudeOK && latitudeOK);
+	}
+	
+	/** Returns the average Latitude for the stored locations.
+	 *  If there are no locations, 0.0 is returned. */
+	private double averageLatitude() {
+		double totalLatitude = 0.0;
+		double nbrOfLocations = locations.size();
+		for(int i = 0; i < nbrOfLocations; i++) {
+			totalLatitude += locations.get(i).getLatitude();
+		}
+		
+		double averageLatitude = nbrOfLocations != 0 ? totalLatitude / nbrOfLocations : 0.0; 
+		return averageLatitude;
+	}
+	
+	/** Returns the average Longitude for the stored locations.
+	 *  If there are no locations, 0.0 is returned. */
+	private double averageLongitude() {
+		double totalLongitude = 0.0;
+		double nbrOfLocations = locations.size();
+		for(int i = 0; i < nbrOfLocations; i++) {
+			totalLongitude += locations.get(i).getLongitude();
+		}
+
+		double averageLongitude = nbrOfLocations != 0 ? totalLongitude / nbrOfLocations : 0.0; 
+		return averageLongitude;
+	}
+    
+    /** Returns a list of pixel coordinates for all Locations.
+	 *  These pixel coordinates specify where, relative to the map,
+	 *  where the locationMarkers have to be placed. */
+	public Point getPixelPosition(Location location) {
+		Point pixelPosition = computeMapPosition(location);
+		pixelPosition.x = pixelPosition.x - getMapPosition().x;
+		pixelPosition.y = pixelPosition.y - getMapPosition().y;
+		return pixelPosition;
+	}
+    
+    private Point computeMapPosition(Location location) {
+		double longitude = location.getLongitude();
+		double latitude = location.getLatitude();
+		return computeMapPosition(longitude, latitude);
+	}
+	
+	private Point computeMapPosition(double longitude, double latitude) {
+		return computePosition(new Point2D.Double(longitude, latitude));
+	}
+	
+	/** Returns a list of pixel coordinates for all Locations.
+	 *  These pixel coordinates specify where, relative to the map,
+	 *  where the locationMarkers have to be placed. */
+	public static Point getPixelPosition(Location location, Point mapPosition, int zoom) {
+		Point pixelPosition = MapPanel.computeMapPosition(location, zoom);
+		pixelPosition.x = pixelPosition.x - mapPosition.x;
+		pixelPosition.y = pixelPosition.y - mapPosition.y;
+		return pixelPosition;
+	}
+    
+    private static Point computeMapPosition(Location location, int zoom) {
+		double longitude = location.getLongitude();
+		double latitude = location.getLatitude();
+		return computeMapPosition(longitude, latitude, zoom);
+	}
+	
+	private static Point computeMapPosition(double longitude, double latitude, int zoom) {
+		return computePosition(new Point2D.Double(longitude, latitude), zoom);
+	}
+    
+    /*---------------------------------------------------------------------
+						HERE ENDS SOME IMPORTANT CODE
+	---------------------------------------------------------------------*/
+    
 //    public class TileServerException extends Exception {
 //    	public TileServerException() { }
 //    	@Override
@@ -254,7 +396,7 @@ public class MapPanel extends JPanel {
 //    	}
 //    }
 
-    private void checkTileServers() {
+	private void checkTileServers() {
         for (TileServer tileServer : TILESERVERS) {
             String urlstring = getTileString(tileServer, 1, 1, 1);
             try {
@@ -460,10 +602,13 @@ public class MapPanel extends JPanel {
             return;
         Dimension oldValue = new Dimension(mapSize.width, mapSize.height);
         Point mapPosition = getMapPosition();
-        int dx = pivot.x;
-        int dy = pivot.y;
+        int dx = pivot.x - PREFERRED_WIDTH / 4;
+        int dy = pivot.y - PREFERRED_WIDTH / 4;
+//        setCenterPosition(new Point(mapPosition.x + dx, mapPosition.y + dy));
+        translateMapPosition(dx, dy);
+        mapPosition = getMapPosition();
         setZoom(getZoom() + 1);
-        updateMapPositionWithoutFire(mapPosition.x * 2 + dx, mapPosition.y * 2 + dy);
+        updateMapPositionWithoutFire(mapPosition.x * 2, mapPosition.y * 2);
 //        setMapPosition(mapPosition.x + dx, mapPosition.y + dy);
         repaint();
         firePropertyChange("zoomIn", oldValue, mapSize);
@@ -476,8 +621,12 @@ public class MapPanel extends JPanel {
         Point mapPosition = getMapPosition();
         int dx = pivot.x;
         int dy = pivot.y;
+//        setMapPosition(new Point(mapPosition.x + dx, mapPosition.y + dy));
+        setCenterPosition(new Point(mapPosition.x + dx, mapPosition.y + dy));
+        translateMapPosition(-PREFERRED_WIDTH / 2, -PREFERRED_HEIGHT / 2); //merge this and above line
+        mapPosition = getMapPosition();
         setZoom(getZoom() - 1);
-        updateMapPositionWithoutFire((mapPosition.x - dx) / 2, (mapPosition.y - dy) / 2);
+        updateMapPositionWithoutFire((mapPosition.x) / 2, (mapPosition.y) / 2);
 //        setMapPosition(mapPosition.x - dx / 2, mapPosition.y - dy / 2);
         repaint();
         firePropertyChange("zoomIn", oldValue, mapSize);
@@ -531,6 +680,12 @@ public class MapPanel extends JPanel {
     public Point computePosition(Point.Double coords) {
         int x = lon2position(coords.x);
         int y = lat2position(coords.y);
+        return new Point(x, y);
+    }
+    
+    public static Point computePosition(Point.Double coords, int zoom) {
+        int x = MapPanel.lon2position(coords.x, zoom);
+        int y = MapPanel.lat2position(coords.y, zoom);
         return new Point(x, y);
     }
 

@@ -10,35 +10,30 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import se.cth.hedgehogphoto.LocationObject;
+import se.cth.hedgehogphoto.database.Location;
 
 @Deprecated
 public class Test {
     private JFrame frame = new JFrame();
-    private JLayeredPane map;
+    private JPanel map;
     
-    public Test(List<LocationObject> locations)
+    public Test(List<Location> locations)
     {
         frame.setPreferredSize(new Dimension(600, 600));
-        frame.setLayout(new BorderLayout());
+        frame.getContentPane().setLayout(new BorderLayout());
         JLabel loading = new JLabel("loading map...");
-        
-        JPanel panel = new JPanel();
-        
-        panel.add(loading, BorderLayout.CENTER);
-        frame.add(panel);
+        JPanel mainPane = new JPanel();
+        mainPane.setLayout(new BorderLayout());
+        mainPane.add(loading, BorderLayout.CENTER);
+        frame.setContentPane(mainPane);
         frame.pack();
         frame.setVisible(true);
-        map = new MapWrapper(locations);
-//        frame.removeAll();
-        panel.remove(loading);
-        frame.setLayout(new BorderLayout());
-        panel.add(map, BorderLayout.CENTER);
-        map.setVisible(true);
+        JPanel map = new MapView(locations);
+        mainPane.remove(loading);
+        mainPane.add(map, BorderLayout.CENTER);
         frame.pack();
-        frame.revalidate();
-        frame.repaint();
         System.out.println("Constructor done");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 
@@ -46,10 +41,19 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    	ArrayList<LocationObject> locations = new ArrayList<LocationObject>();
-    	locations.add(new LocationObject(20.0, 30.0));
-    	locations.add(new LocationObject(15.0, 40.0));
-    	locations.add(new LocationObject(10.0, 20.0));
+    	ArrayList<Location> locations = new ArrayList<Location>();
+    	Location temp = new Location();
+    	temp.setLongitude(20.0);
+    	temp.setLatitude(30.0);
+    	locations.add(temp);
+    	Location temp1 = new Location();
+    	temp1.setLongitude(15.0);
+    	temp1.setLatitude(40.0);
+    	locations.add(temp1);
+    	Location temp2 = new Location();
+    	temp2.setLongitude(10.0);
+    	temp.setLatitude(20.0);
+    	locations.add(temp2);
         new Test(locations);
     }
 
