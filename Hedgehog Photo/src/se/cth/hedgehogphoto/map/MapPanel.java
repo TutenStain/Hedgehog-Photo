@@ -252,7 +252,7 @@ public class MapPanel extends JPanel {
     }
     
     /*---------------------------------------------------------------------
-    					HERE COMES SOME IMPORTANT CODE
+    					HERE COMES SOME IMPORTANT CODE @author Florian
     ---------------------------------------------------------------------*/
     
     private List<Location> locations;
@@ -362,26 +362,6 @@ public class MapPanel extends JPanel {
 	
 	private Point computeMapPosition(double longitude, double latitude) {
 		return computePosition(new Point2D.Double(longitude, latitude));
-	}
-	
-	/** Returns a list of pixel coordinates for all Locations.
-	 *  These pixel coordinates specify where, relative to the map,
-	 *  where the locationMarkers have to be placed. */
-	public static Point getPixelPosition(Location location, Point mapPosition, int zoom) {
-		Point pixelPosition = MapPanel.computeMapPosition(location, zoom);
-		pixelPosition.x = pixelPosition.x - mapPosition.x;
-		pixelPosition.y = pixelPosition.y - mapPosition.y;
-		return pixelPosition;
-	}
-    
-    private static Point computeMapPosition(Location location, int zoom) {
-		double longitude = location.getLongitude();
-		double latitude = location.getLatitude();
-		return computeMapPosition(longitude, latitude, zoom);
-	}
-	
-	private static Point computeMapPosition(double longitude, double latitude, int zoom) {
-		return computePosition(new Point2D.Double(longitude, latitude), zoom);
 	}
     
     /*---------------------------------------------------------------------
@@ -680,12 +660,6 @@ public class MapPanel extends JPanel {
     public Point computePosition(Point.Double coords) {
         int x = lon2position(coords.x);
         int y = lat2position(coords.y);
-        return new Point(x, y);
-    }
-    
-    public static Point computePosition(Point.Double coords, int zoom) {
-        int x = MapPanel.lon2position(coords.x, zoom);
-        int y = MapPanel.lat2position(coords.y, zoom);
         return new Point(x, y);
     }
 
