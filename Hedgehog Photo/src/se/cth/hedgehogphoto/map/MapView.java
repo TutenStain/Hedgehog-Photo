@@ -3,6 +3,7 @@ package se.cth.hedgehogphoto.map;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -111,6 +112,12 @@ public class MapView extends JPanel implements Observer {
 			addRootJLayeredPane(); //unneccessary check? goto: line 38
 		}
 		mainPane.add(getMapPanel(), new Integer(0), 0);
+	}
+	
+	public void addListener(MouseAdapter mouseAdapter) {
+		for (AbstractJOverlayLabel marker : locationMarkers) {
+			marker.addMouseListener(mouseAdapter);
+		}
 	}
 	
 	@Override

@@ -183,6 +183,7 @@ public abstract class AbstractJOverlayLabel extends JLabel implements PropertyCh
 		setBounds(x, y, iconWidth, iconHeight);
 	}
 	
+	@Deprecated
 	public void addMouseListener() {
 		addMouseListener(getMouseListener());
 	}
