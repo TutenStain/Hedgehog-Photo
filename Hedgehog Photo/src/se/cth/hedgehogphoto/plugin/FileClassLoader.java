@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -16,8 +18,9 @@ import java.nio.file.StandardCopyOption;
  */
 
 public class FileClassLoader extends URLClassLoader{
-	String pluginRootDirectory;
-
+	private String pluginRootDirectory;
+	private Map<String, Class<?>> loadedClasses = new HashMap<String, Class<?>>();
+	
 	public FileClassLoader(URL[] urls) {
 		super(urls);
 		
@@ -88,11 +91,19 @@ public class FileClassLoader extends URLClassLoader{
 			}
 		 }
 		
-		try {
-			c = super.loadClass(file);
-		} catch (ClassNotFoundException e) {
+		 //Try to...Return it if we already have loaded it.
+		 c = (Class<?>)loadedClasses.get(file);
+         if (c != null) {
+               return c;
+         }
+         
+         //Try to...Find it via loadclass
+		 try {
+			c = super.loadClass(file, true);
+			loadedClasses.put(file, c);
+		 } catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
+	    }
 
 		return c;
 	}
@@ -111,8 +122,9 @@ public class FileClassLoader extends URLClassLoader{
 		    	System.out.println("API.jar allready in place, skipping copying...");
 		    }
 		 
-		    Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar " + path);
-		    
+		    //Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar " + path);
+		    Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar *.java");
+
 		    try {
 		    	ret = p.waitFor();
 		    } catch(InterruptedException ie) {

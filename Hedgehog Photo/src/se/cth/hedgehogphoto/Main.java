@@ -9,6 +9,7 @@ import java.util.List;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.Files;
+import se.cth.hedgehogphoto.plugin.PluginLoader;
 import se.cth.hedgehogphoto.search.SearchController;
 import se.cth.hedgehogphoto.search.SearchModel;
 import se.cth.hedgehogphoto.search.SearchPreviewView;
@@ -32,6 +33,8 @@ public class Main {
 		MainModel model = new MainModel();
 		MainView view = new MainView();
 		model.addObserver(view);
+		
+		PluginLoader p = new PluginLoader(view);
 		
 		//TagCloud
 		List<String> l = new ArrayList<String>();
@@ -93,7 +96,6 @@ public class Main {
 			f.setAlbumName("Bra bilder");
 			DatabaseHandler.insertPicture(f);
 			i++;
-			
 		}
 	}
 

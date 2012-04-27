@@ -1,10 +1,10 @@
 ----------------------------------------------------------------
-Thu Apr 26 17:14:36 CEST 2012:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0136-ef37-d6e1-0000034ec648 
-on database directory /home/tutenstain/git/Hedgehog-Photo/Hedgehog Photo/HedgeHogDB  with class loader sun.misc.Launcher$AppClassLoader@712801c5 
+Fri Apr 27 10:55:50 CEST 2012:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0136-f303-6f41-0000034aa8c0 
+on database directory /home/tutenstain/git/Hedgehog-Photo/Hedgehog Photo/HedgeHogDB  with class loader sun.misc.Launcher$AppClassLoader@645064f 
 Loaded from file:/home/tutenstain/git/Hedgehog-Photo/Hedgehog%20Photo/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_147-icedtea-b147
+java.runtime.version=1.7.0_03-b147
 user.dir=/home/tutenstain/git/Hedgehog-Photo/Hedgehog Photo
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

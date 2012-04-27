@@ -10,6 +10,7 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import se.cth.hedgehogphoto.plugin.Panel;
 import se.cth.hedgehogphoto.view.WrapLayout;
 
 /**
@@ -65,5 +66,10 @@ public class TagCloudView extends JPanel implements Observer {
 			
 			revalidate();
 		}
+	}
+	
+	@Panel
+	public JPanel getView(){
+		return this;
 	}
 }

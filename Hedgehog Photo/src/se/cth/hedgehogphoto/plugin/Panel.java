@@ -13,6 +13,7 @@ import java.lang.annotation.Target;
  * @param null
  * @return JComponent
  */ 
+
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Panel{
