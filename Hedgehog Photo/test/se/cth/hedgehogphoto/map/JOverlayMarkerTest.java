@@ -9,14 +9,22 @@ import javax.swing.ImageIcon;
 import org.junit.Before;
 import org.junit.Test;
 
-public class JMarkerTest {
+import se.cth.hedgehogphoto.database.Location;
+import se.cth.hedgehogphoto.database.Picture;
+
+public class JOverlayMarkerTest {
 	private AbstractJOverlayLabel label;
 	private int xPos = 50;
 	private int yPos = 70;
 
 	@Before
 	public void setUp() throws Exception {
-		label = new JOverlayMarker(new Point(xPos, yPos));
+		Picture pic = new Picture();
+		Location location = new Location();
+		location.setLongitude(xPos);
+		location.setLatitude(yPos);
+		pic.setLocation(location);
+		label = new JOverlayMarker(pic);
 	}
 
 	@Test

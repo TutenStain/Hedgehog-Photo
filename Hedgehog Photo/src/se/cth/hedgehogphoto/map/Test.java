@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.database.Location;
