@@ -28,6 +28,7 @@ import javax.swing.event.ChangeListener;
 import se.cth.hedgehogphoto.MainModel;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.plugin.PluginArea;
 
 public class MainView implements Observer {
 
@@ -174,13 +175,33 @@ public class MainView implements Observer {
 		return resizedImage;
 	}
 
-	public void addToLeftPanel(JPanel panel){
-		leftPanelView.add(panel);
-	}
-
-	public void addToTopPanel(JPanel panel, String orientation){
-		topPanel.add(panel, orientation);
-	}
+	//TODO This method should be replaced by addPlugin
+		@Deprecated
+		public void addToLeftPanel(JPanel panel){
+			leftPanelView.add(panel);
+		}
+		//TODO This method should be replaced by addPlugin
+		@Deprecated
+		public void addToTopPanel(JPanel panel, String orientation){
+			topPanel.add(panel, orientation);
+		}
+		
+		//TODO Fix this method.
+		public void addPlugin(JPanel panel, PluginArea placement){
+			if(panel != null){
+				if(placement == PluginArea.LEFT_TOP){
+					//TODO Add plugin view to LEFT_TOP
+				}
+				
+				if(placement == PluginArea.LEFT_MIDDLE){
+					//TODO Add plugin view to LEFT_MIDDLe
+				}
+				
+				if(placement == PluginArea.LEFT_BOTTOM){
+					//TODO Add plugin view to LEFT_BOTTOM
+				}
+			}
+		}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {

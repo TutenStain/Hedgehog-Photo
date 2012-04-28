@@ -10,11 +10,12 @@ import java.lang.annotation.Target;
  * to get the view representation of the plugin.
  * This method will get called every time the
  * system feels it will want to refresh the view of the plugin.
- * @param null
- * @return JComponent
+ * @param placement the placement of this plugin.
+ * @return JPanel
  */ 
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Panel{
+	public PluginArea placement();
 }

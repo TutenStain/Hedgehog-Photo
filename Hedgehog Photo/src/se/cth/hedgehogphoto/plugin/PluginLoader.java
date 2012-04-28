@@ -27,7 +27,7 @@ public class PluginLoader {
 		List<Class<?>> map = new ArrayList<Class<?>>();
 		
 		//Searches for @InitializePlugin to initialize everything, 
-		//then @Panel to get the JPanel (JComponent) back.
+		//then @Panel to get the JPanel back.
 		try {	
 			String pluginRootDir = System.getProperty("user.home") + System.getProperty("file.separator") + "plugin";
 			File f = new File(pluginRootDir);
@@ -62,6 +62,13 @@ public class PluginLoader {
 		}
 	}
 	
+	/**
+	 * This method parses all the classes in the list supplied to this method.
+	 * Currently accepting the following annotations:
+	 * @InitializePlugin, @Panel, @Plugin
+	 * @param list
+	 */
+	
 	private void parseClasses(List<Class<?>> list){
 		try{
 			for(Class<?> c : list) {
@@ -76,7 +83,7 @@ public class PluginLoader {
 							System.out.println("NEW CLASS (init): " + o.getClass().getSimpleName());
 						}
 						Method init = c.getMethod(mm[i].getName(), null);
-						init.invoke(o, null);
+						init.invoke(o, (Object[])null);
 					}
 				}
 				
@@ -86,10 +93,11 @@ public class PluginLoader {
 					if(mm[i].isAnnotationPresent(Panel.class)){
 						Method panel = c.getMethod(mm[i].getName(), null);
 						if(panel.getReturnType() == JPanel.class){
-							//Panel pp = c.getAnnotation(Panel.class);
-							//System.out.println("Position: " + pp.position());
-							JPanel p = (JPanel) panel.invoke(o, null);
+							PluginArea pa = panel.getAnnotation(Panel.class).placement();
+							System.out.println("Panel placement: " + pa );
+							JPanel p = (JPanel) panel.invoke(o, (Object[])null);
 							System.out.println("PANEL: " + p);
+							view.addPlugin(p, pa);
 							//view.addToLeftPanel(p);
 						} else {
 							System.out.println("@Panel invalid return type");

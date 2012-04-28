@@ -68,7 +68,7 @@ public class TagCloudView extends JPanel implements Observer {
 		}
 	}
 	
-	@Panel
+
 	public JPanel getView(){
 		return this;
 	}
