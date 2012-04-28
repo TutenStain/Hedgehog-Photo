@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto.plugin;
 
+import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.view.MainView;
 import java.io.File;
 import java.io.FileFilter;
@@ -66,9 +67,8 @@ public class PluginLoader {
 	 * This method parses all the classes in the list supplied to this method.
 	 * Currently accepting the following annotations:
 	 * @InitializePlugin, @Panel, @Plugin
-	 * @param list
+	 * @param list the list of classes to parse
 	 */
-	
 	private void parseClasses(List<Class<?>> list){
 		try{
 			for(Class<?> c : list) {
@@ -76,18 +76,35 @@ public class PluginLoader {
 				//Get all available methods and find the one with 
 				//@InitializePlugin annotation and run it.
 				Method mm[] = c.getMethods();
+				
+				//This gets loaded FIRST (1)
+				//3 loops needed to load them in correct order
+				for(int i = 0; i < mm.length; i++){
+					if(mm[i].isAnnotationPresent(GetDatabase.class)){
+						if(o == null){
+							o = c.newInstance();
+							System.out.println("Initializing plugin with class: " + o.getClass().getSimpleName());
+						}
+						System.out.println("Setting DB...");
+						Method panel = c.getMethod(mm[i].getName(), mm[i].getParameterTypes());
+						panel.invoke(o, DatabaseHandler.getInstance());
+					}
+					
+				}
+				
+				//This gets loaded SECOND (2)
 				for(int i = 0; i < mm.length; i++){
 					if(mm[i].isAnnotationPresent(InitializePlugin.class)){
 						if(o == null){
 							o = c.newInstance();
-							System.out.println("NEW CLASS (init): " + o.getClass().getSimpleName());
+							System.out.println("Initializing plugin with class: " + o.getClass().getSimpleName());
 						}
 						Method init = c.getMethod(mm[i].getName(), null);
 						init.invoke(o, (Object[])null);
 					}
 				}
 				
-				//2 loops needed to load them in correct order.
+				//This gets loaded THIRD (3)
 				//This way @Panel annotation will get loaded last.
 				for(int i = 0; i < mm.length; i++){
 					if(mm[i].isAnnotationPresent(Panel.class)){
@@ -95,10 +112,14 @@ public class PluginLoader {
 						if(panel.getReturnType() == JPanel.class){
 							PluginArea pa = panel.getAnnotation(Panel.class).placement();
 							System.out.println("Panel placement: " + pa );
-							JPanel p = (JPanel) panel.invoke(o, (Object[])null);
-							System.out.println("PANEL: " + p);
-							view.addPlugin(p, pa);
-							//view.addToLeftPanel(p);
+							if(o != null){
+								JPanel p = (JPanel) panel.invoke(o, (Object[])null);
+								System.out.println("PANEL: " + p);
+								view.addPlugin(p, pa);
+								view.addToLeftPanel(p);
+							} else {
+								System.out.println("Class not Initialized, do you have @InitializePlugin annotations?");
+							}
 						} else {
 							System.out.println("@Panel invalid return type");
 						}			

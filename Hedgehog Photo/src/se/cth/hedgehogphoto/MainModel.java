@@ -12,7 +12,7 @@ public class MainModel extends Observable {
 	
 	public MainModel() {
 		try {
-			images = DatabaseHandler.getAllPictures();
+			images = DatabaseHandler.getInstance().getAllPictures();
 		} catch(Exception e) {	
 			//TODO Do something if we fail to get the pictures.
 		}

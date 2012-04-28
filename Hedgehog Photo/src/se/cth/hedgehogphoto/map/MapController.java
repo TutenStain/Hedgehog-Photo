@@ -9,7 +9,8 @@ public class MapController {
 	
 	public MapController(MapView mapView) {
 		this.mapView = mapView;
-		mapView.addListener(new MarkerListener() {
+		//TODO Fix this Florens.
+	/*	mapView.addListener(new MarkerListener() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//TODO make a search in the database
@@ -19,7 +20,7 @@ public class MapController {
 			public void mousePressed(MouseEvent arg0) {
 				
 			}
-		});
+		});*/
 		
 	}
 

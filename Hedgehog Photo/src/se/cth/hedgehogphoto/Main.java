@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.plugin.PluginLoader;
@@ -26,10 +27,10 @@ public class Main {
 
 	//TODO Just a skeleton of the main
 	public static void main(String[] args) {
-		DatabaseHandler.deleteAll();
+		DatabaseHandler.getInstance().deleteAll();
 		//Main
 		insertFileObjectsIntoDatabase();
-		System.out.print(DatabaseHandler.getAllPictures());
+		System.out.print(DatabaseHandler.getInstance().getAllPictures());
 		MainModel model = new MainModel();
 		MainView view = new MainView();
 		model.addObserver(view);
@@ -37,13 +38,13 @@ public class Main {
 		PluginLoader p = new PluginLoader(view);
 		
 		//TagCloud
-		List<String> l = new ArrayList<String>();
-		l = DatabaseHandler.getTags();
+		/*List<String> l = new ArrayList<String>();
+		l = new DatabaseHandler().getTags();
 		TagCloudModel tgm = new TagCloudModel();
 		TagCloudView tgv = new TagCloudView();
 		tgm.addObserver(tgv);
 		tgm.setTags(l);
-		view.addToLeftPanel(tgv);
+		view.addToLeftPanel(tgv);*/
 		
 		//Search
 		SearchPreviewView spv = new SearchPreviewView();
@@ -94,7 +95,7 @@ public class Main {
 			f.setCoverPath("blo");
 			f.setLocation(new LocationObject("Japan"));
 			f.setAlbumName("Bra bilder");
-			DatabaseHandler.insertPicture(f);
+			DatabaseHandler.getInstance().insertPicture(f);
 			i++;
 		}
 	}

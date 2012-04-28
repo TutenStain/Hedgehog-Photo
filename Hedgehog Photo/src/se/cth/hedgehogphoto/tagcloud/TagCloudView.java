@@ -7,10 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JPanel;
-
-import se.cth.hedgehogphoto.plugin.Panel;
+import se.cth.hedgehogphoto.plugin.*;
 import se.cth.hedgehogphoto.view.WrapLayout;
 
 /**
@@ -59,17 +57,12 @@ public class TagCloudView extends JPanel implements Observer {
 			
 			for(Map.Entry<String, Integer> entry : map.entrySet()){
 				TagComponent tag = new TagComponent(entry.getKey());
-				tag.addMouseListener(new TagComponentController(this, tag));
+				tag.addMouseListener(new TagComponentController(this, tag, model.getDatabase()));
 				tag.setFont(baseFont.deriveFont(getFontSize(entry.getValue())));
 				add(tag);
 			}
 			
 			revalidate();
 		}
-	}
-	
-
-	public JPanel getView(){
-		return this;
 	}
 }

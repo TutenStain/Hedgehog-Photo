@@ -99,7 +99,7 @@ public class MainModel extends Observable {
 		getDates();
 		setChanged();
 		notifyObservers();
-	//	System.out.print("Månad " + month + "år" + year + "back");
+	//	System.out.print("Mï¿½nad " + month + "ï¿½r" + year + "back");
 	}
 	public void forwards(){
 		if(((month)%12)!=0){
@@ -127,7 +127,7 @@ public class MainModel extends Observable {
 		dayswithPicture = new ArrayList<Integer>(); 
 		for(int i = 1; i<=maxDays;i++){
 			
-		List<Picture> pics=  DatabaseHandler.searchPicturesfromDates(year + "-" + month + "-" + i);
+		List<Picture> pics=  DatabaseHandler.getInstance().searchPicturesfromDates(year + "-" + month + "-" + i);
 		/*if( DatabaseHandler.searchPicturesfromDates(year + "-" + month + "-" + i) != null){
 			  pics=  DatabaseHandler.searchPicturesfromDates(year + "-" + month + "-" + i);
 		//}*/

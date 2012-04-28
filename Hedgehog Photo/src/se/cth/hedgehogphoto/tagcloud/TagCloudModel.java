@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import se.cth.hedgehogphoto.database.DatabaseAccess;
+
 /**
  * @author Barnabas Sapan
  */
@@ -15,6 +17,11 @@ import java.util.Observable;
 public class TagCloudModel extends Observable {
 	private List<String> tags = new ArrayList<String>();
 	private Map<String, Integer> map = new HashMap<String, Integer>();
+	private DatabaseAccess db;
+	
+	public TagCloudModel(DatabaseAccess db){
+		this.db = db;
+	}
 	
 	public void setTags(List<String> _tags){
 		if(_tags.size() != 0){
@@ -39,5 +46,9 @@ public class TagCloudModel extends Observable {
 	
 	public Map<String, Integer> getTagsOccurrence (){
 		return map;
+	}
+	
+	public DatabaseAccess getDatabase(){
+		return db;
 	}
 }
