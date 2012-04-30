@@ -1,6 +1,7 @@
 package se.cth.hedgehogphoto.map;
 
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -10,10 +11,10 @@ import se.cth.hedgehogphoto.database.Picture;
  * TODO: Add class-description here.
  * @author Florian
  */
-public class JOverlayMarker extends AbstractJOverlayLabel {
+public class JMarker extends AbstractJOverlayMarker {
 	private Picture picture;
 	
-	public JOverlayMarker(Picture picture) {
+	public JMarker(Picture picture) {
 		this.picture = picture;
 		setImageIcon(new ImageIcon("Pictures/markers/marker2.png")); //26x26
 		init();
@@ -29,28 +30,23 @@ public class JOverlayMarker extends AbstractJOverlayLabel {
 	
 	@Override
 	int getXOffset() {
-		return getIconWidth() / 2;
+		return getWidth() / 2;
 	}
 
 	@Override
 	int getYOffset() {
-		return getIconHeight();
+		return getHeight();
 	}
 
 	@Override
-	MouseListener getMouseListener() {
-		return new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				/* TODO: Add event-handling. */
-				System.out.println("x: " + getXPosition() + "\t\ty: " + getYPosition());
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				/* TODO: Add event-handling. */
-			}
-		};
+	public List<Picture> getPictures(List<Picture> pictures) {
+		pictures.add(this.getPicture());
+		return pictures;
+	}
+
+	@Override
+	int computeNumberOfPictures() {
+		return 1;
 	}
 
 }

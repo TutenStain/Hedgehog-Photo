@@ -59,6 +59,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.Location;
 
 
@@ -263,7 +264,7 @@ public class MapPanel extends JPanel {
     	this.locations = locations;
     	updateCenterLocation();
     	adjustZoom();
-    	enableOverlayPanel(true);
+    	enableOverlayPanel(false);
 		enableControlPanel(true);
 		enableInteraction(true);
 		setOpaque(true);
@@ -313,8 +314,8 @@ public class MapPanel extends JPanel {
 	/** Returns true if the passed pixel p is: 0 < p < SIZE.
 	 *  ie if it is part of the map. Returns false otherwise. */
 	private boolean validPixelPosition(Point pixelPosition) {
-		boolean longitudeOK = (pixelPosition.x > 0 && pixelPosition.x < MapPanel.PREFERRED_WIDTH);
-		boolean latitudeOK = (pixelPosition.y > 0 && pixelPosition.y < MapPanel.PREFERRED_HEIGHT);
+		boolean longitudeOK = (pixelPosition.x > Constants.PREFERRED_MODULE_WIDTH * 0.05 && pixelPosition.x < Constants.PREFERRED_MODULE_WIDTH * 0.95);
+		boolean latitudeOK = (pixelPosition.y > Constants.PREFERRED_MODULE_WIDTH * 0.10 && pixelPosition.y < Constants.PREFERRED_MODULE_WIDTH * 0.90);
 		return (longitudeOK && latitudeOK);
 	}
 	

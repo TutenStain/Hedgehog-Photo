@@ -19,15 +19,15 @@ import se.cth.hedgehogphoto.Constants;
  * TODO: Add class-description here.
  * @author Florian
  */
-public abstract class AbstractJOverlayLabel extends JLabel implements PropertyChangeListener {
-	private ImageIcon imageIcon;
-	private int iconWidth;
-	private int iconHeight;
+public abstract class AbstractJOverlayPanel extends JComponent implements PropertyChangeListener {
+	/* No modifier - visible to subclasses. */
+	int componentWidth;
+	int componentHeight;
 	
 	void init() {
 		setOpaque(false);
-		addMouseListener();
 		setBounds(0, 0);
+		setVisible(true);
 	}
 	
 	@Deprecated
@@ -35,7 +35,7 @@ public abstract class AbstractJOverlayLabel extends JLabel implements PropertyCh
 		setOpaque(false);
 		int xPos = p.x - getXOffset();
 		int yPos = p.y - getYOffset();
-		setBounds(xPos, yPos, iconWidth, iconHeight);
+		setBounds(xPos, yPos, componentWidth, componentHeight);
 		setVisible(true);
 	}
 	
@@ -46,7 +46,7 @@ public abstract class AbstractJOverlayLabel extends JLabel implements PropertyCh
 		Point p = getLocation();
 		p.x = p.x + dx;
 		p.y = p.y + dy;
-		setBounds(p.x, p.y, iconWidth, iconHeight);
+		setBounds(p.x, p.y, componentWidth, componentHeight);
 		revalidate();
 	}
 	
@@ -131,42 +131,30 @@ public abstract class AbstractJOverlayLabel extends JLabel implements PropertyCh
 		return Constants.PREFERRED_MODULE_HEIGHT / 2;
 	}
 	
-	public ImageIcon getImageIcon() {
-		return imageIcon;
+	public int getComponentWidth() {
+		return this.componentWidth;
 	}
 
-	/** Sets the imageIcon and the proper icon size. */
-	public void setImageIcon(ImageIcon imageIcon) {
-		this.imageIcon = imageIcon;
-		setIcon(imageIcon);
-		setProperIconSize();
+	public void setComponentWidth(int componentWidth) {
+		this.componentWidth = componentWidth;
 	}
 
-	public int getIconHeight() {
-		return iconHeight;
+	public int getComponentHeight() {
+		return this.componentHeight;
 	}
 
-	public void setIconHeight(int iconHeight) {
-		this.iconHeight = iconHeight;
-	}
-
-	public int getIconWidth() {
-		return iconWidth;
-	}
-
-	public void setIconWidth(int iconWidth) {
-		this.iconWidth = iconWidth;
+	public void setComponentHeight(int componentHeight) {
+		this.componentHeight = componentHeight;
 	}
 	
-	/** In case the iconWidth and iconHeight-instance variables
-	 *  haven't been updated after the change of the icon, this
-	 *  is the method to call. */
-	public void setProperIconSize() {
-		int width = getImageIcon().getIconWidth();
-		int height = getImageIcon().getIconHeight();
-		setIconWidth(width);
-		setIconHeight(height);
+	public void setProperComponentSize() {
+		setComponentWidth(getProperComponentWidth());
+		setComponentHeight(getProperComponentHeight());
+		setSize(this.componentWidth, this.componentHeight);
 	}
+	
+	public abstract int getProperComponentWidth();
+	public abstract int getProperComponentHeight();
 	
 	/** Checks if this label intersects with a given JComponent. */
 	public boolean intersects(JComponent component) {
@@ -178,38 +166,8 @@ public abstract class AbstractJOverlayLabel extends JLabel implements PropertyCh
 	}
 	
 	/** Sets the bounds of this component, using the given params
-	 *  and the stored iconWidth and iconHeight-values. */
+	 *  and the stored componentWidth and componentHeight-values. */
 	public void setBounds(int x, int y) {
-		setBounds(x, y, iconWidth, iconHeight);
+		setBounds(x, y, componentWidth, componentHeight);
 	}
-	
-	@Deprecated
-	public void addMouseListener() {
-		addMouseListener(getMouseListener());
-	}
-	
-	/** Returns each subclass' own implementation of their
-	 *  MouseListener. */
-	abstract MouseListener getMouseListener();
-	
-	/** Abstract MouseListener-class.
-	 *  'Empty' Modifier - subclasses may instantiate it. */
-	abstract class MouseListener extends MouseAdapter {
-		/* TODO: Put this class in the controller-map and separate it from the MODEL? */
-		@Override
-		public void mouseReleased(MouseEvent arg0) {}
-		public abstract void mouseClicked(MouseEvent arg0);
-		public abstract void mousePressed(MouseEvent arg0);
-
-		/* IF POSSIBLE: Might want to Override below methods as well. We'll see. */
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			arg0.getComponent().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			arg0.getComponent().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		}
-    }
 }

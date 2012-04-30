@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.Location;
 
 @Deprecated
@@ -18,7 +19,6 @@ public class Test {
     
     public Test(List<Location> locations)
     {
-        frame.setPreferredSize(new Dimension(600, 600));
         frame.getContentPane().setLayout(new BorderLayout());
         JLabel loading = new JLabel("loading map...");
         JPanel mainPane = new JPanel();
@@ -27,11 +27,12 @@ public class Test {
         frame.setContentPane(mainPane);
         frame.pack();
         frame.setVisible(true);
-        JPanel map = new MapView(locations);
+        MapView map = new MapView(locations);
+        MapController controller = new MapController(map);
         mainPane.remove(loading);
         mainPane.add(map, BorderLayout.CENTER);
+        frame.setPreferredSize(new Dimension(Constants.PREFERRED_MODULE_WIDTH + 20, Constants.PREFERRED_MODULE_HEIGHT+50));
         frame.pack();
-        System.out.println("Constructor done");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -45,14 +46,30 @@ public class Test {
     	temp.setLongitude(20.0);
     	temp.setLatitude(30.0);
     	locations.add(temp);
+    	Location temp0 = new Location();
+    	temp0.setLongitude(20.0);
+    	temp0.setLatitude(30.0);
+    	locations.add(temp0);
     	Location temp1 = new Location();
     	temp1.setLongitude(15.0);
     	temp1.setLatitude(40.0);
     	locations.add(temp1);
     	Location temp2 = new Location();
-    	temp2.setLongitude(10.0);
-    	temp.setLatitude(20.0);
+    	temp2.setLongitude(20.0);
+    	temp2.setLatitude(30.1);
     	locations.add(temp2);
+    	Location temp3 = new Location();
+    	temp3.setLongitude(22.0);
+    	temp3.setLatitude(33.1);
+    	locations.add(temp3);
+    	Location temp4 = new Location();
+    	temp4.setLongitude(22.1);
+    	temp4.setLatitude(33.0);
+    	locations.add(temp4);
+    	Location temp5 = new Location();
+    	temp5.setLongitude(22.1);
+    	temp5.setLatitude(33.2);
+    	locations.add(temp5);
         new Test(locations);
     }
 
