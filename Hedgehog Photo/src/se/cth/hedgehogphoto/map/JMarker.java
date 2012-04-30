@@ -1,6 +1,5 @@
 package se.cth.hedgehogphoto.map;
 
-import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.ImageIcon;
