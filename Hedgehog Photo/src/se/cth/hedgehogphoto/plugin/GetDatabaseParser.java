@@ -5,6 +5,10 @@ import java.lang.reflect.Method;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.view.MainView;
 
+/**
+ * @author Barnabas Sapan
+ */
+
 public class GetDatabaseParser implements Parsable {
 
 	@Override

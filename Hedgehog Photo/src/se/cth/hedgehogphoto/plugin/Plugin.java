@@ -5,6 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * @author Barnabas Sapan
+ */
+
 /* 
  *	A class annotation for the plugin. This is useful 
  *	for providing information about the plugin.

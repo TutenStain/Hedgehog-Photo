@@ -5,6 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * @author Barnabas Sapan
+ */
+
 /*
  * The method containing this annotation will be runned
  * once to initialize the plugin. This is useful for setting

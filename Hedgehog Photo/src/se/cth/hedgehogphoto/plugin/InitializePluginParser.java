@@ -4,6 +4,10 @@ import java.lang.reflect.Method;
 
 import se.cth.hedgehogphoto.view.MainView;
 
+/**
+ * @author Barnabas Sapan
+ */
+
 public class InitializePluginParser implements Parsable{
 
 	@Override

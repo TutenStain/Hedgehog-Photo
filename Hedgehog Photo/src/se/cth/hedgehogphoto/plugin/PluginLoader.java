@@ -1,15 +1,12 @@
 package se.cth.hedgehogphoto.plugin;
 
-import se.cth.hedgehogphoto.database.DatabaseHandler;
-import se.cth.hedgehogphoto.view.MainView;
 import java.io.File;
 import java.io.FileFilter;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JPanel;
 
+import se.cth.hedgehogphoto.view.MainView;
 
 /**
  * A class that handles the plugin-loading. 
@@ -20,7 +17,6 @@ import javax.swing.JPanel;
 
 public class PluginLoader {
 	private MainView view;
-	FileClassLoader l;
 	
 	/**
 	 * The one and only constructor.
@@ -37,7 +33,7 @@ public class PluginLoader {
 			File f = new File(pluginRootDir);
 			URL url = f.toURI().toURL(); 
 			URL[] urls = new URL[]{url}; 
-			l = new FileClassLoader(urls);
+			FileClassLoader l = new FileClassLoader(urls);
 			
 			File directory = new File(pluginRootDir);
 			File[] files = directory.listFiles(new FileFilter() {
@@ -60,6 +56,7 @@ public class PluginLoader {
 				map.add(l.loadClass(finalPath));
 			}
 			
+			//TODO refactor out these so that the user can customize this (make setters and getters).
 			List<Parsable> list = new ArrayList<Parsable>();
 			Parsable a = new GetDatabaseParser();
 			Parsable b = new InitializePluginParser();
@@ -79,16 +76,16 @@ public class PluginLoader {
 	
 	/**
 	 * This method parses all the classes in the list supplied to this method.
-	 * Currently parsing the following annotations:
-	 * @InitializePlugin, @Panel, @Plugin
 	 * @param list the list of classes to parse
+	 * @param parsableMethods classes that implements Parsable to handle the parsing.
+	 * The classes get parsed according to the order of the list. 
 	 */
 	private void parseClasses(List<Class<?>> list, List<Parsable> parsableMethods){
-			for(Class<?> c : list) {
-				Object o = null;
-				for(Parsable p : parsableMethods){
-					o = p.parseMethods(c, o, view);
-				}
+		for(Class<?> c : list) {
+			Object o = null;
+			for(Parsable p : parsableMethods){
+				o = p.parseMethods(c, o, view);
 			}
+		}
 	}
 }

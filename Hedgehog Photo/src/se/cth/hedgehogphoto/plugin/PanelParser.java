@@ -6,6 +6,10 @@ import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.view.MainView;
 
+/**
+ * @author Barnabas Sapan
+ */
+
 public class PanelParser implements Parsable {
 
 	@Override

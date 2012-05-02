@@ -2,6 +2,10 @@ package se.cth.hedgehogphoto.plugin;
 
 import se.cth.hedgehogphoto.view.MainView;
 
+/**
+ * @author Barnabas Sapan
+ */
+
 public class PluginParser implements Parsable {
 
 	@Override
