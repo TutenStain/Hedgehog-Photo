@@ -27,8 +27,6 @@ public class PluginLoader {
 		this.view = view;
 		List<Class<?>> map = new ArrayList<Class<?>>();
 		
-		//Searches for @InitializePlugin to initialize everything, 
-		//then @Panel to get the JPanel back.
 		try {	
 			String pluginRootDir = System.getProperty("user.home") + System.getProperty("file.separator") + "plugin";
 			File f = new File(pluginRootDir);
@@ -52,7 +50,6 @@ public class PluginLoader {
 				int dotPath = path.lastIndexOf(".");
 				String finalPath = path.substring(dividerIndex, dotPath);
 				System.out.println("Loading class " + finalPath + "...");
-			
 				map.add(l.loadClass(finalPath));			
 			}
 			
@@ -89,10 +86,11 @@ public class PluginLoader {
 						Method panel = c.getMethod(mm[i].getName(), mm[i].getParameterTypes());
 						panel.invoke(o, DatabaseHandler.getInstance());
 					}
-					
 				}
 				
-				//This gets loaded SECOND (2)
+				//This gets loaded SECOND (2) or FIRST (1) depending on
+				//if the plugin needs access to the database or not.
+				//needed to loop trough it again so that this would get loaded 
 				for(int i = 0; i < mm.length; i++){
 					if(mm[i].isAnnotationPresent(InitializePlugin.class)){
 						if(o == null){

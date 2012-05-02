@@ -90,7 +90,7 @@ public class FileClassLoader extends URLClassLoader{
 				e1.printStackTrace();
 			}
 		 }
-		
+			
 		 //Try to...Return it if we already have loaded it.
 		 c = (Class<?>)loadedClasses.get(file);
          if (c != null) {
@@ -98,13 +98,14 @@ public class FileClassLoader extends URLClassLoader{
          }
          
          //Try to...Find it via loadclass
-		 try {
-			c = super.loadClass(file, true);
-			loadedClasses.put(file, c);
-		 } catch (ClassNotFoundException e) {
-			e.printStackTrace();
-	    }
-
+    	 try {
+    		c = super.loadClass(file, true);
+    		loadedClasses.put(file, c);
+    	 } catch (ClassNotFoundException e) {
+    		System.out.println(file + " not loaded!");
+    		e.printStackTrace();
+    	 }
+         
 		return c;
 	}
 	
@@ -122,9 +123,12 @@ public class FileClassLoader extends URLClassLoader{
 		    	System.out.println("API.jar allready in place, skipping copying...");
 		    }
 		 
-		    //Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar " + path);
-		    Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar *.java");
-
+		    //TODO fix compiling on classes that rely on other classes.
+		    Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar " + path);
+		    //Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar /home/tutenstain/plugin/*.java");
+		    //System.out.println("String: " + "javac -cp " + pluginRootDirectory + "API.jar /home/tutenstain/plugin/*.java");
+		    //Process q = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar" + path);
+		    
 		    try {
 		    	ret = p.waitFor();
 		    } catch(InterruptedException ie) {
@@ -133,6 +137,10 @@ public class FileClassLoader extends URLClassLoader{
 		    }
 
 		    System.out.println("Compiled with code: " + ret);
+		    
+		    if(ret == 1){
+		    	System.out.println("Could not resolve compilation dependencies!");
+		    }
 
 		    //0 = no compilation errors
 		    return ret==0;

@@ -28,19 +28,6 @@ public class Main {
 	
 		tgm.addObserver(tgv);
 		
-		/*l.add("hej");
-		
-		l.add("whiii");
-		l.add("sfsdf");
-		l.add("hej");
-		l.add("whiii");
-		l.add("whiii");
-		l.add("Yay");
-		l.add("Sweden");
-		l.add("Sweden");
-		l.add("Sweden");
-		l.add("Sweden");*/
-		
 		tgm.setTags(l);
 	}
 

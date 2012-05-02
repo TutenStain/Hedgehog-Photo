@@ -18,7 +18,7 @@ import se.cth.hedgehogphoto.FileObject;
  */
 
 
-public class DatabaseHandler implements DatabaseAccess{
+public class DatabaseHandler implements DatabaseAccess {
 	private Files files = Files.getInstance();
 	//private static List<FileObject> list = files.getList(); 
 	private List<Picture> pictureList = files.getPictureList();
