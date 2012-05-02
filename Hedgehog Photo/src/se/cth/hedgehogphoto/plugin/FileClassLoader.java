@@ -11,6 +11,9 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+
 
 /**
  * A custom class loader that loads classes and compiles them if necessary.
@@ -23,7 +26,6 @@ public class FileClassLoader extends URLClassLoader{
 	
 	public FileClassLoader(URL[] urls) {
 		super(urls);
-		
 		if(urls.length == 1){
 			pluginRootDirectory = urls[0].getPath();
 	
@@ -37,7 +39,7 @@ public class FileClassLoader extends URLClassLoader{
 	
 	private void createPluginFolder(String pluginRootDir){
 		//Creates a plugin directory in home/plugin
-		//If the folder allready exist nothing will be created.
+		//If the folder already exist nothing will be created.
 		//TODO Creating the correct folder structure for packages and copying .class files to this folder.
 		File createDir = new File(pluginRootDir);
 		if(createDir.exists() == false){
@@ -53,6 +55,7 @@ public class FileClassLoader extends URLClassLoader{
 		}
 	}
 	
+	
 	/**
 	 * Loads a class from file. Location based on the root folder supplied in the constructor.
 	 * Tries to compile the .java file if the .class is nonexistent or outdated.
@@ -63,7 +66,7 @@ public class FileClassLoader extends URLClassLoader{
 	public Class<?> loadClass(String file){
 		Class<?> c = null;
 		boolean b = true;
-		
+			
 		//Replace packages to a proper folderstructure
 		String fileStub = file.replace( '.', '/' );
 		
@@ -124,12 +127,12 @@ public class FileClassLoader extends URLClassLoader{
 		    }
 		 
 		    //TODO fix compiling on classes that rely on other classes.
-		    Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar " + path);
+		    //Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar " + path);
 		    //Process p = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar /home/tutenstain/plugin/*.java");
 		    //System.out.println("String: " + "javac -cp " + pluginRootDirectory + "API.jar /home/tutenstain/plugin/*.java");
 		    //Process q = Runtime.getRuntime().exec("javac -cp " + pluginRootDirectory + "API.jar" + path);
 		    
-		    try {
+		    /*try {
 		    	ret = p.waitFor();
 		    } catch(InterruptedException ie) {
 		    	System.out.println("We got interrupted, compilation failed!");
@@ -140,7 +143,20 @@ public class FileClassLoader extends URLClassLoader{
 		    
 		    if(ret == 1){
 		    	System.out.println("Could not resolve compilation dependencies!");
+		    }*/
+		    
+		    JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+		    
+		    if(compiler != null){
+		    	ret = compiler.run(null, null, null, path);
+		    } else{
+		    	System.out.println("No compiler found on this system!");
 		    }
+		    
+		    if(ret == 1){
+		    	System.out.println("Could not resolve compilation dependencies!");
+		    }
+		    
 
 		    //0 = no compilation errors
 		    return ret==0;

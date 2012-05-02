@@ -35,7 +35,7 @@ public class Main {
 		MainView view = new MainView();
 		model.addObserver(view);
 		
-		PluginLoader p = new PluginLoader(view);
+		PluginLoader p = new PluginLoader(view, "plugin");
 		
 		//TagCloud
 		/*List<String> l = new ArrayList<String>();
