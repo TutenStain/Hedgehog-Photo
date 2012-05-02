@@ -10,7 +10,7 @@ import se.cth.hedgehogphoto.database.Picture;
 
 public class Files extends Observable{
 	private static Files file;
-	@Deprecated
+//	@Deprecated
 	//private List<FileObject> list = new ArrayList<FileObject>(); 
 	
 	private List<Picture> pictureList = new ArrayList<Picture>();
