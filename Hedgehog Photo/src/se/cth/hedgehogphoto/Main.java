@@ -7,16 +7,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.Files;
+import se.cth.hedgehogphoto.metadata.Metadata;
 import se.cth.hedgehogphoto.plugin.PluginLoader;
 import se.cth.hedgehogphoto.search.SearchController;
 import se.cth.hedgehogphoto.search.SearchModel;
 import se.cth.hedgehogphoto.search.SearchPreviewView;
 import se.cth.hedgehogphoto.search.SearchView;
-import se.cth.hedgehogphoto.tagcloud.TagCloudModel;
-import se.cth.hedgehogphoto.tagcloud.TagCloudView;
 import se.cth.hedgehogphoto.view.MainView;
 
 /**
@@ -67,9 +65,10 @@ public class Main {
 		File[] files = directory.listFiles();
 		int i = 0;
 		for(File file : files) {
-			FileObject f = new ImageObject();
+			FileObject f = Metadata.getImageObject(file);
+			
 			f.setComment("Gutes bild");
-			f.setFileName("wei" + file.getName());
+			f.setFileName(file.getName());
 			f.setDate("2012.12.02");
 			//Just some random tags to test the TagCloud
 			List<String> l = new ArrayList<String>();
@@ -93,7 +92,9 @@ public class Main {
 				e.printStackTrace();
 			}
 			f.setCoverPath("blo");
-			f.setLocation(new LocationObject("Japan"));
+			if (f.getLocation() == null) {
+				f.setLocation(new LocationObject("Japan"));
+			}
 			f.setAlbumName("Bra bilder");
 			DatabaseHandler.getInstance().insertPicture(f);
 			i++;

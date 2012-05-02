@@ -72,7 +72,12 @@ public class MapView extends JPanel implements Observer, PropertyChangeListener 
 		int index;
 		for (index = 0; index < nbrOfPictures; index++) {
 			Picture picture = pictures.get(index);
-			if (picture.getLocation() != null) { //TODO: Do a better check than != null
+			Location location = picture.getLocation();
+			
+			//TODO: location == null will never happen, 
+			//but if it does, it will cause a NullPointerException
+			if (location != null && location.getLongitude() != 0.0 || 
+					location.getLatitude() != 0.0) { 
 				this.locationMarkers.add(new JMarker(picture));
 				locations.add(picture.getLocation());
 			}

@@ -1,6 +1,7 @@
 package se.cth.hedgehogphoto.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -25,9 +26,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.MainModel;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.map.MapController;
+import se.cth.hedgehogphoto.map.MapView;
 import se.cth.hedgehogphoto.plugin.PluginArea;
 
 public class MainView implements Observer {
@@ -101,11 +105,17 @@ public class MainView implements Observer {
 		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
 
 		leftPanelView = new JPanel();
+		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
+		leftPanelView.setPreferredSize(d);
+		leftPanelView.setMinimumSize(d);
+		leftPanelView.setSize(d);
 		frame.getContentPane().add(leftPanelView, BorderLayout.WEST);
 		leftPanelView.setLayout(new GridLayout(3, 0, 0, 0));
 
-		JButton btnMaps = new JButton("Maps");
-		leftPanelView.add(btnMaps);
+//		JButton btnMaps = new JButton("Maps");
+		MapView map = new MapView();
+        MapController controller = new MapController(map);
+		leftPanelView.add(map);
 
 		JButton btnCalender = new JButton("Calender");
 		leftPanelView.add(btnCalender);

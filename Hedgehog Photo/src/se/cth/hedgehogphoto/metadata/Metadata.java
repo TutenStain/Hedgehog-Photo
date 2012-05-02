@@ -33,7 +33,7 @@ public class Metadata {
 	}
 	
 	public static ImageObject getImageObject(File file) {
-		IImageMetadata metadata = extractMetadata();
+		IImageMetadata metadata = extractMetadata(file);
 		return getImageObject(metadata); 
 	}
 	
@@ -70,7 +70,7 @@ public class Metadata {
 				
 			} 
 		}
-		
+
 		return imageObject;
 	}
 	
