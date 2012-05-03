@@ -18,23 +18,23 @@ import se.cth.hedgehogphoto.*;
  */
 
 
-public class DatabaseHandler {
-	private static Files files = Files.getInstance();
-	//private static List<FileObject> list = files.getList(); 
-	private static List<Picture> pictureList = files.getPictureList();
-	private static List<Album> albumList = files.getAlbumList();
-	private static final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
-	private static EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-	private static JpaAlbumDao jad = new JpaAlbumDao();
-	private static JpaCommentDao jcd = new JpaCommentDao();
-	private static JpaLocationDao jld = new JpaLocationDao();
-	private static JpaTagDao jtd = new JpaTagDao();
-	private static JpaPictureDao jpd = new JpaPictureDao();
+public class DatabaseHandler implements DatabaseAccess {
+	private Files files = Files.getInstance();
+	//private List<FileObject> list = files.getList(); 
+	private List<Picture> pictureList = files.getPictureList();
+	private List<Album> albumList = files.getAlbumList();
+	private final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
+	private EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	private JpaAlbumDao jad = new JpaAlbumDao();
+	private JpaCommentDao jcd = new JpaCommentDao();
+	private JpaLocationDao jld = new JpaLocationDao();
+	private JpaTagDao jtd = new JpaTagDao();
+	private JpaPictureDao jpd = new JpaPictureDao();
 	private static DatabaseHandler db;
 	
 
-	static EntityManager em = factory.createEntityManager();
-	private static int i = 0;
+	EntityManager em = factory.createEntityManager();
+	private int i = 0;
 	
 	private DatabaseHandler(){
 		
@@ -48,7 +48,7 @@ public class DatabaseHandler {
 	 * A method that return all tags in the database as strings.
 	 * @return List<String>
 	 */
-	public static List<String> getTags(){
+	public List<String> getTags(){
 		List<Tag> tags = jtd.getAll();
 		List<String> taggs = new ArrayList<String>();
 		for(Tag t:tags){
@@ -60,7 +60,7 @@ public class DatabaseHandler {
 	 * return all locations as Strings
 	 * @return List<String>
 	 */
-	public static List<String> getLocations(){
+	public List<String> getLocations(){
 		List<Location> location = jld.getAll();
 		List<String> locations = new ArrayList<String>();
 		for(Location l:location){
@@ -69,19 +69,19 @@ public class DatabaseHandler {
 		return locations;
 	}
 
-	public static void updateSearchPictureNames(String search){
+	public void updateSearchPictureNames(String search){
 		pictureList = searchPictureNames(search);
 		files.setPictureList(pictureList);
 	}
-	public static List<Picture> searchPictureNames(String search){
+	public List<Picture> searchPictureNames(String search){
 		
 		return jpd.searchfromNames(search);
 	}
-	public static void updateSearchPicturesfromDates(String search){
+	public void updateSearchPicturesfromDates(String search){
 		pictureList = searchPicturesfromDates(search);
 		files.setPictureList(pictureList);
 	}
-	public static List<Picture> searchPicturesfromDates(String search){
+	public List<Picture> searchPicturesfromDates(String search){
 		Query q = em.createQuery("select t from Picture t where t.date=:date");
 		q.setParameter("date", search);
 			try{
@@ -92,82 +92,82 @@ public class DatabaseHandler {
 			return null;
 		}
 	}
-	public static void updateSearchAlbumsfromDates(String search){
+	public void updateSearchAlbumsfromDates(String search){
 		albumList = searchAlbumsfromDates(search);
 		files.setAlbumList(albumList);
 	}
-	public static List<Album>  searchAlbumsfromDates(String search){
+	public List<Album>  searchAlbumsfromDates(String search){
 		return jad.searchfromDates(search);
 
 	}
-	public static void updateSearchAlbumNames(String search){
+	public void updateSearchAlbumNames(String search){
 		albumList =searchAlbumNames(search);
 		files.setAlbumList(albumList);
 	}
-	public static List<Album> searchAlbumNames(String search){
+	public List<Album> searchAlbumNames(String search){
 		return jad.searchfromNames(search);
 	}
-	public static void updateSearchPicturesfromComments(String search){
+	public void updateSearchPicturesfromComments(String search){
 		pictureList = searchPicturesfromComments(search);
 		files.setPictureList(pictureList);
 	}
-	public static List<Picture> searchPicturesfromComments(String search){
+	public List<Picture> searchPicturesfromComments(String search){
 		return jpd.searchfromComments(search);
 	}
-	public static void updateSearchAlbumsfromComments(String search){
+	public void updateSearchAlbumsfromComments(String search){
 		albumList = searchAlbumsfromComments(search);
 		files.setAlbumList(albumList);
 	}
-	public static List<Album> searchAlbumsfromComments(String search){
+	public List<Album> searchAlbumsfromComments(String search){
 		return jad.searchfromComments(search);
 
 	}
 
-	public static void updateSearchPicturesfromTags(String search){
+	public void updateSearchPicturesfromTags(String search){
 		pictureList =searchPicturesfromTags(search);
 		files.setPictureList(pictureList);
 	}
 
-	public static List<Picture> searchPicturesfromTags(String search){
+	public List<Picture> searchPicturesfromTags(String search){
 		return jpd.searchfromTags(search);
 	}
-	public static void updateSearchPicturefromsLocations(String search){
+	public void updateSearchPicturefromsLocations(String search){
 		pictureList = searchPicturefromsLocations(search);
 		files.setPictureList(pictureList);
 	}
-	public static List<Picture> searchPicturefromsLocations(String search){
+	public List<Picture> searchPicturefromsLocations(String search){
 		return jpd.searchfromLocations(search);
 	}
-	public static void updateAlbumsfromSearchTags(String search){
+	public void updateAlbumsfromSearchTags(String search){
 		albumList = searchAlbumfromTag(search);
 		files.setAlbumList(albumList);
 	}
-	public static List<Album> searchAlbumfromTag(String search){
+	public List<Album> searchAlbumfromTag(String search){
 		return jad.searchfromTags(search);
 	}
-	public static void updateSearchAlbumsfromLocations(String search){
+	public void updateSearchAlbumsfromLocations(String search){
 		albumList  =  searchAlbumsfromLocations(search);
 		files.setAlbumList(albumList);
 	}
-	public static List<Album> searchAlbumsfromLocations(String search){
+	public List<Album> searchAlbumsfromLocations(String search){
 		return jad.searchfromTags(search);
 	}
-	public static void updateAllPictures(){
+	public void updateAllPictures(){
 		pictureList = getAllPictures();
 		files.setPictureList(pictureList);
 
 
 	}
-	public static List<Picture> getAllPictures(){
+	public List<Picture> getAllPictures(){
 		Query p = em.createQuery("select t from Picture t");
 		return (List<Picture>)p.getResultList();
 
 	}
-	public static void updateAllAlbums(){
+	public void updateAllAlbums(){
 		 albumList = getAllAlbums();
 		 files.setAlbumList(albumList);
 	 }
-	 public static List<Album> getAllAlbums(){
+	 public List<Album> getAllAlbums(){
 		 Query p = em.createQuery("select t from Album t");
 		 return (List<Album>)p.getResultList();
 
@@ -175,7 +175,7 @@ public class DatabaseHandler {
 
 
 
-	 /*public static FileObject makeFileObjectfromPath(String filePath){
+	 /*public FileObject makeFileObjectfromPath(String filePath){
 		String name = "";
 		String date = "";
 		String path ="";
@@ -229,7 +229,7 @@ public class DatabaseHandler {
 
 	}
 
-	public static FileObject makeFileObjectfromAlbumName(String albumName){
+	public FileObject makeFileObjectfromAlbumName(String albumName){
 		List<String> tags = new ArrayList<String>();
 		se.cth.hedgehogphoto.metadata.Location location = new se.cth.hedgehogphoto.metadata.Location("");
 		Album album = new Album();
@@ -286,7 +286,7 @@ public class DatabaseHandler {
 		return f;
 	}
 	  */
-	 /*	public static void updateInsertPicture(ImageObject f){
+	 /*	public void updateInsertPicture(ImageObject f){
 
 		boolean pictureExist = false;
 		boolean albumExist = false;
@@ -307,7 +307,7 @@ public class DatabaseHandler {
 		insertPicture(f);
 
 	}*/
-	/* public static void insertPicture(FileObject f){
+	/* public void insertPicture(FileObject f){
 		 if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
 			 Album theAlbum = AlbumHandler.dothis(f);
 			 Picture pic = PictureHandler.dothis(f, theAlbum);
@@ -362,7 +362,7 @@ public class DatabaseHandler {
 			 }
 		 }
 	 }*/
-	 public static void insertPicture(FileObject f){
+	 public void insertPicture(FileObject f){
 			if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
 				Album theAlbum = new Album();
 				if(f.getAlbumName() != null || (!f.getAlbumName().equals(""))){
@@ -522,7 +522,7 @@ public class DatabaseHandler {
 			}
 		}
 
-	 public static void updateAddTagtoPicture(String tag, String filePath){
+	 public void updateAddTagtoPicture(String tag, String filePath){
 		 for(Picture f:pictureList){
 			 if(f.getPath().equals(filePath))
 				 pictureList.remove(f);
@@ -532,10 +532,10 @@ public class DatabaseHandler {
 	 }
 
 
-	 public static void addTagtoPicture(String tag, String filePath){
+	 public void addTagtoPicture(String tag, String filePath){
 		 jpd.addTag(tag, filePath);
 	 }
-	 public static void updateAddTagtoAlbum(String tag, String albumName){
+	 public void updateAddTagtoAlbum(String tag, String albumName){
 		for(Album f:albumList){
 			if(f.getAlbumName().equals(albumName))
 					albumList.remove(f);
@@ -543,11 +543,11 @@ public class DatabaseHandler {
 	addTagtoAlbum(tag, albumName);
 	files.setAlbumList(albumList);
 }
-	 public static void addTagtoAlbum(String tag, String albumName){
+	 public void addTagtoAlbum(String tag, String albumName){
 		 jad.addTag(tag, albumName);
 
 	 }
-	 public static void updateaddCommenttoPicture(String comment, String filePath){
+	 public void updateaddCommenttoPicture(String comment, String filePath){
 		 for(Picture f:pictureList){
 			 if(f.getPath().equals(filePath))
 				 pictureList.remove(f);
@@ -558,10 +558,10 @@ public class DatabaseHandler {
 
 	
 
-	 public static void addCommenttoPicture(String comment, String filePath){
+	 public void addCommenttoPicture(String comment, String filePath){
 		 jpd.addComment(comment, filePath);
 	 }
-	 public static void updateAddCommenttoAlbum(String comment, String albumName){
+	 public void updateAddCommenttoAlbum(String comment, String albumName){
 			for(Album f:albumList){
 				if(f.getAlbumName().equals(albumName))
 						albumList.remove(f);
@@ -571,11 +571,11 @@ public class DatabaseHandler {
 	}
 
 
-	 public static void addCommenttoAlbum(String comment, String filePath){
+	 public void addCommenttoAlbum(String comment, String filePath){
 		 jad.addComment(comment, filePath);
 	 }
 
-	 public static void updateAddLocationtoPicture(String location, String filePath){
+	 public void updateAddLocationtoPicture(String location, String filePath){
 		 for(Picture f:pictureList){
 			 if(f.getPath().equals(filePath))
 				 pictureList.remove(f);
@@ -586,10 +586,10 @@ public class DatabaseHandler {
 
 
 
-	 public static void addLocationtoPicture(String location, String filePath){
+	 public void addLocationtoPicture(String location, String filePath){
 		 jpd.addLocation(location, filePath);
 	 }
-	 public static void updateAddLocationtoAlbum(String location, String albumName){
+	 public void updateAddLocationtoAlbum(String location, String albumName){
 			for(Album f:albumList){
 				if(f.getAlbumName().equals(albumName))
 						albumList.remove(f);
@@ -599,10 +599,10 @@ public class DatabaseHandler {
 	}
 
 
-	 public static void addLocationtoAlbum(String location, String albumName){
+	 public void addLocationtoAlbum(String location, String albumName){
 		jad.addLocation(location, albumName);
 	 }
-	 public static void deleteAll(){
+	 public void deleteAll(){
 		 Query b = em.createQuery("select t from Picture t");
 		 List<Picture> allPictures = b.getResultList();
 		 for(Picture pic:allPictures){
@@ -610,14 +610,14 @@ public class DatabaseHandler {
 		 }
 	 }
 
-	 public static void updateDeletePictures(String filePath){
+	 public void updateDeletePictures(String filePath){
 		 deletePicture(filePath);
 		pictureList = getAllPictures();
 		 files.setPictureList(pictureList);
 	 }
 	 
 
-	 public static void deletePicture (String filePath){
+	 public void deletePicture (String filePath){
 		 Picture picture = em.find(Picture.class, filePath);
 
 		 if(picture != null){
@@ -666,7 +666,7 @@ public class DatabaseHandler {
 
 	 }
 
-	 public static void updateDeleteTagsfromPictures(String filePath){
+	 public void updateDeleteTagsfromPictures(String filePath){
 		deleteTagsfromPicture(filePath);
 		for(Picture p: pictureList){
 			if(p.getPath().equals(filePath))
@@ -675,10 +675,10 @@ public class DatabaseHandler {
 		files.setPictureList(pictureList);
 	}
 	
-	 public static void deleteTagsfromPicture(String filePath){
+	 public void deleteTagsfromPicture(String filePath){
 		jpd.deleteTags(filePath);
 	 }
-	 public static void updateDeletePicturefromAlbum(String filePath){
+	 public void updateDeletePicturefromAlbum(String filePath){
 		 jad.deletePicture(filePath);
 		 String albumName = "";
 		for(Picture f: pictureList){
@@ -699,7 +699,7 @@ public class DatabaseHandler {
 	 public void deletePicturefromAlbum(String filePath){
 		 jpd.deletePicture(filePath);
 	 }
-	 	public static void updateDeleteCommentfromPicture(String filePath){
+	 	public void updateDeleteCommentfromPicture(String filePath){
 		 deleteCommentfromPicture(filePath);
 			for(Picture f: pictureList){
 				if(f.getPath().equals(filePath))
@@ -710,10 +710,10 @@ public class DatabaseHandler {
 	 }
 	 
 
-	 public static void deleteCommentfromPicture(String filePath){
+	 public void deleteCommentfromPicture(String filePath){
 		jpd.deleteComment(filePath);
 	 }
-	 public static void updateDeleteLocationfromPicture(String filePath){
+	 public void updateDeleteLocationfromPicture(String filePath){
 		deleteLocationfromPicture(filePath);
 		for(Picture f: pictureList){
 			if(f.getPath().equals(filePath))
@@ -724,10 +724,10 @@ public class DatabaseHandler {
 	}
 
 	
-	 public static void deleteLocationfromPicture(String filePath){
+	 public void deleteLocationfromPicture(String filePath){
 		 jpd.deleteLocation(filePath);
 	 }
-	 	public static void updateDeleteCommentfromAlbum(String albumName){
+	 	public void updateDeleteCommentfromAlbum(String albumName){
 		 deleteCommentfromAlbum(albumName);
 			for(Album f:albumList){
 				if(f.getAlbumName().equals(albumName))
@@ -737,10 +737,10 @@ public class DatabaseHandler {
 	}
 
 
-	 public static void deleteCommentfromAlbum(String albumName){
+	 public void deleteCommentfromAlbum(String albumName){
 		 jad.deleteComment(albumName);
 	 }
-	 public static void updateDeleteLocationfromAlbum(String albumName){
+	 public void updateDeleteLocationfromAlbum(String albumName){
 		deleteLocationfromAlbum(albumName);
 		for(Album f:albumList){
 			if(f.getAlbumName().equals(albumName))
@@ -749,10 +749,10 @@ public class DatabaseHandler {
 	files.setAlbumList(albumList);
 }
 	
-	 public static void deleteLocationfromAlbum(String albumName){
+	 public void deleteLocationfromAlbum(String albumName){
 		 jad.deleteLocation(albumName);
 	 }
-	 	public static void updateDeleteTagsfromAlbum(String albumName){
+	 	public void updateDeleteTagsfromAlbum(String albumName){
 		deleteTagsfromAlbum(albumName);
 		for(Album f:albumList){
 			if(f.getAlbumName().equals(albumName))
@@ -761,7 +761,7 @@ public class DatabaseHandler {
 	files.setAlbumList(albumList);
 	}
 	  
-	 public static void deleteTagsfromAlbum(String albumName){
+	 public void deleteTagsfromAlbum(String albumName){
 		jad.deleteTags(albumName);
 	 }
 }
