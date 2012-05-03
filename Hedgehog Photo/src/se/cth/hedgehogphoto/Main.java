@@ -17,6 +17,7 @@ import se.cth.hedgehogphoto.search.SearchPreviewView;
 import se.cth.hedgehogphoto.search.SearchView;
 import se.cth.hedgehogphoto.view.MainView;
 
+
 /**
  * @author Barnabas Sapan
  */

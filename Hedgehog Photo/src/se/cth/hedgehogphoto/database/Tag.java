@@ -1,10 +1,16 @@
 package se.cth.hedgehogphoto.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 /**
  * 
  * @author Julia
@@ -19,32 +25,32 @@ private String tag;
 
 
 @ManyToMany
-private List<Picture> picture;
+private List<Picture> pictures;
 @ManyToMany
-private List<Album> album;
+private List<Album> albums;
 
 	public String getTag() {
 		return tag;
 	}
 
-	public void setPicture(List<Picture> picture) {
-		this.picture = picture;
+	public void setPictures(List<Picture> pictures) {
+		this.pictures = pictures;
 	}
 
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
-	public List<Album> getAlbum() {
-		return album;
+	public List<Album> getAlbums() {
+		return albums;
 	}
 
-	public void setAlbum(List<Album> album) {
-		this.album = album;
+	public void setAlbums(List<Album> albums) {
+		this.albums = albums;
 	}
 
-	public List<Picture> getPicture() {
-		return picture;
+	public List<Picture> getPictures() {
+		return pictures;
 	}
 	@Override
 	public String toString() {

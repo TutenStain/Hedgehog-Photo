@@ -1,11 +1,17 @@
 package se.cth.hedgehogphoto.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
 /**
  * 
  * @author Julia
@@ -16,14 +22,14 @@ public class Picture {
 	@Id
 	private String path;
 	private String name;
-
+	private String date;
 	@ManyToOne
 	 private Album album;
 
 
 	@ManyToMany
 	private List<Tag> tags;
-	private String date;
+	
 	@ManyToOne
 	private Comment comment;
 	@ManyToOne
@@ -32,14 +38,14 @@ public class Picture {
 	public List<Tag> getTags() {
 		return tags;
 	}
-	protected void setTag(List<Tag> tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 
 	public Comment getComment() {
 		return comment;
 	}
-	protected void setComment(Comment comment) {
+	public void setComment(Comment comment) {
 		this.comment = comment;
 	}
 
@@ -54,7 +60,7 @@ public class Picture {
 		return date;
 	}
 
-	protected void setDate(String date) {
+	public void setDate(String date) {
 		this.date = date;
 	}	
 	

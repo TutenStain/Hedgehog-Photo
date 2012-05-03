@@ -1,10 +1,16 @@
 package se.cth.hedgehogphoto.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 /**
  * 
  * @author Julia
@@ -19,11 +25,11 @@ private String location;
 private double longitude, latitude;
 
 public double getLongitude() {
-	return longitude;
+	return latitude;
 }
 
 public void setLongitude(double lon) {
-	this.longitude = lon;
+	this.latitude = lon;
 }
 
 public double getLatitude() {
@@ -35,16 +41,16 @@ public void setLatitude(double lat) {
 }
 
 @OneToMany
-private List<Picture> picture;
+private List<Picture> pictures;
 @OneToMany
-private List<Album> album;
+private List<Album> albums;
 
-	public List<Picture> getPicture() {
-	return picture;
+	public List<Picture> getPictures() {
+	return pictures;
 }
 
-public void setPicture(List<Picture> picture) {
-	this.picture = picture;
+public void setPictures(List<Picture> pictures) {
+	this.pictures = pictures;
 }
 
 	public void setLocation(String location) {
@@ -63,12 +69,12 @@ public void setPicture(List<Picture> picture) {
 		return location;
 	}
 
-	public List<Album> getAlbum() {
-		return album;
+	public List<Album> getAlbums() {
+		return albums;
 	}
 
-	public void setAlbum(List<Album> album) {
-		this.album = album;
+	public void setAlbums(List<Album> albums) {
+		this.albums = albums;
 	}
 	
 }
