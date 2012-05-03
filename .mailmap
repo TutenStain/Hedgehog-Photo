@@ -1,0 +1,4 @@
+# This mailmap just translates the weird addresses from the original import into git
+# into proper addresses so that they are counted properly in git shortlog output.
+#
+Florian Minges <florianminges@hotmail.com> FlorianMinges <florianminges@hotmail.com>
