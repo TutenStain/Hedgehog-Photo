@@ -12,7 +12,7 @@ import se.cth.hedgehogphoto.view.MainView;
 public class GetDatabaseParser implements Parsable {
 
 	@Override
-	public Object parseMethods(Class<?> c, Object o, MainView view) {
+	public Object parseClass(Class<?> c, Object o, MainView view) {
 		Method m[] = c.getMethods();
 		for(int i = 0; i < m.length; i++){
 			try{
@@ -24,6 +24,7 @@ public class GetDatabaseParser implements Parsable {
 				System.out.println("Setting DB...");
 				Method panel = c.getMethod(m[i].getName(), m[i].getParameterTypes());
 				panel.invoke(o, DatabaseHandler.getInstance());
+				break;
 			}
 			}catch (Exception e){
 				e.printStackTrace();

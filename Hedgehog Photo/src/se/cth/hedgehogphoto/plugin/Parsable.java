@@ -15,5 +15,5 @@ public interface Parsable {
 	 * @return Object the resulting object after invoking methods defined by this function, 
 	 * probably a (new)instance of the class if the class had to be instantiated
 	 */
-	public Object parseMethods(Class<?> c, Object o, MainView view);
+	public Object parseClass(Class<?> c, Object o, MainView view);
 }

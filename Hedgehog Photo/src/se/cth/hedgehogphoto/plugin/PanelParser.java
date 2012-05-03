@@ -13,7 +13,7 @@ import se.cth.hedgehogphoto.view.MainView;
 public class PanelParser implements Parsable {
 
 	@Override
-	public Object parseMethods(Class<?> c, Object o, MainView view){
+	public Object parseClass(Class<?> c, Object o, MainView view){
 		Method m[] = c.getMethods();
 		for(int i = 0; i < m.length; i++){
 			try{

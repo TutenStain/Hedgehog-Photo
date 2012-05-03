@@ -26,7 +26,7 @@ public class PluginLoader {
 	 */
 	public PluginLoader(MainView view, String pluginFolderName) {
 		this.view = view;
-		List<Class<?>> map = new ArrayList<Class<?>>();
+		List<Class<?>> loadedClasses = new ArrayList<Class<?>>();
 		
 		try {	
 			String pluginRootDir = System.getProperty("user.home") + System.getProperty("file.separator") + pluginFolderName;
@@ -53,7 +53,7 @@ public class PluginLoader {
 				int dotPath = path.lastIndexOf(".");
 				String finalPath = path.substring(dividerIndex, dotPath);
 				System.out.println("Loading class " + finalPath + "...");
-				map.add(l.loadClass(finalPath));
+				loadedClasses.add(l.loadClass(finalPath));
 			}
 			
 			//TODO refactor out these so that the user can customize this (make setters and getters).
@@ -67,7 +67,7 @@ public class PluginLoader {
 			list.add(c);
 			list.add(d);
 			
-			parseClasses(map, list);
+			parseClasses(loadedClasses, list);
 			
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -77,14 +77,14 @@ public class PluginLoader {
 	/**
 	 * This method parses all the classes in the list supplied to this method.
 	 * @param list the list of classes to parse
-	 * @param parsableMethods classes that implements Parsable to handle the parsing.
+	 * @param parsableAnnotations classes that implements Parsable to handle the parsing.
 	 * The classes get parsed according to the order of the list. 
 	 */
-	private void parseClasses(List<Class<?>> list, List<Parsable> parsableMethods){
+	private void parseClasses(List<Class<?>> list, List<Parsable> parsableAnnotations){
 		for(Class<?> c : list) {
 			Object o = null;
-			for(Parsable p : parsableMethods){
-				o = p.parseMethods(c, o, view);
+			for(Parsable p : parsableAnnotations){
+				o = p.parseClass(c, o, view);
 			}
 		}
 	}
