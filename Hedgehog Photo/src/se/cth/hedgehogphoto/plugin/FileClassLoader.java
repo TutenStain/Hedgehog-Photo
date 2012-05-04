@@ -2,6 +2,7 @@ package se.cth.hedgehogphoto.plugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -20,10 +21,10 @@ import javax.tools.ToolProvider;
 
 /**
  * A custom class loader that loads classes and compiles them if necessary.
- * @author Barnabas
+ * @author Barnabas Sapan
  */
 
-public class FileClassLoader extends URLClassLoader{
+public class FileClassLoader extends URLClassLoader {
 	private String pluginRootDirectory;
 	private Map<String, Class<?>> loadedClasses = new HashMap<String, Class<?>>();
 
@@ -31,40 +32,39 @@ public class FileClassLoader extends URLClassLoader{
 		super(urls);
 		if(urls.length == 1){
 			pluginRootDirectory = urls[0].getPath();
-
-			System.out.println("Setting plugin directory: " + pluginRootDirectory);
-			createPluginFolder(urls[0].getPath());
+			addSubfolders();
 		} else {
 			System.out.println("Error, only one file path supported at a time");
 		}
-
 	}
-
-	private void createPluginFolder(String pluginRootDir){
-		//Creates a plugin directory in home/plugin
-		//If the folder already exist nothing will be created.
-		//TODO Creating the correct folder structure for packages and copying .class files to this folder.
-		File createDir = new File(pluginRootDir);
-		if(createDir.exists() == false){
-			System.out.println("Plugin directory not found, creating new directory...");
-			if(createDir.mkdirs() == false){
-				//TODO Throw an appropriate exception
-				System.out.println("Creating plugin directory failed, fatal error");
-			} else {
-				System.out.println("Plugin directory succesfully created!");
+	
+	/**
+	 * Appends the subfolders in pluginRootDirectory
+	 * to the list of URLs to search for classes and resources.
+	 */
+	
+	private void addSubfolders(){
+		File file = new File(pluginRootDirectory);
+		for(String dir : file.list()){
+			if(file.isDirectory()){
+				try {
+					File subfolder = new File(file.getCanonicalPath().toString() + "/" + dir);
+					System.out.println("Setting sub directoy: " + subfolder.toURI().toURL());
+					addURL(subfolder.toURI().toURL());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-		} else {
-			System.out.println("Plugin dir exists, skipping creation...");
 		}
 	}
-
 
 	/**
 	 * Loads a class from file. Location based on the root folder supplied in the constructor.
 	 * Tries to compile the .java file if the .class is nonexistent or outdated.
 	 * @param file the file name including the package like se.cth.hedgehogphoto.plugin.Tester
+	 * excluding .java or .class at the end.
 	 */
-
+	
 	@Override
 	public Class<?> loadClass(String file){
 		Class<?> c = null;
@@ -83,7 +83,7 @@ public class FileClassLoader extends URLClassLoader{
 		//Only compile if necessary
 		if (javaFile.exists() && (!classFile.exists() || javaFile.lastModified() > classFile.lastModified())) {
 			try {
-				System.out.println(".class is outdated/nonexistend, compilation needed...");
+				System.out.println(".class is outdated/nonexistent, compilation needed...");
 
 				b = compile(javaFilenamePath);
 
@@ -114,8 +114,16 @@ public class FileClassLoader extends URLClassLoader{
 
 		return c;
 	}
+	
+	/**
+	 * Compiles a specific file.
+	 * @param path the filepath to the file to compile
+	 * @return returns true if the compilation was successful, false if it failed due
+	 * to compilation errors or if JDK is not installed on the system
+	 * @throws IOException
+	 */
 
-	public boolean compile(String path) throws IOException {
+	private boolean compile(String path) throws IOException {
 		System.out.println("Compiling " + path + "...");
 
 		//Copy our API to plugin dir
@@ -136,13 +144,12 @@ public class FileClassLoader extends URLClassLoader{
 			StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 			Iterable<? extends JavaFileObject> compUnits =  fileManager.getJavaFileObjects(fileToCompile);
 			String classpath = pluginRootDirectory + "API.jar:" + pluginRootDirectory;
-			final Iterable<String> options = Arrays.asList( new String[] { "-cp", classpath} );
+			final Iterable<String> options = Arrays.asList(new String[] { "-cp", classpath});
 			compilationResult = compiler.getTask(null, fileManager, null, options, null, compUnits).call();        
 		} else {
 			System.out.println("No javacompiler found on system! ERROR");
 		}
 		
-
 		return compilationResult;
 	}
 }
