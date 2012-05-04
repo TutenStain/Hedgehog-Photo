@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.map;
+package se.cth.hedgehogphoto.map.model;
 /*******************************************************************************
  * Copyright (c) 2008, 2012 Stepan Rutz.
  * All rights reserved. This program and the accompanying materials
@@ -217,8 +217,8 @@ public class MapPanel extends JPanel {
      *  If false, it's a static map. */
     private boolean interactionEnabled;
 
-    protected MapPanel() {
-        this(new Point(8282, 5179), 6);
+    public MapPanel() {
+        this(new Point(8282, 5179), 16);
     }
 
     protected MapPanel(Point mapPosition, int zoom) {
@@ -240,7 +240,7 @@ public class MapPanel extends JPanel {
         addMouseMotionListener(mouseListener);
         addMouseWheelListener(mouseListener);
         setZoom(zoom);
-        setMapPosition(mapPosition);
+        updateMapPositionWithoutFire(mapPosition.x, mapPosition.y);
 
 //        searchPanel = new SearchPanel(); /* IF POSSIBLE: check if it is possible to remove this panel, since it is not used right now */
         checkTileServers();
@@ -582,33 +582,32 @@ public class MapPanel extends JPanel {
         if (getZoom() >= getTileServer().getMaxZoom())
             return;
         Dimension oldValue = new Dimension(mapSize.width, mapSize.height);
-        Point mapPosition = getMapPosition();
-        int dx = pivot.x - PREFERRED_WIDTH / 4;
-        int dy = pivot.y - PREFERRED_WIDTH / 4;
-//        setCenterPosition(new Point(mapPosition.x + dx, mapPosition.y + dy));
+        int dx = pivot.x - PREFERRED_WIDTH / 2;
+        int dy = pivot.y - PREFERRED_WIDTH / 2;
         translateMapPosition(dx, dy);
-        mapPosition = getMapPosition();
+        Point mapPosition = getMapPosition();
         setZoom(getZoom() + 1);
         updateMapPositionWithoutFire(mapPosition.x * 2, mapPosition.y * 2);
-//        setMapPosition(mapPosition.x + dx, mapPosition.y + dy);
-        repaint();
+        translateMapPosition(-PREFERRED_WIDTH / 2, -PREFERRED_HEIGHT / 2);
         firePropertyChange("zoomIn", oldValue, mapSize);
+        mapPosition = getMapPosition();
+        setMapPosition(mapPosition.x + PREFERRED_WIDTH, mapPosition.y + PREFERRED_HEIGHT);
+//       == setMapPosition(mapPosition.x + dx, mapPosition.y + dy);
+        repaint();
+        
     }
 
     public void zoomOut(Point pivot) {
         if (getZoom() <= 1)
             return;
         Dimension oldValue = new Dimension(mapSize.width, mapSize.height);
-        Point mapPosition = getMapPosition();
         int dx = pivot.x;
         int dy = pivot.y;
-//        setMapPosition(new Point(mapPosition.x + dx, mapPosition.y + dy));
-        setCenterPosition(new Point(mapPosition.x + dx, mapPosition.y + dy));
-        translateMapPosition(-PREFERRED_WIDTH / 2, -PREFERRED_HEIGHT / 2); //merge this and above line
-        mapPosition = getMapPosition();
+        translateMapPosition(dx, dy);
+        Point mapPosition = getMapPosition();
         setZoom(getZoom() - 1);
         updateMapPositionWithoutFire((mapPosition.x) / 2, (mapPosition.y) / 2);
-//        setMapPosition(mapPosition.x - dx / 2, mapPosition.y - dy / 2);
+        translateMapPosition(-PREFERRED_WIDTH / 2, -PREFERRED_HEIGHT / 2);
         repaint();
         firePropertyChange("zoomIn", oldValue, mapSize);
     }
