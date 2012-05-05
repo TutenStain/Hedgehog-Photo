@@ -7,9 +7,11 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.Files;
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.metadata.Metadata;
 import se.cth.hedgehogphoto.plugin.PluginLoader;
 import se.cth.hedgehogphoto.search.SearchController;
@@ -30,7 +32,6 @@ public class Main {
 		DatabaseHandler.getInstance().deleteAll();
 		//Main
 		insertFileObjectsIntoDatabase();
-		System.out.print(DatabaseHandler.getInstance().getAllPictures());
 		MainModel model = new MainModel();
 		MainView view = new MainView();
 		model.addObserver(view);
@@ -92,7 +93,7 @@ public class Main {
 			
 			try {
 				f.setFilePath(file.getCanonicalPath());
-				System.out.println(file.getCanonicalPath());
+				Log.getLogger().log(Level.INFO, "Found image:" + file.getCanonicalPath());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

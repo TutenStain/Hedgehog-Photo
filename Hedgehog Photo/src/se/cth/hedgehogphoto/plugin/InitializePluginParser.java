@@ -1,7 +1,9 @@
 package se.cth.hedgehogphoto.plugin;
 
 import java.lang.reflect.Method;
+import java.util.logging.Level;
 
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.view.MainView;
 
 /**
@@ -18,7 +20,7 @@ public class InitializePluginParser implements Parsable{
 				if(m[i].isAnnotationPresent(InitializePlugin.class)){
 					if(o == null){
 						o = c.newInstance();					
-						System.out.println("Initializing plugin with class: " + o.getClass().getSimpleName());
+						Log.getLogger().log(Level.INFO, "Initializing plugin with class: " + o.getClass().getSimpleName());
 					}
 					Method init = c.getMethod(m[i].getName(), null);
 					init.invoke(o, (Object[])null);

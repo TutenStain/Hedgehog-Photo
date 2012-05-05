@@ -1,9 +1,11 @@
 package se.cth.hedgehogphoto.plugin;
 
 import java.lang.reflect.Method;
+import java.util.logging.Level;
 
 import javax.swing.JPanel;
 
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.view.MainView;
 
 /**
@@ -21,17 +23,16 @@ public class PanelParser implements Parsable {
 					Method panel = c.getMethod(m[i].getName(), null);
 					if(panel.getReturnType() == JPanel.class){
 						PluginArea pa = panel.getAnnotation(Panel.class).placement();
-						System.out.println("Panel placement: " + pa );
+						Log.getLogger().log(Level.INFO, "Panel placement: " + pa );
 						if(o != null){
 							JPanel p = (JPanel) panel.invoke(o, (Object[])null);
-							System.out.println("PANEL: " + p);
 							view.addPlugin(p, pa);
 							view.addToLeftPanel(p);
 						} else {
-							System.out.println("Class not Initialized, do you have @InitializePlugin annotation?");
+							Log.getLogger().log(Level.SEVERE, "Class not Initialized, do you have @InitializePlugin annotation?");
 						}
 					} else {
-						System.out.println("@Panel invalid return type");
+						Log.getLogger().log(Level.SEVERE, "@Panel invalid return type");
 					}			
 				}
 			}catch (Exception e){

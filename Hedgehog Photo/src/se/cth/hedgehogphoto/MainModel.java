@@ -3,9 +3,11 @@ package se.cth.hedgehogphoto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.log.Log;
 
 public class MainModel extends Observable {
 	private List<Picture> images = new ArrayList<Picture>();
@@ -19,9 +21,6 @@ public class MainModel extends Observable {
 	}
 	
 	public List<Picture> getImages() {
-		for(int i = 0; i < images.size(); i++) {
-			System.out.println(images.get(i));
-		}
 		return images;
 	}
 	

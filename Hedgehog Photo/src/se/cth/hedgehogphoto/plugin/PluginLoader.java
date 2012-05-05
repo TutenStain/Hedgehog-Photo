@@ -7,8 +7,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.Util;
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.view.MainView;
 
 /**
@@ -20,7 +22,7 @@ import se.cth.hedgehogphoto.view.MainView;
 
 public class PluginLoader {
 	private MainView view;
-	private FileClassLoader l;
+	private FileClassLoader classLoader;
 	private String pluginRootDir;
 		
 	public PluginLoader(MainView view, File pluginRootDir){
@@ -40,10 +42,10 @@ public class PluginLoader {
 		try {		
 			File f = new File(pluginRootDir);
 			URL url = f.toURI().toURL(); 
-			URL[] urls = new URL[]{url}; 
-			System.out.println("Setting plugin directory: " + urls[0].getPath());
+			URL[] urls = new URL[]{url};
+			Log.getLogger().log(Level.INFO, "Setting plugin directory: " + urls[0].getPath());
 			Helper.createPluginFolder(urls[0].getPath());
-			l = new FileClassLoader(urls);
+			classLoader = new FileClassLoader(urls);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -52,7 +54,6 @@ public class PluginLoader {
 	/**
 	 * Loads all the available plugins in the plugin root folder specified by the constructor
 	 */
-	
 	public void loadAllPlugins(){
 		loadPluginFromDirectory(new File(pluginRootDir));
 	}
@@ -75,8 +76,8 @@ public class PluginLoader {
 		//Loop trough all files and load the classes.
 		for(File file : files) {
 			String className = Helper.stripDotAndSlashFromString(file.toString());
-			System.out.println("Loading class " + className + "...");
-			loadedClasses.add(l.loadClass(className));
+			Log.getLogger().log(Level.INFO, "Loading class " + className + "...");
+			loadedClasses.add(classLoader.loadClass(className));
 		}
 
 		parseClasses(loadedClasses, Helper.getDefaultPluginParsers());

@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+
+import se.cth.hedgehogphoto.log.Log;
 
 /**
  * A helper class for plugin-related classes
@@ -71,15 +74,15 @@ public final class Helper {
 		//If the folder already exist nothing will be created.
 		File createDir = new File(pluginRootDir);
 		if(createDir.exists() == false){
-			System.out.println("Plugin directory not found, creating new directory...");
+			Log.getLogger().log(Level.INFO, "Plugin directory not found, creating new directory...");
 			if(createDir.mkdirs() == false){
 				//TODO Throw an appropriate exception
-				System.out.println("Creating plugin directory failed, fatal error");
+				Log.getLogger().log(Level.INFO, "Creating plugin directory failed, fatal error");
 			} else {
-				System.out.println("Plugin directory succesfully created!");
+				Log.getLogger().log(Level.INFO, "Plugin directory succesfully created!");
 			}
 		} else {
-			System.out.println("Plugin dir exists, skipping creation...");
+			Log.getLogger().log(Level.INFO, "Plugin dir exists, skipping creation...");
 		}
 	}
 }

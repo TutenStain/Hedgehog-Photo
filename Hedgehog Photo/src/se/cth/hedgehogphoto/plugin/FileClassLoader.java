@@ -12,11 +12,14 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
+
+import se.cth.hedgehogphoto.log.Log;
 
 
 /**
@@ -34,7 +37,7 @@ public class FileClassLoader extends URLClassLoader {
 			pluginRootDirectory = urls[0].getPath();
 			addSubfolders();
 		} else {
-			System.out.println("Error, only one file path supported at a time");
+			Log.getLogger().log(Level.SEVERE, "Error, only one file path supported at a time");
 		}
 	}
 	
@@ -49,7 +52,7 @@ public class FileClassLoader extends URLClassLoader {
 			if(file.isDirectory()){
 				try {
 					File subfolder = new File(file.getCanonicalPath().toString() + "/" + dir);
-					System.out.println("Setting sub directoy: " + subfolder.toURI().toURL());
+					Log.getLogger().log(Level.INFO, "Setting sub directoy: " + subfolder.toURI().toURL());
 					addURL(subfolder.toURI().toURL());
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -83,14 +86,14 @@ public class FileClassLoader extends URLClassLoader {
 		//Only compile if necessary
 		if (javaFile.exists() && (!classFile.exists() || javaFile.lastModified() > classFile.lastModified())) {
 			try {
-				System.out.println(".class is outdated/nonexistent, compilation needed...");
+				Log.getLogger().log(Level.INFO, ".class is outdated/nonexistent, compilation needed...");
 
 				b = compile(javaFilenamePath);
 
 				if(b == true){
-					System.out.println("Compilation succesfull!");
+					Log.getLogger().log(Level.INFO, "Compilation succesfull!");
 				} else {
-					System.out.println("Compilation failed!");
+					Log.getLogger().log(Level.SEVERE, "Compilation failed!");
 				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -108,7 +111,7 @@ public class FileClassLoader extends URLClassLoader {
 			c = super.loadClass(file, true);
 			loadedClasses.put(file, c);
 		} catch (ClassNotFoundException e) {
-			System.out.println(file + " not loaded!");
+			Log.getLogger().log(Level.SEVERE, file + " not loaded!");
 			e.printStackTrace();
 		}
 
@@ -124,16 +127,16 @@ public class FileClassLoader extends URLClassLoader {
 	 */
 
 	private boolean compile(String path) throws IOException {
-		System.out.println("Compiling " + path + "...");
+		Log.getLogger().log(Level.INFO, "Compiling " + path + "...");
 
 		//Copy our API to plugin dir
 		Path target = Paths.get(pluginRootDirectory + "API.jar");
 		if(Files.exists(target) == false) {
-			System.out.println("Copying API.jar to: " + pluginRootDirectory + "...");
+			Log.getLogger().log(Level.INFO, "Copying API.jar to: " + pluginRootDirectory + "...");
 			Path source = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "API.jar");
 			Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
 		} else {
-			System.out.println("API.jar allready in place, skipping copying...");
+			Log.getLogger().log(Level.INFO, "API.jar allready in place, skipping copying...");
 		}
 		
 		//Handles the compiling
@@ -147,7 +150,7 @@ public class FileClassLoader extends URLClassLoader {
 			final Iterable<String> options = Arrays.asList(new String[] { "-cp", classpath});
 			compilationResult = compiler.getTask(null, fileManager, null, options, null, compUnits).call();        
 		} else {
-			System.out.println("No javacompiler found on system! ERROR");
+			Log.getLogger().log(Level.SEVERE, "No javacompiler found on system! ERROR");
 		}
 		
 		return compilationResult;
