@@ -69,7 +69,7 @@ public class FileClassLoader extends URLClassLoader {
 	public Class<?> loadClass(String file){
 		Class<?> c = null;
 		boolean b = true;
-
+		
 		//Replace packages to a proper folderstructure
 		String fileStub = file.replace( '.', '/' );
 

@@ -3,6 +3,7 @@ package se.cth.hedgehogphoto;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,8 @@ public class Main {
 		File pluginRootDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
 		PluginLoader p = new PluginLoader(view, pluginRootDir);
 		p.loadAllPlugins();
+		//File tagCloudDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin/TagCloud");
+		//p.loadPluginFromDirectory(tagCloudDir);
 		
 		//TagCloud
 		/*List<String> l = new ArrayList<String>();
@@ -62,10 +65,10 @@ public class Main {
 	}
 	
 	private static void insertFileObjectsIntoDatabase() {
-		//TODO This is in the DB:
 		
 		File directory = new File("Pictures");
 		File[] files = directory.listFiles();
+		
 		int i = 0;
 		for(File file : files) {
 			FileObject f = Metadata.getImageObject(file);
