@@ -17,6 +17,7 @@ public class ImageObject implements FileObject {
 	public void setProperty(String property, String value) {
 		switch(property) {
 			case "Modify Date": setDate(value); break;
+			case "Date Time Original": setDate(value); break;
 			case "Artist": setArtist(value); break;
 			case "XPComment": setComment(value); break;
 			case "XPKeywords": setTags(value); break;
