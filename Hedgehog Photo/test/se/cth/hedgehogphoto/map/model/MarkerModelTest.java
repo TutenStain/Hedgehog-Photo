@@ -69,14 +69,6 @@ public class MarkerModelTest {
 	}
 
 	@Test
-	public void testSetTotalVisible() {
-		model.setTotalVisible(true);
-		assertTrue(model.isVisible() == true);
-		model.setTotalVisible(false);
-		assertTrue(model.isVisible() == false);
-	}
-
-	@Test
 	public void testHandleZoom() {
 		model.handleZoom();
 		assertTrue(model.isVisible()); 
