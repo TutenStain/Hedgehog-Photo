@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto.map.model;
 
+import java.awt.Point;
 import java.util.List;
 
 import se.cth.hedgehogphoto.database.Picture;
@@ -13,8 +14,9 @@ public class MarkerModel extends AbstractMarkerModel {
 	
 	public MarkerModel(Picture picture) {
 		this.picture = picture;
-		setIconPath("Pictures/markers/marker2.png"); //26x26
+		setIconPath(Global.MARKER_ICON_PATH); //26x26
 		initialize();
+		handleVisibility();
 	}
 	
 	public Picture getPicture() {
@@ -48,6 +50,16 @@ public class MarkerModel extends AbstractMarkerModel {
 	@Override
 	int computeNumberOfPictures() {
 		return 1;
+	}
+
+	@Override
+	protected void handleVisibility() {
+		this.setVisible(true);
+	}
+
+	@Override
+	Point.Double getLonglat() {
+		return new Point.Double(getLongitude(), getLatitude());
 	}
 
 }

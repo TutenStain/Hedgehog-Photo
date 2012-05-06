@@ -33,21 +33,39 @@ public abstract class AbstractComponentModel extends Observable
 		setPosition(x, y);
 	}
 	
-	/** Returns the position of this label, ie the position to 
-	 *  where it points. */
+	/** Returns the position of this label, ie the position of 
+	 *  the upper left corner. */
 	public Point getPosition() {
 		return new Point(getXPosition(), getYPosition());
 	}
 	
+	/** Returns the position of this label, ie the position to 
+	 *  where it points. */
+	public Point getPointerPosition() {
+		return new Point(getXPointerPosition(), getYPointerPosition());
+	}
+	
+	/** Returns the x-position of the components 
+	 *  top left corner. */
+	public int getXPosition() {
+		return this.position.x;
+	}
+	
+	/** Returns the y-position of the components 
+	 *  top left corner. */
+	public int getYPosition() {
+		return this.position.y;
+	}
+	
 	/** Returns the x-position of where the components 
 	 *  graphical representation points. */
-	public int getXPosition() {
+	public int getXPointerPosition() {
 		return this.position.x + getXOffset();
 	}
 	
 	/** Returns the y-position of where the components
 	 *  graphical representation points. */
-	public int getYPosition() {
+	public int getYPointerPosition() {
 		return this.position.y + getYOffset();
 	}
 	
@@ -65,7 +83,7 @@ public abstract class AbstractComponentModel extends Observable
 	public void setPosition(int x, int y) {
 		this.position = new Point(x, y);
 		setChanged();
-		notifyObservers();
+		notifyObservers(Global.POSITION_UPDATE);
 	}
 	
 	/** Sets the stored position so that it's graphical
@@ -82,20 +100,12 @@ public abstract class AbstractComponentModel extends Observable
 		setPosition(x, y);
 	}
 	
-	/** Sets the new position in case of a zoom. 
-	 *  @param zoomMultiplier a value of 2 corresponds to a 'zoomIn'-event
-	 *  and a value of 0.5 represents a 'zoomOut'-event. */
-	private void handleZoom(double zoomMultiplier) {
-		int factor = zoomMultiplier < 1 ? -2 : 4;
-		move(se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_WIDTH / factor, se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_HEIGHT / factor);
-		int x = (int) ((1 - zoomMultiplier) * getCenterXPixel() + zoomMultiplier * getXPosition());
-		int y = (int) ((1 - zoomMultiplier) * getCenterYPixel() + zoomMultiplier * getYPosition());
-		setPointerPosition(x, y);
-	}
+	/** Sets the new position in case of a zoom. */
+	protected abstract void handleZoom();
 	
 	/** If the map moves, the overlayLabels move with it! 
 	 *  The parameters suppose the use of a firePropertyChange. */
-	private void handleDrag(Object oldValue, Object newValue) {
+	private void handleDrag(Object oldValue, Object newValue) { 
 		Point oldPoint = (Point) oldValue;
 		Point newPoint = (Point) newValue;
 		int dx = oldPoint.x - newPoint.x;
@@ -107,11 +117,10 @@ public abstract class AbstractComponentModel extends Observable
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		String property = event.getPropertyName();
-		if (property.equals("mapPosition")) {
+		if (property.equals(Global.DRAG_EVENT) && isVisible()) { //don't have to move invisible markers
 			handleDrag(event.getOldValue(), event.getNewValue());
-		} else if (property.startsWith("zoom")){
-			double zoomMultiplier = (double) ((Dimension) event.getNewValue()).width / (double) ((Dimension) event.getOldValue()).width;
-			handleZoom(zoomMultiplier);
+		} else if (property.startsWith(Global.ZOOM)){
+			handleZoom();
 		}
 	}
 	
@@ -150,7 +159,7 @@ public abstract class AbstractComponentModel extends Observable
 	 *  if property 'hasChanged' already was set to true. */
 	private void waitForSecondChangeBeforeNotification() {
 		if (hasChanged())
-			notifyObservers();
+			notifyObservers(Global.COMPONENT_SIZE_UPDATE);
 		else
 			setChanged();
 	}
@@ -166,7 +175,7 @@ public abstract class AbstractComponentModel extends Observable
 	public void setVisible(boolean visible) {
 		this.isVisible = visible;
 		setChanged();
-		notifyObservers();
+		notifyObservers(Global.VISIBILITY_UPDATE);
 	}
 	
 	public boolean isVisible() {
@@ -176,7 +185,7 @@ public abstract class AbstractComponentModel extends Observable
 	public boolean intersects(AbstractComponentModel model) {
 		Rectangle thisRectangle = this.getRectangle();
 		Rectangle otherRectangle = model.getRectangle();
-		return thisRectangle.intersects(otherRectangle);
+		return thisRectangle.intersects(otherRectangle) || otherRectangle.intersects(thisRectangle);
 	}
 	
 	public Rectangle getRectangle() {
@@ -186,5 +195,9 @@ public abstract class AbstractComponentModel extends Observable
 	
 	public Dimension getSize() {
 		return new Dimension(getComponentWidth(), getComponentHeight());
+	}
+	
+	public Integer getLayer() {
+		return new Integer(position.y + getComponentHeight());
 	}
 }

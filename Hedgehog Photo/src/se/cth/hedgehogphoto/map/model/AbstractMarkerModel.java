@@ -1,10 +1,12 @@
 package se.cth.hedgehogphoto.map.model;
 
-import java.beans.PropertyChangeEvent;
+import java.awt.Point;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
 
 /**
@@ -39,7 +41,9 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 	
 	public void setIconPath(String iconPath) {
 		this.iconPath = iconPath;
-		setProperComponentSize(); 
+		setProperComponentSize();
+		setChanged();
+		notifyObservers(Global.ICON_UPDATE);
 		/* TODO: Setting the proper component size is essential 
 		 * for calculations, but with only the string it is hard to check.
 		 * One might need to hard-code the size of certain icons. */
@@ -55,16 +59,27 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 		return icon.getIconHeight();
 	}
 	
-	/** Passing it on further down in the hierarchy. */
-	abstract int getXOffset(); //not necessary to define again?
-	abstract int getYOffset(); //not necessary to define again?
+	/** Returns the x-difference between the top-left corner and the
+	 *  position this marker points at. */
+	abstract int getXOffset(); 
 	
+	/** Returns the y-difference between the top-left corner and the
+	 *  position this marker points at. */
+	abstract int getYOffset(); 
 	
+	abstract void handleVisibility();
+	abstract Point.Double getLonglat();
 	
 	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		// TODO Auto-generated method stub
-
+	protected void handleZoom() { 
+		Point.Double p = this.getLonglat();
+		setPointerPosition(MapPanel.computePixelPositionOnMap(p.x, p.y));
 	}
-
+	
+	public void print() {
+		String visible = this.isVisible() ? "VISIBLE      <----- wow!." : "not visible.";
+		String className = this.getClass().toString().substring(this.getClass().toString().indexOf("M"), this.getClass().toString().length());
+		String position = this.getPosition().toString().substring(this.getPosition().toString().indexOf("["), this.getPosition().toString().length());
+		System.out.println(className +": " + position + " is " + visible);
+	}
 }
