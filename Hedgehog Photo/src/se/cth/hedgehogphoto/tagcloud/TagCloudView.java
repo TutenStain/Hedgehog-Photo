@@ -7,8 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JPanel;
-import se.cth.hedgehogphoto.plugin.*;
+
 import se.cth.hedgehogphoto.view.WrapLayout;
 
 /**

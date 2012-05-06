@@ -6,7 +6,11 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.database.DatabaseAccess;
-import se.cth.hedgehogphoto.plugin.*;
+import se.cth.hedgehogphoto.plugin.GetDatabase;
+import se.cth.hedgehogphoto.plugin.InitializePlugin;
+import se.cth.hedgehogphoto.plugin.Panel;
+import se.cth.hedgehogphoto.plugin.Plugin;
+import se.cth.hedgehogphoto.plugin.PluginArea;
 
 
 /**
