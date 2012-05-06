@@ -30,8 +30,6 @@ import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.MainModel;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
-import se.cth.hedgehogphoto.map.MapController;
-import se.cth.hedgehogphoto.map.MapView;
 import se.cth.hedgehogphoto.plugin.PluginArea;
 
 public class MainView implements Observer {
@@ -113,9 +111,6 @@ public class MainView implements Observer {
 		leftPanelView.setLayout(new GridLayout(3, 0, 0, 0));
 
 //		JButton btnMaps = new JButton("Maps");
-		MapView map = new MapView();
-        MapController controller = new MapController(map);
-		leftPanelView.add(map);
 
 		JButton btnCalender = new JButton("Calender");
 		leftPanelView.add(btnCalender);

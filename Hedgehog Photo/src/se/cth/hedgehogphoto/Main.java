@@ -51,6 +51,12 @@ public class Main {
 		tgm.setTags(l);
 		view.addToLeftPanel(tgv);*/
 		
+		//map
+		MapModel mapModel = new MapModel();
+		MapView map = new MapView(mapModel);
+        MapController mapController = new MapController(map);
+		view.addToLeftPanel(map);
+		
 		//Search
 		SearchPreviewView spv = new SearchPreviewView();
 		SearchView sv = new SearchView(spv);
@@ -103,6 +109,7 @@ public class Main {
 				f.setLocation(new LocationObject("Japan"));
 			}
 			f.setAlbumName("Bra bilder");
+			System.out.println(f.getLocation().getLongitude() + " and " + f.getLocation().getLatitude());
 			DatabaseHandler.getInstance().insertPicture(f);
 			i++;
 		}
