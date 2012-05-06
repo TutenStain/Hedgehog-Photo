@@ -14,7 +14,7 @@ public class JMultipleMarker extends AbstractJOverlayMarker {
 	}
 	
 	@Override
-	protected MultipleMarkerModel getModel() {
+	public MultipleMarkerModel getModel() {
 		return (MultipleMarkerModel) model;
 	}
 }

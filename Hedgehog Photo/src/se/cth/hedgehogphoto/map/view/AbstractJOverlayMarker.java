@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import se.cth.hedgehogphoto.map.model.AbstractMarkerModel;
+import se.cth.hedgehogphoto.map.model.Global;
 
 /**
  * Abstract graphical representation of a marker
@@ -14,9 +15,9 @@ public class AbstractJOverlayMarker extends AbstractJOverlayPanel {
 	private JLabel iconContainer;
 	
 	protected void initialize() {
-		super.initialize();
 		initializeIconContainer();
 		setProperIcon();
+		super.initialize();
 	}
 	
 	private void initializeIconContainer() {
@@ -44,7 +45,15 @@ public class AbstractJOverlayMarker extends AbstractJOverlayPanel {
 	}
 	
 	@Override
-	protected AbstractMarkerModel getModel() {
+	protected void update(String updateType) {
+		super.update(updateType);
+		if (updateType.equals(Global.ICON_UPDATE)) {
+			setProperIcon();
+		}
+	}
+	
+	@Override
+	public AbstractMarkerModel getModel() {
 		return (AbstractMarkerModel) model;
 	}
 	

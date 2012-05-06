@@ -4,9 +4,11 @@ import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.map.model.AbstractComponentModel;
+import se.cth.hedgehogphoto.map.model.Global;
 
 /**
  * Abstract graphical representation of a JPanel that
@@ -26,22 +28,34 @@ public abstract class AbstractJOverlayPanel extends JPanel
 	 *  and convenient way to access submodels specific methods, but
 	 *  recquires ie that a JMarker has a MarkerModel, and not some 
 	 *  kind of superclass. */
-	protected abstract AbstractComponentModel getModel();
+	public abstract AbstractComponentModel getModel();
 	
+	/** Sets the model and assigns the view as an observer to it. */
 	protected void setModel(AbstractComponentModel model) {
 		this.model = model;
+		this.model.addObserver(this);
 	}
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		forceProperSize(); //dunno if this is necessary
-		setProperBounds();
-		setProperVisibility();
+		initialize(); //TODO: CHeck WHAT updates, and then update that ONLY, not everything
+	}
+	
+	protected void update(String updateType) {
+		switch (updateType) {
+			case Global.POSITION_UPDATE: setProperBounds(); break;
+			case Global.VISIBILITY_UPDATE: setProperVisibility(); break;
+			case Global.COMPONENT_SIZE_UPDATE: forceProperSize(); break;
+			default: break;
+		}
 	}
 	
 	protected void initialize() {
+		this.setBorder(BorderFactory.createEmptyBorder());
+		setProperBounds();
+		forceProperSize(); //dunno if this is necessary
+		setProperVisibility();
 		setOpaque(false);
-		setVisible(true);
 	}
 	
 	protected void setProperBounds() {
@@ -53,10 +67,11 @@ public abstract class AbstractJOverlayPanel extends JPanel
 	}
 	
 	protected void forceProperSize() {
-		Dimension dimension = model.getSize();
-		setPreferredSize(dimension);
-		setMinimumSize(dimension);
-		setMaximumSize(dimension);
+		Dimension dimension = this.getPreferredSize();
 		setSize(dimension);
+	}
+	
+	public int getLayer() {
+		return model.getLayer();
 	}
 }

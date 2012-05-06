@@ -8,13 +8,18 @@ import se.cth.hedgehogphoto.map.model.MarkerModel;
  */
 public class JMarker extends AbstractJOverlayMarker {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1489041564249003411L;
+
 	public JMarker(MarkerModel model) {
 		setModel(model);
 		initialize();
 	}
 	
 	@Override
-	protected MarkerModel getModel() {
+	public MarkerModel getModel() {
 		return (MarkerModel) model;
 	}
 }
