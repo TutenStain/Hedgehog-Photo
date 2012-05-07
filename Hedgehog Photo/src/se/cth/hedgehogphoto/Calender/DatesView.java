@@ -8,7 +8,6 @@ import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class DatesView extends JPanel implements Observer{

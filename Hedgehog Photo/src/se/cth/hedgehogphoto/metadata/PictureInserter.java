@@ -2,7 +2,7 @@ package se.cth.hedgehogphoto.metadata;
 
 import java.util.List;
 
-import se.cth.hedgehogphoto.ImageObject;
+import se.cth.hedgehogphoto.objects.ImageObject;
 
 /**
  * 

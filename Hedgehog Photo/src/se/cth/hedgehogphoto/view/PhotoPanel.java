@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import se.cth.hedgehogphoto.FileObject;
+import se.cth.hedgehogphoto.objects.FileObject;
 
 //TODO This class need to be fixed, photopanels gets a incorrect dimension that does
 //not wrap tight around the picture when only the pictures are shown. Did not check if they 

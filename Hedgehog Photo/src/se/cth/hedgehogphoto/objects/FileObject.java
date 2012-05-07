@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.database;
+package se.cth.hedgehogphoto.objects;
 
 import java.util.List;
 /**

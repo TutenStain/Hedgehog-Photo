@@ -15,7 +15,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
-import se.cth.hedgehogphoto.FileObject;
+import se.cth.hedgehogphoto.objects.FileObject;
 
 /**
  * @author Barnabas Sapan

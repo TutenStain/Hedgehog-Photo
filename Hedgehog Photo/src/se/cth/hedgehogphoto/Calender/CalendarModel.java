@@ -2,15 +2,14 @@ package se.cth.hedgehogphoto.Calender;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 
-import se.cth.hedgehogphoto.database.*;
+import se.cth.hedgehogphoto.database.DatabaseHandler;
+import se.cth.hedgehogphoto.database.Picture;
 
 
 

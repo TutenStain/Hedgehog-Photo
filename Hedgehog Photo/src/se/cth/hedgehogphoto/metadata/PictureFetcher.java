@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import se.cth.hedgehogphoto.ImageObject;
+import se.cth.hedgehogphoto.objects.ImageObject;
 
 /**
  * 

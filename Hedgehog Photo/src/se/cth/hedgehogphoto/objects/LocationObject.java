@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto;
+package se.cth.hedgehogphoto.objects;
 
 public class LocationObject {
 	private String location;

@@ -4,7 +4,7 @@ package se.cth.hedgehogphoto.search;
 import java.util.List;
 import java.util.Observable;
 
-import se.cth.hedgehogphoto.FileObject;
+import se.cth.hedgehogphoto.objects.FileObject;
 
 
 /**
