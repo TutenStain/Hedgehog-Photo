@@ -3,6 +3,7 @@ package se.cth.hedgehogphoto.Calender;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.util.GregorianCalendar;
 import java.util.Observable;
 import java.util.Observer;
@@ -12,24 +13,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.plugin.InitializePlugin;
 
 
-public class CalendarView implements Observer{
+public class CalendarView extends JPanel implements Observer{
 	private static CalendarView cv;
 	private JLabel monthText;
-	private CalendarModel mainModel;
+	private CalendarModel calendarModel;
 	private CalendarView(){
 	}
-	@InitializePlugin
-	public void start() {
-		JFrame j = new JFrame();
-		j.setLayout(new BorderLayout());
-		j.setSize(new Dimension(200,200));
-		mainModel = CalendarModel.getInstance();
-		ButtonController bc = new ButtonController();
+
+	private CalendarView(DatabaseAccess da){
+		setLayout(new BorderLayout());
+		setSize(new Dimension(200,200));
+		calendarModel = CalendarModel.getInstance(da);
+		ButtonController bc = new ButtonController(da);
 		JPanel jp = new JPanel();
-		mainModel.addObserver(this);
+		calendarModel.addObserver(this);
 		jp.setLayout(new GridLayout(1,3));
 		jp.setSize(30, 30);
 		JButton back = new JButton("Back");
@@ -48,16 +49,15 @@ public class CalendarView implements Observer{
 		back.setActionCommand("Back");
 		forward.addActionListener(bc);
 		forward.setActionCommand("Forward");
-		GregorianCalendar g = mainModel.getCalendar();
-		j.add(jp,BorderLayout.NORTH);
-		j.add(DatesView.getInstance(),BorderLayout.CENTER);
-		j.setVisible(true);
-		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		addObserverto(mainModel);
+		GregorianCalendar g = calendarModel.getCalendar();
+		add(jp,BorderLayout.NORTH);
+		add(DatesView.getInstance(da),BorderLayout.CENTER);
+		setVisible(true);
+		addObserverto(calendarModel);
 	}
-	public static CalendarView getInstance(){
+	public static CalendarView getInstance(DatabaseAccess da){
 		if(cv == null){
-			cv = new CalendarView();
+			cv = new CalendarView(da);
 		}
 		return cv;
 	}
@@ -71,6 +71,6 @@ public class CalendarView implements Observer{
 		System.out.print("UPPDATE MAIN");
 	}
 	public void changeMonthText(){
-		monthText.setText(mainModel.getMonthasString());
+		monthText.setText(calendarModel.getMonthasString());
 	}
 }

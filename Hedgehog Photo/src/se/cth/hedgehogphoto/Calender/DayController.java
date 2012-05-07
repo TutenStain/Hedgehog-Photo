@@ -2,11 +2,17 @@ package se.cth.hedgehogphoto.Calender;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
+
+import se.cth.hedgehogphoto.database.DatabaseAccess;
 
 public class DayController implements ActionListener{
 	private int day;
-	private CalendarModel mm = CalendarModel.getInstance();
-	
+	private CalendarModel mm;
+	public DayController(DatabaseAccess da){
+		mm = CalendarModel.getInstance(da);
+	}
 	public DayController(int day){
 		this.day = day;
 	}

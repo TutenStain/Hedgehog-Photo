@@ -8,16 +8,19 @@ import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import se.cth.hedgehogphoto.database.DatabaseAccess;
 
 public class DatesView extends JPanel implements Observer{
 	private static DatesView dw;
 	private CalendarModel m;
 	private JPanel jp;
-	private DatesView() { 
+	private DatesView(DatabaseAccess da) { 
 		this.setPreferredSize(new Dimension(150,75));
 		this.setLayout(new BorderLayout());
-		m = CalendarModel.getInstance();
+		m = CalendarModel.getInstance(da);
 		m.addObserver(this);
 		jp = new JPanel();
 		jp.setLayout(new GridLayout(5,7));
@@ -30,9 +33,9 @@ public class DatesView extends JPanel implements Observer{
 		System.out.print("UPDATE MAINVIEW");
 	}
 
-	public static DatesView getInstance(){
+	public static DatesView getInstance(DatabaseAccess da){
 		if(dw==null){
-			dw = new DatesView();
+			dw = new DatesView(da);
 		}
 		return dw;
 	}

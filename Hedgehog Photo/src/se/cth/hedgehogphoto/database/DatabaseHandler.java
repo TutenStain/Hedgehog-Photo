@@ -364,9 +364,9 @@ public class DatabaseHandler implements DatabaseAccess{
 		 }
 	 }*/
 	public  void insertPicture(FileObject f){
-		if(jpd.findById(f.getFilePath())==null){
+		if(jpd.findById(f.getFilePath())!=null){
 			Album album = new Album();
-			System.out.print("pic does not exist");
+		
 			if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
 				if(f.getAlbumName() != null || (!f.getAlbumName().equals(""))){
 					album = jad.findById(f.getAlbumName());
@@ -426,9 +426,10 @@ public class DatabaseHandler implements DatabaseAccess{
 						}
 
 						for(int i = 0; i <tags.size();i++){	
-							if(!(pictags.contains(tags.get(i)))){
+						//	if(!(pictags.contains(tags.get(i)))){
 								Tag tag= (Tag) jtd.findById(tags.get(i));
-								if(tag != null){
+								try{
+								if(tag.getTag().equals("")){
 									em.getTransaction().begin();
 
 									List<Picture> ptag= tag.getPictures();						
@@ -466,8 +467,11 @@ public class DatabaseHandler implements DatabaseAccess{
 									em.persist(tag);
 									em.persist(picture);
 									em.getTransaction().commit();
-								}
+								//}
 							}
+								}catch(Exception e){
+									
+								}
 						}
 					}
 					try{
@@ -646,23 +650,37 @@ public class DatabaseHandler implements DatabaseAccess{
 				em.remove(album);
 			}
 			em.persist(album);
+
 			em.getTransaction().commit();	
 
 		
+
+			em.getTransaction().commit();
+			try{
+		
+
 			em.getTransaction().begin();
-			Location loc = picture.getLocation();
-			List<Picture>  picts = loc.getPictures();
+			Location location = picture.getLocation();
+			List<Picture>  picts = location.getPictures();
+		
 			picts.remove(picture);
-			loc.setPictures(picts);
-			em.persist(loc);
+			location.setPictures(picts);
+			em.persist(location);
+		
+			}catch(Exception e){
+				
+			}
 			em.getTransaction().commit();	
 
 			Comment com = picture.getComment();
 			em.getTransaction().begin();
+			try{
 			List<Picture> pictures = com.getPictures();
 			pictures.remove(picture);
 			com.setPicture(pictures);
 			em.persist(com);
+			}catch(Exception e){
+			}
 			em.getTransaction().commit();	
 
 			em.getTransaction().begin();
