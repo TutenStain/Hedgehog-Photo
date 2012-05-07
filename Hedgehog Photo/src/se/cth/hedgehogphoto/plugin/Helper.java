@@ -54,13 +54,15 @@ public final class Helper {
 	public static List<Parsable> getDefaultPluginParsers(){
 		List<Parsable> list = new ArrayList<Parsable>();
 		Parsable a = new GetDatabaseParser();
-		Parsable b = new InitializePluginParser();
-		Parsable c = new PanelParser();
-		Parsable d = new PluginParser();
+		Parsable b = new GetVisibleFilesParser();
+		Parsable c = new InitializePluginParser();
+		Parsable d = new PanelParser();
+		Parsable e = new PluginParser();
 		list.add(a);
 		list.add(b);
 		list.add(c);
 		list.add(d);
+		list.add(e);
 		
 		return list;
 	}

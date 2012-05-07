@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto.plugin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 
@@ -35,8 +36,8 @@ public class PanelParser implements Parsable {
 						Log.getLogger().log(Level.SEVERE, "@Panel invalid return type");
 					}			
 				}
-			}catch (Exception e){
-				e.printStackTrace();
+			}catch (IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e){
+				Log.getLogger().log(Level.SEVERE, "Exception", e);
 			}
 		}
 		return o;

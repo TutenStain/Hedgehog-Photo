@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto.plugin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 
@@ -28,8 +29,8 @@ public class GetDatabaseParser implements Parsable {
 				panel.invoke(o, DatabaseHandler.getInstance());
 				break;
 			}
-			}catch (Exception e){
-				e.printStackTrace();
+			}catch (InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e){
+				Log.getLogger().log(Level.SEVERE, "Exception", e);
 			}
 		}
 		

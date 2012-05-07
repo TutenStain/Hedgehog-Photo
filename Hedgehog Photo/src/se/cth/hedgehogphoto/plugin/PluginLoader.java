@@ -18,6 +18,8 @@ import se.cth.hedgehogphoto.view.MainView;
  * @author Barnabas Sapan
  */
 
+//TODO FIX GETVISIBLEFILES PARSER (ADD IT TO THE API.JAR)!!!
+
 public class PluginLoader {
 	private MainView view;
 	private FileClassLoader classLoader;
