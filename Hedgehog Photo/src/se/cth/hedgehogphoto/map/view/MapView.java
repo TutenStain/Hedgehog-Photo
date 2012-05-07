@@ -60,13 +60,8 @@ public class MapView extends JPanel implements Observer {
 		for (int index = 0; index < nbrOfModels; index++) {
 			AbstractMarkerModel abstractModel = markerModels.get(index);
 			if (abstractModel.countObservers() > 0) {
-//				try { //Reset the layer
-//					AbstractJOverlayMarker marker = getMarkerGUI(abstractModel);
-//					this.mainPane.setLayer(marker, JLayeredPane.DRAG_LAYER, 0);
-//					this.mainPane.moveToFront(marker);
-//				} catch (NoMatchingGUIException e) { } 
-//				
-				continue; //goto next step in loop, marker already has graphical representation
+				//goto next step in loop, marker already has graphical representation
+				continue; 
 			} else if (abstractModel instanceof MultipleMarkerModel) {
 				MultipleMarkerModel model = (MultipleMarkerModel) abstractModel;
 				JMultipleMarker marker = new JMultipleMarker(model);
@@ -85,24 +80,12 @@ public class MapView extends JPanel implements Observer {
 			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
 		createMarkerGUIs(model.getMarkerModels());
 		for (AbstractJOverlayMarker marker : this.locationMarkers) {
-//			if (marker.isVisible())
-				this.mainPane.add(marker, JLayeredPane.DRAG_LAYER, 0);
-//			else if (marker instanceof JMultipleMarker) {
-//				JMultipleMarker mMarker = (JMultipleMarker) marker;
-//				AbstractMarkerModel modelOne = mMarker.getModel().getMarkerModels().get(0);
-//				AbstractMarkerModel modelTwo = mMarker.getModel().getMarkerModels().get(1);
-//				try {
-//					if (modelOne.isVisible()) 
-//						this.mainPane.add(getMarkerGUI(modelOne), JLayeredPane.DRAG_LAYER, new Integer(-1));
-//					if (modelTwo.isVisible())
-//						this.mainPane.add(getMarkerGUI(modelTwo),  JLayeredPane.DRAG_LAYER, new Integer(-1));
-//				} catch (NoMatchingGUIException e) {}
-//			}
+			this.mainPane.add(marker, JLayeredPane.DRAG_LAYER, 0); //can handle the addition of the same component multiple times
 		}
-//		this.mainPane.moveToBack(model.getMapPanel());
-		this.validate();
+		this.validate(); //have to validate to see changes
 	}
 	
+	@Deprecated
 	private AbstractJOverlayMarker getMarkerGUI(AbstractMarkerModel model) 
 													throws NoMatchingGUIException {
 		int nbrOfModels = this.locationMarkers.size();
@@ -114,6 +97,7 @@ public class MapView extends JPanel implements Observer {
 		throw new NoMatchingGUIException();
 	}
 	
+	@Deprecated
 	private class NoMatchingGUIException extends Exception {
 		public NoMatchingGUIException() {
 			super("No GUI with that model found.");
@@ -132,15 +116,11 @@ public class MapView extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// What happens when the files/new markers are updated
 		if (arg1.toString().equals(Global.MARKERS_UPDATE)) {
 			int oldValue = this.locationMarkers.size();
-			addLocationMarkers(); //TODO move down after second if case
+			addLocationMarkers(); 
 			int newValue = this.locationMarkers.size();
 			firePropertyChange(Global.MARKERS_UPDATE, oldValue, newValue);
-//			this.mainPane.removeAll();
-//			addMap();
-//			addLocationMarkers();
 		} else if (arg1.toString().equals(Global.FILES_UPDATE)) {
 			this.mainPane.removeAll();
 			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
