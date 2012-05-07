@@ -2,6 +2,7 @@ package se.cth.hedgehogphoto.plugin;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -85,5 +86,38 @@ public final class Helper {
 		} else {
 			Log.getLogger().log(Level.INFO, "Plugin dir exists, skipping creation...");
 		}
+	}
+	
+	/**
+	 * This method checks if the file exist and if it does not exist it searches 
+	 * for the file in the subfolders. Appends filestub and suffix to the found file.
+	 * @param f the file to find
+	 * @param filestub the filestub to append at the new file
+	 * @param suffix the suffix to append at the new file
+	 * @param subFolders the subfolders to search the file in
+	 * @return a File object with the absolute path with filestub and suffic appended.
+	 */
+	public static File findFileInSubfolder(File f, String filestub, String suffix, URL[] subFolders){
+		if(f.exists() == false){
+			for(URL u : subFolders){
+				f = new File(u.getPath() + filestub + suffix);
+				if(f.exists()){
+					break;
+				}
+			}
+		}
+		
+		return f;
+	}
+	
+	/**
+	 * Finds the folder the supplied file is in. 
+	 * This is just a lazy method striping the last forward-slash (/) from the path.
+	 * @param f the file to get folder to
+	 * @return a File object representing the folder the supplied file is in.
+	 */
+	public static File findFolderForFile(File f){
+		String d = f.getPath();
+		return new File(d.substring(0, d.lastIndexOf("/")));
 	}
 }

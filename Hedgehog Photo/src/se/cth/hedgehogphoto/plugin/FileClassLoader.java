@@ -74,17 +74,19 @@ public class FileClassLoader extends URLClassLoader {
 
 		String javaFilenamePath = pluginRootDirectory + fileStub + ".java";
 		String classFilenamePath = pluginRootDirectory + fileStub + ".class";
-
+		
 		File javaFile = new File(javaFilenamePath);
 		File classFile = new File(classFilenamePath);
-
-
+		
+		javaFile = Helper.findFileInSubfolder(javaFile, fileStub ,".java", getURLs());
+		classFile = Helper.findFileInSubfolder(classFile, fileStub ,".class", getURLs());
+		
 		//Only compile if necessary
 		if (javaFile.exists() && (!classFile.exists() || javaFile.lastModified() > classFile.lastModified())) {
 			try {
 				Log.getLogger().log(Level.INFO, ".class is outdated/nonexistent, compilation needed...");
 
-				if(compile(javaFilenamePath) == true){
+				if(compile(javaFile.getPath(), Helper.findFolderForFile(javaFile).getPath()) == true){
 					Log.getLogger().log(Level.INFO, "Compilation succesfull!");
 				} else {
 					Log.getLogger().log(Level.SEVERE, "Compilation failed!");
@@ -118,7 +120,7 @@ public class FileClassLoader extends URLClassLoader {
 	 * to compilation errors or if JDK is not installed on the system
 	 * @throws IOException
 	 */
-	private boolean compile(String path) throws IOException {
+	private boolean compile(String path, String fileRootFolder) throws IOException {
 		Log.getLogger().log(Level.INFO, "Compiling " + path + "...");
 
 		//Copy our API to plugin dir
@@ -138,7 +140,7 @@ public class FileClassLoader extends URLClassLoader {
 		if(compiler != null){
 			StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 			Iterable<? extends JavaFileObject> compUnits =  fileManager.getJavaFileObjects(fileToCompile);
-			String classpath = pluginRootDirectory + "API.jar:" + pluginRootDirectory;
+			String classpath = pluginRootDirectory + "API.jar:" + fileRootFolder;
 			final Iterable<String> options = Arrays.asList(new String[] { "-cp", classpath});
 			compilationResult = compiler.getTask(null, fileManager, null, options, null, compUnits).call();        
 		} else {
