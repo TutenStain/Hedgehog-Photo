@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -63,12 +64,44 @@ public class ImageObject implements FileObject {
 	}
 	
 	/**
-	 * Assuming that multipel tags are separated by a semi-colon (';')
+	 * Assuming that multiple tags are separated by a semi-colon (';')
 	 */
 	public void setTags(String tags) {
-		List<String> tagList = Util.convertStringToList(tags, ";");
+		List<String> tagList = convertStringToList(tags, ";");
 		this.tags = tagList;
 	}
+
+	/**
+	 * Takes a long string and a separation sign as parameter, 
+	 * splits the string at the separation signs and puts the
+	 * substrings into a List which is returned. 
+	 * @param text the string which has to be split.
+	 * @param separationSign the sign where the splits shall be performed.
+	 * @return a List containing all the substrings.
+	 */
+	public List<String> convertStringToList(String text, String separationSign) {
+		List<String> list = new ArrayList<String>();
+		int separationSignIndex = text.indexOf(separationSign);
+		int tempIndex = 0;
+
+		while (separationSignIndex != -1) {
+			String listItem = text.substring(tempIndex, separationSignIndex + 1);
+			listItem = listItem.trim();
+			list.add(listItem);
+
+			tempIndex = separationSignIndex + 1;
+			separationSignIndex = text.indexOf(separationSign, tempIndex);
+		}
+
+		int lastIndex = text.length();
+		if ( !text.endsWith(separationSign) ) {
+			String lastItem = text.substring(tempIndex, lastIndex);
+			list.add(lastItem);
+		}
+
+		return list;
+	}
+
 
 	@Override
 	public String getDate() {
