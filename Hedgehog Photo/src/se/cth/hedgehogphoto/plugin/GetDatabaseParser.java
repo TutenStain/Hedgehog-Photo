@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 
+import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.view.MainView;
@@ -26,7 +27,12 @@ public class GetDatabaseParser implements Parsable {
 				}
 				Log.getLogger().log(Level.INFO, "Setting DB...");
 				Method panel = c.getMethod(m[i].getName(), m[i].getParameterTypes());
-				panel.invoke(o, DatabaseHandler.getInstance());
+				if(panel.getReturnType() == void.class){
+					panel.invoke(o, DatabaseHandler.getInstance());
+				} else {
+					Log.getLogger().log(Level.SEVERE, "@GetDatabase invalid return type!");
+				}
+				
 				break;
 			}
 			}catch (InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e){

@@ -33,7 +33,7 @@ public class PanelParser implements Parsable {
 							Log.getLogger().log(Level.SEVERE, "Class not Initialized, do you have @InitializePlugin annotation?");
 						}
 					} else {
-						Log.getLogger().log(Level.SEVERE, "@Panel invalid return type");
+						Log.getLogger().log(Level.SEVERE, "@Panel invalid return type!");
 					}			
 				}
 			}catch (IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e){

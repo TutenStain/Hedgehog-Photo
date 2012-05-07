@@ -23,6 +23,7 @@ import se.cth.hedgehogphoto.search.SearchModel;
 import se.cth.hedgehogphoto.search.SearchPreviewView;
 import se.cth.hedgehogphoto.search.SearchView;
 import se.cth.hedgehogphoto.view.MainView;
+import se.cth.hedgehogphoto.database.FileObject;
 
 
 /**

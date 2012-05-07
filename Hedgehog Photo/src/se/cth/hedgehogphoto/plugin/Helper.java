@@ -78,8 +78,7 @@ public final class Helper {
 		if(createDir.exists() == false){
 			Log.getLogger().log(Level.INFO, "Plugin directory not found, creating new directory...");
 			if(createDir.mkdirs() == false){
-				//TODO Throw an appropriate exception
-				Log.getLogger().log(Level.INFO, "Creating plugin directory failed, fatal error");
+				Log.getLogger().log(Level.SEVERE, "Creating plugin directory failed, fatal error");
 			} else {
 				Log.getLogger().log(Level.INFO, "Plugin directory succesfully created!");
 			}
