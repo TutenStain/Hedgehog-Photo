@@ -1,7 +1,6 @@
 package se.cth.hedgehogphoto.plugin;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import se.cth.hedgehogphoto.Util;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.view.MainView;
 
@@ -63,7 +61,6 @@ public class PluginLoader {
 	 * Loads a specific (or all if more plugins exist in same dir) plugin to the program
 	 * @param dir the absolute path of the directory to the plugin
 	 */
-	
 	public void loadPluginFromDirectory(File dir){
 		List<Class<?>> loadedClasses = new ArrayList<Class<?>>();
 		List<File> files = Helper.getAllFilesInFolder(dir, new FilenameFilter() {

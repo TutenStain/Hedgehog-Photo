@@ -103,8 +103,7 @@ public class Main {
 				f.setFilePath(file.getCanonicalPath());
 				Log.getLogger().log(Level.INFO, "Found image:" + file.getCanonicalPath());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.getLogger().log(Level.SEVERE, "IOException", e);
 			}
 			f.setCoverPath("blo");
 			if (f.getLocation() == null) {

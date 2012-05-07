@@ -2,7 +2,6 @@ package se.cth.hedgehogphoto.plugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -45,7 +44,6 @@ public class FileClassLoader extends URLClassLoader {
 	 * Appends the subfolders in pluginRootDirectory
 	 * to the list of URLs to search for classes and resources.
 	 */
-	
 	private void addSubfolders(){
 		File file = new File(pluginRootDirectory);
 		for(String dir : file.list()){
@@ -55,7 +53,7 @@ public class FileClassLoader extends URLClassLoader {
 					Log.getLogger().log(Level.INFO, "Setting sub directoy: " + subfolder.toURI().toURL());
 					addURL(subfolder.toURI().toURL());
 				} catch (IOException e) {
-					Log.getLogger().log(Level.SEVERE, "IOException", e.getMessage());
+					Log.getLogger().log(Level.SEVERE, "IOException", e);
 				}
 			}
 		}
@@ -67,11 +65,9 @@ public class FileClassLoader extends URLClassLoader {
 	 * @param file the file name including the package like se.cth.hedgehogphoto.plugin.Tester
 	 * excluding .java or .class at the end.
 	 */
-	
 	@Override
 	public Class<?> loadClass(String file){
 		Class<?> c = null;
-		boolean b = true;
 		
 		//Replace packages to a proper folderstructure
 		String fileStub = file.replace( '.', '/' );
@@ -88,15 +84,13 @@ public class FileClassLoader extends URLClassLoader {
 			try {
 				Log.getLogger().log(Level.INFO, ".class is outdated/nonexistent, compilation needed...");
 
-				b = compile(javaFilenamePath);
-
-				if(b == true){
+				if(compile(javaFilenamePath) == true){
 					Log.getLogger().log(Level.INFO, "Compilation succesfull!");
 				} else {
 					Log.getLogger().log(Level.SEVERE, "Compilation failed!");
 				}
 			} catch (IOException e) {
-				Log.getLogger().log(Level.SEVERE, "IOException", e.getMessage());
+				Log.getLogger().log(Level.SEVERE, "IOException", e);
 			}
 		}
 
@@ -111,7 +105,7 @@ public class FileClassLoader extends URLClassLoader {
 			c = super.loadClass(file, true);
 			loadedClasses.put(file, c);
 		} catch (ClassNotFoundException e) {
-			Log.getLogger().log(Level.SEVERE, "ClassNotFoundException: " + file + " not loaded!", e.getMessage());
+			Log.getLogger().log(Level.SEVERE, "ClassNotFoundException: " + file + " not loaded!", e);
 		}
 
 		return c;
@@ -124,7 +118,6 @@ public class FileClassLoader extends URLClassLoader {
 	 * to compilation errors or if JDK is not installed on the system
 	 * @throws IOException
 	 */
-
 	private boolean compile(String path) throws IOException {
 		Log.getLogger().log(Level.INFO, "Compiling " + path + "...");
 

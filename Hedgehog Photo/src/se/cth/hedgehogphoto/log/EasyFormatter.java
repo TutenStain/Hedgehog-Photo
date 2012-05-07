@@ -23,10 +23,13 @@ public class EasyFormatter extends Formatter {
 		sb.append(record.getSourceClassName());
 		if(record.getThrown() != null){
 			sb.append(" | ");
-			sb.append(record.getThrown().getStackTrace());
+			sb.append(record.getThrown().toString());
 		}
 		sb.append("]: ");
 		sb.append(record.getMessage());
+		if(record.getThrown() != null){
+			sb.append(" "+ record.getThrown().getStackTrace()[0].toString());
+		}
 		sb.append("\n");
 
 		return sb.toString();
