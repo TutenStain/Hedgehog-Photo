@@ -15,10 +15,9 @@ import se.cth.hedgehogphoto.Constants;
  * @author Florian
  */
 public abstract class AbstractComponentModel extends Observable
-												implements PropertyChangeListener {
-	/* No modifier - visible to subclasses. */
-	int componentWidth;
-	int componentHeight;
+												implements PropertyChangeListener { //doesn't need the propertychangelistener, but the propertyChange-method
+	private int componentWidth;
+	private int componentHeight;
 	private Point position;
 	private boolean isVisible;
 	

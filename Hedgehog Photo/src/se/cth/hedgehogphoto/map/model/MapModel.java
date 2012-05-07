@@ -125,6 +125,12 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 		notifyObservers(Global.FILES_UPDATE);
 	}
 
+	/**
+	 * IMPORTANT: We want the markers to update themself,
+	 * and after that we want to check if there are any overlapping
+	 * markers, and combine them. So that's why this class listens
+	 * to the mapPanel and sends the event on to the markers. 
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		for (AbstractMarkerModel model: markerModels) {

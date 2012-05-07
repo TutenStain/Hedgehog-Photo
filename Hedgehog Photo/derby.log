@@ -4,7 +4,7 @@ Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 -
 on database directory /home/tutenstain/git/Hedgehog-Photo/Hedgehog Photo/HedgeHogDB  with class loader sun.misc.Launcher$AppClassLoader@645064f 
 Loaded from file:/home/tutenstain/git/Hedgehog-Photo/Hedgehog%20Photo/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_03-b147
-user.dir=/home/tutenstain/git/Hedgehog-Photo/Hedgehog Photo
+java.runtime.version=1.7.0_03-b05
+user.dir=C:\Documents\University\Projektkurs\Hedgehog-Photo\Hedgehog Photo
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
