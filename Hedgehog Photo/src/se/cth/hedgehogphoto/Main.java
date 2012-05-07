@@ -15,6 +15,7 @@ import se.cth.hedgehogphoto.map.controller.MapController;
 import se.cth.hedgehogphoto.map.model.MapModel;
 import se.cth.hedgehogphoto.map.view.MapView;
 import se.cth.hedgehogphoto.metadata.Metadata;
+import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObject;
 import se.cth.hedgehogphoto.plugin.PluginLoader;
@@ -23,7 +24,6 @@ import se.cth.hedgehogphoto.search.SearchModel;
 import se.cth.hedgehogphoto.search.SearchPreviewView;
 import se.cth.hedgehogphoto.search.SearchView;
 import se.cth.hedgehogphoto.view.MainView;
-import se.cth.hedgehogphoto.database.FileObject;
 
 
 /**

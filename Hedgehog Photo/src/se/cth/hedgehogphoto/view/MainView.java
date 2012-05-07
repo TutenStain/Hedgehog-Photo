@@ -27,9 +27,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import se.cth.hedgehogphoto.Constants;
-import se.cth.hedgehogphoto.MainModel;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.plugin.PluginArea;
 
 public class MainView implements Observer {

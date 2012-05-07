@@ -21,7 +21,7 @@ private String tag;
 
 @ManyToMany
 private List<Picture> pictures;
-
+@ManyToMany
 private List<Album> albums;
 
 	public String getTag() {

@@ -648,8 +648,9 @@ public class DatabaseHandler implements DatabaseAccess{
 			em.persist(album);
 			em.getTransaction().commit();	
 
-			Location loc = picture.getLocation();
+		
 			em.getTransaction().begin();
+			Location loc = picture.getLocation();
 			List<Picture>  picts = loc.getPictures();
 			picts.remove(picture);
 			loc.setPictures(picts);
