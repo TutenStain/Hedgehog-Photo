@@ -55,7 +55,7 @@ public class FileClassLoader extends URLClassLoader {
 					Log.getLogger().log(Level.INFO, "Setting sub directoy: " + subfolder.toURI().toURL());
 					addURL(subfolder.toURI().toURL());
 				} catch (IOException e) {
-					e.printStackTrace();
+					Log.getLogger().log(Level.SEVERE, "IOException", e.getMessage());
 				}
 			}
 		}
@@ -95,8 +95,8 @@ public class FileClassLoader extends URLClassLoader {
 				} else {
 					Log.getLogger().log(Level.SEVERE, "Compilation failed!");
 				}
-			} catch (IOException e1) {
-				e1.printStackTrace();
+			} catch (IOException e) {
+				Log.getLogger().log(Level.SEVERE, "IOException", e.getMessage());
 			}
 		}
 
@@ -111,8 +111,7 @@ public class FileClassLoader extends URLClassLoader {
 			c = super.loadClass(file, true);
 			loadedClasses.put(file, c);
 		} catch (ClassNotFoundException e) {
-			Log.getLogger().log(Level.SEVERE, file + " not loaded!");
-			e.printStackTrace();
+			Log.getLogger().log(Level.SEVERE, "ClassNotFoundException: " + file + " not loaded!", e.getMessage());
 		}
 
 		return c;

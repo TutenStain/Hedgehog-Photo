@@ -47,7 +47,7 @@ public class PluginLoader {
 			Helper.createPluginFolder(urls[0].getPath());
 			classLoader = new FileClassLoader(urls);
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			Log.getLogger().log(Level.SEVERE, "MalformedURLException", e.getMessage());
 		}
 	}
 	
