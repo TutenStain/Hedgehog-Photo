@@ -15,18 +15,17 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 	public JpaAlbumDao(){
 		super();
 	}
+
 	public  List<Album>  searchfromDates(String search){
 		if(search.equals("")){
-			search = search.toLowerCase();
-		 return findByLike("date",search);
+		 return findByLike("date",search.toLowerCase());
 		}else{
 			return null;
 		}
 	}
 	public List<Album>  searchfromNames(String search){
 		if(search.equals("")){
-		search = search.toLowerCase();
-			return findByLike("albumName", search);
+			return findByLike("albumName", search.toLowerCase());
 		}else{
 			return null;
 		}
@@ -41,7 +40,16 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 	}
 	
-	
+	public Album makeAlbum(FileObject f){
+		beginTransaction();
+	Album theAlbum = new Album();	
+	theAlbum.setAlbumName(f.getAlbumName());
+	theAlbum.setCoverPath(f.getFilePath());
+	 entityManager.persist(theAlbum);
+	commitTransaction();
+	return theAlbum;
+	}
+
 	public List<Album> searchfromComments(String search){
 		search = search.toLowerCase();
 		if(!(search.equals(""))){

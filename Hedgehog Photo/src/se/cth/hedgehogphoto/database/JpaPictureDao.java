@@ -30,7 +30,28 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		}
 		return null;
 }
+	public  Picture makePicture(FileObject f, Album theAlbum){
+		beginTransaction();
+		
+		Picture pic = new Picture();
+		pic.setPath(f.getFilePath());	
+			pic.setDate(f.getDate());		
+		if(f.getFileName() != null ||(!f.getFileName().equals("")))
+			pic.setName(f.getFileName());
+		if(theAlbum != null){
+			
+			List<Picture> thePictures = theAlbum.getPictures();
+			if(!(thePictures.contains(pic)))
+			thePictures.add(pic);
+			theAlbum.setPictures(thePictures);
+			pic.setAlbum(theAlbum);
+			entityManager.persist(theAlbum);
+		}
+			persist(pic);
+			commitTransaction();	
+			return pic;
 	
+	}
 	public  List<Picture> searchfromNames(String search){
 		if(!(search.equals(""))){
 		search = search.toLowerCase();
@@ -50,20 +71,18 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 
 	public List<Picture> searchfromTags(String search){
 		if(!(search.equals(""))){
-			search = search.toLowerCase();
-			List<Picture> pictures = getAll();
-			
-			List<Picture> matchingPictures = new ArrayList<Picture>();
-			for(Picture p: pictures){
-				for(Tag t:  p.getTags()){
-					if(t.getTag().equals(search)){
-						 matchingPictures.add(p);
-					}
-					
-				}
-				
-			}
-			return matchingPictures;
+		JpaTagDao jtd = new JpaTagDao();
+		List<Tag> tags = jtd.findByLike("tag", search);
+		List<Picture> pictures = new ArrayList<Picture>();
+ 		for(Tag t: tags){
+ 			try{
+ 				System.out.print(findByEntity(t,"dao.database.Tag"));
+			pictures.addAll(findByEntity((Object)t,"dao.database.Tag"));
+ 			}catch(Exception e){
+ 				
+ 			}
+ 			}
+ 		return pictures;
 	}
 		return null;
 		}
@@ -98,6 +117,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		tag = tag.toLowerCase();
 		filePath = filePath.toLowerCase();
 		Picture picture = findById(filePath);
+		List<Tag> tags = picture.getTags();
 		if( picture != null ){
 			JpaTagDao jtd = new JpaTagDao();
 			Tag tagg = jtd.findById(tag);
@@ -107,6 +127,11 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					beginTransaction();
 					pics.add(picture);
 					tagg.setPictures(pics);
+					if(tags == null)
+						tags = new ArrayList<Tag>();
+						
+					tags.add(tagg);
+					picture.setTags(tags);
 					entityManager.persist(tagg);
 					commitTransaction();	
 				}
@@ -117,8 +142,11 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				List<Picture> pictures = new ArrayList<Picture>();
 				pictures.add(picture);
 				newTag.setPictures(pictures);
-				List<Tag> tags =picture.getTags();
-				tags.add(newTag);
+				List<Tag> taggs =picture.getTags();
+				if(taggs == null)
+					taggs = new ArrayList<Tag>();
+					
+				taggs.add(newTag);
 				picture.setTags(tags);
 				persist(picture);
 				entityManager.persist(newTag);

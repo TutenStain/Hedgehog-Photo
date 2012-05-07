@@ -3,7 +3,7 @@ package se.cth.hedgehogphoto.Calender;
 public class Test {
 
 	public static void main(String[] arg){
-		MainModel m = MainModel.getInstance();
+		 CalendarModel m = CalendarModel.getInstance();
 		for(int i = 0; i <4;i++){
 		m.forwards();
 		System.out.print("Månad " + m.getMonth() + "Year " + m.getYear() + "  MaxDays  " + m.getMaxDays());

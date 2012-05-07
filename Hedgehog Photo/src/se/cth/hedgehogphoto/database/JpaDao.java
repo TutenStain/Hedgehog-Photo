@@ -48,7 +48,9 @@ import javax.persistence.Query;
 
 		public void remove(E entity) { entityManager.remove(entity); }
 
-		public E findById(K id) { return (E) entityManager.find(entityClass, id); }
+		public E findById(K id) { 
+		
+			return (E) entityManager.find(entityClass, id); }
 		
 		public List<E> findByEntity(Object entity,String ent) { 
 		 

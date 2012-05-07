@@ -1,43 +1,47 @@
 package se.cth.hedgehogphoto.Calender;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Observer;
 
-import se.cth.hedgehogphoto.database.DatabaseHandler;
-import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.*;
 
 
-public class MainModel extends Observable {
-	static List<Picture> pics;
+
+public class CalendarModel extends Observable {
+	private DatabaseHandler db = DatabaseHandler.getInstance();
+	private static List<Picture> pics;
 	private int month;
 	private int maxDays;
 	private int year;
-	private static MainModel m ;
+	private static CalendarModel m ;
 	private Map<Integer, List<Picture>> pictureDays;
 	private List<Integer> dayswithPicture = new ArrayList<Integer>();
 	private GregorianCalendar g= new GregorianCalendar();
-	private  MainModel(){
-			month = g.get(g.MONTH)+1;
+	private  CalendarModel(){
+		month = g.get(g.MONTH)+1;
 		System.out.print(g.get(g.MONTH)+1);
 		year = g.get(g.YEAR);
 		System.out.println(year);
 		maxDays = g.getActualMaximum(g.DAY_OF_MONTH);
 		System.out.print(maxDays);
 		getDates();
-		
-	
+
+
 	}
-	public static MainModel getInstance(){
-		if(m==null){
-			m = new MainModel();
-		}
-			return m;
-		}
-	
+	public static CalendarModel getInstance(){
+	//	if(m==null){
+			m = new CalendarModel();
+		//}
+		return m;
+	}
+
 
 	public int getMonth() {
 		return month;
@@ -81,65 +85,55 @@ public class MainModel extends Observable {
 
 	public void backwards(){
 		if(((month)%12)!=1){
-		g.set(year,month-1,1);
-		month = month -1;
-		
+			//g.set(year,month-1,1);
+			month = month -1;
+
 		}else{
-			g.set((year-1),12,1);
+		//	g.set((year-1),12,1);
 			month = 12;
 			year = year -1;
 		}
-		  g.setLenient(false);
-		    g.set(GregorianCalendar.YEAR, year);
-		    g.set(GregorianCalendar.MONTH, month-1);
-		    g.set(GregorianCalendar.DATE, 1);
-		//month = g.get(g.MONTH);
-		//year = g.get(g.YEAR);
+		Date date = new Date(year,month-1,1);
+		g.setTime(date);
 		maxDays = g.getActualMaximum(g.DAY_OF_MONTH);
 		getDates();
 		setChanged();
 		notifyObservers();
-	//	System.out.print("Mï¿½nad " + month + "ï¿½r" + year + "back");
+		//	System.out.print("Månad " + month + "år" + year + "back");
 	}
 	public void forwards(){
 		if(((month)%12)!=0){
-			//g.set(year,month-1,1);
 			month = month +1;
-			
-			}else{
-				//g.set((year+1),1,1);
-				month = month + 1;
-				year = year +1;
-			}
-			  g.setLenient(false);
-			    g.set(GregorianCalendar.YEAR, year);
-			    g.set(GregorianCalendar.MONTH, month+1);
-			    g.set(GregorianCalendar.DATE, 1);
-			//month = g.get(g.MONTH);
-			//year = g.get(g.YEAR);
-			maxDays = g.getActualMaximum(g.DAY_OF_MONTH);
-			getDates();
-			setChanged();
-			notifyObservers();
+
+		}else{
+			month = 1;
+			year = year +1;
+		}
+		@SuppressWarnings("deprecation")
+		Date date = new Date(year,month-1,1);
+		g.setTime(date);
+	//g.setLenient(false);
+		
+	//	g.set(GregorianCalendar.YEAR, year);
+		//g.set(GregorianCalendar.MONTH, month+1);
+		//g.set(GregorianCalendar.DATE, 1);
+		
+		maxDays = g.getActualMaximum(g.DAY_OF_MONTH);
+		getDates();
+		setChanged();
+		notifyObservers();
 	}
 	public void getDates(){
 		pictureDays = new HashMap<Integer, List<Picture>>();
 		dayswithPicture = new ArrayList<Integer>(); 
 		for(int i = 1; i<=maxDays;i++){
-			
-		List<Picture> pics=  DatabaseHandler.getInstance().searchPicturesfromDates(year + "-" + month + "-" + i);
-		/*if( DatabaseHandler.searchPicturesfromDates(year + "-" + month + "-" + i) != null){
-			  pics=  DatabaseHandler.searchPicturesfromDates(year + "-" + month + "-" + i);
-		//}*/
-		if(pics ==  null){
-			System.out.print("I  LIKE MY NAME BARNABASSEE");
+			List<Picture> pics=  db.searchPicturesfromDates(year + "-" + month + "-" + i);
+			pics.addAll(db.searchPicturesfromDates(year + ":" + month + ":" + i));
+			if(!(pics.isEmpty()) && pics != null){
+				pictureDays.put(i,pics);
+				dayswithPicture.add(i);
+			}
 		}
-				if(!(pics.isEmpty()) && pics != null){
-			pictureDays.put(i,pics);
-		dayswithPicture.add(i);
-				}
-				}
-		
 	}
 	public List<Picture> getPictures(Integer key){
 		if(!(pictureDays.isEmpty())){
@@ -155,7 +149,6 @@ public class MainModel extends Observable {
 	}
 
 	public GregorianCalendar getCalendar() {
-		// TODO Auto-generated method stub
 		return g;
 	}
 	public String getMonthasString(){
@@ -188,9 +181,7 @@ public class MainModel extends Observable {
 			return "January";
 		}
 	}
-/*	public void addObserver(Observer o){
-		addObserver(o);
-	}*/	
+
 }
-	
+
 

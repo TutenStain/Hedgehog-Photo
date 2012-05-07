@@ -26,7 +26,6 @@ public class Picture {
 	@ManyToOne
 	 private Album album;
 
-
 	@ManyToMany
 	private List<Tag> tags;
 	
@@ -89,9 +88,9 @@ public class Picture {
 
 	@Override
 	public String toString() {
-
+		tags.size();
 		return "Pictures [Path= " + path + " Name="+name +"Date= " + date
-				+  album  + tags  + comment  +  location +"]";
+				+  album  + "Taggar" + tags  + comment  +  location +"]";
 	}
 
 }

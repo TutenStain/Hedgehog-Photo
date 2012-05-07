@@ -28,8 +28,7 @@ public class Album {
 	
 	@OneToMany
 	List<Picture> pictures;
-
-	@ManyToMany
+	@OneToMany
 	private List<Tag> tags;
 	private String date;
 	@ManyToOne
@@ -37,11 +36,13 @@ public class Album {
 	@ManyToOne
 	private Location location;
 
+	
 	public List<Tag> getTags() {
 		return tags;
 	}
 	protected void setTags(List<Tag> tags) {
 		this.tags = tags;
+	
 	}
 
 	public Comment getComment() {
@@ -95,7 +96,7 @@ public class Album {
 
 	@Override
 	public String toString() {
-		super.toString();
-		return " Album [CoverPath=  " + coverPath+ ", AlbumName= " + albumName + "Location= " + location + "Comment= "+ comment + "Tags" + tags +"Date= " + date+  "] ";
+		tags.size();
+		return " Album [CoverPath=  " + coverPath+ ", AlbumName= " + albumName + "Location= " + location + "Comment= "+ comment + "Tags= " + tags +"Date= " + date+  "] ";
 	}
 }

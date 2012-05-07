@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ButtonController  implements ActionListener{
-	MainModel m = MainModel.getInstance();
+	CalendarModel m = CalendarModel.getInstance();
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Back")){
