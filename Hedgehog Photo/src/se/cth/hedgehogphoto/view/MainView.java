@@ -39,14 +39,14 @@ public class MainView implements Observer {
 	private	JPanel leftPanelView;
 	private JPanel topPanel;
 	private static List<PhotoPanel> photoPanels;
-	
+
 	/**
 	 * Create the application.
 	 */
 	public MainView() {
 		initialize();
 	}
-	
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -110,7 +110,7 @@ public class MainView implements Observer {
 		frame.getContentPane().add(leftPanelView, BorderLayout.WEST);
 		leftPanelView.setLayout(new GridLayout(3, 0, 0, 0));
 
-//		JButton btnMaps = new JButton("Maps");
+		//		JButton btnMaps = new JButton("Maps");
 
 		JButton btnCalender = new JButton("Calender");
 		leftPanelView.add(btnCalender);
@@ -151,13 +151,13 @@ public class MainView implements Observer {
 			public void stateChanged(ChangeEvent arg0) {
 				JSlider slider = (JSlider)arg0.getSource();
 				float scale = (float)slider.getValue()/100;
-				
+
 				for(int i=0;i<photoPanels.size();i++){
 					Image image = photoPanels.get(i).getIcon().getImage();
 					BufferedImage bi = resize(image, Math.round(image.getWidth(null)*scale),
 							Math.round(image.getHeight(null)*scale));
 					ImageIcon icon2 = new ImageIcon(bi);
-					
+
 					photoPanels.get(i).setIcon(icon2);
 				}
 			}
@@ -181,38 +181,38 @@ public class MainView implements Observer {
 	}
 
 	//TODO This method should be replaced by addPlugin
-		@Deprecated
-		public void addToLeftPanel(JPanel panel){
-			leftPanelView.add(panel);
-		}
-		//TODO This method should be replaced by addPlugin
-		@Deprecated
-		public void addToTopPanel(JPanel panel, String orientation){
-			topPanel.add(panel, orientation);
-		}
-		
-		//TODO Fix this method.
-		public void addPlugin(JPanel panel, PluginArea placement){
-			if(panel != null){
-				if(placement == PluginArea.LEFT_TOP){
-					//TODO Add plugin view to LEFT_TOP
-				}
-				
-				if(placement == PluginArea.LEFT_MIDDLE){
-					//TODO Add plugin view to LEFT_MIDDLe
-				}
-				
-				if(placement == PluginArea.LEFT_BOTTOM){
-					//TODO Add plugin view to LEFT_BOTTOM
-				}
+	@Deprecated
+	public void addToLeftPanel(JPanel panel){
+		leftPanelView.add(panel);
+	}
+	//TODO This method should be replaced by addPlugin
+	@Deprecated
+	public void addToTopPanel(JPanel panel, String orientation){
+		topPanel.add(panel, orientation);
+	}
+
+	//TODO Fix this method.
+	public void addPlugin(JPanel panel, PluginArea placement){
+		if(panel != null){
+			if(placement == PluginArea.LEFT_TOP){
+				//TODO Add plugin view to LEFT_TOP
+			}
+
+			if(placement == PluginArea.LEFT_MIDDLE){
+				//TODO Add plugin view to LEFT_MIDDLe
+			}
+
+			if(placement == PluginArea.LEFT_BOTTOM){
+				//TODO Add plugin view to LEFT_BOTTOM
 			}
 		}
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		photoPanels = new ArrayList<PhotoPanel>();
 		List<Picture> images;
-		
+
 		if(arg1 instanceof MainModel) {
 			MainModel model = (MainModel)arg1;
 			images = model.getImages();

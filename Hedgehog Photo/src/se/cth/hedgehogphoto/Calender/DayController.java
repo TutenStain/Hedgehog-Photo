@@ -2,10 +2,9 @@ package se.cth.hedgehogphoto.Calender;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 
 import se.cth.hedgehogphoto.database.DatabaseAccess;
+import se.cth.hedgehogphoto.database.Files;
 
 public class DayController implements ActionListener{
 	private int day;
@@ -20,7 +19,7 @@ public class DayController implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Day")){
 			Files f = Files.getInstance();
-		f.setPictureList(mm.getPictures(day));//SÄTT LISTA FILES TILL DETTA
+		f.setPictureList(mm.getPictures(day));//Sï¿½TT LISTA FILES TILL DETTA
 		System.out.print("Get Picture" + mm.getPictures(day));
 		}
 	}

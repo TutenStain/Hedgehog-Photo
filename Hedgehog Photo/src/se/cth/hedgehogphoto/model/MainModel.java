@@ -11,14 +11,14 @@ public class MainModel extends Observable {
 	private List<Picture> images = new ArrayList<Picture>();
 	
 	public MainModel() {
-		try {
-			images = DatabaseHandler.getInstance().getAllPictures();
-		} catch(Exception e) {	
-			//TODO Do something if we fail to get the pictures.
-		}
+		images = DatabaseHandler.getInstance().getAllPictures();
 	}
 	
 	public List<Picture> getImages() {
+		for(Picture p : images){
+			System.out.println(p.toString());
+		}
+		System.out.println("IMAGES SIZE: " + images.size());
 		return images;
 	}
 	
