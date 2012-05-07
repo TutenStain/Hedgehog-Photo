@@ -14,8 +14,7 @@ import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.map.controller.MapController;
-import se.cth.hedgehogphoto.map.model.*;
-import se.cth.hedgehogphoto.map.view.*;
+import se.cth.hedgehogphoto.map.model.MapModel;
 
 public class Test {
     private JFrame frame = new JFrame();

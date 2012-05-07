@@ -9,8 +9,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 
-
-
 /**
  * 
  * @author Julia

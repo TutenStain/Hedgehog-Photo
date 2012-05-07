@@ -1,12 +1,10 @@
 package se.cth.hedgehogphoto.map.model;
 
 import java.awt.Point;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
 
 /**
