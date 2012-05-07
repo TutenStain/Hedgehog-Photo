@@ -46,10 +46,10 @@ public class FileClassLoader extends URLClassLoader {
 	 */
 	private void addSubfolders(){
 		File file = new File(pluginRootDirectory);
-		for(String dir : file.list()){
-			if(file.isDirectory()){
+		for(File dir : file.listFiles()){
+			if(dir.isDirectory()){
 				try {
-					File subfolder = new File(file.getCanonicalPath().toString() + "/" + dir);
+					File subfolder = new File(dir.toURI());
 					Log.getLogger().log(Level.INFO, "Setting sub directoy: " + subfolder.toURI().toURL());
 					addURL(subfolder.toURI().toURL());
 				} catch (IOException e) {

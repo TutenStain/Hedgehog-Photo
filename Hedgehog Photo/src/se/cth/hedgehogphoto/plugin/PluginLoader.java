@@ -73,10 +73,14 @@ public class PluginLoader {
 		});
 		
 		//Loop trough all files and load the classes.
+		//Only add classes the the loadedClasses list if they were loaded (!=null)
 		for(File file : files) {
 			String className = Helper.stripDotAndSlashFromString(file.toString());
 			Log.getLogger().log(Level.INFO, "Loading class " + className + "...");
-			loadedClasses.add(classLoader.loadClass(className));
+			Class<?> c = classLoader.loadClass(className);
+			if(c != null){
+				loadedClasses.add(c);
+			}	
 		}
 
 		parseClasses(loadedClasses, Helper.getDefaultPluginParsers());
