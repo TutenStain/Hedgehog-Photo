@@ -28,7 +28,6 @@ public class PanelParser implements Parsable {
 						if(o != null){
 							JPanel p = (JPanel) panel.invoke(o, (Object[])null);
 							view.addPlugin(p, pa);
-							view.addToLeftPanel(p);
 						} else {
 							Log.getLogger().log(Level.SEVERE, "Class not Initialized, do you have @InitializePlugin annotation?");
 						}

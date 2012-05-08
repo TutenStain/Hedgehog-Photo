@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -29,6 +30,7 @@ import javax.swing.event.ChangeListener;
 import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.plugin.PluginArea;
 
@@ -36,7 +38,8 @@ public class MainView implements Observer {
 
 	private JFrame frame;
 	private JPanel photoViewPanel;
-	private	JPanel leftPanelView;
+	private	 JPanel leftPanelView;
+	private JPanel[] panelHolder = new JPanel[3];
 	private JPanel topPanel;
 	private static List<PhotoPanel> photoPanels;
 
@@ -102,6 +105,7 @@ public class MainView implements Observer {
 		topPanel.setLayout(new BorderLayout());
 		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
 
+		
 		leftPanelView = new JPanel();
 		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
 		leftPanelView.setPreferredSize(d);
@@ -110,7 +114,10 @@ public class MainView implements Observer {
 		frame.getContentPane().add(leftPanelView, BorderLayout.WEST);
 		leftPanelView.setLayout(new GridLayout(3, 0, 0, 0));
 
-		//		JButton btnMaps = new JButton("Maps");
+		for(int i = 0; i < 3; i++) {
+		    panelHolder[i] = new JPanel();
+		    leftPanelView.add(panelHolder[i]);
+		}
 
 		JButton btnCalender = new JButton("Calender");
 		leftPanelView.add(btnCalender);
@@ -179,32 +186,34 @@ public class MainView implements Observer {
 		g.dispose();
 		return resizedImage;
 	}
-
-	//TODO This method should be replaced by addPlugin
-	@Deprecated
-	public void addToLeftPanel(JPanel panel){
-		leftPanelView.add(panel);
-	}
+	
 	//TODO This method should be replaced by addPlugin
 	@Deprecated
 	public void addToTopPanel(JPanel panel, String orientation){
 		topPanel.add(panel, orientation);
 	}
 
-	//TODO Fix this method.
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
 			if(placement == PluginArea.LEFT_TOP){
-				//TODO Add plugin view to LEFT_TOP
+				panelHolder[0] = panel;
 			}
 
 			if(placement == PluginArea.LEFT_MIDDLE){
-				//TODO Add plugin view to LEFT_MIDDLe
+				panelHolder[1] = panel;
 			}
 
 			if(placement == PluginArea.LEFT_BOTTOM){
-				//TODO Add plugin view to LEFT_BOTTOM
+				panelHolder[2] = panel;
 			}
+			
+			leftPanelView.removeAll();
+			
+			for(int i = 0; i < 3; i++){
+				leftPanelView.add(panelHolder[i]);
+			}
+		} else {
+			Log.getLogger().log(Level.SEVERE, "Could not add plugin panel to the view, panel is null");
 		}
 	}
 

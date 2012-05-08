@@ -17,6 +17,7 @@ import se.cth.hedgehogphoto.metadata.Metadata;
 import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObject;
+import se.cth.hedgehogphoto.plugin.PluginArea;
 import se.cth.hedgehogphoto.plugin.PluginLoader;
 import se.cth.hedgehogphoto.search.SearchController;
 import se.cth.hedgehogphoto.search.SearchModel;
@@ -61,7 +62,7 @@ public class Main {
 		MapModel mapModel = new MapModel();
 		MapView map = new MapView(mapModel);
         MapController mapController = new MapController(map);
-		view.addToLeftPanel(map);
+		view.addPlugin(map, PluginArea.LEFT_TOP);
 		
 		//Search
 		SearchPreviewView spv = new SearchPreviewView();
