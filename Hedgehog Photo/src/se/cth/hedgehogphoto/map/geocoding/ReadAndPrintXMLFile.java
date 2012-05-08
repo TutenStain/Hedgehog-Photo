@@ -1,8 +1,8 @@
 package se.cth.hedgehogphoto.map.geocoding;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,6 +13,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+import se.cth.hedgehogphoto.objects.LocationObject;
 
 public class ReadAndPrintXMLFile{
 	public static URI xmlFile;
@@ -25,7 +27,7 @@ public class ReadAndPrintXMLFile{
 		
 	}
 
-    public static void main (String argv []){
+    public static List<LocationObject> processSearch(){
     try {
     		initXMLFile();
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -42,6 +44,7 @@ public class ReadAndPrintXMLFile{
             int nbrOfPlaces = listOfPlaces.getLength();
             System.out.println("Total no of places : " + nbrOfPlaces);
 
+            List<LocationObject> locations = new LinkedList<LocationObject>();
             for(int s=0; s < nbrOfPlaces ; s++){
 
 
@@ -52,12 +55,19 @@ public class ReadAndPrintXMLFile{
                     String lat = placeElement.getAttribute("lat");
                     String lon = placeElement.getAttribute("lon");
                     String place = placeElement.getAttribute("display_name");
-                    System.out.println(place + " | (" + lon + ", " + lat + ")");
+                    LocationObject location = new LocationObject(place);
+                    try {
+                    	location.setLongitude(Double.parseDouble(lon));
+                        location.setLatitude(Double.parseDouble(lat));
+                       	locations.add(location);
+                    } catch (NumberFormatException nf) { }
+                    
                 }//end of if clause
 
 
             }//end of for loop with s var
 
+            return locations;
 
         }catch (SAXParseException err) {
         System.out.println ("** Parsing error" + ", line " 
@@ -71,7 +81,8 @@ public class ReadAndPrintXMLFile{
         }catch (Throwable t) {
         t.printStackTrace ();
         }
-        //System.exit (0);
+
+    	return null;
 
     }//end of main
 

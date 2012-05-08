@@ -1,5 +1,11 @@
 package se.cth.hedgehogphoto.objects;
 
+/**
+ * Represents a place, which has a name and
+ * a geographical position expressed in longitude
+ * and latitude.
+ * @author Florian Minges
+ */
 public class LocationObject {
 	private String location;
 	private double longitude, latitude;
@@ -12,28 +18,61 @@ public class LocationObject {
 		setLocation(longitude, latitude);
 	}
 	
+	/**
+	 * Sets the locations name.
+	 * @param place
+	 * 			String representing the locations name.
+	 */
 	public void setLocation(String place) {
 		location = place;
 	}
 	
+	
+	/**
+	 * Sets the locations geographical position.
+	 * @param longitude
+	 * 			the locations longitude.
+	 * @param latitude
+	 * 			the locations latitude.
+	 */
 	public void setLocation(double longitude, double latitude) {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		location = ( String.valueOf(longitude) + "," + String.valueOf(latitude) );
 	}
 	
+	/**
+	 * Sets the locations latitude.
+	 * @param latitude
+	 * 			The locations latitude.
+	 */
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 	
+	/**
+	 * Sets the locations latitude.
+	 * @param latitude
+	 * 			String representing the locations latitude.
+	 */
 	public void setLatitude(String latitude) {
 		setLatitude( extractCoordinate(latitude) );
 	}
 	
+	/**
+	 * Sets the locations longitude.
+	 * @param longitude 
+	 * 			The locations longitude.
+	 */
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	
+	/**
+	 * Sets the locations longitude.
+	 * @param longitude 
+	 * 			String representing the locations longitude.
+	 */
 	public void setLongitude(String longitude) {
 		setLongitude( extractCoordinate(longitude) );
 	}
@@ -132,13 +171,26 @@ public class LocationObject {
 		return location.equalsIgnoreCase(secondLocation);
 	}
 	
+	/**
+	 * Returns the locations latitude.
+	 * @return the locations latitude.
+	 */
 	public double getLatitude() {
 		return latitude;
 	}
 	
+	/**
+	 * Returns the locations longitude.
+	 * @return the locations longitude. 
+	 */
 	public double getLongitude() {
 		return longitude;
 	}
+	
+	/**
+	 * Returns the name of the location.
+	 * @return the name of the location.
+	 */
 	public String getLocation() {
 		return location;
 	}

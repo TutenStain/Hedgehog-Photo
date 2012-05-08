@@ -11,7 +11,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.net.URI;
 import java.net.URLEncoder;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -22,21 +22,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.xml.parsers.SAXParserFactory;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+import se.cth.hedgehogphoto.objects.LocationObject;
 
 public final class SearchPanel extends JPanel {
 
-	private EditorPane editorPane = new EditorPane();
-	private JComboBox searchBox = new JComboBox();
+	private ConstrainedGrid resultPanel = new ConstrainedGrid();
+	private JComboBox<Object> searchBox = new JComboBox<Object>();
 
 	private String oldSearch = "";
-	private ArrayList<SearchResult> results = new ArrayList<SearchResult>();
 	private boolean searching;
 	
 	private static final String NAMEFINDER_URL = "http://nominatim.openstreetmap.org/search?";
@@ -60,11 +54,11 @@ public final class SearchPanel extends JPanel {
 		topPanel.add(new JLabel("Find:"), BorderLayout.WEST);
 		topPanel.add(searchBox, BorderLayout.CENTER);
 		add(topPanel, BorderLayout.NORTH);
-		JScrollPane scrollPane = new JScrollPane(editorPane);
-		scrollPane.setViewportBorder(BorderFactory.createEmptyBorder());
-		scrollPane.setBorder(BorderFactory.createEmptyBorder());
-		scrollPane.getViewport().setBackground(Color.WHITE);
-		add(scrollPane, BorderLayout.CENTER);
+//		JScrollPane scrollPane = new JScrollPane(new JPanel());
+//		scrollPane.setViewportBorder(BorderFactory.createEmptyBorder());
+//		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+//		scrollPane.getViewport().setBackground(Color.WHITE);
+		add(resultPanel, BorderLayout.CENTER);
 		searchBox.setEditable(true);
 		Component editorComponent = searchBox.getEditor().getEditorComponent();
 		searchBox.addActionListener(new ActionListener() {
@@ -82,22 +76,6 @@ public final class SearchPanel extends JPanel {
 				}
 			});
 		}
-		editorPane.addHyperlinkListener(new HyperlinkListener() {
-			public void hyperlinkUpdate(HyperlinkEvent e) {
-				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-					String s = e.getDescription();
-					int index = Integer.valueOf(s);
-					SearchResult result = results.get(index);
-//					MapPanel.zoom = result.getZoom() < 1 || result.getZoom() > 18 ? 8
-//							: result.getZoom();
-//					Point position = MapPanel.computePosition(new Point2D.Double(
-//									result.getLon(), result.getLat()));
-//					MapPanel.setCenterPosition(position);
-//					
-//					MapPanel.repaint();
-				}
-			}
-		});
 	}
 
 	public void doSearch(Object selectedItem) {
@@ -115,128 +93,54 @@ public final class SearchPanel extends JPanel {
 		};
 		searching = true;
 		searchBox.setEnabled(false);
-		editorPane.setText("<html><body><i>searching...</i></body></html>");
+//		editorPane.setText("<html><body><i>searching...</i></body></html>");
 		searchBox.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-		editorPane.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//		editorPane.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		Thread t = new Thread(r, "searcher " + newSearch);
 		t.start();
 	}
 
 	private void doSearchInternal(final String newSearch) {
-		results.clear();
 		try {
 			// Create a URL for the desired page
 			String args = URLEncoder.encode(newSearch, "UTF-8");
 			String path = NAMEFINDER_URL + "format=xml&addressdetails=1&q=" + args;
 			System.out.println(path);
 			ReadAndPrintXMLFile.xmlFile = new URI(path);
-			String [] arg = new String[2];
-			ReadAndPrintXMLFile.main(arg);
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			factory.setValidating(false);
-			factory.newSAXParser().parse(path, new DefaultHandler() {
-				private final ArrayList<String> pathStack = new ArrayList<String>();
-				private final ArrayList<SearchResult> namedStack = new ArrayList<SearchResult>();
-				private StringBuilder chars;
-
-				public void startElement(String uri, String localName,
-						String qName, Attributes attributes) {
-					pathStack.add(qName);
-					if ("place".equals(qName)) {
-						SearchResult result = new SearchResult();
-						result.setType(attributes.getValue("type"));
-						result.setLat(tryDouble(attributes.getValue("lat")));
-						result.setLon(tryDouble(attributes.getValue("lon")));
-						result.setName(attributes.getValue("name"));
-						result.setCategory(attributes.getValue("category"));
-						result.setInfo(attributes.getValue("info"));
-						result.setZoom(tryInteger(attributes.getValue("zoom")));
-						namedStack.add(result);
-						if (pathStack.size() == 2)
-							results.add(result);
-					} else if ("description".equals(qName)) {
-						chars = new StringBuilder();
-					}
-				}
-
-				public void endElement(String uri, String localName,
-						String qName) throws SAXException {
-					if ("named".equals(qName)) {
-						namedStack.remove(namedStack.size() - 1);
-					} else if ("description".equals(qName)) {
-						namedStack.get(namedStack.size() - 1).setDescription(
-								chars.toString());
-					}
-					pathStack.remove(pathStack.size() - 1);
-				}
-
-				public void characters(char[] ch, int start, int length)
-						throws SAXException {
-					if (chars != null)
-						chars.append(ch, start, length);
-				}
-
-				private double tryDouble(String s) {
-					try {
-						return Double.valueOf(s);
-					} catch (Exception e) {
-						return 0d;
-					}
-				}
-
-				private int tryInteger(String s) {
-					try {
-						return Integer.valueOf(s);
-					} catch (Exception e) {
-						return 0;
-					}
-				}
-			});
+			List<LocationObject> locations = ReadAndPrintXMLFile.processSearch();
+			resultPanel.addLocations(locations);
+			this.setPreferredWidth();
 		} catch (Exception e) {
 //			log.log(Level.SEVERE, "failed to search for \"" + newSearch + "\"",
 //					e);
 			System.out.println("ERROR HAHAHAHAHAHAHAHAHA \n" + e);
 		}
-
-		StringBuilder html = new StringBuilder();
-		html.append("<html><body>\r\n");
-		for (int i = 0; i < results.size(); ++i) {
-			SearchResult result = results.get(i);
-			String description = result.getDescription();
-			description = description.replaceAll("\\[.*?\\]", "");
-			String shortName = result.getName();
-			shortName = shortName.replaceAll("\\s(.*)$", "");
-			String linkBody = shortName + " [" + result.getCategory() + "]";
-			html.append("<a href='").append(i).append("'>").append(linkBody)
-					.append("</a><br>\r\n");
-			html.append("<i>").append(description).append("<br><br>\r\n");
-//			 String description = result.getDescription() == null ||
-//			 result.getDescription().length() == 0 ? "-" :
-//			 result.getDescription();
-//			 html.append(description).append("<br><br>\r\n");
-		}
-		html.append("</body></html>\r\n");
-		final String html_ = html.toString();
-		System.out.println(html_);
+		
 
 		Runnable r = new Runnable() {
 			public void run() {
 				try {
-					editorPane.setText(html_);
-					editorPane.setCaretPosition(0);
+//					editorPane.setText("hej");
+//					editorPane.setCaretPosition(0);
 					DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) searchBox
 							.getModel();
 					comboBoxModel.removeElement(newSearch);
 					comboBoxModel.addElement(newSearch);
 				} finally {
 					searchBox.setCursor(Cursor.getDefaultCursor());
-					editorPane.setCursor(Cursor.getDefaultCursor());
+//					editorPane.setCursor(Cursor.getDefaultCursor());
+					
 					searching = false;
 					searchBox.setEnabled(true);
 				}
 			}
 		};
 		SwingUtilities.invokeLater(r);
+	}
+	
+	private void setPreferredWidth() {
+		Dimension d = this.getPreferredSize();
+		d.width = resultPanel.getPreferredWidth() + 30;
 	}
 }
