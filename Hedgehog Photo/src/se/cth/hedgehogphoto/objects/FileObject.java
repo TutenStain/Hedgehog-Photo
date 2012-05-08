@@ -22,5 +22,4 @@ public interface FileObject {
 	public String getCoverPath();
 	public String getAlbumName();
 	public String toString();
-
 }

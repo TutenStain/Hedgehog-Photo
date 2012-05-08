@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.Calender;
+package se.cth.hedgehogphoto.calender;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ public class CalendarModel extends Observable {
 		getDates();
 		setChanged();
 		notifyObservers();
-		//	System.out.print("Månad " + month + "år" + year + "back");
+		//	System.out.print("Mï¿½nad " + month + "ï¿½r" + year + "back");
 	}
 	public void forwards(){
 		if(((month)%12)!=0){

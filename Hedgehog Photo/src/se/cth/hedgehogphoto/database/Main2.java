@@ -7,6 +7,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import se.cth.hedgehogphoto.objects.FileObject;
+import se.cth.hedgehogphoto.objects.ImageObject;
+import se.cth.hedgehogphoto.objects.LocationObject;
+
 public class Main2 {
 
 	public static void main(String[] args){
@@ -15,7 +19,7 @@ public class Main2 {
 	//S	new PictureInserter();
 			//entityManager.getTransaction().begin();
 /*		Picture p = new Picture();
-			p.setPath("bafddjgfddyfg¨jjsgjjfllgdsgdr");
+			p.setPath("bafddjgfddyfgï¿½jjsgjjfllgdsgdr");
 			//Location l = new Location();
 		/*	l.setLocation("dg");
 			l.setLongitude(4.5);
@@ -46,7 +50,7 @@ public class Main2 {
 		
 		//album.setComment(com);*/
 		JpaAlbumDao jpa = new JpaAlbumDao();
-		 Album a = jpa.findById("tönt");
+		 Album a = jpa.findById("tï¿½nt");
 		// List<Tag> t = a.getTags();
 		 //t.size();
 		// Tag tag = new Tag();
@@ -60,7 +64,7 @@ public class Main2 {
 		f.setAlbumName("albumensa");
 		f.setComment("wwddddd");
 		f.setDate("datessa");
-		f.setLocation(new LocationObject("Växjö"));
+		f.setLocation(new LocationObject("Vï¿½xjï¿½"));
 		f.setFileName("nameass");
 		List<String> tagss= new ArrayList<String>();
 		tagss.add("tagssas");

@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.Calender;
+package se.cth.hedgehogphoto.calender;
 
 import java.awt.BorderLayout;
 import java.awt.Button;

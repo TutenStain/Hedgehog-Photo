@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.Calender;
+package se.cth.hedgehogphoto.calender;
 
 import javax.swing.JPanel;
 

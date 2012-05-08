@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.Calender;
+package se.cth.hedgehogphoto.calender;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

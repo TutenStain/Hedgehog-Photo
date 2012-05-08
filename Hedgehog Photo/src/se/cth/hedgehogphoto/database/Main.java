@@ -3,6 +3,9 @@ package se.cth.hedgehogphoto.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.cth.hedgehogphoto.objects.FileObject;
+import se.cth.hedgehogphoto.objects.ImageObject;
+
 
 
 public class Main {
@@ -15,9 +18,9 @@ public class Main {
 	DatabaseHandler db = DatabaseHandler.getInstance();
 	//db.deleteAll();
 	//System.out.print(db.getAllPictures());
-	//db.addTagtoPicture("lollllloooo", "bafddjgfddyfg¨jjsgjjfllgdsgdr");
+	//db.addTagtoPicture("lollllloooo", "bafddjgfddyfgï¿½jjsgjjfllgdsgdr");
 	//JpaPictureDao jpd = new JpaPictureDao();
-	//System.out.print(jpd.findById("bafddjgfddyfg¨jjsgjjfllgdsgdr"));
+	//System.out.print(jpd.findById("bafddjgfddyfgï¿½jjsgjjfllgdsgdr"));
 	FileObject f = new ImageObject();
 	f.setFilePath("fileSsfsvvvvvkkkkhjujesrhhh");
 	f.setAlbumName("albumjefss");

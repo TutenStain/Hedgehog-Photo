@@ -13,6 +13,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.sanselan.common.IImageMetadata;
 
+import se.cth.hedgehogphoto.objects.ImageObject;
+
 /**
  * 
  * @author Julia

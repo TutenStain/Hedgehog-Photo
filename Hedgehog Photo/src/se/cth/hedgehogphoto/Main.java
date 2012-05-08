@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
-import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.map.controller.MapController;
 import se.cth.hedgehogphoto.map.model.MapModel;
@@ -24,6 +23,8 @@ import se.cth.hedgehogphoto.search.SearchModel;
 import se.cth.hedgehogphoto.search.SearchPreviewView;
 import se.cth.hedgehogphoto.search.SearchView;
 import se.cth.hedgehogphoto.view.MainView;
+
+
 
 
 /**
@@ -41,8 +42,8 @@ public class Main {
 		MainView view = new MainView();
 		model.addObserver(view);
 		
-		File pluginRootDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
-		PluginLoader p = new PluginLoader(view, pluginRootDir);
+		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
+		PluginLoader p = new PluginLoader(view, pluginRooDir);
 		p.loadAllPlugins();
 		//File tagCloudDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin/TagCloud");
 		//p.loadPluginFromDirectory(tagCloudDir);
@@ -69,7 +70,7 @@ public class Main {
 		sv.setPreferredSize(new Dimension(250, 30));
 		new SearchController(sm, sv);
 
-		Files.getInstance().addObserver(view);
+		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(view);
 
 		view.addToTopPanel(sv, BorderLayout.EAST);
 
@@ -114,6 +115,7 @@ public class Main {
 			}
 			f.setAlbumName("Bra bilder");
 			System.out.println(f.getLocation().getLongitude() + " and " + f.getLocation().getLatitude());
+			DatabaseHandler.getInstance().insertPicture(f);
 			DatabaseHandler.getInstance().insertPicture(f);
 			i++;
 			System.out.print(DatabaseHandler.getInstance().getAllPictures());
