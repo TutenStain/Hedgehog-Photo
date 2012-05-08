@@ -86,7 +86,7 @@ public class FileClassLoader extends URLClassLoader {
 			try {
 				Log.getLogger().log(Level.INFO, ".class is outdated/nonexistent, compilation needed...");
 
-				if(compile(javaFile.getPath(), Helper.findFolderForFile(javaFile).getPath()) == true){
+				if(compile(javaFile, Helper.findFolderForFile(javaFile)) == true){
 					Log.getLogger().log(Level.INFO, "Compilation succesfull!");
 				} else {
 					Log.getLogger().log(Level.SEVERE, "Compilation failed!");
@@ -120,8 +120,8 @@ public class FileClassLoader extends URLClassLoader {
 	 * to compilation errors or if JDK is not installed on the system
 	 * @throws IOException
 	 */
-	private boolean compile(String path, String fileRootFolder) throws IOException {
-		Log.getLogger().log(Level.INFO, "Compiling " + path + "...");
+	private boolean compile(File fileToCompile, File fileRootFolder) throws IOException {
+		Log.getLogger().log(Level.INFO, "Compiling " + fileToCompile.getPath() + "...");
 
 		//Copy our API to plugin dir
 		Path target = Paths.get(pluginRootDirectory + "API.jar");
@@ -135,12 +135,11 @@ public class FileClassLoader extends URLClassLoader {
 		
 		//Handles the compiling
 		boolean compilationResult = false;
-		File fileToCompile = new File(path);
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		if(compiler != null){
 			StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 			Iterable<? extends JavaFileObject> compUnits =  fileManager.getJavaFileObjects(fileToCompile);
-			String classpath = pluginRootDirectory + "API.jar:" + fileRootFolder;
+			String classpath = pluginRootDirectory + "API.jar:" + fileRootFolder.getPath();
 			final Iterable<String> options = Arrays.asList(new String[] { "-cp", classpath});
 			compilationResult = compiler.getTask(null, fileManager, null, options, null, compUnits).call();        
 		} else {

@@ -364,14 +364,14 @@ public class DatabaseHandler implements DatabaseAccess{
 		 }
 	 }*/
 	public  void insertPicture(FileObject f){
-		if(jpd.findById(f.getFilePath())!=null){
-			Album album = new Album();
-		
+		if(jpd.findById(f.getFilePath())==null){
 			if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
+				Album album = new Album();
 				if(f.getAlbumName() != null || (!f.getAlbumName().equals(""))){
 					album = jad.findById(f.getAlbumName());
-					if(album!=null){
-						em.getTransaction().begin();	
+					try{
+					if(album.getAlbumName().equals(f.getAlbumName())){
+						em.getTransaction().begin();
 						if(album.getCoverPath().equals("")|| album.getCoverPath()==null)
 							album.setCoverPath(f.getFilePath());
 						em.persist(album);
@@ -384,11 +384,14 @@ public class DatabaseHandler implements DatabaseAccess{
 						em.persist(album);
 						em.getTransaction().commit();
 					}
+				}catch(Exception i){
+					
 				}
-				Picture picture = new Picture();
+				//Picture picture = new Picture();
 				boolean pictureExist = false;
-				picture = jpd.findById(f.getFileName());
-				if(picture != null){
+				Picture picture = jpd.findById(f.getFilePath());
+				try{
+				if(picture.getPath().equals(f.getFilePath())){
 					em.getTransaction().begin();
 					picture.setAlbum(album);
 					if(!(f.getDate().equals("")))
@@ -418,15 +421,24 @@ public class DatabaseHandler implements DatabaseAccess{
 						em.getTransaction().commit();
 						pictureExist=true;
 					}
+				}
+				}catch(Exception o){
+					
+				}
+					
 					if(f.getTags() != null){
 						List<String> tags = f.getTags();
 						List<String> pictags = new ArrayList<String>();
+						try{
 						for(Tag tagg: picture.getTags()){
 							pictags.add(tagg.getTag());
 						}
+						}catch(Exception r){
+							
+						}
 
 						for(int i = 0; i <tags.size();i++){	
-						//	if(!(pictags.contains(tags.get(i)))){
+							if(!(pictags.contains(tags.get(i)))){
 								Tag tag= (Tag) jtd.findById(tags.get(i));
 								try{
 								if(tag.getTag().equals("")){
@@ -476,7 +488,7 @@ public class DatabaseHandler implements DatabaseAccess{
 					}
 					try{
 							Comment comment = jcd.findById(f.getComment());
-							if(comment != null){
+							if(comment.getComment().equals(f.getComment())){
 								em.getTransaction().begin();
 								comment.setComment(f.getComment());
 								List<Picture> pics = comment.getPictures();
@@ -503,7 +515,7 @@ public class DatabaseHandler implements DatabaseAccess{
 					}
 					try{
 						Location location = jld.findById(f.getLocation().getLocation());
-						if(location != null){
+						if(location.getLocation().equals(f.getLocation())){
 							em.getTransaction().begin();
 							location.setLatitude((f.getLocation().getLatitude()));
 							location.setLongitude(f.getLocation().getLongitude());
@@ -529,6 +541,7 @@ public class DatabaseHandler implements DatabaseAccess{
 					}	
 				}
 			}
+		}
 		}
 	}
 
@@ -655,7 +668,7 @@ public class DatabaseHandler implements DatabaseAccess{
 
 		
 
-			em.getTransaction().commit();
+
 			try{
 		
 

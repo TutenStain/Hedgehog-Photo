@@ -116,6 +116,7 @@ public class Main {
 			System.out.println(f.getLocation().getLongitude() + " and " + f.getLocation().getLatitude());
 			DatabaseHandler.getInstance().insertPicture(f);
 			i++;
+			System.out.print(DatabaseHandler.getInstance().getAllPictures());
 		}
 	}
 
