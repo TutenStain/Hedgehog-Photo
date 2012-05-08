@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.map.geolocation;
+package se.cth.hedgehogphoto.map.geocoding;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public final class SearchPanel extends JPanel {
 	private ArrayList<SearchResult> results = new ArrayList<SearchResult>();
 	private boolean searching;
 	
-	private static final String NAMEFINDER_URL = "http://gazetteer.openstreetmap.org/namefinder/search.xml";
+	private static final String NAMEFINDER_URL = "http://nominatim.openstreetmap.org/search?";
 	
 	public static void main(String [] args) {
 		JFrame frame = new JFrame();
@@ -127,7 +128,11 @@ public final class SearchPanel extends JPanel {
 		try {
 			// Create a URL for the desired page
 			String args = URLEncoder.encode(newSearch, "UTF-8");
-			String path = NAMEFINDER_URL + "?find= " + args;
+			String path = NAMEFINDER_URL + "format=xml&addressdetails=1&q=" + args;
+			System.out.println(path);
+			ReadAndPrintXMLFile.xmlFile = new URI(path);
+			String [] arg = new String[2];
+			ReadAndPrintXMLFile.main(arg);
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			factory.setValidating(false);
 			factory.newSAXParser().parse(path, new DefaultHandler() {
@@ -138,7 +143,7 @@ public final class SearchPanel extends JPanel {
 				public void startElement(String uri, String localName,
 						String qName, Attributes attributes) {
 					pathStack.add(qName);
-					if ("named".equals(qName)) {
+					if ("place".equals(qName)) {
 						SearchResult result = new SearchResult();
 						result.setType(attributes.getValue("type"));
 						result.setLat(tryDouble(attributes.getValue("lat")));
@@ -206,13 +211,14 @@ public final class SearchPanel extends JPanel {
 			html.append("<a href='").append(i).append("'>").append(linkBody)
 					.append("</a><br>\r\n");
 			html.append("<i>").append(description).append("<br><br>\r\n");
-			// String description = result.getDescription() == null ||
-			// result.getDescription().length() == 0 ? "-" :
-			// result.getDescription();
-			// html.append(description).append("<br><br>\r\n");
+//			 String description = result.getDescription() == null ||
+//			 result.getDescription().length() == 0 ? "-" :
+//			 result.getDescription();
+//			 html.append(description).append("<br><br>\r\n");
 		}
 		html.append("</body></html>\r\n");
 		final String html_ = html.toString();
+		System.out.println(html_);
 
 		Runnable r = new Runnable() {
 			public void run() {

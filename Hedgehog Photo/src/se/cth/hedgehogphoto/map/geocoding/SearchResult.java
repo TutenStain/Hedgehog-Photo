@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.map.geolocation;
+package se.cth.hedgehogphoto.map.geocoding;
 
 public final class SearchResult {
 	private String type;
@@ -37,7 +37,7 @@ public final class SearchResult {
 	}
 
 	public String getName() {
-		return name;
+		return name == null ? "" : name;
 	}
 
 	public void setName(String name) {

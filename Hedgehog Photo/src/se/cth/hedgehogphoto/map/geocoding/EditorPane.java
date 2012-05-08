@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.map.geolocation;
+package se.cth.hedgehogphoto.map.geocoding;
 
 import java.awt.Font;
 import java.io.StringReader;
