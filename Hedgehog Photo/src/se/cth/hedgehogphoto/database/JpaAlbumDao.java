@@ -3,7 +3,8 @@ package se.cth.hedgehogphoto.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.cth.hedgehogphoto.objects.FileObject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 
 

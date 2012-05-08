@@ -1,26 +1,32 @@
 package se.cth.hedgehogphoto.database;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 
 	public abstract class JpaDao<E,K> implements Dao<E,K> {
+		 final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
+			
 		protected Class entityClass;
-		 EntityManager entityManager;
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		 EntityManager entityManager = factory.createEntityManager();;
+		 
+		
+			
 		
 	//	protected EntityManager entityManager;
 	
 		public JpaDao() {
 			ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 			this.entityClass = (Class) genericSuperclass.getActualTypeArguments()[0];
-			 final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-			entityManager = factory.createEntityManager();
+		
 			/*Album album = new Album();
 			beginTransaction();
 			album.setAlbumName("Lallanarnsstggdfgadrxsfsllgkaafsglsdgggssra");

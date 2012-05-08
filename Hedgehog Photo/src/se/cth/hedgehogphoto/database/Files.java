@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+
+
 public class Files extends Observable{
-	private static Files file;	
+	private static Files file;
+	@Deprecated
+	private List<FileObject> list = new ArrayList<FileObject>(); 
+	
 	private List<Picture> pictureList = new ArrayList<Picture>();
 	private List<Album> albumList = new ArrayList<Album>();
 	
@@ -20,7 +25,20 @@ public class Files extends Observable{
 			return file;
 		}
 	}
-		
+	
+	@Deprecated
+	public List<FileObject> getList(){
+		return list;
+	}
+	
+	
+	@Deprecated
+	public void setList(List<FileObject> list){
+		this.list = list;
+		setChanged();
+		notifyObservers(this);
+	}
+	
 	public void setPictureList(List<Picture> list){
 		pictureList = list;
 		setChanged();

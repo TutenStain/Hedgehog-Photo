@@ -8,7 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import se.cth.hedgehogphoto.objects.FileObject;
+
 
 
 /**
@@ -23,17 +23,18 @@ public class DatabaseHandler implements DatabaseAccess{
 	//private static List<FileObject> list = files.getList(); 
 	private static List<Picture> pictureList = files.getPictureList();
 	private static List<Album> albumList = files.getAlbumList();
-	private static final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
-	private static EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	
 	private static JpaAlbumDao jad = new JpaAlbumDao();
 	private static JpaCommentDao jcd = new JpaCommentDao();
 	private static JpaLocationDao jld = new JpaLocationDao();
 	private static JpaTagDao jtd = new JpaTagDao();
 	private static JpaPictureDao jpd = new JpaPictureDao();
+	private static final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
+	private static EntityManagerFactory factory = jpd.factory;
 
 
-
-	static EntityManager em = factory.createEntityManager();
+	
+	static EntityManager em = jpd.entityManager;
 	private static int i = 0;
 	private static DatabaseHandler db;
 
@@ -44,7 +45,7 @@ public class DatabaseHandler implements DatabaseAccess{
 	public static DatabaseHandler getInstance(){
 		if(db == null)
 			db = new DatabaseHandler();
-		return db;
+return db;
 	}
 	/**
 	 * A method that return all tags in the database as strings.
@@ -84,15 +85,9 @@ public class DatabaseHandler implements DatabaseAccess{
 		files.setPictureList(pictureList);
 	}
 	public List<Picture> searchPicturesfromDates(String search){
-		Query q = em.createQuery("select t from Picture t where t.date=:date");
-		q.setParameter("date", search);
-		try{
-			List<Picture> pics = q.getResultList();
+	
+			List<Picture> pics = jpd.findByString("date", search);
 			return pics;
-
-		}catch(Exception e){
-			return null;
-		}
 	}
 	public void updateSearchAlbumsfromDates(String search){
 		albumList = searchAlbumsfromDates(search);
@@ -362,7 +357,217 @@ public class DatabaseHandler implements DatabaseAccess{
 				 LocationHandler.changeLocation(location, pic, f);
 			 }
 		 }
-	 }*/
+	 }
+*/	public  void insertPicture(FileObject f){
+		if(jpd.findById(f.getFilePath())==null){
+			Album album = new Album();
+		
+			if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
+				if(f.getAlbumName() != null || (!f.getAlbumName().equals(""))){
+					album = jad.findById(f.getAlbumName());
+					if(album!=null){
+						em.getTransaction().begin();	
+						if(album.getCoverPath().equals("")|| album.getCoverPath()==null)
+							album.setCoverPath(f.getFilePath());
+						//em.persist(album);
+						em.getTransaction().commit();
+					}else {
+						em.getTransaction().begin();
+						album = new Album();	
+						album.setAlbumName(f.getAlbumName());
+						album.setCoverPath(f.getFilePath());
+						em.persist(album);
+						
+						em.getTransaction().commit();
+					}
+				}
+				Picture picture = new Picture();
+				boolean pictureExist = false;
+				picture = jpd.findById(f.getFileName());
+				if(picture != null){
+					em.getTransaction().begin();
+					picture.setAlbum(album);
+					if(!(f.getDate().equals("")))
+						picture.setDate(f.getDate());
+
+					List<Picture> thePictures = album.getPictures();
+					if(!(thePictures.contains(picture)))
+						thePictures.add(picture);
+					album.setPictures(thePictures);
+					em.persist(picture);
+					//em.persist(album);
+					em.getTransaction().commit();
+
+				}else{
+					em.getTransaction().begin();
+					picture = new Picture();
+					picture.setPath(f.getFilePath());	
+					picture.setDate(f.getDate());
+					if(f.getFileName() != null ||(!f.getFileName().equals(""))){
+						picture.setName(f.getFileName());
+						picture.setAlbum(album);
+						List<Picture> thePictures = album.getPictures();
+						thePictures.add(picture);
+						album.setPictures(thePictures);
+					
+						//em.persist(album);
+						em.persist(picture);
+						em.getTransaction().commit();
+						pictureExist=true;
+					}
+					if(f.getTags() != null){
+						List<String> tags = f.getTags();
+						List<String> pictags = new ArrayList<String>();
+						for(Tag tagg: picture.getTags()){
+							pictags.add(tagg.getTag());
+						}
+
+						for(int i = 0; i <tags.size();i++){	
+							if(!(pictags.contains(tags.get(i)) && tags.get(i).equals(""))){
+								Tag tag= (Tag) jtd.findById(tags.get(i));
+								try{
+								if((tag!=null)){
+									em.getTransaction().begin();
+									System.out.print(tag);
+									List<Picture> ptag= tag.getPictures();						
+									if(!(ptag.contains(picture))){
+										ptag.add(picture);
+										tag.setPictures(ptag);	
+
+									}
+									List<Tag> pTags = picture.getTags();
+									if(!(pTags.contains(tag))){
+										pTags.add(tag);
+
+										picture.setTags(pTags);
+
+									}
+									//em.persist(tag);
+									//em.persist(picture);
+									em.getTransaction().commit();
+									System.out.print("FOUND");
+								}
+								else{
+									System.out.print("EXCEPTION");
+									em.getTransaction().begin();
+
+									tag = new Tag();
+									tag.setTag(tags.get(i));			
+									List<Picture> peg = new ArrayList<Picture>();
+									peg.add(picture);
+									tag.setPictures(peg);
+									List<Tag> pTags = picture.getTags();
+									if(pTags==null)
+										pTags = new ArrayList<Tag>();
+									pTags.add(tag);		
+									picture.setTags(pTags);
+									em.persist(tag);
+									em.persist(picture);
+									em.getTransaction().commit();
+								//}
+							}
+								}catch(Exception e){
+									
+								}
+						}
+						}
+					}
+					try{
+						System.out.print("commentry");
+					//	if(!(f.getComment().equals(""))){
+							System.out.print("comment not empty");
+							Comment comment = jcd.findById(f.getComment());
+							System.out.print("commen" + jcd.findById(f.getComment()));
+							if(comment.getComment().equals(f.getComment())){
+								System.out.print("commen" + comment);
+								em.getTransaction().begin();
+								//comment.setComment(f.getComment());
+								List<Picture> pics = comment.getPictures();
+								pics.add(picture);
+								comment.setPicture(pics);
+								picture.setComment(comment);							
+								em.persist(picture);
+							//	em.persist(comment);
+								em.getTransaction().commit();
+							}else{	
+								System.out.print("no com");
+								em.getTransaction().begin();
+								comment = new Comment();		
+								comment.setComment(f.getComment());		
+								List<Picture> pics = new ArrayList<Picture>();
+								pics.add(picture);
+								comment.setPicture(pics);
+								picture.setComment(comment);
+								em.persist(picture);
+								em.persist(comment);
+								em.getTransaction().commit();
+							}
+						}
+			//		}
+					catch(Exception k){
+						if(jcd.findById(f.getComment())==null){
+						System.out.print("no com");
+						em.getTransaction().begin();
+						Comment comment = new Comment();		
+						comment.setComment(f.getComment());		
+						List<Picture> pics = new ArrayList<Picture>();
+						pics.add(picture);
+						comment.setPicture(pics);
+						picture.setComment(comment);
+						em.persist(picture);
+						em.persist(comment);
+						em.getTransaction().commit();
+						}
+					}
+					}
+					
+						if(!(f.getLocation().equals(""))){
+						try{
+							Location location = jld.findById(f.getLocation().getLocation());
+						if(location.getLocation().equals(f.getLocation())){
+							em.getTransaction().begin();
+							location.setLatitude((f.getLocation().getLatitude()));
+							location.setLongitude(f.getLocation().getLongitude());
+							//picture.setLocation(location);
+							em.persist(picture);
+							//em.persist(location);
+							em.getTransaction().commit();
+						}else{
+							em.getTransaction().begin();
+							location = new Location();
+							location.setLatitude((f.getLocation().getLatitude()));
+							location.setLongitude(f.getLocation().getLongitude());
+							location.setLocation(f.getLocation().getLocation());
+							List<Picture> pics = new ArrayList<Picture>();
+							pics.add(picture);
+							location.setPictures(pics);
+							picture.setLocation(location);
+							em.persist(picture);
+							em.persist(location);
+							em.getTransaction().commit();
+						}	
+						
+					}catch(Exception j){
+						if(jld.findById(f.getLocation().getLocation())==null){
+						em.getTransaction().begin();
+						Location location = new Location();
+						location.setLatitude((f.getLocation().getLatitude()));
+						location.setLongitude(f.getLocation().getLongitude());
+						location.setLocation(f.getLocation().getLocation());
+						List<Picture> pics = new ArrayList<Picture>();
+						pics.add(picture);
+						location.setPictures(pics);
+						picture.setLocation(location);
+						//em.persist(picture);
+						em.persist(location);
+						em.getTransaction().commit();
+					}	
+					}
+						}
+			}
+			}
+		}
+	/*
 	public  void insertPicture(FileObject f){
 		if(jpd.findById(f.getFilePath())==null){
 			if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
@@ -441,19 +646,18 @@ public class DatabaseHandler implements DatabaseAccess{
 							if(!(pictags.contains(tags.get(i)))){
 								Tag tag= (Tag) jtd.findById(tags.get(i));
 								try{
-								if(tag.getTag().equals("")){
+								if(tag.getTag().equals(tags.get(i))){
 									em.getTransaction().begin();
 
-									List<Picture> ptag= tag.getPictures();						
+									List<Picture
+									> ptag= tag.getPictures();						
 									if(!(ptag.contains(picture))){
 										ptag.add(picture);
 										tag.setPictures(ptag);	
-
 									}
 									List<Tag> pTags = picture.getTags();
 									if(!(pTags.contains(tag))){
 										pTags.add(tag);
-
 										picture.setTags(pTags);
 
 									}
@@ -465,7 +669,6 @@ public class DatabaseHandler implements DatabaseAccess{
 								else{
 									System.out.print("EXCEPTION");
 									em.getTransaction().begin();
-
 									tag = new Tag();
 									tag.setTag(tags.get(i));			
 									List<Picture> peg = new ArrayList<Picture>();
@@ -479,12 +682,13 @@ public class DatabaseHandler implements DatabaseAccess{
 									em.persist(tag);
 									em.persist(picture);
 									em.getTransaction().commit();
-								//}
+								
 							}
 								}catch(Exception e){
 									
 								}
 						}
+					}
 					}
 					try{
 							Comment comment = jcd.findById(f.getComment());
@@ -539,12 +743,12 @@ public class DatabaseHandler implements DatabaseAccess{
 						}	
 					}catch(Exception j){
 					}	
-				}
+				
 			}
 		}
 		}
 	}
-
+*/
 	public  void updateAddTagtoPicture(String tag, String filePath){
 		for(Picture f:pictureList){
 			if(f.getPath().equals(filePath))
@@ -626,8 +830,8 @@ public class DatabaseHandler implements DatabaseAccess{
 		jad.addLocation(location, albumName);
 	}
 	public  void deleteAll(){
-		Query b = em.createQuery("select t from Picture t");
-		List<Picture> allPictures = b.getResultList();
+	
+		List<Picture> allPictures = jpd.getAll();
 		for(Picture pic:allPictures){
 			deletePicture(pic.getPath());
 		}
@@ -641,9 +845,9 @@ public class DatabaseHandler implements DatabaseAccess{
 
 
 	public void deletePicture (String filePath){
-		Picture picture = em.find(Picture.class, filePath);
+		Picture picture = jpd.findById(filePath);
 
-		if(picture != null){
+		if(picture.getPath().equals(filePath)){
 			List<Tag> tags = picture.getTags();
 			for(Tag tag: tags){
 
@@ -651,11 +855,15 @@ public class DatabaseHandler implements DatabaseAccess{
 				List<Picture> pics =tag.getPictures();
 				pics.remove(picture);
 				tag.setPictures(pics);
+				if(pics.isEmpty()==true)
+					em.remove(tag);
 				em.persist(tag);
 				em.getTransaction().commit();	
 			}
-			em.getTransaction().begin();
+			
 			Album album = picture.getAlbum();
+			if(album!=null){
+				em.getTransaction().begin();
 			List<Picture> pics = album.getPictures();
 			pics.remove(picture);
 			album.setPictures(pics);
@@ -666,19 +874,22 @@ public class DatabaseHandler implements DatabaseAccess{
 
 			em.getTransaction().commit();	
 
-		
-
-
+			}
 			try{
 		
+			Location loc = picture.getLocation();
 
 			em.getTransaction().begin();
 			Location location = picture.getLocation();
 			List<Picture>  picts = location.getPictures();
 		
 			picts.remove(picture);
-			location.setPictures(picts);
-			em.persist(location);
+			if(picts.isEmpty()){
+				em.remove(location);
+			em.persist( location);
+			}else
+			 location.setPictures(picts);
+		em.persist( location);
 		
 			}catch(Exception e){
 				
@@ -687,22 +898,30 @@ public class DatabaseHandler implements DatabaseAccess{
 
 			Comment com = picture.getComment();
 			em.getTransaction().begin();
+			List<Picture> pictures = new ArrayList<Picture>();
 			try{
-			List<Picture> pictures = com.getPictures();
+			pictures = com.getPictures();
 			pictures.remove(picture);
-			com.setPicture(pictures);
-			em.persist(com);
+			
+		
 			}catch(Exception e){
 			}
+			if(pictures.isEmpty() && com!=null){
+				em.remove(com);
+			em.persist(com);
+			}else if(com != null){
+			com.setPicture(pictures);
+			em.persist(com);
+		}
 			em.getTransaction().commit();	
 
 			em.getTransaction().begin();
 			em.remove(picture);
 			em.getTransaction().commit();
 		}
-
-
 	}
+
+	
 
 	public void updateDeleteTagsfromPictures(String filePath){
 		deleteTagsfromPicture(filePath);

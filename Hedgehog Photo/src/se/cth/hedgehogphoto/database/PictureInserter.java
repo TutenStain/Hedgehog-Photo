@@ -1,9 +1,10 @@
 package se.cth.hedgehogphoto.database;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-
-import se.cth.hedgehogphoto.objects.FileObject;
-import se.cth.hedgehogphoto.objects.ImageObject;
+import java.util.Map;
 
 
 
