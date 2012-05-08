@@ -124,7 +124,7 @@ public class FileClassLoader extends URLClassLoader {
 		Log.getLogger().log(Level.INFO, "Compiling " + fileToCompile.getPath() + "...");
 
 		//Copy our API to plugin dir
-		Path target = Paths.get(pluginRootDirectory.getPath() + "API.jar");
+		Path target = Paths.get(pluginRootDirectory.getPath() + "/API.jar");
 		if(Files.exists(target) == false) {
 			Log.getLogger().log(Level.INFO, "Copying API.jar to: " + pluginRootDirectory.getPath() + "...");
 			Path source = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "API.jar");
