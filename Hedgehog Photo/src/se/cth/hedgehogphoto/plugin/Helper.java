@@ -70,12 +70,11 @@ public final class Helper {
 	
 	/**
 	 * Creates the plugin folder
-	 * @param pluginRootDir the folder path to create
+	 * @param createDir the folder path to create
 	 */
-	public static void createPluginFolder(String pluginRootDir){
+	public static void createPluginFolder(final File createDir){
 		//Creates a plugin directory in home/plugin
 		//If the folder already exist nothing will be created.
-		File createDir = new File(pluginRootDir);
 		if(createDir.exists() == false){
 			Log.getLogger().log(Level.INFO, "Plugin directory not found, creating new directory...");
 			if(createDir.mkdirs() == false){
@@ -116,7 +115,7 @@ public final class Helper {
 	 * @param f the file to get folder to
 	 * @return a File object representing the folder the supplied file is in.
 	 */
-	public static File findFolderForFile(File f){
+	public static File findFolderForFile(final File f){
 		String d = f.getPath();
 		return new File(d.substring(0, d.lastIndexOf("/")));
 	}

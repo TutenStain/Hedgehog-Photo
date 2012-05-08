@@ -27,13 +27,14 @@ import se.cth.hedgehogphoto.log.Log;
  */
 
 public class FileClassLoader extends URLClassLoader {
-	private String pluginRootDirectory;
+	File pluginRootDirectory;
+	
 	private Map<String, Class<?>> loadedClasses = new HashMap<String, Class<?>>();
 
 	public FileClassLoader(URL[] urls) {
 		super(urls);
 		if(urls.length == 1){
-			pluginRootDirectory = urls[0].getPath();
+			pluginRootDirectory = new File(urls[0].getPath());
 			addSubfolders();
 		} else {
 			Log.getLogger().log(Level.SEVERE, "Error, only one file path supported at a time");
@@ -45,8 +46,7 @@ public class FileClassLoader extends URLClassLoader {
 	 * to the list of URLs to search for classes and resources.
 	 */
 	private void addSubfolders(){
-		File file = new File(pluginRootDirectory);
-		for(File dir : file.listFiles()){
+		for(File dir : pluginRootDirectory.listFiles()){
 			if(dir.isDirectory()){
 				try {
 					File subfolder = new File(dir.toURI());
@@ -72,8 +72,8 @@ public class FileClassLoader extends URLClassLoader {
 		//Replace packages to a proper folderstructure
 		String fileStub = file.replace( '.', '/' );
 
-		String javaFilenamePath = pluginRootDirectory + fileStub + ".java";
-		String classFilenamePath = pluginRootDirectory + fileStub + ".class";
+		String javaFilenamePath = pluginRootDirectory.getPath() + fileStub + ".java";
+		String classFilenamePath = pluginRootDirectory.getPath() + fileStub + ".class";
 		
 		File javaFile = new File(javaFilenamePath);
 		File classFile = new File(classFilenamePath);
@@ -86,7 +86,7 @@ public class FileClassLoader extends URLClassLoader {
 			try {
 				Log.getLogger().log(Level.INFO, ".class is outdated/nonexistent, compilation needed...");
 
-				if(compile(javaFile, Helper.findFolderForFile(javaFile)) == true){
+				if(compile(javaFile) == true){
 					Log.getLogger().log(Level.INFO, "Compilation succesfull!");
 				} else {
 					Log.getLogger().log(Level.SEVERE, "Compilation failed!");
@@ -115,18 +115,18 @@ public class FileClassLoader extends URLClassLoader {
 	
 	/**
 	 * Compiles a specific file.
-	 * @param path the filepath to the file to compile
+	 * @param fileToCompile the file to compile
 	 * @return returns true if the compilation was successful, false if it failed due
 	 * to compilation errors or if JDK is not installed on the system
 	 * @throws IOException
 	 */
-	private boolean compile(File fileToCompile, File fileRootFolder) throws IOException {
+	private boolean compile(File fileToCompile) throws IOException {
 		Log.getLogger().log(Level.INFO, "Compiling " + fileToCompile.getPath() + "...");
 
 		//Copy our API to plugin dir
-		Path target = Paths.get(pluginRootDirectory + "API.jar");
+		Path target = Paths.get(pluginRootDirectory.getPath() + "API.jar");
 		if(Files.exists(target) == false) {
-			Log.getLogger().log(Level.INFO, "Copying API.jar to: " + pluginRootDirectory + "...");
+			Log.getLogger().log(Level.INFO, "Copying API.jar to: " + pluginRootDirectory.getPath() + "...");
 			Path source = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "API.jar");
 			Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
 		} else {
@@ -135,11 +135,12 @@ public class FileClassLoader extends URLClassLoader {
 		
 		//Handles the compiling
 		boolean compilationResult = false;
+		File fileRootFolder = Helper.findFolderForFile(fileToCompile);
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		if(compiler != null){
 			StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 			Iterable<? extends JavaFileObject> compUnits =  fileManager.getJavaFileObjects(fileToCompile);
-			String classpath = pluginRootDirectory + "API.jar:" + fileRootFolder.getPath();
+			String classpath = pluginRootDirectory.getPath() + "API.jar:" + fileRootFolder.getPath();
 			final Iterable<String> options = Arrays.asList(new String[] { "-cp", classpath});
 			compilationResult = compiler.getTask(null, fileManager, null, options, null, compUnits).call();        
 		} else {
