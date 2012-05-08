@@ -35,8 +35,9 @@ public final class Helper {
 	}
 	
 	/**
-	 * Strips the last dot (.) and last forward-slash (/) from the String
-	 * @param s the string to strip the last dot and last forward-slash from
+	 * Strips the dot (.) and forward-slash (/) from the String, resulting in
+	 * just the class name. For example "home//plugin/Main.java" becomes Main
+	 * @param s the string to strip the dot and forward-slash from
 	 * @return the stripped String
 	 */
 	public static String stripDotAndSlashFromString(String s){

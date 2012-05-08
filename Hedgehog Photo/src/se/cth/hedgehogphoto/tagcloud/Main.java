@@ -10,7 +10,7 @@ import se.cth.hedgehogphoto.plugin.GetDatabase;
 import se.cth.hedgehogphoto.plugin.InitializePlugin;
 import se.cth.hedgehogphoto.plugin.Panel;
 import se.cth.hedgehogphoto.plugin.Plugin;
-import se.cth.hedgehogphoto.plugin.PluginArea;
+import se.cth.hedgehogphoto.view.PluginArea;
 
 
 /**

@@ -140,7 +140,7 @@ public class FileClassLoader extends URLClassLoader {
 		if(compiler != null){
 			StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 			Iterable<? extends JavaFileObject> compUnits =  fileManager.getJavaFileObjects(fileToCompile);
-			String classpath = pluginRootDirectory.getPath() + "API.jar:" + fileRootFolder.getPath();
+			String classpath = pluginRootDirectory.getPath() + "/API.jar:" + fileRootFolder.getPath();
 			final Iterable<String> options = Arrays.asList(new String[] { "-cp", classpath});
 			compilationResult = compiler.getTask(null, fileManager, null, options, null, compUnits).call();        
 		} else {

@@ -8,7 +8,7 @@ import se.cth.hedgehogphoto.map.view.MapView;
 import se.cth.hedgehogphoto.plugin.InitializePlugin;
 import se.cth.hedgehogphoto.plugin.Panel;
 import se.cth.hedgehogphoto.plugin.Plugin;
-import se.cth.hedgehogphoto.plugin.PluginArea;
+import se.cth.hedgehogphoto.view.PluginArea;
 
 @Plugin(name="Map", version="1.0", 
 author="Florian Minges", description="N/A")

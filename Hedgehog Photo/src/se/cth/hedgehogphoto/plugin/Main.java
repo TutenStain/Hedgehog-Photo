@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.tagcloud.TagCloudModel;
 import se.cth.hedgehogphoto.tagcloud.TagCloudView;
+import se.cth.hedgehogphoto.view.PluginArea;
 
 /**
  * @author Barnabas Sapan

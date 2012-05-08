@@ -2,10 +2,8 @@ package se.cth.hedgehogphoto.calender;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import se.cth.hedgehogphoto.database.DatabaseAccess;
-import se.cth.hedgehogphoto.database.Picture;
 
 public class ButtonController  implements ActionListener{
 	CalendarModel m;

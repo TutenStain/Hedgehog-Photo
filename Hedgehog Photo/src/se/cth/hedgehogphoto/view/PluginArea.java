@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.plugin;
+package se.cth.hedgehogphoto.view;
 
 /**
  * @author Barnabas Sapan

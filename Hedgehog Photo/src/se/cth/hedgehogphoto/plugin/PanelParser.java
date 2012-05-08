@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.view.MainView;
+import se.cth.hedgehogphoto.view.PluginArea;
 
 /**
  * @author Barnabas Sapan

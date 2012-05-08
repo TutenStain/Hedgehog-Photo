@@ -32,7 +32,6 @@ import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.model.MainModel;
-import se.cth.hedgehogphoto.plugin.PluginArea;
 
 public class MainView implements Observer {
 
