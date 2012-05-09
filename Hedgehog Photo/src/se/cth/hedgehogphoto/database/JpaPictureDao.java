@@ -3,19 +3,23 @@ package se.cth.hedgehogphoto.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.cth.hedgehogphoto.objects.FileObject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 
 
 
 
 public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao {
-
+	private static JpaAlbumDao jad = new JpaAlbumDao();
+	private static JpaCommentDao jcd = new JpaCommentDao();
+	private static JpaLocationDao jld = new JpaLocationDao();
+	private static JpaTagDao jtd = new JpaTagDao();
+	private static JpaPictureDao jpd = new JpaPictureDao();
 	
 	public  List<Picture> searchfromComments(String search){
 		if(!(search.equals(""))){
 			search = search.toLowerCase();
-			JpaCommentDao jcd = new JpaCommentDao();
 			List<Comment> commments = (List<Comment>)jcd.findByLike("comment", search);
 			
 		if(commments != null){
@@ -70,19 +74,28 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 
 	public List<Picture> searchfromTags(String search){
 		if(!(search.equals(""))){
-		JpaTagDao jtd = new JpaTagDao();
+		search = search.toLowerCase();
 		List<Tag> tags = jtd.findByLike("tag", search);
 		List<Picture> pictures = new ArrayList<Picture>();
+		System.out.print(tags);
+		if(!(tags.isEmpty())){
  		for(Tag t: tags){
  			try{
- 				System.out.print(findByEntity(t,"dao.database.Tag"));
-			pictures.addAll(findByEntity((Object)t,"dao.database.Tag"));
+ 			for(Tag tag: jtd.getAll()){
+ 				if(tag.getTag().equals(t.getTag())){
+ 					pictures.addAll(tag.getPictures());
+ 				}
+ 			}
  			}catch(Exception e){
  				
  			}
  			}
+ 		
+ 		
+ 		
  		return pictures;
 	}
+		}
 		return null;
 		}
 	public List<Picture> searchfromLocations(String search){
@@ -90,7 +103,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	
 		search = search.toLowerCase();
 		List<Picture> 	pictures = new ArrayList<Picture>();
-			JpaLocationDao jld = new JpaLocationDao();
 			List<Location> locations = jld.findByLike("location", search);
 			
 			if(!(locations.isEmpty())){
@@ -118,7 +130,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		Picture picture = findById(filePath);
 		List<Tag> tags = picture.getTags();
 		if( picture != null ){
-			JpaTagDao jtd = new JpaTagDao();
+
 			Tag tagg = jtd.findById(tag);
 				if(tagg != null){
 				List<Picture> pics = tagg.getPictures();
@@ -159,7 +171,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		filePath = filePath.toLowerCase();
 		Picture picture = findById(filePath);
 		if(picture != null ) {
-			JpaCommentDao jcd = new JpaCommentDao();
 			Comment comm = jcd.findById(comment);
 				if(comm!= null){
 				beginTransaction();
@@ -193,7 +204,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			filePath = filePath.toLowerCase();
 			Picture picture = findById(filePath);
 			if(picture != null) {
-				JpaLocationDao jld = new JpaLocationDao();
 				Location loc = (Location)jld.findById(location);
 				if(loc != null){
 					
@@ -234,98 +244,402 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				List<Tag> tags = picture.getTags();
 				for(Tag tag: tags){
 
+					entityManager.getTransaction().begin();
+					List<Picture> pics =tag.getPictures();
+					pics.remove(picture);
+					tag.setPictures(pics);
+					if(pics.isEmpty()==true)
+						entityManager.remove(tag);
+					entityManager.persist(picture);
+					entityManager.persist(tag);
+					entityManager.getTransaction().commit();	
+				}
+				/*List<Tag> tags = picture.getTags();
+				for(Tag tag: tags){
+
 					beginTransaction();
 					List<Picture> pics =tag.getPictures();
 					pics.remove(picture);
 					tag.setPictures(pics);
 					entityManager.persist(tag);
 					commitTransaction();
-				}
+				*/}
 			}
-		}
+		
 		public void deleteComment(String filePath){
 			filePath = filePath.toLowerCase();
 			Picture picture = findById(filePath);
 			if(picture != null){
 				Comment com = picture.getComment();
+				entityManager.getTransaction().begin();
+				List<Picture> pictures = new ArrayList<Picture>();
+				try{
+				pictures = com.getPictures();
+				pictures.remove(picture);
+				
+			
+				}catch(Exception e){
+				}
+				if(pictures.isEmpty() && com!=null){
+					entityManager.remove(com);
+					entityManager.persist(com);
+				}else if(com != null){
+				com.setPicture(pictures);
+				entityManager.persist(com);
+			}
+				entityManager.getTransaction().commit();	
+
+			/*	Comment com = picture.getComment();
 				beginTransaction();
 				List<Picture> pictures = com.getPictures();
 				pictures.remove(picture);
 				com.setPicture(pictures);
 				entityManager.persist(com);
 				commitTransaction();
-			}
+			*/}
 			
 		}
 		public void deleteLocation(String filePath){
 			filePath = filePath.toLowerCase();
 			Picture picture = findById(filePath);
 			if(picture != null){
-				Location loc = picture.getLocation();
+				try{
+					
+					Location loc = picture.getLocation();
+
+					entityManager.getTransaction().begin();
+					Location location = picture.getLocation();
+					List<Picture>  picts = location.getPictures();
+				
+					picts.remove(picture);
+					if(picts.isEmpty()){
+						entityManager.remove(location);
+						entityManager.persist( location);
+					}else
+					 location.setPictures(picts);
+					entityManager.persist( location);
+				
+					}catch(Exception e){
+						
+					}
+					entityManager.getTransaction().commit();	
+
+			/*	Location loc = picture.getLocation();
 				beginTransaction();
 				List<Picture>  picts = loc.getPictures();
 				picts.remove(picture);
 				loc.setPictures(picts);
 				entityManager.persist(loc);
 				commitTransaction();
-			}
+			*/}
 		}
+		public void deletePicturefromAlbum(String filePath){
+			filePath = filePath.toLowerCase();
+			Picture picture = findById(filePath);
+			if(picture != null){
+			Album album = picture.getAlbum();
+			if(album!=null){
+				entityManager.getTransaction().begin();
+			List<Picture> pics = album.getPictures();
+			pics.remove(picture);
+			album.setPictures(pics);
+			if(album.getPictures().isEmpty()){
+				entityManager.remove(album);
+			}
+			entityManager.persist(album);
+
+			entityManager.getTransaction().commit();	
+			}
+			}
+			
+			}
 	
 		 public void deletePicture (String  filePath){
-			 Picture picture = findById(filePath);
+				Picture picture = findById(filePath);
+				if(picture.getPath().equals(filePath)){
+					//this.deleteTags(filePath);
+					List<Tag> tags = picture.getTags();
+					for(Tag tag: tags){
 
-			 if(picture != null){
-				 List<Tag> tags = picture.getTags();
-				 for(Tag tag: tags){
+						entityManager.getTransaction().begin();
+						List<Picture> pics =tag.getPictures();
+						pics.remove(picture);
+						tag.setPictures(pics);
+						if(pics.isEmpty()==true)
+							entityManager.remove(tag);
+						entityManager.persist(tag);
+						entityManager.getTransaction().commit();	
+					}
+					//this.deletePicturefromAlbum(filePath);
+					Album album = picture.getAlbum();
+					if(album!=null){
+						entityManager.getTransaction().begin();
+					List<Picture> pics = album.getPictures();
+					pics.remove(picture);
+					album.setPictures(pics);
+					if(album.getPictures().isEmpty()){
+						entityManager.remove(album);
+					}
+					
+					entityManager.persist(album);
+					}
+					entityManager.getTransaction().commit();	
 
-					beginTransaction();
-					 List<Picture> pics =tag.getPictures();
-					 pics.remove(picture);
-					 tag.setPictures(pics);
-					 entityManager.persist(tag);
-					 commitTransaction();	
-				 }
+				//}*/
+		//this.deleteLocation(filePath);
+					try{
+				
+					Location loc = picture.getLocation();
 
-					beginTransaction();
-				 Album album = picture.getAlbum();
-				 List<Picture> pics = album.getPictures();
-				 pics.remove(picture);
-				 album.setPictures(pics);
-				 if(album.getPictures().isEmpty()){
-					 entityManager.remove(album);
-				 }
-				 entityManager.persist(album);
-				 commitTransaction();		
+					entityManager.getTransaction().begin();
+					Location location = picture.getLocation();
+					List<Picture>  picts = location.getPictures();
+				
+					picts.remove(picture);
+					if(picts.isEmpty()){
+						entityManager.remove(location);
+						entityManager.persist( location);
+					}else
+					 location.setPictures(picts);
+					entityManager.persist( location);
+				
+					}catch(Exception e){
+						
+					}
+					entityManager.getTransaction().commit();	
 
-				 Location loc = picture.getLocation();
+			//		this.deleteComment(filePath);
+					Comment com = picture.getComment();
+					entityManager.getTransaction().begin();
+					List<Picture> pictures = new ArrayList<Picture>();
+					try{
+					pictures = com.getPictures();
+					pictures.remove(picture);
+					
+				
+					}catch(Exception e){
+					}
+					if(pictures.isEmpty() && com!=null){
+						entityManager.remove(com);
+						entityManager.persist(com);
+					}else if(com != null){
+					com.setPicture(pictures);
+					entityManager.persist(com);
+				}
+					entityManager.getTransaction().commit();	
 
-					beginTransaction();
-				 List<Picture>  picts = loc.getPictures();
-				 picts.remove(picture);
-				 loc.setPictures(picts);
-				 entityManager.persist(loc);
-				 commitTransaction();		
-
-				 Comment com = picture.getComment();
-
-					beginTransaction();
-				 List<Picture> pictures = com.getPictures();
-				 pictures.remove(picture);
-				 com.setPicture(pictures);
-				 entityManager.persist(com);
-				 commitTransaction();		
-
-				 beginTransaction();
-				 entityManager.remove(picture);
-				 commitTransaction();	
-			 }
-
-
+					
+			entityManager.getTransaction().begin();
+					entityManager.remove(picture);
+					//
+					entityManager.getTransaction().commit();
+				}
+				
 		 }
+		 public  void insertPicture(FileObject f){
+				if(findById(f.getFilePath())==null){
+					Album album = new Album();
+				
+					if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
+						if(f.getAlbumName() != null || (!f.getAlbumName().equals(""))){
+							album = jad.findById(f.getAlbumName());
+							if(album!=null){
+								entityManager.getTransaction().begin();	
+								if(album.getCoverPath().equals("")|| album.getCoverPath()==null)
+									album.setCoverPath(f.getFilePath());
+								entityManager.getTransaction().commit();
+							}else {
+								entityManager.getTransaction().begin();
+								album = new Album();	
+								album.setAlbumName(f.getAlbumName());
+								album.setCoverPath(f.getFilePath());
+								entityManager.persist(album);	
+								entityManager.getTransaction().commit();
+							}
+						}
+						Picture picture = new Picture();
+						boolean pictureExist = false;
+						picture = findById(f.getFilePath());
+						if(picture != null){
+							entityManager.getTransaction().begin();
+							if(!(f.getDate().equals("")))
+								picture.setDate(f.getDate());
+							if(picture.getName().equals(""))
+								picture.setName(f.getFileName());
+							List<Picture> thePictures = album.getPictures();
+							if(!(thePictures.contains(picture)))
+								thePictures.add(picture);
+							album.setPictures(thePictures);
+							entityManager.getTransaction().commit();
+
+						}else{
+							entityManager.getTransaction().begin();
+							picture = new Picture();
+							picture.setPath(f.getFilePath());	
+							picture.setDate(f.getDate());
+							if(f.getFileName() != null ||(!f.getFileName().equals(""))){
+								picture.setName(f.getFileName());
+								picture.setAlbum(album);
+								List<Picture> thePictures = album.getPictures();
+								thePictures.add(picture);
+								album.setPictures(thePictures);
+								entityManager.persist(picture);
+								entityManager.getTransaction().commit();
+								pictureExist=true;
+							}
+						}	
+							setTags(f,picture);
+							setComment(f,picture);
+							setLocation(f,picture);
+								
+					}
+				}
+			}
 
 
 
 
+		 
+		 public void setComment(FileObject f,Picture picture){
+				if(picture != null){
+			try{
+				System.out.print("commentry");
+				if(!(f.getComment().equals(""))){
+					System.out.print("comment not empty");
+					Comment comment = jcd.findById(f.getComment());
+					System.out.print("commen" + jcd.findById(f.getComment()));
+					if(comment.getComment().equals(f.getComment())){
+						System.out.print("commen" + comment);
+						entityManager.getTransaction().begin();
+						List<Picture> pics = comment.getPictures();
+						pics.add(picture);
+						comment.setPicture(pics);
+						picture.setComment(comment);							
+						entityManager.getTransaction().commit();
+					}
+				
+			}
+	}
+			
+			catch(Exception k){
+				if(jcd.findById(f.getComment())==null){
+				System.out.print("no com");
+				entityManager.getTransaction().begin();
+				Comment comment = new Comment();		
+				comment.setComment(f.getComment());		
+				List<Picture> pics = new ArrayList<Picture>();
+				pics.add(picture);
+				comment.setPicture(pics);
+				picture.setComment(comment);
+				entityManager.persist(comment);
+				entityManager.getTransaction().commit();
+				}
+			}
+			}
+}
+		 public void setTags(FileObject f,Picture picture){
+				if(picture != null){
+		 if(f.getTags() != null){
+				List<String> tags = f.getTags();
+				List<String> pictags = new ArrayList<String>();
+				for(Tag tagg: picture.getTags()){
+					pictags.add(tagg.getTag());
+				}
 
+				for(int i = 0; i <tags.size();i++){	
+					if(!(pictags.contains(tags.get(i)) && tags.get(i).equals(""))){
+						Tag tag= (Tag) jtd.findById(tags.get(i));
+						try{
+						if((tag!=null)){
+							entityManager.getTransaction().begin();
+							System.out.print(tag);
+							List<Picture> ptag= tag.getPictures();						
+							if(!(ptag.contains(picture))){
+								ptag.add(picture);
+								tag.setPictures(ptag);	
+								List<Tag> pTags = picture.getTags();
+								if(!(pTags.contains(tag))){
+									pTags.add(tag);
 
+									picture.setTags(pTags);
+								}
+								}
+							}
+								entityManager.getTransaction().commit();
+								System.out.print("FOUND");
+							
+						
+
+							/*}else{
+								entityManager.getTransaction().begin();
+
+								tag = new Tag();
+								tag.setTag(tags.get(i));			
+								List<Picture> peg = new ArrayList<Picture>();
+								peg.add(picture);
+								tag.setPictures(peg);
+								List<Tag> pTags = picture.getTags();
+								if(pTags==null)
+									pTags = new ArrayList<Tag>();
+								pTags.add(tag);		
+								picture.setTags(pTags);
+								entityManager.persist(tag);
+								entityManager.getTransaction().commit();
+							}
+					*/
+						}catch(Exception e){
+							entityManager.getTransaction().begin();
+
+							 tag = new Tag();
+							tag.setTag(tags.get(i));			
+							List<Picture> peg = new ArrayList<Picture>();
+							peg.add(picture);
+							tag.setPictures(peg);
+							List<Tag> pTags = picture.getTags();
+							if(pTags==null)
+								pTags = new ArrayList<Tag>();
+							pTags.add(tag);		
+							picture.setTags(pTags);
+							entityManager.persist(tag);
+							entityManager.getTransaction().commit();
+						}
+					}
+				}
+				
+				}
+			}
+		 }
+		 public void setLocation(FileObject f,Picture picture){
+				if(picture != null){
+		 if(!(f.getLocation().equals(""))){
+				try{
+					Location location = jld.findById(f.getLocation());
+				if(location.getLocation().equals(f.getLocation())){
+					System.out.print("hitta loc");
+					entityManager.getTransaction().begin();
+					location.setLatitude((f.getLocationObject().getLatitude()));
+					location.setLongitude(f.getLocationObject().getLongitude());
+					picture.setLocation(location);
+					entityManager.getTransaction().commit();
+				}
+				
+			}catch(Exception j){
+				System.out.print("catch");
+				entityManager.getTransaction().begin();
+				System.out.print("hittar  ej loc");
+				Location location = new Location();
+				location.setLatitude((f.getLocationObject().getLatitude()));
+				location.setLongitude(f.getLocationObject().getLongitude());
+				location.setLocation(f.getLocation());
+				List<Picture> pics = new ArrayList<Picture>();
+				pics.add(picture);
+				location.setPictures(pics);
+				picture.setLocation(location);
+				entityManager.persist(location);
+				entityManager.getTransaction().commit();
+			
+			}
+		 }
+				}
+		 }
 }
