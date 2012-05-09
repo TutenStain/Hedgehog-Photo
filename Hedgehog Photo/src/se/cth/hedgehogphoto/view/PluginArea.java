@@ -5,5 +5,5 @@ package se.cth.hedgehogphoto.view;
  */
 
 public enum PluginArea {
-	LEFT_TOP, LEFT_MIDDLE, LEFT_BOTTOM;
+	LEFT_TOP, LEFT_MIDDLE, LEFT_BOTTOM, SEARCH;
 }

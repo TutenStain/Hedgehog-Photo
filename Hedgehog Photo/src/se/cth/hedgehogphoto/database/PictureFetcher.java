@@ -47,8 +47,7 @@ public class PictureFetcher {
 
 	}
 
-	public  static void fetchFiles(){
-		;
+	public static void fetchFiles(){
 		int returnVal = chooser.showOpenDialog(null);
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
 
@@ -58,7 +57,7 @@ public class PictureFetcher {
 				if(directorys[i].isDirectory()){
 					String album = directorys[i].getName();
 					System.out.print("ALBUM : " + album);
-				//if(chooser.getSelectedFile().isDirectory()){
+					//if(chooser.getSelectedFile().isDirectory()){
 					//ArrayList<File> synonymer = files.get(chooser.getSelectedFile().getName());
 
 					File[] dirFiles = chooser.getSelectedFile().listFiles();
@@ -73,13 +72,13 @@ public class PictureFetcher {
 									if(dirFiles[j].isDirectory()==false){
 										IImageMetadata imageMetadata =	metadata.extractMetadata(dirFiles[j]);
 										if(imageMetadata != null){
-										imageObject = metadata.getImageObject(imageMetadata);
-												imageObject.setAlbumName(album);
-												
-												imageObject.setFileName(dirFiles[j].getName());
-												imageObject.setFilePath(dirFiles[j].getPath());
-												imageObjects.add(imageObject);
-									} 
+											imageObject = metadata.getImageObject(imageMetadata);
+											imageObject.setAlbumName(album);
+
+											imageObject.setFileName(dirFiles[j].getName());
+											imageObject.setFilePath(dirFiles[j].getPath());
+											imageObjects.add(imageObject);
+										} 
 									}
 								}catch (IOException e) {
 									// TODO Auto-generated catch block
@@ -99,7 +98,7 @@ public class PictureFetcher {
 							ImageObject  imageObject = Metadata.getImageObject(metadata.extractMetadata((chooser.getSelectedFiles()[k])));
 							imageObject.setAlbumName(chooser.getSelectedFiles()[k].getParentFile().getName());
 							imageObject.setFileName(chooser.getSelectedFiles()[k].getName());
-							
+
 							imageObject.setFilePath(chooser.getSelectedFiles()[k].getPath());
 							imageObjects.add(imageObject);
 
@@ -116,6 +115,5 @@ public class PictureFetcher {
 
 	public  List<ImageObject> getImageObjects(){
 		return imageObjects;
-
 	}
 }

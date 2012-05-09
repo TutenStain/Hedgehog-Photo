@@ -63,22 +63,23 @@ public class PhotoPanel extends JPanel {
 		commentsPanel.add(commentsLabel, BorderLayout.CENTER);
 		
 	}
-	public void setTags(String s){
-		this.tagsLabel.setText(s);
+	public void setTag(String tag){
+		this.tagsLabel.setText(tag);
 	}
-	public void setLocation(String s){
-		this.locationLabel.setText(s);
+	public void setLocation(String location){
+		this.locationLabel.setText(location);
 	}
+	
+	public void setComment(String comment){
+		this.commentsLabel.setText(comment);
+	}
+
 	public ImageIcon getIcon(){
 		return this.icon;
 	}
 	
 	public void setIcon(ImageIcon icon){
 		this.iconLabel.setIcon(icon);
-	}
-	
-	public void setComment(String comment){
-		commentsLabel.setText(comment);
 	}
 	
 	public void displayComments(Boolean b){

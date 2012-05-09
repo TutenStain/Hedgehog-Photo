@@ -26,7 +26,7 @@ public class PictureInserter {
 		//DatabaseHandler.searchPictureNames("IMG_0175");
 	}
 	
-	public  void insertImageObject(){	
+	public void insertImageObject(){	
 		for(ImageObject io: imageObjects){
 			
 			System.out.print(io.getFileName());

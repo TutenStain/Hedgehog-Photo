@@ -1,6 +1,5 @@
 package se.cth.hedgehogphoto;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
@@ -73,7 +72,7 @@ public class Main {
 
 		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(view);
 
-		view.addToTopPanel(sv, BorderLayout.EAST);
+		view.addPlugin(sv, PluginArea.SEARCH);
 
 		model.testNotify();
 	}

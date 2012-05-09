@@ -186,30 +186,28 @@ public class MainView implements Observer {
 		return resizedImage;
 	}
 	
-	//TODO This method should be replaced by addPlugin
-	@Deprecated
-	public void addToTopPanel(JPanel panel, String orientation){
-		topPanel.add(panel, orientation);
-	}
-
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
-			if(placement == PluginArea.LEFT_TOP){
-				panelHolder[0] = panel;
-			}
-
-			if(placement == PluginArea.LEFT_MIDDLE){
-				panelHolder[1] = panel;
-			}
-
-			if(placement == PluginArea.LEFT_BOTTOM){
-				panelHolder[2] = panel;
-			}
-			
-			leftPanelView.removeAll();
-			
-			for(int i = 0; i < 3; i++){
-				leftPanelView.add(panelHolder[i]);
+			if(placement == PluginArea.SEARCH){
+				topPanel.add(panel, BorderLayout.EAST);
+			} else {	
+				if(placement == PluginArea.LEFT_TOP){
+					panelHolder[0] = panel;
+				}
+	
+				if(placement == PluginArea.LEFT_MIDDLE){
+					panelHolder[1] = panel;
+				}
+	
+				if(placement == PluginArea.LEFT_BOTTOM){
+					panelHolder[2] = panel;
+				}
+				
+				leftPanelView.removeAll();
+				
+				for(int i = 0; i < 3; i++){
+					leftPanelView.add(panelHolder[i]);
+				}
 			}
 		} else {
 			Log.getLogger().log(Level.SEVERE, "Could not add plugin panel to the view, panel is null");
@@ -225,10 +223,11 @@ public class MainView implements Observer {
 			MainModel model = (MainModel)arg1;
 			images = model.getImages();
 			photoViewPanel.removeAll();
+			
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
-				/*pp.setComment(images.get(i).getComment().getComment());
-				pp.setTags(images.get(i).getTags().get(i).getTag());
+			/*	pp.setComment(images.get(i).getComment().getCommentAsString());
+				pp.setTag(images.get(i).getTags().get(0).getTag());
 				pp.setLocation(images.get(i).getLocation().getLocation());*/
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
