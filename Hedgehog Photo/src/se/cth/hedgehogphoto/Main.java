@@ -111,11 +111,10 @@ public class Main {
 			}
 			f.setCoverPath("blo");
 			if (f.getLocation() == null) {
-				f.setLocation(new LocationObject("Japan"));
+				f.setLocationObject(new LocationObject("Japan"));
 			}
 			f.setAlbumName("Bra bilder");
-			System.out.println(f.getLocation().getLongitude() + " and " + f.getLocation().getLatitude());
-			DatabaseHandler.getInstance().insertPicture(f);
+		//	System.out.println(f.getLocation().getLongitude() + " and " + f.getLocation().getLatitude());
 			DatabaseHandler.getInstance().insertPicture(f);
 			i++;
 			System.out.print(DatabaseHandler.getInstance().getAllPictures());

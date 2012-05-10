@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import javax.swing.JLabel;
+
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 
 /**

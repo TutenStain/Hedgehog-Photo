@@ -3,25 +3,36 @@ package se.cth.hedgehogphoto.objects;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.cth.hedgehogphoto.objects.LocationObject;
+
+
 
 
 public class ImageObject implements FileObject {
-	private String filePath, fileName, date, artist, comment, albumName, coverPath = "";
+	private String filePath, fileName, date, artist, comment, albumName,location = "";
 	private List<String> tags;
-	private LocationObject location = new LocationObject(""); 
+	private String longitude, latitude;
+	private LocationObject locationObject = new LocationObject("");
 	private boolean legitGPSInfo;
 	
 	public ImageObject() {
 		//init
 	}
+	
+	public String getAlbumName() {
+		return albumName;
+	}
+
+	public void setAlbumName(String albumName) {
+		this.albumName = albumName;
+	}
 
 	public void setProperty(String property, String value) {
 		switch(property) {
 			case "Modify Date": setDate(value); break;
-			case "Date Time Original": setDate(value); break;
 			case "Artist": setArtist(value); break;
 			case "XPComment": setComment(value); break;
-			case "XPKeywords": setTags(value); break;
+			//case "XPKeywords": setTags(value); break;
 			case "File Path": setFilePath(value); break;
 			case "File Name": setFileName(value); break;
 			case "Interop Index": setFirstGPSDirection(value); break;
@@ -42,73 +53,19 @@ public class ImageObject implements FileObject {
 		System.out.println("tags: " + tags);
 		System.out.println("location: " + location.toString());
 	}
-	
-	@Override
-	public String getAlbumName() {
-		return albumName;
-	}
 
-	@Override
-	public void setAlbumName(String albumName) {
-		this.albumName = albumName;
-	}
-
-	@Override
 	public List<String> getTags() {
 		return tags;
 	}
 
-	@Override
 	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
-	
-	/**
-	 * Assuming that multiple tags are separated by a semi-colon (';')
-	 */
-	public void setTags(String tags) {
-		List<String> tagList = convertStringToList(tags, ";");
-		this.tags = tagList;
-	}
 
-	/**
-	 * Takes a long string and a separation sign as parameter, 
-	 * splits the string at the separation signs and puts the
-	 * substrings into a List which is returned. 
-	 * @param text the string which has to be split.
-	 * @param separationSign the sign where the splits shall be performed.
-	 * @return a List containing all the substrings.
-	 */
-	public List<String> convertStringToList(String text, String separationSign) {
-		List<String> list = new ArrayList<String>();
-		int separationSignIndex = text.indexOf(separationSign);
-		int tempIndex = 0;
-
-		while (separationSignIndex != -1) {
-			String listItem = text.substring(tempIndex, separationSignIndex + 1);
-			listItem = listItem.trim();
-			list.add(listItem);
-
-			tempIndex = separationSignIndex + 1;
-			separationSignIndex = text.indexOf(separationSign, tempIndex);
-		}
-
-		int lastIndex = text.length();
-		if ( !text.endsWith(separationSign) ) {
-			String lastItem = text.substring(tempIndex, lastIndex);
-			list.add(lastItem);
-		}
-
-		return list;
-	}
-
-
-	@Override
 	public String getDate() {
 		return date;
 	}
 
-	@Override
 	public void setDate(String date) {
 		this.date = date;
 	}
@@ -121,49 +78,46 @@ public class ImageObject implements FileObject {
 		this.artist = artist;
 	}
 
-	@Override
 	public String getComment() {
 		return comment;
 	}
 
-	@Override
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
-	@Override
 	public String getFilePath() {
 		return filePath;
 	}
 
-	@Override
 	public  void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
 	
-	@Override
 	public String getFileName() {
 		return fileName;
 	}
 	
-	@Override
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 	
-	@Override
-	public LocationObject getLocation() {
+	public LocationObject getLocationObject() {
+		return locationObject;
+	}
+	public String getLocation(){
 		return location;
 	}
+
 	
 	private void setLongitude(String longitude) {
 		if (legitGPSInfo)
-			location.setLongitude(longitude);
+			locationObject.setLongitude(longitude);
 	}
 	
 	private void setLatitude(String latitude) {
 		if (legitGPSInfo)
-			location.setLatitude(latitude);
+			locationObject.setLatitude(latitude);
 	}
 	
 	private void setFirstGPSDirection(String value) {
@@ -177,22 +131,47 @@ public class ImageObject implements FileObject {
 	}
 
 	@Override
-	public void setLocation(LocationObject location) {
-		this.location=location;
+	public void setLocationObject(LocationObject locationObject) {
+		this.locationObject=locationObject;
+		this.location=locationObject.getLocation();
+	}
+
+	@Override
+	public String toString() {
+		return "[name=" + fileName + "] [location=" + location + "] [date=" + date + "] [tag=" + tags + "] [comments= " + comment +"] [albumName=" + albumName + "]" + "Path= " + filePath + "]";
 	}
 
 	@Override
 	public void setCoverPath(String path) {
-		this.coverPath = path;
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public String getCoverPath() {
-		return coverPath;
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
+	public void convertComment(){
+		String comment = "";
+		List<Integer> i = new ArrayList<Integer>();
+	//	io.getComment().substring(1);
+		  for(String s:comment.substring(1).split(", ")){
+			  i.add(Integer.parseInt(s));
+		  }
+		  for(Integer ii: i){
+
+		  String aChar = new Character((char)(int)ii).toString();
+		  if(!(aChar.equals("")))
+		  comment = comment + aChar;
+		  }
+	this.comment =comment;
+	}
+
 	@Override
-	public String toString() {
-		return "[name=" + fileName + "] [location=" + location + "] [date=" + date + "] [tag=" + tags + "] [comments= " + comment +"] [albumName=" + albumName + "]" + "[Path= " + filePath + "]";
+	public void setLocation(String location) {
+		this.location=location;
 	}
+
+	
 }
