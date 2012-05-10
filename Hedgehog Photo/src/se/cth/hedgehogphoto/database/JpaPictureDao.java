@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.cth.hedgehogphoto.objects.FileObject;
+import se.cth.hedgehogphoto.objects.Files;
 
 public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao {
 	private static JpaAlbumDao jad = new JpaAlbumDao();
@@ -11,7 +12,13 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	private static JpaLocationDao jld = new JpaLocationDao();
 	private static JpaTagDao jtd = new JpaTagDao();
 	private static JpaPictureDao jpd = new JpaPictureDao();
-
+	private static Files files = Files.getInstance();
+	private static List<Album> albumList = files.getAlbumList();
+	private static List<Picture> pictureList = files.getPictureList();
+	public void updateSearchfromComments(String search){
+		pictureList = searchfromComments(search);
+		files.setPictureList(pictureList);
+	}
 	public  List<Picture> searchfromComments(String search){
 		if(!(search.equals(""))){
 			search = search.toLowerCase();
@@ -26,24 +33,9 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		}
 		return null;
 	}
-	public  Picture makePicture(FileObject f, Album theAlbum){
-		beginTransaction();
-		Picture pic = new Picture();
-		pic.setPath(f.getFilePath());	
-		pic.setDate(f.getDate());		
-		if(f.getFileName() != null ||(!f.getFileName().equals("")))
-			pic.setName(f.getFileName());
-		if(theAlbum != null){
-			List<Picture> thePictures = theAlbum.getPictures();
-			if(!(thePictures.contains(pic)))
-				thePictures.add(pic);
-			theAlbum.setPictures(thePictures);
-			pic.setAlbum(theAlbum);
-			entityManager.persist(theAlbum);
-		}
-		persist(pic);
-		commitTransaction();	
-		return pic;
+	public void updateSearchfromNames(String search){
+		pictureList = searchfromNames(search);
+		files.setPictureList(pictureList);
 	}
 	public  List<Picture> searchfromNames(String search){
 		if(!(search.equals(""))){
@@ -54,6 +46,10 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			return null;
 		}
 	}
+	public void updateSearchPicturesfromDates(String search){
+		pictureList = searchfromDates(search);
+		files.setPictureList(pictureList);
+	}
 	public List<Picture> searchfromDates(String search){
 		if(!(search.equals(""))){
 			search = search.toLowerCase();
@@ -61,6 +57,14 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		}else{
 			return null;
 		}
+	}
+	public  void updateSearchfromsLocations(String search){
+		pictureList = searchfromLocations(search);
+		files.setPictureList(pictureList);
+	}
+	public  void updateSearchfromTags(String search){
+		pictureList =searchfromTags(search);
+		files.setPictureList(pictureList);
 	}
 	public List<Picture> searchfromTags(String search){
 		if(!(search.equals(""))){
@@ -103,6 +107,15 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		search = search.toLowerCase();
 		return findById(search);
 	}
+	public  void updateAddTag(String tag, String filePath){
+		for(Picture f:pictureList){
+			if(f.getPath().equals(filePath))
+				pictureList.remove(f);
+		}
+		addTag(tag, filePath);
+		files.setPictureList(pictureList);
+	}
+
 	public void addTag(String tag, String filePath){
 		tag = tag.toLowerCase();
 		filePath = filePath.toLowerCase();
@@ -141,6 +154,14 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			}
 		}
 	}
+	public  void updateaddComment(String comment, String filePath){
+		for(Picture f:pictureList){
+			if(f.getPath().equals(filePath))
+				pictureList.remove(f);
+		}
+		addComment(comment, filePath);
+		files.setPictureList(pictureList);
+	}
 	public  void addComment(String comment, String filePath){
 		comment = comment.toLowerCase();
 		filePath = filePath.toLowerCase();
@@ -171,6 +192,16 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			}
 		}
 	}
+
+	public  void updateAddLocation(String location, String filePath){
+		for(Picture f:pictureList){
+			if(f.getPath().equals(filePath))
+				pictureList.remove(f);
+		}
+		addLocation(location, filePath);
+		files.setPictureList(pictureList);
+	}
+
 	public void addLocation(String location, String filePath){
 		location = location.toLowerCase();
 		filePath = filePath.toLowerCase();
@@ -204,6 +235,32 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		}
 
 	}
+	public void updateAllPictures(){
+		pictureList = getAllPictures();
+		files.setPictureList(pictureList);
+
+
+	}
+	public List<Picture> getAllPictures(){
+		return getAll();
+
+	}
+	public  void deleteAll(){
+		
+		List<Picture> allPictures = getAll();
+		for(Picture pic:allPictures){
+			deletePicture(pic.getPath());
+		}
+	}
+	public void updateDeleteTags(String filePath){
+		deleteTags(filePath);
+		for(Picture p: pictureList){
+			if(p.getPath().equals(filePath))
+				pictureList.remove(p);
+		}
+		files.setPictureList(pictureList);
+	}
+
 	public void deleteTags(String filePath){
 		filePath = filePath.toLowerCase();
 		Picture picture = findById(filePath);
@@ -229,6 +286,15 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					entityManager.persist(tag);
 					commitTransaction();
 			 */}
+	}
+	public  void updateDeleteComment(String filePath){
+		deleteComment(filePath);
+		for(Picture f: pictureList){
+			if(f.getPath().equals(filePath))
+				pictureList.remove(f);
+
+		}
+		files.setPictureList(pictureList);
 	}
 	public void deleteComment(String filePath){
 		filePath = filePath.toLowerCase();
@@ -287,6 +353,23 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				commitTransaction();
 			 */}
 	}
+	public void updateDeletePicturefromAlbum(String filePath){
+		jad.deletePicture(filePath);
+		String albumName = "";
+		for(Picture f: pictureList){
+			if(f.getPath().equals(filePath))
+				pictureList.remove(f);
+			albumName = f.getAlbum().getAlbumName();
+		}
+		files.setPictureList(pictureList);
+		if(albumName.equals("")){
+			for(Album f:albumList){
+				if(f.getAlbumName().equals(albumName))
+					albumList.remove(f);
+			}
+			files.setAlbumList(albumList);
+		}
+	}
 	public void deletePicturefromAlbum(String filePath){
 		filePath = filePath.toLowerCase();
 		Picture picture = findById(filePath);
@@ -304,6 +387,11 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			entityManager.getTransaction().commit();	
 			}
 		}
+	}
+	public  void updateDeletePicture(String filePath){
+		deletePicture(filePath);
+		pictureList = getAllPictures();
+		files.setPictureList(pictureList);
 	}
 	public void deletePicture (String  filePath){
 		Picture picture = findById(filePath);
@@ -530,7 +618,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			if(!(f.getLocation().equals(""))){
 				try{
 					Location location = jld.findById(f.getLocation().toLowerCase());
-					if(location.getLocation().equals(f.getLocation().toLowerCase())){
+					if(location.getLocation().equals(f.getLocation())){
 						System.out.print("hitta loc");
 						entityManager.getTransaction().begin();
 						location.setLatitude((f.getLocationObject().getLatitude()));

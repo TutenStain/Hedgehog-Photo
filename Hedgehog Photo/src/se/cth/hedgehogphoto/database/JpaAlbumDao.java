@@ -3,24 +3,44 @@ package se.cth.hedgehogphoto.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.cth.hedgehogphoto.objects.FileObject;
+import se.cth.hedgehogphoto.objects.Files;
 
 
 
 
 public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
-
+	private static Files files = Files.getInstance();
+	private static List<Album> albumList = files.getAlbumList();
 	
 	public JpaAlbumDao(){
 		super();
 	}
+	public void updateAllAlbums(){
+		albumList = getAllAlbums();
+		files.setAlbumList(albumList);
+	}
+	public List<Album> getAllAlbums(){
+		return getAll();
 
+	}
+	public void updateSearchfromDates(String search){
+		albumList = searchfromDates(search);
+		files.setAlbumList(albumList);
+	}
+	public void updateSearchPicturesfromDates(String search){
+		albumList  = searchfromDates(search);
+		files.setAlbumList(albumList );
+	}
 	public  List<Album>  searchfromDates(String search){
 		if(search.equals("")){
 		 return findByLike("date",search.toLowerCase());
 		}else{
 			return null;
 		}
+	}
+	public void updateSearchfromNames(String search){
+		albumList  = searchfromNames(search);
+		files.setAlbumList(albumList );
 	}
 	public List<Album>  searchfromNames(String search){
 		if(search.equals("")){
@@ -30,25 +50,10 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 
 	}
-	public Album findbyName(String albumName){
-		if(albumName.equals("")){
-			albumName = albumName.toLowerCase();
-		return findById(albumName);
-		}else{
-			return null;
-		}
+	public void updateSearchfromComments(String search){
+		albumList = searchfromComments(search);
+		files.setAlbumList(albumList);
 	}
-	
-	public Album makeAlbum(FileObject f){
-		beginTransaction();
-	Album theAlbum = new Album();	
-	theAlbum.setAlbumName(f.getAlbumName());
-	theAlbum.setCoverPath(f.getFilePath());
-	 entityManager.persist(theAlbum);
-	commitTransaction();
-	return theAlbum;
-	}
-
 	public List<Album> searchfromComments(String search){
 		search = search.toLowerCase();
 		if(!(search.equals(""))){
@@ -61,6 +66,10 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 			}
 	}
 	return null;
+	}
+	public void updateSearchfromTags(String search){
+		albumList = searchfromTags(search);
+		files.setAlbumList(albumList);
 	}
 	public  List<Album> searchfromTags(String search){
 		search = search.toLowerCase();
@@ -75,6 +84,10 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 		return null;
 	}
+	public void updateSearchfromLocations(String search){
+		albumList  =  searchfromLocations(search);
+		files.setAlbumList(albumList);
+	}
 	public List<Album> searchfromLocations(String search){
 		search = search.toLowerCase();
 		if(!(search.equals(""))){
@@ -88,7 +101,14 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 		return null;
 	}
-
+	public  void updateAddTag(String tag, String albumName){
+		for(Album f:albumList){
+			if(f.getAlbumName().equals(albumName))
+				albumList.remove(f);
+		}
+		addTag(tag, albumName);
+		files.setAlbumList(albumList);
+	}
 public void addTag(String tag, String albumName){
 	Album album = findById(albumName);
 	albumName = albumName.toLowerCase();
@@ -124,6 +144,15 @@ public void addTag(String tag, String albumName){
 	}
 
 }
+public  void updateAddComment(String comment, String albumName){
+	for(Album f:albumList){
+		if(f.getAlbumName().equals(albumName))
+			albumList.remove(f);
+	}
+	addComment(comment, albumName);
+	files.setAlbumList(albumList);
+}
+
 public void addComment(String comment, String albumName){
 	albumName = albumName.toLowerCase();
 	comment = comment.toLowerCase();
@@ -157,6 +186,15 @@ public void addComment(String comment, String albumName){
 		}
 	}
 }
+public  void updateAddLocation(String location, String albumName){
+	for(Album f:albumList){
+		if(f.getAlbumName().equals(albumName))
+			albumList.remove(f);
+	}
+	addLocation(location, albumName);
+	files.setAlbumList(albumList);
+}
+
 public void addLocation(String location, String albumName){
 	albumName = albumName.toLowerCase();
 	location = location.toLowerCase();
@@ -192,7 +230,14 @@ public void addLocation(String location, String albumName){
 	}
 
 }
-
+public  void updateDeleteComment(String albumName){
+	deleteComment(albumName);
+	for(Album f:albumList){
+		if(f.getAlbumName().equals(albumName))
+			albumList.remove(f);
+	}
+	files.setAlbumList(albumList);
+}
 public void deleteComment(String albumName){
 	albumName = albumName.toLowerCase();
 	Album album = findById(albumName);
@@ -206,6 +251,14 @@ public void deleteComment(String albumName){
 		commitTransaction();
 	}
 }
+public  void updateDeleteLocation(String albumName){
+	deleteLocation(albumName);
+	for(Album f:albumList){
+		if(f.getAlbumName().equals(albumName))
+			albumList.remove(f);
+	}
+	files.setAlbumList(albumList);
+}
 public void deleteLocation(String albumName){
 	Album album = findById(albumName);
 	if(album!= null){
@@ -217,6 +270,15 @@ public void deleteLocation(String albumName){
 		 entityManager.persist(loc);
 		commitTransaction();
 	}
+}
+
+public void updateDeleteTags(String albumName){
+	deleteTags(albumName);
+	for(Album f:albumList){
+		if(f.getAlbumName().equals(albumName))
+			albumList.remove(f);
+	}
+	files.setAlbumList(albumList);
 }
 public void deleteTags(String albumName){
 	albumName = albumName.toLowerCase();
@@ -234,6 +296,7 @@ public void deleteTags(String albumName){
 		}
 	}
 }
+
 public void deletePicture(String filePath){
 	JpaPictureDao jpd = new JpaPictureDao();
 	Picture picture = jpd.findById(filePath);
