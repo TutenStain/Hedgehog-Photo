@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.objects.FileObject;
 
 /**
@@ -21,7 +22,7 @@ public class SearchComponentView extends JPanel{
 	private JTextArea comment;
 	private JTextArea tags;
 	
-	public SearchComponentView(final FileObject fo) {
+	public SearchComponentView(final Picture fo) {
 		FlowLayout flowLayout = new FlowLayout();
 		flowLayout.setVgap(0);
 		flowLayout.setHgap(10);
@@ -31,17 +32,17 @@ public class SearchComponentView extends JPanel{
 		image.setMinimumSize(new Dimension(50, 50));
 		image.setMaximumSize(new Dimension(50, 50));
 		image.setPreferredSize(new Dimension(50, 50));
-		image.setIcon(new ImageIcon(fo.getFilePath()));
+		image.setIcon(new ImageIcon(fo.getPath()));
 		add(image);
 		
 		//TODO Maybe a better implementation?
-		String str = "";
+	/*	String str = "";
 		Iterator<String> itr = fo.getTags().iterator();
 		while(itr.hasNext()){
 			str += itr.next() + " "; 
-		}
+		}*/
 		
-		tags = new JTextArea(str);
+		tags = new JTextArea("hej");
 	    tags.setEditable(false);  
 	    tags.setCursor(null);  
 	    tags.setOpaque(false);  
@@ -55,7 +56,7 @@ public class SearchComponentView extends JPanel{
 		tags.setPreferredSize(new Dimension(60, 50));
 		add(tags);
 		
-		comment = new JTextArea(fo.getComment());
+		comment = new JTextArea(fo.getComment().getComment());
 	    comment.setEditable(false);  
 	    comment.setCursor(null);  
 	    comment.setOpaque(false);  

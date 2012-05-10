@@ -244,7 +244,7 @@ public class MainView implements Observer {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
 				pp.setComment(images.get(i).getComment().getComment());
 				pp.setTags(images.get(i).getTags());
-				//pp.setLocation(images.get(i).getLocation().getLocation());
+				pp.setLocation(images.get(i).getLocation().getLocation());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 				frame.revalidate();

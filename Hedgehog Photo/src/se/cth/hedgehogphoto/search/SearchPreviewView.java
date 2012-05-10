@@ -15,6 +15,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
+import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.objects.FileObject;
 
 /**
@@ -44,8 +45,8 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 		SearchModel model = (SearchModel)arg;
 		System.out.println("UPDATE @ SEARCH_PREVIEW_VIEW: " + model.getSearchQueryText());
 		show(jtf, -50, jtf.getHeight());
-		List<FileObject> fo = model.getSearchObjects();
-		Iterator<FileObject> itr = fo.iterator();
+		List<Picture> fo = model.getSearchObjects();
+		Iterator<Picture> itr = fo.iterator();
 		panel.removeAll();
 		
 		//TODO Change this value to reflect the max size of the popup.
@@ -65,7 +66,7 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 		
 		int i = 0;
 		while(itr.hasNext() && i < 5){
-			FileObject ob = itr.next();
+			Picture ob = itr.next();
 			SearchComponentView view = new SearchComponentView(ob);
 			new SearchComponentController(view, ob, model);
 			panel.add(view);

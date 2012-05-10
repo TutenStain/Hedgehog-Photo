@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.objects.FileObject;
 
 /**
@@ -12,10 +13,10 @@ import se.cth.hedgehogphoto.objects.FileObject;
 public class SearchComponentController{
 	private SearchComponentView view;
 	private SearchModel model;
-	private final FileObject fo;
+	private final Picture fo;
 	private Color oldColor;
 	
-	public SearchComponentController(SearchComponentView _view, final FileObject _fo, final SearchModel _model){
+	public SearchComponentController(SearchComponentView _view, final Picture _fo, final SearchModel _model){
 		view = _view;
 		fo = _fo;
 		model = _model;
@@ -24,7 +25,7 @@ public class SearchComponentController{
 			//TODO This needs to be done.
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Clicked on: " + fo.getFilePath());
+				System.out.println("Clicked on: " + fo.getPath());
 			//	Files.getInstance().setPictureList((DatabaseHandler.searchPicturesfromTags(fo.getTags().get(0))));
 			}
 

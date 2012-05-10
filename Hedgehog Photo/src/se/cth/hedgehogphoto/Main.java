@@ -85,7 +85,7 @@ public class Main {
 		int i = 0;
 		for(File file : files) {
 			FileObject f = Metadata.getImageObject(file);
-			f.setLocationObject(new LocationObject("Växjö"));
+			f.setLocationObject(new LocationObject("Japan"));
 			f.setComment("Gutes bild");
 			f.setFileName(file.getName());
 			f.setDate("2012.12.02");
