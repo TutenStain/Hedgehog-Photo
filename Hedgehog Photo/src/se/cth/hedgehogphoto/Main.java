@@ -110,11 +110,12 @@ public class Main {
 				Log.getLogger().log(Level.SEVERE, "IOException", e);
 			}
 			f.setCoverPath("blo");
-			if (f.getLocation() == null) {
+		
+		//	if (f.getLocationObject() == null || f.getLocation().equals("")) {
 				f.setLocationObject(new LocationObject("Japan"));
-			}
+		//	}
 			f.setAlbumName("Bra bilder");
-		//	System.out.println(f.getLocation().getLongitude() + " and " + f.getLocation().getLatitude());
+		
 			DatabaseHandler.getInstance().insertPicture(f);
 			i++;
 			System.out.print(DatabaseHandler.getInstance().getAllPictures());

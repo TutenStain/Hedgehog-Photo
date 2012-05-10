@@ -26,7 +26,7 @@ public class PluginLoader {
 	private String pluginRootDir;
 		
 	public PluginLoader(MainView view, File pluginRootDir){
-		this(view, pluginRootDir.getPath());
+		this(view, pluginRootDir.getAbsolutePath());
 	}
 
 	/**

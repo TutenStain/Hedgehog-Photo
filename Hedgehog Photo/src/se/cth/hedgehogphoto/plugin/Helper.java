@@ -117,7 +117,7 @@ public final class Helper {
 	 * @return a File object representing the folder the supplied file is in.
 	 */
 	public static File findFolderForFile(final File f){
-		String d = f.getPath();
+		String d = f.getAbsolutePath();
 		return new File(d.substring(0, d.lastIndexOf("/")));
 	}
 }

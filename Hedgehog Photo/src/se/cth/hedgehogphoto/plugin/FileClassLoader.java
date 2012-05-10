@@ -72,8 +72,8 @@ public class FileClassLoader extends URLClassLoader {
 		//Replace packages to a proper folderstructure
 		String fileStub = file.replace( '.', '/' );
 
-		String javaFilenamePath = pluginRootDirectory.getPath() + fileStub + ".java";
-		String classFilenamePath = pluginRootDirectory.getPath() + fileStub + ".class";
+		String javaFilenamePath = pluginRootDirectory.getAbsolutePath() + fileStub + ".java";
+		String classFilenamePath = pluginRootDirectory.getAbsolutePath() + fileStub + ".class";
 		
 		File javaFile = new File(javaFilenamePath);
 		File classFile = new File(classFilenamePath);
@@ -121,12 +121,12 @@ public class FileClassLoader extends URLClassLoader {
 	 * @throws IOException
 	 */
 	private boolean compile(File fileToCompile) throws IOException {
-		Log.getLogger().log(Level.INFO, "Compiling " + fileToCompile.getPath() + "...");
+		Log.getLogger().log(Level.INFO, "Compiling " + fileToCompile.getAbsolutePath() + "...");
 
 		//Copy our API to plugin dir
-		Path target = Paths.get(pluginRootDirectory.getPath() + "/API.jar");
+		Path target = Paths.get(pluginRootDirectory.getAbsolutePath() + "/API.jar");
 		if(Files.exists(target) == false) {
-			Log.getLogger().log(Level.INFO, "Copying API.jar to: " + pluginRootDirectory.getPath() + "...");
+			Log.getLogger().log(Level.INFO, "Copying API.jar to: " + pluginRootDirectory.getAbsolutePath() + "...");
 			Path source = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "API.jar");
 			Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
 		} else {
@@ -140,7 +140,7 @@ public class FileClassLoader extends URLClassLoader {
 		if(compiler != null){
 			StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 			Iterable<? extends JavaFileObject> compUnits =  fileManager.getJavaFileObjects(fileToCompile);
-			String classpath = pluginRootDirectory.getPath() + "/API.jar:" + fileRootFolder.getPath();
+			String classpath = pluginRootDirectory.getAbsolutePath() + "/API.jar:" + fileRootFolder.getAbsolutePath();
 			final Iterable<String> options = Arrays.asList(new String[] { "-cp", classpath});
 			compilationResult = compiler.getTask(null, fileManager, null, options, null, compUnits).call();        
 		} else {
