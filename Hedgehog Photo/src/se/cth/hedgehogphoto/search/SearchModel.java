@@ -1,6 +1,7 @@
 package se.cth.hedgehogphoto.search;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -30,14 +31,21 @@ public class SearchModel extends Observable{
 
 	//TODO fix this...
 	public List<Picture> getSearchObjects(){
-		//DatabaseHandler.deleteAll();
-		//System.out.println(DatabaseHandler.getTags())
-		//System.out.println(DatabaseHandler.getLocationd"s());
-		//DatabaseHandler.getAlbumName("jaggillarelefanter.jpg");
-		return DatabaseHandler.getInstance().searchPicturefromsLocations("Japan");
-		//return DatabaseHandler.getInstance().searchPicturesfromComments("Gutes bild");
-		//return DatabaseHandler.getInstance().searchPicturesfromTags("snyggt");
-		//return DatabaseHandler.searchComments(searchText);
+		List<Picture> search = new ArrayList<Picture>();
+		
+		if(DatabaseHandler.getInstance().searchPicturefromsLocations(searchText) != null){
+			search.addAll(DatabaseHandler.getInstance().searchPicturefromsLocations(searchText));
+		}
+		
+		if(DatabaseHandler.getInstance().searchPicturesfromTags(searchText) != null){
+			search.addAll(DatabaseHandler.getInstance().searchPicturesfromTags(searchText));
+		}
+		
+		if(DatabaseHandler.getInstance().searchPicturesfromComments(searchText) != null){
+			search.addAll(DatabaseHandler.getInstance().searchPicturesfromComments(searchText));
+		}
+		
+		return search;
 	}
 	
 	public void doSearch(){

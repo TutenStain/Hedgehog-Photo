@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto.search;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -49,32 +50,43 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 		Iterator<Picture> itr = fo.iterator();
 		panel.removeAll();
 		
-		//TODO Change this value to reflect the max size of the popup.
-		if(fo.size() > 2){
+		if(fo.isEmpty() == false){
+			//TODO Change this value to reflect the max size of the popup.
+			if(fo.size() > 2){
+				JPanel p = new JPanel();
+				p.setLayout(new FlowLayout());
+				p.add(new JLabel("More results for '" + model.getSearchQueryText() + "'"));
+				p.addMouseListener(new MouseAdapter() {     
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						System.out.println("Clicked ON ME!!!");
+			        }
+				});
+				panel.add(p);
+				panel.add(new JSeparator());
+			}
+			
+			int i = 0;
+			while(itr.hasNext() && i < 5){
+				Picture pic = itr.next();
+				SearchComponentView view = new SearchComponentView(pic);
+				new SearchComponentController(view, pic, model);
+				panel.add(view);
+				i++;
+				//panel.add(new JSeparator());		
+			}
+			
+			setPopupSize(250, (i * 70));
+		} else {
 			JPanel p = new JPanel();
 			p.setLayout(new FlowLayout());
-			p.add(new JLabel("More results for '" + model.getSearchQueryText() + "'"));
-			p.addMouseListener(new MouseAdapter() {     
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					System.out.println("Clicked ON ME!!!");
-		        }
-			});
+			p.setBackground(Color.GRAY);
+			p.add(new JLabel("No results for '" + model.getSearchQueryText() + "'. Try again!"));
 			panel.add(p);
-			panel.add(new JSeparator());
+			setPopupSize(250, 40);
 		}
 		
-		int i = 0;
-		while(itr.hasNext() && i < 5){
-			Picture ob = itr.next();
-			SearchComponentView view = new SearchComponentView(ob);
-			new SearchComponentController(view, ob, model);
-			panel.add(view);
-			i++;
-			//panel.add(new JSeparator());		
-		}
 		
-		setPopupSize(250, (i * 70));
 
 		panel.revalidate();
 	}

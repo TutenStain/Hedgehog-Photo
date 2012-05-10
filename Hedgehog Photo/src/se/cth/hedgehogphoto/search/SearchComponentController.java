@@ -3,9 +3,12 @@ package se.cth.hedgehogphoto.search;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.objects.FileObject;
+import se.cth.hedgehogphoto.objects.Files;
 
 /**
  * @author Barnabas Sapan
@@ -26,7 +29,9 @@ public class SearchComponentController{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("Clicked on: " + fo.getPath());
-			//	Files.getInstance().setPictureList((DatabaseHandler.searchPicturesfromTags(fo.getTags().get(0))));
+				List<Picture> pic = new ArrayList<Picture>();
+				pic.add(fo);
+				Files.getInstance().setPictureList(pic);
 			}
 
 			@Override
