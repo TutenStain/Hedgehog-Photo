@@ -1,6 +1,7 @@
 package se.cth.hedgehogphoto.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
