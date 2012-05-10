@@ -618,7 +618,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			if(!(f.getLocation().equals(""))){
 				try{
 					Location location = jld.findById(f.getLocation().toLowerCase());
-					if(location.getLocation().equals(f.getLocation())){
+					if(location.getLocation().equals(f.getLocation().toLowerCase())){
 						System.out.print("hitta loc");
 						entityManager.getTransaction().begin();
 						location.setLatitude((f.getLocationObject().getLatitude()));
