@@ -7,7 +7,6 @@ import java.util.Observable;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.Picture;
-import se.cth.hedgehogphoto.objects.FileObject;
 
 
 /**
@@ -29,7 +28,7 @@ public class SearchModel extends Observable{
 		searchText = txt;
 	}
 
-	//TODO fix this...
+	//TODO Better implementation/better != null checks
 	public List<Picture> getSearchObjects(){
 		List<Picture> search = new ArrayList<Picture>();
 		

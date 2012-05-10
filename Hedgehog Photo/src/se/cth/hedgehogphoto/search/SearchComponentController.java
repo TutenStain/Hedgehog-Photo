@@ -6,9 +6,9 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.objects.FileObject;
-import se.cth.hedgehogphoto.objects.Files;
 
 /**
  * @author Barnabas Sapan
@@ -19,10 +19,9 @@ public class SearchComponentController{
 	private final Picture fo;
 	private Color oldColor;
 	
-	public SearchComponentController(SearchComponentView _view, final Picture _fo, final SearchModel _model){
+	public SearchComponentController(SearchComponentView _view, final Picture _fo){
 		view = _view;
 		fo = _fo;
-		model = _model;
 		
 		view.addMouseListener(new MouseListener(){
 			//TODO This needs to be done.

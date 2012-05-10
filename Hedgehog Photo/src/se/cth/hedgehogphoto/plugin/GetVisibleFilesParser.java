@@ -4,8 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 
+import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.log.Log;
-import se.cth.hedgehogphoto.objects.Files;
 import se.cth.hedgehogphoto.view.MainView;
 
 public class GetVisibleFilesParser implements Parsable{

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import se.cth.hedgehogphoto.objects.Files;
+import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
 

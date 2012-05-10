@@ -1,11 +1,10 @@
-package se.cth.hedgehogphoto.objects;
+package se.cth.hedgehogphoto.database;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import se.cth.hedgehogphoto.database.Album;
-import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.objects.FileObject;
 
 
 

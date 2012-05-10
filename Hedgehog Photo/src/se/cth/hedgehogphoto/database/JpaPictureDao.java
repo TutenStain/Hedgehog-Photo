@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.cth.hedgehogphoto.objects.FileObject;
-import se.cth.hedgehogphoto.objects.Files;
 
 public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao {
 	private static JpaAlbumDao jad = new JpaAlbumDao();
