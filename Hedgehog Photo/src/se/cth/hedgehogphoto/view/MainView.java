@@ -219,10 +219,12 @@ public class MainView implements Observer {
 		photoPanels = new ArrayList<PhotoPanel>();
 		List<Picture> images;
 
+		//TODO Maybe refresh in another way than removing the PhotoPanels?
+		photoViewPanel.removeAll();
+		
 		if(arg1 instanceof MainModel) {
 			MainModel model = (MainModel)arg1;
 			images = model.getImages();
-			photoViewPanel.removeAll();
 			
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
@@ -237,8 +239,6 @@ public class MainView implements Observer {
 
 		if(arg1 instanceof Files){
 			images = Files.getInstance().getPictureList();
-			//TODO Maybe refresh in another way than removing the PhotoPanels?
-			photoViewPanel.removeAll();
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
 				/*pp.setComment(images.get(i).getComment().getComment());
