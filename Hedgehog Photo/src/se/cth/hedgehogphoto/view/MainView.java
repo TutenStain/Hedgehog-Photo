@@ -30,6 +30,7 @@ import javax.swing.event.ChangeListener;
 import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.objects.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.Tag;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.model.MainModel;
 
@@ -229,7 +230,7 @@ public class MainView implements Observer {
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
 				pp.setComment(images.get(i).getComment().getComment());
-				pp.setTag(images.get(i).getTags().get(0).getTag());
+				pp.setTags(images.get(i).getTags());
 				pp.setLocation(images.get(i).getLocation().getLocation());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
@@ -242,8 +243,8 @@ public class MainView implements Observer {
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
 				pp.setComment(images.get(i).getComment().getComment());
-				pp.setTag(images.get(i).getTags().get(0).getTag());
-				//pp.setLocation(images.get(i).getLocation().getLocation());
+				pp.setTags(images.get(i).getTags());
+				pp.setLocation(images.get(i).getLocation().getLocation());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 				frame.revalidate();
