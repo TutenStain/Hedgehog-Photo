@@ -3,8 +3,7 @@ package se.cth.hedgehogphoto.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import se.cth.hedgehogphoto.objects.FileObject;
 
 public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao {
 	private static JpaAlbumDao jad = new JpaAlbumDao();

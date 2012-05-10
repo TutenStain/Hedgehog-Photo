@@ -33,7 +33,6 @@ import se.cth.hedgehogphoto.view.PluginArea;
 
 public class Main {
 
-	//TODO Just a skeleton of the main
 	public static void main(String[] args) {
 		DatabaseHandler.getInstance().deleteAll();
 		//Main
