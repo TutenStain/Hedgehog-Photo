@@ -450,7 +450,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			}
 
 			catch(Exception k){
-				if(jcd.findById(f.getComment())==null){
+				if(jcd.findById(f.getComment().toLowerCase())==null){
 					System.out.print("no com");
 					entityManager.getTransaction().begin();
 					Comment comment = new Comment();		

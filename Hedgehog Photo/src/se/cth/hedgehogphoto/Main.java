@@ -13,6 +13,7 @@ import se.cth.hedgehogphoto.map.controller.MapController;
 import se.cth.hedgehogphoto.map.model.MapModel;
 import se.cth.hedgehogphoto.map.view.MapView;
 import se.cth.hedgehogphoto.metadata.Metadata;
+import se.cth.hedgehogphoto.metadata.PictureInserter;
 import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObject;
