@@ -2,14 +2,8 @@ package se.cth.hedgehogphoto.note;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
 
