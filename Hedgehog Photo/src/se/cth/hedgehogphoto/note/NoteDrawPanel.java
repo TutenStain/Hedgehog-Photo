@@ -12,10 +12,9 @@ public class NoteDrawPanel extends JPanel{
 	private static int circleDiam = 10;
 	private static Color color = Color.black;
 	
-	public NoteDrawPanel(int width, int height){
+	public NoteDrawPanel(){
 
 		this.setBackground(Color.white);
-		this.setPreferredSize(new Dimension(width, height));
 		
 		this.addMouseListener(new MouseAdapter() { 
 			public void mousePressed(MouseEvent me) {

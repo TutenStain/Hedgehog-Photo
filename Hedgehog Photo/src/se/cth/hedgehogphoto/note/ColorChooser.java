@@ -13,7 +13,7 @@ public class ColorChooser extends JPanel{
 	private Dimension side;
 	private JButton[] grid = new JButton[9];
 	
-	public ColorChooser(Dimension side){
+	public ColorChooser(){
 		this.side = side;
 		this.setLayout(new GridLayout(3, 3));
 		this.arrangeButtons();
@@ -22,7 +22,6 @@ public class ColorChooser extends JPanel{
 	public void arrangeButtons(){
 		for(int i=0;i<grid.length;i++){
 			grid[i] = new JButton();
-			grid[i].setPreferredSize(side);
 			this.add(grid[i]);
 		}
 		grid[0].setBackground(Color.white);

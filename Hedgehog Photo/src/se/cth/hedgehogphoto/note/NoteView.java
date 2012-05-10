@@ -21,10 +21,10 @@ public class NoteView extends JPanel implements ChangeListener, Observer, Action
 	
 	private JPanel bottomPanel = new JPanel();
 	private JSlider slider = new JSlider(5, 15);
-	private NoteDrawPanel board = new NoteDrawPanel(200, 200);
-	private NotePreview preview = new NotePreview(100);
+	private NoteDrawPanel board = new NoteDrawPanel();
+	private NotePreview preview = new NotePreview();
 	
-	private ColorChooser colorChooser = new ColorChooser(new Dimension(5, 5));
+	private ColorChooser colorChooser = new ColorChooser();
 	
 	private NoteModel model = new NoteModel(10, Color.black);
 	
@@ -34,6 +34,7 @@ public class NoteView extends JPanel implements ChangeListener, Observer, Action
 		this.add(board, BorderLayout.CENTER);
 		this.add(bottomPanel, BorderLayout.SOUTH);
 		
+		bottomPanel.setPreferredSize(new Dimension(Constants.PREFERRED_MODULE_WIDTH, 50));
 		bottomPanel.setBackground(Color.white);
 		bottomPanel.setLayout(new GridLayout(1, 3));
 		

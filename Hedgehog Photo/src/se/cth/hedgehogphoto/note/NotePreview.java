@@ -7,9 +7,8 @@ import javax.swing.JPanel;
 
 public class NotePreview extends JPanel{
 	
-	public NotePreview(int side){
+	public NotePreview(){
 		this.setBackground(Color.white);
-		this.setPreferredSize(new Dimension(side, side));
 	}
 	
 	public void paintPreview(int diam, Color c){
