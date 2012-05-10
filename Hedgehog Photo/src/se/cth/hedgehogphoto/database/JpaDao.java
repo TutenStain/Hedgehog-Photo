@@ -11,13 +11,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 
-	public abstract class JpaDao<E,K> implements Dao<E,K> {
-		 final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
-			
+	public abstract class JpaDao<E,K> implements Dao<E,K>,Entity {
+	
 		protected Class entityClass;
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		 EntityManager entityManager = factory.createEntityManager();;
-		 
 		
 			
 		
@@ -76,7 +72,7 @@ import javax.persistence.Query;
 			    Object obj = theClass.cast(something);
 			Query q = entityManager.createQuery(s);
 			q.setParameter(c,obj);
-			
+			System.out.println(q.getResultList());
 			return  (List<E>)q.getResultList();
 	}
 		public List<E> findByString(String quality,String search) {

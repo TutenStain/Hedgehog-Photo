@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
 import se.cth.hedgehogphoto.objects.FileObject;
+import se.cth.hedgehogphoto.objects.Files;
 
 
 

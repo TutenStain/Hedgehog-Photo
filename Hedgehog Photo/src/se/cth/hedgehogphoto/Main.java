@@ -70,7 +70,7 @@ public class Main {
 		sv.setPreferredSize(new Dimension(250, 30));
 		new SearchController(sm, sv);
 
-		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(view);
+		se.cth.hedgehogphoto.objects.Files.getInstance().addObserver(view);
 
 		view.addPlugin(sv, PluginArea.SEARCH);
 

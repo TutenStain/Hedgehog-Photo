@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import se.cth.hedgehogphoto.database.DatabaseAccess;
-import se.cth.hedgehogphoto.database.Files;
+import se.cth.hedgehogphoto.objects.Files;
 
 public class DayController implements ActionListener{
 	private int day;
