@@ -1,6 +1,7 @@
-package se.cth.hedgehogphoto.map.geocoding;
+package se.cth.hedgehogphoto.map.geocoding.view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.text.DecimalFormat;
 
@@ -15,6 +16,7 @@ public class LocationPanel extends JPanel {
 	private JLabel nameLabel;
 	private JLabel longitudeLabel, latitudeLabel;
 	private LocationObject location;
+	private Color defaultColor;
 	private static Color color;
 	private static int colorScale;
 	
@@ -24,7 +26,7 @@ public class LocationPanel extends JPanel {
 		this.nameLabel = new JLabel(location.getLocation());
 		
 		//round doubles (gps-coords) /just the visible part/
-		DecimalFormat df = new DecimalFormat("#.#######");
+		DecimalFormat df = new DecimalFormat("#.#####");
 		String lon = df.format(location.getLongitude());
 		String lat = df.format(location.getLatitude());
 
@@ -62,20 +64,34 @@ public class LocationPanel extends JPanel {
 		
 		//set background color
 		this.setBackground(color);
+		helpPanel.setBackground(Color.WHITE);
+		defaultColor = color;
 		incrementColorScale();
 	}
 	
 	public static void resetColorScale() {
-		color = new Color(255,255,255); //white
+		color = new Color(255,150,95); 
 		colorScale = 1;
 	}
 	
 	private void incrementColorScale() {
 		colorScale++;
-		int red = 255 - colorScale*2;
-		int green = 255 - colorScale*4;
-		int blue = 255 - colorScale*10;
+		int red = 255 - colorScale*4 >= 0 ? 255 - colorScale*4: 0;
+		int green = 255 - colorScale*5 >= 0 ? 255 - colorScale*5: 0;
+		int blue = 105 + colorScale*15 <= 255 ? 95 + colorScale*15: 255;
 		color = new Color(red,green,blue);
+	}
+	
+	public void brighter() {
+		this.setBackground(defaultColor.brighter());
+	}
+	
+	public void defaultColor() {
+		this.setBackground(defaultColor);
+	}
+	
+	public void darker() {
+		this.setBackground(defaultColor.darker());
 	}
 
 }

@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.map.geocoding;
+package se.cth.hedgehogphoto.map.geocoding.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.net.URI;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -19,16 +19,20 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import se.cth.hedgehogphoto.map.geocoding.model.URLCreator;
+import se.cth.hedgehogphoto.map.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.objects.LocationObject;
 
 public final class SearchPanel extends JPanel {
 
 	private ConstrainedGrid resultPanel = new ConstrainedGrid();
 	private JComboBox<Object> searchBox = new JComboBox<Object>();
+	
+	private URLCreator urlCreator = URLCreator.getInstance();
+	private XMLParser xmlParser = XMLParser.getInstance();
 
 	private String oldSearch = "";
 	private boolean searching;
@@ -103,12 +107,9 @@ public final class SearchPanel extends JPanel {
 
 	private void doSearchInternal(final String newSearch) {
 		try {
-			// Create a URL for the desired page
-			String args = URLEncoder.encode(newSearch, "UTF-8");
-			String path = NAMEFINDER_URL + "format=xml&addressdetails=1&q=" + args;
-			System.out.println(path);
-			ReadAndPrintXMLFile.xmlFile = new URI(path);
-			List<LocationObject> locations = ReadAndPrintXMLFile.processSearch();
+			// Create a URL for the desired page, and create objects for the searchResults
+			URL url = urlCreator.queryURL(newSearch);
+			List<LocationObject> locations = xmlParser.processSearch(url);
 			resultPanel.addLocations(locations);
 			this.setPreferredWidth();
 		} catch (Exception e) {
