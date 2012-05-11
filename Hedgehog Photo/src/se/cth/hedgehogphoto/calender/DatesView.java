@@ -11,16 +11,17 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 
 public class DatesView extends JPanel implements Observer{
 	private static DatesView dw;
 	private CalendarModel m;
 	private JPanel jp;
-	private DatesView(DatabaseAccess da) { 
+	private DatesView(DaoFactory df) { 
 		this.setPreferredSize(new Dimension(150,75));
 		this.setLayout(new BorderLayout());
-		m = CalendarModel.getInstance(da);
+		m = CalendarModel.getInstance(df);
 		m.addObserver(this);
 		jp = new JPanel();
 		jp.setLayout(new GridLayout(5,7));
@@ -33,9 +34,9 @@ public class DatesView extends JPanel implements Observer{
 		System.out.print("UPDATE MAINVIEW");
 	}
 
-	public static DatesView getInstance(DatabaseAccess da){
+	public static DatesView getInstance(DaoFactory df){
 		if(dw==null){
-			dw = new DatesView(da);
+			dw = new DatesView(df);
 		}
 		return dw;
 	}

@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.plugin.InitializePlugin;
 
@@ -24,11 +25,11 @@ public class CalendarView extends JPanel implements Observer{
 	private CalendarView(){
 	}
 
-	private CalendarView(DatabaseAccess da){
+	private CalendarView(DaoFactory df){
 		setLayout(new BorderLayout());
 		setSize(new Dimension(200,200));
-		calendarModel = CalendarModel.getInstance(da);
-		ButtonController bc = new ButtonController(da);
+		calendarModel = CalendarModel.getInstance(df);
+		ButtonController bc = new ButtonController(df);
 		JPanel jp = new JPanel();
 		calendarModel.addObserver(this);
 		jp.setLayout(new GridLayout(1,3));
@@ -51,13 +52,13 @@ public class CalendarView extends JPanel implements Observer{
 		forward.setActionCommand("Forward");
 		GregorianCalendar g = calendarModel.getCalendar();
 		add(jp,BorderLayout.NORTH);
-		add(DatesView.getInstance(da),BorderLayout.CENTER);
+		add(DatesView.getInstance(df),BorderLayout.CENTER);
 		setVisible(true);
 		addObserverto(calendarModel);
 	}
-	public static CalendarView getInstance(DatabaseAccess da){
+	public static CalendarView getInstance(DaoFactory df){
 		if(cv == null){
-			cv = new CalendarView(da);
+			cv = new CalendarView(df);
 		}
 		return cv;
 	}

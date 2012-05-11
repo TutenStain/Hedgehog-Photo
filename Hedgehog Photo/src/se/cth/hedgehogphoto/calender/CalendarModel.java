@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
+import se.cth.hedgehogphoto.database.JpaPictureDao;
 import se.cth.hedgehogphoto.database.Picture;
 
 
@@ -25,8 +27,10 @@ public class CalendarModel extends Observable {
 	private Map<Integer, List<Picture>> pictureDays;
 	private List<Integer> dayswithPicture = new ArrayList<Integer>();
 	private GregorianCalendar g= new GregorianCalendar();
-	private  CalendarModel(DatabaseAccess da){
-		this.da = da;
+	private JpaPictureDao jpd;
+	private  CalendarModel(DaoFactory df){
+		DaoFactory daoFactory = df.getInstance();
+		jpd = daoFactory.getJpaPictureDao();
 		month = g.get(g.MONTH)+1;
 		System.out.print(g.get(g.MONTH)+1);
 		year = g.get(g.YEAR);
@@ -37,9 +41,9 @@ public class CalendarModel extends Observable {
 
 
 	}
-	public static CalendarModel getInstance(DatabaseAccess da){
+	public static CalendarModel getInstance(DaoFactory df){
 	if(m==null){
-			m = new CalendarModel(da);
+			m = new CalendarModel(df);
 	}
 		return m;
 	}
@@ -128,13 +132,17 @@ public class CalendarModel extends Observable {
 	public void getDates(){
 		pictureDays = new HashMap<Integer, List<Picture>>();
 		dayswithPicture = new ArrayList<Integer>(); 
+		try{
 		for(int i = 1; i<=maxDays;i++){
-			List<Picture> pics=  da.searchPicturesfromDates(year + "-" + month + "-" + i);
-			pics.addAll( da.searchPicturesfromDates(year + ":" + month + ":" + i));
+			List<Picture> pics=  jpd.searchfromDates(year + "-" + month + "-" + i);
+			pics.addAll( jpd.searchfromDates(year + ":" + month + ":" + i));
 			if(!(pics.isEmpty()) && pics != null){
 				pictureDays.put(i,pics);
 				dayswithPicture.add(i);
 			}
+		}
+		}catch(Exception h){
+			
 		}
 	}
 	public List<Picture> getPictures(Integer key){
