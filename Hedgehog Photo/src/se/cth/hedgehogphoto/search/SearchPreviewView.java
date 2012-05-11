@@ -16,6 +16,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
+import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.objects.FileObject;
 
@@ -43,7 +44,7 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		SearchModel model = (SearchModel)arg;
+		final SearchModel model = (SearchModel)arg;
 		System.out.println("UPDATE @ SEARCH_PREVIEW_VIEW: " + model.getSearchQueryText());
 		show(jtf, -50, jtf.getHeight());
 		List<Picture> fo = model.getSearchObjects();
@@ -63,6 +64,7 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						System.out.println("Clicked ON ME and FIX ME!!!");
+						Files.getInstance().setPictureList(model.getSearchObjects());
 			        }
 				});
 				panel.add(p);

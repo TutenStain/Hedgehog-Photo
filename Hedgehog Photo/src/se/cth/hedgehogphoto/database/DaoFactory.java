@@ -1,15 +1,23 @@
 package se.cth.hedgehogphoto.database;
 
-import javax.persistence.EntityManagerFactory;
-
+/**
+ * 
+ * @author Julia Gustafsson
+ */
 public class DaoFactory {
 
-	private static JpaAlbumDao jad;
-	private static JpaCommentDao jcd;
-	private static JpaLocationDao jld;
-	private static JpaTagDao jtd;
-	private static JpaPictureDao jpd;
+	private JpaAlbumDao jad;
+	private JpaCommentDao jcd;
+	private JpaLocationDao jld;
+	private JpaTagDao jtd;
+	private JpaPictureDao jpd;
 	private static DaoFactory daoFactory;
+	
+	public static DaoFactory getInstance(){
+		if(daoFactory == null)
+			daoFactory = new DaoFactory();
+		return daoFactory;
+	}
 
 	private DaoFactory(){
 		jad = new JpaAlbumDao();
@@ -20,50 +28,48 @@ public class DaoFactory {
 
 	}
 	
-	public static JpaAlbumDao getJpaAlbumDao() {
+	public JpaAlbumDao getJpaAlbumDao() {
 		return jad;
 	}
 
-	public static void setJpaAlbumDao(JpaAlbumDao jad) {
-		DaoFactory.jad = jad;
+	public void setJpaAlbumDao(JpaAlbumDao jad) {
+		this.jad = jad;
 	}
 
-	public static JpaCommentDao getJpaCommentDao () {
+	public JpaCommentDao getJpaCommentDao () {
 		return jcd;
 	}
 
-	public static void setJpaCommentDao (JpaCommentDao jcd) {
-		DaoFactory.jcd = jcd;
+	public void setJpaCommentDao (JpaCommentDao jcd) {
+		this.jcd = jcd;
 	}
 
-	public static JpaLocationDao getJpaLocationDao() {
+	public JpaLocationDao getJpaLocationDao() {
 		return jld;
 	}
 
-	public static void setJpaLocationDao(JpaLocationDao jld) {
-		DaoFactory.jld = jld;
+	public void setJpaLocationDao(JpaLocationDao jld) {
+		this.jld = jld;
 	}
 
-	public static JpaTagDao getJpaTagDao() {
+	public JpaTagDao getJpaTagDao() {
 		return jtd;
 	}
 
-	public static void setJpaTagDao(JpaTagDao jtd) {
-		DaoFactory.jtd = jtd;
+	public void setJpaTagDao(JpaTagDao jtd) {
+		this.jtd = jtd;
 	}
 
-	public static JpaPictureDao getJpaPictureDao() {
+	public JpaPictureDao getJpaPictureDao() {
 		return jpd;
 	}
 
-	public static void setJpaPictureDao(JpaPictureDao jpd) {
-		DaoFactory.jpd = jpd;
+	public void setJpaPictureDao(JpaPictureDao jpd) {
+		this.jpd = jpd;
 	}
-
-	public static DaoFactory getInstance(){
-		if(daoFactory == null)
-			daoFactory = new DaoFactory();
-		return daoFactory;
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		throw new CloneNotSupportedException();
 	}
-
 }

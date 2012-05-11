@@ -72,19 +72,23 @@ public final class Helper {
 	/**
 	 * Creates the plugin folder
 	 * @param createDir the folder path to create
+	 * @return returns true upon sucesfully folder creation, otherwise false
 	 */
-	public static void createPluginFolder(final File createDir){
+	public static boolean createPluginFolder(final File createDir){
 		//Creates a plugin directory in home/plugin
 		//If the folder already exist nothing will be created.
 		if(createDir.exists() == false){
 			Log.getLogger().log(Level.INFO, "Plugin directory not found, creating new directory...");
 			if(createDir.mkdirs() == false){
 				Log.getLogger().log(Level.SEVERE, "Creating plugin directory failed, fatal error");
+				return false;
 			} else {
 				Log.getLogger().log(Level.INFO, "Plugin directory succesfully created!");
+				return true;
 			}
 		} else {
 			Log.getLogger().log(Level.INFO, "Plugin dir exists, skipping creation...");
+			return true;
 		}
 	}
 	

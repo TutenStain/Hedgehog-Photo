@@ -6,6 +6,8 @@ import java.io.File;
 import java.util.List;
 
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 public class HelperTest {
 	@Test
@@ -33,6 +35,15 @@ public class HelperTest {
 	public void testFindFolderForFile(){
 		File before = new File("this/is/the/folder/file.java");
 		File after = new File("this/is/the/folder");
+		System.out.println(Helper.findFolderForFile(before));
 		assertTrue(Helper.findFolderForFile(before).toPath().equals(after.toPath()));
+	}
+	
+	@Test
+	public void testCreatePluginFolder(){
+		File file = Mockito.mock(File.class);
+		Mockito.when(file.getPath()).thenReturn("/home/temp");
+		Mockito.when(file.exists()).thenReturn(true);
+		assertTrue(Helper.createPluginFolder(file));
 	}
 }

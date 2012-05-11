@@ -61,7 +61,6 @@ public class Files extends Observable{
 		return albumList;
 	}
 	
-	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();

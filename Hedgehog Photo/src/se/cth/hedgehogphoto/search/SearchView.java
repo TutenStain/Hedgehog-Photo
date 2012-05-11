@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,6 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
+
+import se.cth.hedgehogphoto.database.Files;
+import se.cth.hedgehogphoto.database.Picture;
 
 /**
  * @author Barnabas Sapan
@@ -23,7 +28,7 @@ public class SearchView extends JPanel implements Observer{
 	private Dimension searchButtonSize = new Dimension(100, 30);
 	private JTextField searchBox;
 	private JButton searchButton;
-	private SearchPreviewView spv;
+	private SearchPreviewView spv = null;
 	
 	public SearchView(SearchPreviewView spv){
 		setLayout(new FlowLayout());
@@ -33,7 +38,9 @@ public class SearchView extends JPanel implements Observer{
 		searchBox.setPreferredSize(searchBoxSize);
 		add(searchBox);
 		add(searchButton);
-		this.setSearchPreview(spv);
+		if(spv != null){
+			this.setSearchPreview(spv);
+		}
 	}
 	
 	public void setSearchBoxFocusListener(FocusListener fl){
@@ -74,10 +81,10 @@ public class SearchView extends JPanel implements Observer{
 	 * @param _spv The search preview model.
 	 */
 	//TODO Use interface argument instead.
-	public void setSearchPreview(SearchPreviewView _spv){
-		spv = _spv;
-		spv.setTextField(searchBox);
-		add(spv);
+	public void setSearchPreview(SearchPreviewView spv){
+		this.spv = spv;
+		this.spv.setTextField(searchBox);
+		add(this.spv);
 	}
 	
 	public void setSearchBoxText(String txt){
@@ -90,10 +97,13 @@ public class SearchView extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//TODO This gets called when we dont have a spv specified. Make search here.
+		//If we dont have a spv specified, just make the search and update the view.
 		if(spv == null){
 			SearchModel model = (SearchModel)arg;
 			System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());
+			
+			List<Picture> pic = model.getSearchObjects();;
+			Files.getInstance().setPictureList(pic);
 		}
 	}
 }
