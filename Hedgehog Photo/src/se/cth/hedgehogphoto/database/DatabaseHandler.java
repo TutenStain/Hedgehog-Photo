@@ -373,5 +373,10 @@ return db;
 	public void deleteTagsfromAlbum(String albumName){
 		jad.deleteTags(albumName);
 	}
+	@Override
+	public DaoFactory getFactory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
