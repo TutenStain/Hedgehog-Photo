@@ -14,7 +14,7 @@ import se.cth.hedgehogphoto.database.Picture;
  */
 public abstract class AbstractMarkerModel extends AbstractComponentModel {
 	private String iconPath;
-	int numberOfPictures;
+	int numberOfPictures; //TODO: call numberOfLocations instead, more general = easier to extend
 	
 	@Override
 	public void initialize() {
