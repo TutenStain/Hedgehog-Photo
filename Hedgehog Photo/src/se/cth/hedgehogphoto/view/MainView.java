@@ -33,6 +33,11 @@ import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.model.MainModel;
 
+/**
+ * 
+ * @author David
+ */
+
 public class MainView implements Observer {
 
 	private JFrame frame;
@@ -42,16 +47,10 @@ public class MainView implements Observer {
 	private JPanel topPanel;
 	private static List<PhotoPanel> photoPanels;
 
-	/**
-	 * Create the application.
-	 */
 	public MainView(StartUpView startView) {
 		initialize(startView);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize(StartUpView startView) {
 		frame =  startView;
 

@@ -10,6 +10,12 @@ import javax.swing.JLabel;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.log.Log;
 
+/**
+ * 
+ * @author Barnabas Sapan
+ *
+ */
+
 public class StartUpView extends JFrame implements Runnable{
 
 	@Override
@@ -28,6 +34,7 @@ public class StartUpView extends JFrame implements Runnable{
 		
 		setVisible(true);
 		
+		//Start and wait for the database to finnish loading
 		Thread t = new Thread(DatabaseHandler.getInstance());
 		t.run();
 		try {
