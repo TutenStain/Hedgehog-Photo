@@ -1,7 +1,6 @@
 package se.cth.hedgehogphoto.map.geocoding.model;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -75,7 +74,7 @@ public class URLCreatorTest {
 		}
 	}
 	
-	private URL createURL(String path) {
+	private URL createURL(String path) { //TODO: Remove method?
 		URL url = null;
 		try {
 			return new URL(path);

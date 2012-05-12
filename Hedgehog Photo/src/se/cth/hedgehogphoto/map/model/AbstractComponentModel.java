@@ -125,13 +125,13 @@ public abstract class AbstractComponentModel extends Observable
 	
 	/** Returns the mapcenters x-coordinate in pixels.
 	 *  Fetches it from a global accessible class. */
-	private int getCenterXPixel() {
+	private int getCenterXPixel() { //TODO: Check if this is actually needed somewhere, and if yes, use the method, else; remove it.
 		return Constants.PREFERRED_MODULE_WIDTH / 2;
 	}
 	
 	/** Returns the mapcenters y-coordinate in pixels.
 	 *  Fetches it from a global accessible class. */
-	private int getCenterYPixel() {
+	private int getCenterYPixel() { //TODO: Check if this is actually needed somewhere, and if yes, use the method, else; remove it.
 		return Constants.PREFERRED_MODULE_HEIGHT / 2;
 	}
 	

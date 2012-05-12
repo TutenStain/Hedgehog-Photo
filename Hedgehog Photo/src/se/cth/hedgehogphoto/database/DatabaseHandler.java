@@ -31,7 +31,7 @@ public class DatabaseHandler implements DatabaseAccess{
 	private static JpaTagDao jtd = new JpaTagDao();
 	private static JpaPictureDao jpd = new JpaPictureDao();
 	private static final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
-	private static EntityManagerFactory factory = jpd.factory;
+	private static EntityManagerFactory factory = jpd.factory; //TODO: unused fields
 
 
 	

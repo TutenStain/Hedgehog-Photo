@@ -87,7 +87,7 @@ public class MapView extends JPanel implements Observer {
 	
 	@Deprecated
 	private AbstractJOverlayMarker getMarkerGUI(AbstractMarkerModel model) 
-													throws NoMatchingGUIException {
+													throws NoMatchingGUIException { //TODO: Do we need this method?
 		int nbrOfModels = this.locationMarkers.size();
 		for (int index = 0; index < nbrOfModels; index++) {
 			AbstractJOverlayMarker marker = this.locationMarkers.get(index);

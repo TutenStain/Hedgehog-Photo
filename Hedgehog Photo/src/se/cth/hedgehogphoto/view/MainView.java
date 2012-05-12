@@ -56,7 +56,7 @@ public class MainView implements Observer {
 		frame =  new JFrame();
 
 		//TODO Minimum size?
-		frame.setExtendedState(frame.MAXIMIZED_BOTH);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel bottomPanel = new JPanel();

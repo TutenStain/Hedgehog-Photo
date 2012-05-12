@@ -14,7 +14,7 @@ public class ColorChooser extends JPanel{
 	private JButton[] grid = new JButton[9];
 	
 	public ColorChooser(){
-		this.side = side;
+		this.side = side; //TODO: we are actually doing this.side = this.side; here...
 		this.setLayout(new GridLayout(3, 3));
 		this.arrangeButtons();
 	}

@@ -31,7 +31,7 @@ public class CalendarModel extends Observable {
 	private  CalendarModel(DaoFactory df){
 		DaoFactory daoFactory = df.getInstance();
 		jpd = daoFactory.getJpaPictureDao();
-		month = g.get(g.MONTH)+1;
+		month = g.get(g.MONTH)+1; //TODO: Change g.MONTH to GregorianCalendar.MONTH (below as well)
 		System.out.print(g.get(g.MONTH)+1);
 		year = g.get(g.YEAR);
 		System.out.println(year);
@@ -99,7 +99,7 @@ public class CalendarModel extends Observable {
 			month = 12;
 			year = year -1;
 		}
-		Date date = new Date(year,month-1,1);
+		Date date = new Date(year,month-1,1); //TODO: Might want to change to Calendar.set(year + 1900, month, date) or GregorianCalendar(year + 1900, month, date)?
 		g.setTime(date);
 		maxDays = g.getActualMaximum(g.DAY_OF_MONTH);
 		getDates();
