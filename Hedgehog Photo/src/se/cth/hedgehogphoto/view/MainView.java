@@ -45,15 +45,15 @@ public class MainView implements Observer {
 	/**
 	 * Create the application.
 	 */
-	public MainView() {
-		initialize();
+	public MainView(StartUpView startView) {
+		initialize(startView);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		frame =  new JFrame();
+	private void initialize(StartUpView startView) {
+		frame =  startView;
 
 		//TODO Minimum size?
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

@@ -30,7 +30,15 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	private static JpaCommentDao jcd = new JpaCommentDao();
 	private static JpaLocationDao jld = new JpaLocationDao();
 	private static JpaTagDao jtd = new JpaTagDao();
+<<<<<<< HEAD
+	private static JpaPictureDao jpd = new JpaPictureDao();
+	private static final String PERSISTENCE_UNIT_NAME = "hedgehogphoto";
+	private static EntityManagerFactory factory = jpd.factory; //TODO: unused fields
+
+
+=======
 	private static JpaPictureDao jpd = new JpaPictureDao();*/
+>>>>>>> added a startup screen
 	
 	private JpaAlbumDao jad;
 	private JpaCommentDao jcd;
@@ -40,8 +48,6 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	
 	private EntityManager em;// = Entity.entityManager;
 	private static DatabaseHandler db = null;
-
-	private static Thread t = Thread.currentThread();
 	
 	public DatabaseHandler () {}
 

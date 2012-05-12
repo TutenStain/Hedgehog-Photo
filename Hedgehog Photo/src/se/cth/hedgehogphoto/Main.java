@@ -23,6 +23,7 @@ import se.cth.hedgehogphoto.search.SearchPreviewView;
 import se.cth.hedgehogphoto.search.SearchView;
 import se.cth.hedgehogphoto.view.MainView;
 import se.cth.hedgehogphoto.view.PluginArea;
+import se.cth.hedgehogphoto.view.StartUpView;
 
 
 
@@ -34,11 +35,20 @@ import se.cth.hedgehogphoto.view.PluginArea;
 public class Main {
 
 	public static void main(String[] args) {
+		StartUpView start = new StartUpView();
+		Thread t = new Thread(start);
+		t.start();
+		try {
+			t.join();
+		} catch (InterruptedException e) {
+			Log.getLogger().log(Level.WARNING, "Interrupted", e);
+		}
+		
 		DatabaseHandler.getInstance().deleteAll();
-		//Main
+
 		insertFileObjectsIntoDatabase();
 		MainModel model = new MainModel();
-		MainView view = new MainView();
+		MainView view = new MainView(start);
 		model.addObserver(view);
 		
 		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
