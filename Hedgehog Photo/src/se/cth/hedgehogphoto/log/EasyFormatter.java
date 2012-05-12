@@ -29,7 +29,7 @@ public class EasyFormatter extends Formatter {
 		if(record.getThrown() != null){
 			sb.append(" "+ record.getThrown().getStackTrace()[0].toString());
 		}
-		sb.append("\n");
+		sb.append(System.getProperty("line.separator"));
 
 		return sb.toString();
 	}
@@ -39,12 +39,12 @@ public class EasyFormatter extends Formatter {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
 		StringBuilder sb = new StringBuilder()
-			.append("\n")
+			.append(System.getProperty("line.separator"))
 			.append("HedgehogPhoto ")
 			.append(dateFormat.format(cal.getTime()))
 			.append(" -----------------------")
-			.append("\n")
-			.append("\n");
+			.append(System.getProperty("line.separator"))
+			.append(System.getProperty("line.separator"));
 		
 		return sb.toString();
 	}
@@ -52,7 +52,7 @@ public class EasyFormatter extends Formatter {
 	@Override
 	public String getTail(Handler h){
 		return new StringBuilder()
-					.append("\n")
+					.append(System.getProperty("line.separator"))
 					.append("----------------------------------------------------------")
 					.toString();
 	}
