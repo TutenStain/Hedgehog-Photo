@@ -78,13 +78,11 @@ public class URLCreatorTest {
 	private URL createURL(String path) {
 		URL url = null;
 		try {
-			url = new URL(path);
+			return new URL(path);
 		} catch (MalformedURLException e) {
-			url = null;
-			fail("Could not create URL");
-		} finally {
-			return url;
-		}
+			return null;
+//			fail("Could not create URL");
+		} 
 	}
 
 }
