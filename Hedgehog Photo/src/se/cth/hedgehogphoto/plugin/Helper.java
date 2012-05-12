@@ -41,7 +41,7 @@ public final class Helper {
 	 * @return the stripped String
 	 */
 	public static String stripDotAndSlashFromString(String s){
-		int dividerIndex = s.lastIndexOf("/") + 1;
+		int dividerIndex = s.lastIndexOf(System.getProperty("file.separator")) + 1;
 		int dotPath = s.lastIndexOf(".");
 		String finalString = s.substring(dividerIndex, dotPath);
 		
@@ -116,12 +116,13 @@ public final class Helper {
 	
 	/**
 	 * Finds the folder the supplied file is in. 
-	 * This is just a lazy method striping the last forward-slash (/) from the path.
+	 * This is just a lazy method striping the last forward-slash (/) or backward-slash (\)
+	 * depending on system from the path.
 	 * @param f the file to get folder to
 	 * @return a File object representing the folder the supplied file is in.
 	 */
 	public static File findFolderForFile(final File f){
 		String d = f.getAbsolutePath();
-		return new File(d.substring(0, d.lastIndexOf("/")));
+		return new File(d.substring(0, d.lastIndexOf(System.getProperty("file.separator"))));
 	}
 }

@@ -80,6 +80,12 @@ public class FileClassLoader extends URLClassLoader {
 		
 		javaFile = Helper.findFileInSubfolder(javaFile, fileStub ,".java", getURLs());
 		classFile = Helper.findFileInSubfolder(classFile, fileStub ,".class", getURLs());
+
+		
+		System.out.println("fileStub: " + fileStub);
+		System.out.println("javaString: " + javaFilenamePath);
+		System.out.println("JavaFile: " + javaFile.getAbsolutePath() + " " + javaFile.exists());
+		System.out.println("-------");
 		
 		//Only compile if necessary
 		if (javaFile.exists() && (!classFile.exists() || javaFile.lastModified() > classFile.lastModified())) {
@@ -124,7 +130,7 @@ public class FileClassLoader extends URLClassLoader {
 		Log.getLogger().log(Level.INFO, "Compiling " + fileToCompile.getAbsolutePath() + "...");
 
 		//Copy our API to plugin dir
-		Path target = Paths.get(pluginRootDirectory.getAbsolutePath() + "/API.jar");
+		Path target = Paths.get(pluginRootDirectory.getAbsolutePath() + System.getProperty("file.separator")  + "API.jar");
 		if(Files.exists(target) == false) {
 			Log.getLogger().log(Level.INFO, "Copying API.jar to: " + pluginRootDirectory.getAbsolutePath() + "...");
 			Path source = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "API.jar");
@@ -140,7 +146,7 @@ public class FileClassLoader extends URLClassLoader {
 		if(compiler != null){
 			StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 			Iterable<? extends JavaFileObject> compUnits =  fileManager.getJavaFileObjects(fileToCompile);
-			String classpath = pluginRootDirectory.getAbsolutePath() + "/API.jar:" + fileRootFolder.getAbsolutePath();
+			String classpath = pluginRootDirectory.getAbsolutePath() + System.getProperty("file.separator") + "API.jar:" + fileRootFolder.getAbsolutePath();
 			final Iterable<String> options = Arrays.asList(new String[] { "-cp", classpath});
 			compilationResult = compiler.getTask(null, fileManager, null, options, null, compUnits).call();        
 		} else {
