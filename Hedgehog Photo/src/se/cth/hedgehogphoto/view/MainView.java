@@ -57,7 +57,6 @@ public class MainView implements Observer {
 
 		//TODO Minimum size?
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel bottomPanel = new JPanel();
 		frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
@@ -117,9 +116,6 @@ public class MainView implements Observer {
 		    panelHolder[i] = new JPanel();
 		    leftPanelView.add(panelHolder[i]);
 		}
-
-		JButton btnCalender = new JButton("Calender");
-		leftPanelView.add(btnCalender);
 
 		JScrollPane photoView = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		frame.getContentPane().add(photoView, BorderLayout.CENTER);
