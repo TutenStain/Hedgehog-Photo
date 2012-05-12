@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.List;
 
 import javax.swing.BorderFactory;

@@ -3,19 +3,15 @@ package se.cth.hedgehogphoto.calender;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.util.GregorianCalendar;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.database.DaoFactory;
-import se.cth.hedgehogphoto.database.DatabaseAccess;
-import se.cth.hedgehogphoto.plugin.InitializePlugin;
 
 
 public class CalendarView extends JPanel implements Observer{

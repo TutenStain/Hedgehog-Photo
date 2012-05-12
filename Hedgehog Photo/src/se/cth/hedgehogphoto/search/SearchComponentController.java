@@ -8,7 +8,6 @@ import java.util.List;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
-import se.cth.hedgehogphoto.objects.FileObject;
 
 /**
  * @author Barnabas Sapan

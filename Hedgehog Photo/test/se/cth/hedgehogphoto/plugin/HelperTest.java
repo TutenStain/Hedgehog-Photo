@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.List;
 
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 public class HelperTest {

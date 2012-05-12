@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import se.cth.hedgehogphoto.database.DaoFactory;
-import se.cth.hedgehogphoto.database.DatabaseAccess;
 
 public class ButtonController  implements ActionListener{
 	CalendarModel m;

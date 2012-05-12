@@ -3,8 +3,6 @@ package se.cth.hedgehogphoto.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.cth.hedgehogphoto.objects.LocationObject;
-
 
 
 

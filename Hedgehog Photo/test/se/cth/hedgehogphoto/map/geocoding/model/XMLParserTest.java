@@ -1,7 +1,6 @@
 package se.cth.hedgehogphoto.map.geocoding.model;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.net.MalformedURLException;
 import java.net.URL;

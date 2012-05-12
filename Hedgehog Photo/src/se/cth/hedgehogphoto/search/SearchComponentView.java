@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseListener;
-import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,7 +12,6 @@ import javax.swing.JTextArea;
 
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.Tag;
-import se.cth.hedgehogphoto.objects.FileObject;
 
 /**
  * @author Barnabas Sapan

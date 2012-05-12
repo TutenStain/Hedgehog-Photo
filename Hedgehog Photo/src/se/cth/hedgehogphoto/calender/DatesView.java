@@ -8,11 +8,9 @@ import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.database.DaoFactory;
-import se.cth.hedgehogphoto.database.DatabaseAccess;
 
 public class DatesView extends JPanel implements Observer{
 	private static DatesView dw;

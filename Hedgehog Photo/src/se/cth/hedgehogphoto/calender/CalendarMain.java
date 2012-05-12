@@ -3,7 +3,6 @@ package se.cth.hedgehogphoto.calender;
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.database.DaoFactory;
-import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.plugin.GetDatabase;
 import se.cth.hedgehogphoto.plugin.InitializePlugin;
 import se.cth.hedgehogphoto.plugin.Panel;

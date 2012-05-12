@@ -1,7 +1,6 @@
 package se.cth.hedgehogphoto.map.geocoding.view;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.text.DecimalFormat;
 

@@ -30,7 +30,6 @@ import javax.swing.event.ChangeListener;
 import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
-import se.cth.hedgehogphoto.database.Tag;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.model.MainModel;
 

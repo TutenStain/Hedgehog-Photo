@@ -2,8 +2,6 @@ package se.cth.hedgehogphoto.tagcloud;
 
 import javax.swing.JLabel;
 
-import se.cth.hedgehogphoto.database.DatabaseAccess;
-
 /**
  * @author Barnabas Sapan
  */
