@@ -21,7 +21,7 @@ public class XMLParser {
 	private static XMLParser xmlParser;
 	private DocumentBuilder docBuilder;
 	
-	public static XMLParser getInstance() {
+	public static synchronized XMLParser getInstance() {
 		if (xmlParser == null) 
 			xmlParser = new XMLParser();
 		return xmlParser;

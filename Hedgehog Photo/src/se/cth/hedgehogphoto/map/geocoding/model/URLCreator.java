@@ -21,7 +21,7 @@ public class URLCreator {
 	private URLCreator() {
 	}
 	
-	public static URLCreator getInstance() {
+	public static synchronized URLCreator getInstance() {
 		if (urlCreator == null)
 			urlCreator = new URLCreator();
 		return urlCreator;
