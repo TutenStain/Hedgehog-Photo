@@ -40,6 +40,16 @@ public class LocationObject {
 		setLongitude( extractCoordinate(longitude) );
 	}
 	
+	/**
+	 * Given a string that contains coordinate-information,
+	 * this method returns it's value as a double. The string
+	 * may be formatted like this (separations with a comma):
+	 * degree
+	 * degree, minutes
+	 * degree, minutes, seconds
+	 * @param coordinate the string containing the coordinate-info.
+	 * @return the coordinate as a double.
+	 */
 	private double extractCoordinate(String coordinate) {
 		//will be on form Double,Double,Double after preparation
 		coordinate = coordinate.trim();
@@ -110,25 +120,34 @@ public class LocationObject {
 		return data;
 	}
 	
-	private String replaceCommasWithinParenthesis(String coordinate) {
+	/**
+	 * Given a string, this method returns the same string, but commas
+	 * within two parenthesis-clauses are converted into points/dots.
+	 * That way Java can read the inners of the clauses as doubles
+	 * (if it really are numbers there, which in this class case will be).
+	 * @param string the string to modify
+	 * @return the same string as given, but with commas within two
+	 * parenthesis-clauses replaced by dots/points.
+	 */
+	private String replaceCommasWithinParenthesis(String string) {
 		StringBuilder sb = new StringBuilder();
 		int tempIndex = 0;
-		int startParenthesisIndex = coordinate.indexOf('(', tempIndex);
-		int endParenthesisIndex = coordinate.indexOf(')', tempIndex);
+		int startParenthesisIndex = string.indexOf('(', tempIndex);
+		int endParenthesisIndex = string.indexOf(')', tempIndex);
 		while (indexPositionsAreOk(startParenthesisIndex, endParenthesisIndex)) {
-			String unalteredText = coordinate.substring(tempIndex, startParenthesisIndex);
-			String parenthesisText = coordinate.substring(startParenthesisIndex, endParenthesisIndex);
+			String unalteredText = string.substring(tempIndex, startParenthesisIndex);
+			String parenthesisText = string.substring(startParenthesisIndex, endParenthesisIndex);
 			parenthesisText = parenthesisText.replace(',', '.');
 			sb.append(unalteredText);
 			sb.append(parenthesisText);
 			
 			/* Prepare for next iteration */
 			tempIndex = endParenthesisIndex;
-			startParenthesisIndex = coordinate.indexOf('(', tempIndex);
-			endParenthesisIndex = coordinate.indexOf(')', tempIndex);
+			startParenthesisIndex = string.indexOf('(', tempIndex);
+			endParenthesisIndex = string.indexOf(')', tempIndex);
 		}
-		int lastIndex = coordinate.length();
-		String endOfString = coordinate.substring(tempIndex, lastIndex);
+		int lastIndex = string.length();
+		String endOfString = string.substring(tempIndex, lastIndex);
 		sb.append(endOfString);
 		return sb.toString();
 	}
@@ -148,7 +167,8 @@ public class LocationObject {
 		return (indexOne != -1) && (indexTwo != -1) && (indexOne <= indexTwo);
 	}
 	
-	public boolean equals(LocationObject otherLocation) { //TODO: Make a proper equals-method!
+	@Deprecated
+	public boolean equals(LocationObject otherLocation) { //TODO: Make a proper equals-method! Not reliable at the moment.
 		super.equals(otherLocation);
 		String secondLocation = otherLocation.toString();
 		return location.equalsIgnoreCase(secondLocation);
