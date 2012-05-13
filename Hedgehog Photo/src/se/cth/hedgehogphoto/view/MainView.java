@@ -35,14 +35,14 @@ import se.cth.hedgehogphoto.model.MainModel;
 
 /**
  * 
- * @author David
+ * @author David Grankvist
  */
 
 public class MainView implements Observer {
 
 	private JFrame frame;
 	private JPanel photoViewPanel;
-	private	 JPanel leftPanelView;
+	private	JPanel leftPanelView;
 	private JPanel[] panelHolder = new JPanel[3];
 	private JPanel topPanel;
 	private static List<PhotoPanel> photoPanels;
@@ -53,22 +53,14 @@ public class MainView implements Observer {
 
 	private void initialize(StartUpView startView) {
 		frame = startView;
-		
 		//TODO Minimum size?
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
 		JPanel bottomPanel = new JPanel();
 		frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
-
 		JButton btnShowhideTags = new JButton("Show/Hide tags");
-
-
 		JButton btnShowhideLocation = new JButton("Show/Hide location");
-
 		JSlider slider = new JSlider(50, 200);
-
 		JButton showHideComments = new JButton("Show/Hide comments");
-
 
 		GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);
 		gl_bottomPanel.setHorizontalGroup(
@@ -101,7 +93,6 @@ public class MainView implements Observer {
 		topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
 		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
-
 		
 		leftPanelView = new JPanel();
 		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
@@ -121,7 +112,6 @@ public class MainView implements Observer {
 
 		photoViewPanel = new JPanel();
 		photoView.setViewportView(photoViewPanel);
-		
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 
 		showHideComments.addActionListener(new ActionListener() {
@@ -143,8 +133,6 @@ public class MainView implements Observer {
 				for(int i=0;i<photoPanels.size();i++){
 					photoPanels.get(i).displayLocation(!photoPanels.get(i).isVisibleLocation());
 				}
-
-
 			}
 		});
 		slider.addChangeListener(new ChangeListener(){
@@ -152,31 +140,16 @@ public class MainView implements Observer {
 			public void stateChanged(ChangeEvent arg0) {
 				JSlider slider = (JSlider)arg0.getSource();
 				float scale = (float)slider.getValue()/100;
-
 				for(int i=0;i<photoPanels.size();i++){
 					Image image = photoPanels.get(i).getIcon().getImage();
-					BufferedImage bi = resize(image, Math.round(image.getWidth(null)*scale),
+					BufferedImage bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
 							Math.round(image.getHeight(null)*scale));
 					ImageIcon icon2 = new ImageIcon(bi);
-
 					photoPanels.get(i).setIcon(icon2);
 				}
 			}
 
 		});
-	}
-
-	private static BufferedImage resize(Image image, int width, int height) {
-		//TODO added to skip the picture with an illegal name
-		if(width <= 0 || height <= 0){
-			return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-		}
-		BufferedImage resizedImage = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g = resizedImage.createGraphics();
-		g.drawImage(image, 0, 0, width, height, null);
-		g.dispose();
-		return resizedImage;
 	}
 	
 	public void addPlugin(JPanel panel, PluginArea placement){
