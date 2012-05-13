@@ -27,8 +27,8 @@ public abstract class AbstractComponentModel extends Observable
 	
 	/** Moves the position by the given length. */
 	public void move(int dx, int dy) {
-		int x = this.position.x + dx;
-		int y = this.position.y + dy;
+		int x = getXPosition() + dx;
+		int y = getYPosition() + dy;
 		setPosition(x, y);
 	}
 	
@@ -59,13 +59,13 @@ public abstract class AbstractComponentModel extends Observable
 	/** Returns the x-position of where the components 
 	 *  graphical representation points. */
 	public int getXPointerPosition() {
-		return this.position.x + getXOffset();
+		return getXPosition() + getXOffset();
 	}
 	
 	/** Returns the y-position of where the components
 	 *  graphical representation points. */
 	public int getYPointerPosition() {
-		return this.position.y + getYOffset();
+		return getYPosition() + getYOffset();
 	}
 	
 	/** Returns the distance from the stored position to
@@ -123,18 +123,6 @@ public abstract class AbstractComponentModel extends Observable
 		}
 	}
 	
-	/** Returns the mapcenters x-coordinate in pixels.
-	 *  Fetches it from a global accessible class. */
-	private int getCenterXPixel() { //TODO: Check if this is actually needed somewhere, and if yes, use the method, else; remove it.
-		return Constants.PREFERRED_MODULE_WIDTH / 2;
-	}
-	
-	/** Returns the mapcenters y-coordinate in pixels.
-	 *  Fetches it from a global accessible class. */
-	private int getCenterYPixel() { //TODO: Check if this is actually needed somewhere, and if yes, use the method, else; remove it.
-		return Constants.PREFERRED_MODULE_HEIGHT / 2;
-	}
-	
 	public int getComponentWidth() {
 		return this.componentWidth;
 	}
@@ -188,7 +176,7 @@ public abstract class AbstractComponentModel extends Observable
 	}
 	
 	public Rectangle getRectangle() {
-		return new Rectangle(this.position.x, this.position.y, 
+		return new Rectangle(getXPosition(), getYPosition(), 
 								getComponentWidth(), getComponentHeight());
 	}
 	

@@ -24,7 +24,7 @@ public class MarkerModel extends AbstractMarkerModel {
 	}
 	
 	public double getLongitude() {
-		return this.picture.getLocation().getLongitude();
+		return this.picture.getLocation().getLongitude(); //TODO: Might want to access this.picture via getPicture() instead?
 	}
 	
 	public double getLatitude() {
@@ -48,7 +48,7 @@ public class MarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	int computeNumberOfPictures() {
+	int computeNumberOfLocations() {
 		return 1;
 	}
 

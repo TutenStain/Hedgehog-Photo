@@ -38,20 +38,20 @@ public class MultipleMarkerModel extends AbstractMarkerModel {
 	private Point computePosition() {
 		int xSum = 0;
 		int ySum = 0;
-		int nbrOfMarkers = markers.size();
+		int nbrOfMarkers = this.markers.size();
 		for (int index = 0; index < nbrOfMarkers; index++) {
-			AbstractMarkerModel marker = markers.get(index);
-			xSum += marker.getXPointerPosition() * marker.getNumberOfPictures();
-			ySum += marker.getYPointerPosition() * marker.getNumberOfPictures();
+			AbstractMarkerModel marker = this.markers.get(index);
+			xSum += marker.getXPointerPosition() * marker.getNumberOfLocations();
+			ySum += marker.getYPointerPosition() * marker.getNumberOfLocations();
 		}
-		int averageX = xSum / this.getNumberOfPictures();
-		int averageY = ySum / this.getNumberOfPictures();
+		int averageX = xSum / this.getNumberOfLocations();
+		int averageY = ySum / this.getNumberOfLocations();
 		return new Point(averageX, averageY);
 	}
 	
 	public void handleVisibility() {
-		AbstractMarkerModel markerOne = markers.get(0);
-		AbstractMarkerModel markerTwo = markers.get(1);
+		AbstractMarkerModel markerOne = this.markers.get(0);
+		AbstractMarkerModel markerTwo = this.markers.get(1);
 		markerOne.handleVisibility(); //let submarkers handle their visibility status first
 		markerTwo.handleVisibility(); //if they are invisible, this marker will be that too
 		if (markerOne.intersects(markerTwo) && markerOne.isVisible() && markerTwo.isVisible()) {
@@ -62,8 +62,8 @@ public class MultipleMarkerModel extends AbstractMarkerModel {
 	}
 	
 	public void show() {
-		markers.get(0).setVisible(false);
-		markers.get(1).setVisible(false);
+		this.markers.get(0).setVisible(false);
+		this.markers.get(1).setVisible(false);
 		this.setVisible(true);
 	}
 	
@@ -94,19 +94,19 @@ public class MultipleMarkerModel extends AbstractMarkerModel {
 
 	@Override
 	public List<Picture> getPictures(List<Picture> pictures) {
-		int nbrOfMarkers = markers.size();
+		int nbrOfMarkers = this.markers.size();
 		for (int index = 0; index < nbrOfMarkers; index++) {
-			pictures = markers.get(index).getPictures(pictures);
+			pictures = this.markers.get(index).getPictures(pictures);
 		}
 		return pictures;
 	}
 
 	@Override
-	int computeNumberOfPictures() {
+	int computeNumberOfLocations() {
 		int nbrOfPictures = 0;
-		int nbrOfMarkers = markers.size();
+		int nbrOfMarkers = this.markers.size();
 		for (int index = 0; index < nbrOfMarkers; index++) {
-			nbrOfPictures += markers.get(index).computeNumberOfPictures();
+			nbrOfPictures += this.markers.get(index).computeNumberOfLocations();
 		}
 		return nbrOfPictures;
 	}

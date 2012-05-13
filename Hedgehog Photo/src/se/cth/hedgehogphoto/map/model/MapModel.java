@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Location;
@@ -38,7 +39,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 		List<Picture> pictures = Files.getInstance().getPictureList(); //fetch pictures
 		List<Location> locations = new LinkedList<Location>();
 		int nbrOfPictures = pictures.size();
-		Log.getLogger().info("\n" + "wtf happens????? \n" + nbrOfPictures);
+		Log.getLogger().log(Level.INFO, nbrOfPictures + " pictures were found in the Files-class.");
 		int index;
 		for (index = 0; index < nbrOfPictures; index++) {
 			Picture picture = pictures.get(index);
@@ -48,6 +49,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 					this.markerModels.add(new MarkerModel(picture));
 					locations.add(picture.getLocation());
 					Log.getLogger().info(location.getLocation() + "\n" + location.getLongitude() + ", " + location.getLatitude() + "\n");
+					Log.getLogger().log(Level.INFO, "en location!");
 				}
 			}
 		}
@@ -74,15 +76,15 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 	 * into MultipleMarkerModels. 
 	 */
 	public void organizeMarkers() {
-		for (int index = 0; index < markerModels.size() - 1; index++) {
-			AbstractMarkerModel marker = markerModels.get(index);
-			int nbrOfMarkers = markerModels.size();
+		for (int index = 0; index < this.markerModels.size() - 1; index++) { //TODO: Use this.getMarkerModels() to access models instead?
+			AbstractMarkerModel marker = this.markerModels.get(index);
+			int nbrOfMarkers = this.markerModels.size();
 			for (int indexToCheckAgainst = index + 1; indexToCheckAgainst < nbrOfMarkers; indexToCheckAgainst++) {
-				AbstractMarkerModel markerTwo = markerModels.get(indexToCheckAgainst);
+				AbstractMarkerModel markerTwo = this.markerModels.get(indexToCheckAgainst);
 				if (marker.intersects(markerTwo)) {
-					markerModels.add(new MultipleMarkerModel(marker, markerTwo));
-					markerModels.remove(markerTwo);
-					markerModels.remove(marker);
+					this.markerModels.add(new MultipleMarkerModel(marker, markerTwo));
+					this.markerModels.remove(markerTwo);
+					this.markerModels.remove(marker);
 					index--;
 					setChanged();
 					break;
@@ -105,7 +107,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 	}
 	
 	public List<AbstractMarkerModel> getMarkerModels() {
-		return markerModels;
+		return this.markerModels;
 	}
 	
 	public Dimension getSize() {
@@ -113,11 +115,11 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 	}
 	
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 	
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 	
 	@Override
@@ -136,7 +138,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		for (AbstractMarkerModel model: markerModels) {
+		for (AbstractMarkerModel model: this.markerModels) {
 			model.propertyChange(event);
 		}
 		
@@ -147,20 +149,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 				organizeMarkers();
 			} while (hasChanged());
 			setChanged();
-			notifyObservers(Global.MARKERS_UPDATE); //setChanged called by organizeMarkers()
+			notifyObservers(Global.MARKERS_UPDATE); 
 		}
 	}
-	
-	@Deprecated
-	public void print(List<AbstractMarkerModel> models) {
-		for (AbstractMarkerModel model: models) {
-			model.print();
-			if (model instanceof MultipleMarkerModel) {
-				List<AbstractMarkerModel> list = ((MultipleMarkerModel)model).getMarkerModels();
-				print(list);
-			}
-		}
-		System.out.println("\n *************************** \n");
-	}
-
 }

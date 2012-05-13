@@ -14,23 +14,23 @@ import se.cth.hedgehogphoto.database.Picture;
  */
 public abstract class AbstractMarkerModel extends AbstractComponentModel {
 	private String iconPath;
-	int numberOfPictures; //TODO: call numberOfLocations instead, more general = easier to extend
+	int numberOfLocations; 
 	
 	@Override
 	public void initialize() {
 		super.initialize();
-		setNumberOfPictures(computeNumberOfPictures());
+		setNumberOfLocations(computeNumberOfLocations());
 	}
 	
 	public abstract List<Picture> getPictures(List<Picture> pictures);
-	abstract int computeNumberOfPictures();
+	abstract int computeNumberOfLocations();
 
-	public int getNumberOfPictures() {
-		return this.numberOfPictures;
+	public int getNumberOfLocations() {
+		return this.numberOfLocations;
 	}
 	
-	public void setNumberOfPictures(int numberOfPictures) {
-		this.numberOfPictures = numberOfPictures;
+	public void setNumberOfLocations(int numberOfLocations) {
+		this.numberOfLocations = numberOfLocations;
 	}
 	
 	public String getIconPath() {
@@ -72,12 +72,5 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 	protected void handleZoom() { 
 		Point.Double p = this.getLonglat();
 		setPointerPosition(MapPanel.computePixelPositionOnMap(p.x, p.y));
-	}
-	
-	public void print() {
-		String visible = this.isVisible() ? "VISIBLE      <----- wow!." : "not visible.";
-		String className = this.getClass().toString().substring(this.getClass().toString().indexOf("M"), this.getClass().toString().length());
-		String position = this.getPosition().toString().substring(this.getPosition().toString().indexOf("["), this.getPosition().toString().length());
-		System.out.println(className +": " + position + " is " + visible);
 	}
 }
