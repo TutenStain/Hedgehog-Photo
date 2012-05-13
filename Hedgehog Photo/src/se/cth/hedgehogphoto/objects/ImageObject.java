@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class ImageObject implements FileObject {
-	private String filePath, fileName, date, artist, comment, albumName,location = "";
+	private String filePath, fileName, date, artist, coverPath,comment, albumName,location = "";
 	private List<String> tags;
 	private String tag;
 	public String getTag() {
@@ -202,6 +202,17 @@ public class ImageObject implements FileObject {
 		this.location=location;
 		locationObject = new LocationObject(location);
 		
+	}
+
+	@Override
+	public void setCoverPath(String coverPath) {
+		this.coverPath = coverPath;
+		
+	}
+
+	@Override
+	public String getCoverPath(){
+		return coverPath;
 	}
 
 	

@@ -10,7 +10,7 @@ public interface FileObject {
 	public void setComment(String comment);
 	public void setFileName(String name);
 	public void setFilePath(String path);
-	//public void setCoverPath(String path);
+	public void setCoverPath(String path);
 	public void setLocationObject(LocationObject locationObject);
 	public void setAlbumName(String albumName);
 	public void setLocation(String location);
@@ -21,7 +21,7 @@ public interface FileObject {
 	public LocationObject getLocationObject();
 	public String getFileName();
 	public String getFilePath();
-	//public String getCoverPath();
+	public String getCoverPath();
 	public String getAlbumName();
 	public String toString();
 
