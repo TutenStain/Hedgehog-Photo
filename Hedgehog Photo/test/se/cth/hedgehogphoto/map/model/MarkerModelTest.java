@@ -64,8 +64,8 @@ public class MarkerModelTest {
 	}
 
 	@Test
-	public void testComputeNumberOfPictures() {
-		assertTrue(model.computeNumberOfPictures() == 1); //markermodel always has one picture only
+	public void testComputeNumberOfLocations() {
+		assertTrue(model.computeNumberOfLocations() == 1); //markermodel always has one picture only
 	}
 
 	@Test
@@ -128,15 +128,15 @@ public class MarkerModelTest {
 
 	@Test
 	public void testGetNumberOfPictures() {
-		assertTrue(model.getNumberOfPictures() == 1); //SHOULD always be 1
+		assertTrue(model.getNumberOfLocations() == 1); //SHOULD always be 1
 	}
 
 	@Test
 	public void testSetNumberOfPictures() {
-		model.setNumberOfPictures(9);
-		assertTrue(model.getNumberOfPictures() == 9);
-		model.setNumberOfPictures(-2);
-		assertTrue(model.getNumberOfPictures() == -2); //TODO: Don't allow negative values!
+		model.setNumberOfLocations(9);
+		assertTrue(model.getNumberOfLocations() == 9);
+		model.setNumberOfLocations(-2);
+		assertTrue(model.getNumberOfLocations() == -2); //TODO: Don't allow negative values!
 		//TODO: Override method and only allow value 1 for this component? throw otherwise
 	}
 
