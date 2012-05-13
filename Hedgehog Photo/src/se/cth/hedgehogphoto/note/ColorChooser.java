@@ -3,6 +3,7 @@ package se.cth.hedgehogphoto.note;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -10,11 +11,9 @@ import javax.swing.JPanel;
 
 public class ColorChooser extends JPanel{
 	
-	private Dimension side;
 	private JButton[] grid = new JButton[9];
 	
 	public ColorChooser(){
-		this.side = side; //TODO: we are actually doing this.side = this.side; here...
 		this.setLayout(new GridLayout(3, 3));
 		this.arrangeButtons();
 	}

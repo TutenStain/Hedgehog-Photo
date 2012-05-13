@@ -8,9 +8,9 @@ public class NoteModel extends Observable{
 	private int circleDiam;
 	private Color color;
 	
-	public NoteModel(int circleDiam, Color color){
-		this.circleDiam = circleDiam;
-		this.color = color;
+	public NoteModel(){
+		this.circleDiam = 10;
+		this.color = Color.black;
 	}
 	public int getCircleDiam(){
 		return this.circleDiam;
