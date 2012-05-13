@@ -264,6 +264,11 @@ public class MapPanel extends JPanel {
     /** Calculates the proper zoom so that every location fits on the 
 	 *  visible part of the map. */
 	private void adjustZoom() {
+		if (centerLocation.getLongitude() == 0.0 && centerLocation.getLatitude() == 0.0) {
+			setZoom(1);
+			centerMap();
+			return;
+		}
 		int zoom = 16;
 		setZoom(zoom);
 		centerMap();
@@ -271,6 +276,7 @@ public class MapPanel extends JPanel {
 			setZoom(--zoom);
 			centerMap();
 		} 
+		
 	}
 	
 	/** Internal method for updating the centerLocation-variable. */
