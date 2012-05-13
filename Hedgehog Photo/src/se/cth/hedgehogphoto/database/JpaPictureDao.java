@@ -25,7 +25,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			if(commments != null){
 				List<Picture> pictures = new ArrayList<Picture>();
 				for(Comment c: commments){
-					pictures.addAll(findByEntity(c,"Comment"));
+					pictures.addAll(findByEntity(c,"se.cth.hedgehogphoto.database.Comment"));
 				}
 				return pictures;
 			}
