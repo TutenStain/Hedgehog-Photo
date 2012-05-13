@@ -3,6 +3,8 @@ package se.cth.hedgehogphoto.map.geocoding.model;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -19,9 +21,10 @@ import org.xml.sax.SAXParseException;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.LocationObject;
 
-public class XMLParser {
+public class XMLParser implements Runnable {
 	private static XMLParser xmlParser;
 	private DocumentBuilder docBuilder;
+	private Lock lock = new ReentrantLock();
 
 	public static synchronized XMLParser getInstance() {
 		if (xmlParser == null) 
@@ -40,6 +43,7 @@ public class XMLParser {
 
 	public List<LocationObject> processSearch(URL xmlFileUrl){
 		try {
+			lock.lock();
 			Document doc = docBuilder.parse(xmlFileUrl.toString()); 
 
 			// normalize text representation
@@ -86,10 +90,30 @@ public class XMLParser {
 
 		} catch (Throwable t) {
 			Log.getLogger().log(Level.SEVERE, "Error" , t);
+		} finally {
+			Thread t = new Thread(this);
+			t.start();
+			lock.unlock();
 		}
 
 		return null; //Return empty list instead?
 
+	}
+
+	@Override
+	public void run() {
+		   try {
+			  lock.lock();
+		      Thread.sleep(1000);
+		   } catch (InterruptedException ie) {
+			   //should not happen :(
+		   }
+		   finally {
+		      lock.unlock();
+		   }
+//		}
+
+		
 	}
 
 
