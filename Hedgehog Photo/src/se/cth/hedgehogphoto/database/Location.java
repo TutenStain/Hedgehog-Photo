@@ -79,8 +79,8 @@ public class Location {
 	 * @return true if longitude and latitude are valid values
 	 */
 	public boolean validPosition() {
-		boolean longitudeOK = Math.abs(this.getLongitude()) > 180.0;
-		boolean latitudeOK = Math.abs(this.getLatitude()) > 90.0;
+		boolean longitudeOK = Math.abs(this.getLongitude()) < 180.0;
+		boolean latitudeOK = Math.abs(this.getLatitude()) < 90.0;
 		return (longitudeOK && latitudeOK);
 	}
 
