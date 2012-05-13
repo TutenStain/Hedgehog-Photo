@@ -90,11 +90,21 @@ public class LocationObject {
 		return sb.toString();
 	}
 	
-	private String removeIrrelevantData(String data) {
+	/**
+	 * Given an input string, this method strips out everything
+	 * that is not within the parenthesis. If no parenthesis, or
+	 * only one is found the trimmed string gets returned. 
+	 * ie, the input string 'hej (32.44) gud' would return '32.44'. 
+	 * the input string 'crazy (56' would return 'crazy (56'. 
+	 * @param data the input string.
+	 * @return a String without the, in this program, unnecessary
+	 * string characters.
+	 */
+	private String removeIrrelevantData(String data) { //TODO: Change method-name?
 		data = data.trim();
 		int startParenthesisIndex = data.indexOf('(');
-		if (startParenthesisIndex != -1) {
-			int endParenthesisIndex = data.indexOf(')'); //IF POSSIBLE: Add handling of the unprobable case that there is no end parenthesis
+		int endParenthesisIndex = data.indexOf(')');
+		if (indexPositionsAreOk(startParenthesisIndex, endParenthesisIndex)) {
 			data = data.substring(startParenthesisIndex + 1, endParenthesisIndex);
 		}
 		return data;
@@ -104,9 +114,8 @@ public class LocationObject {
 		StringBuilder sb = new StringBuilder();
 		int tempIndex = 0;
 		int startParenthesisIndex = coordinate.indexOf('(', tempIndex);
-		int endParenthesisIndex;
-		while (startParenthesisIndex != -1) {
-			endParenthesisIndex = coordinate.indexOf(')', tempIndex);
+		int endParenthesisIndex = coordinate.indexOf(')', tempIndex);
+		while (indexPositionsAreOk(startParenthesisIndex, endParenthesisIndex)) {
 			String unalteredText = coordinate.substring(tempIndex, startParenthesisIndex);
 			String parenthesisText = coordinate.substring(startParenthesisIndex, endParenthesisIndex);
 			parenthesisText = parenthesisText.replace(',', '.');
@@ -115,7 +124,8 @@ public class LocationObject {
 			
 			/* Prepare for next iteration */
 			tempIndex = endParenthesisIndex;
-			startParenthesisIndex = coordinate.indexOf('(', tempIndex); 		
+			startParenthesisIndex = coordinate.indexOf('(', tempIndex);
+			endParenthesisIndex = coordinate.indexOf(')', tempIndex);
 		}
 		int lastIndex = coordinate.length();
 		String endOfString = coordinate.substring(tempIndex, lastIndex);
@@ -123,7 +133,23 @@ public class LocationObject {
 		return sb.toString();
 	}
 	
-	public boolean equals(LocationObject otherLocation) {
+	/**
+	 * Given two integers, this method returns true if:
+	 * no input equals -1 and indexOne is smaller or equals indexTwo.
+	 * Usage: say you want to see what is in between two parenthesis
+	 * signs in a string. You get the index of both these signs, and 
+	 * by using this method, you can see if they are placed properly.
+	 * ie not 'he (k', 	')he(' or 	'hej)'.
+	 * @param indexOne the index of the sign which is supposed to come first.
+	 * @param indexTwo the index of the sign which is supposed to come second.
+	 * @return true if their positions are ok.
+	 */
+	private boolean indexPositionsAreOk(int indexOne, int indexTwo) {
+		return (indexOne != -1) && (indexTwo != -1) && (indexOne <= indexTwo);
+	}
+	
+	public boolean equals(LocationObject otherLocation) { //TODO: Make a proper equals-method!
+		super.equals(otherLocation);
 		String secondLocation = otherLocation.toString();
 		return location.equalsIgnoreCase(secondLocation);
 	}

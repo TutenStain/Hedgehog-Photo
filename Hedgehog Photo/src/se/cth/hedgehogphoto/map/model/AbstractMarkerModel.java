@@ -42,7 +42,7 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 		setProperComponentSize();
 		setChanged();
 		notifyObservers(Global.ICON_UPDATE);
-		/* TODO: Setting the proper component size is essential 
+		/* IF POSSIBLE: Setting the proper component size is essential 
 		 * for calculations, but with only the string it is hard to check.
 		 * One might need to hard-code the size of certain icons. */
 	}
