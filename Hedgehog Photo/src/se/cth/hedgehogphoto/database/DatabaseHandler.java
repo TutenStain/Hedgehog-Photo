@@ -186,7 +186,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	}
 
 	public  void insertPicture(FileObject f){
-	//	jpd.insertPicture(f);
+		jpd.insertPicture(f);
 	}
 		
 		public  void updateAddTagtoPicture(String tag, String filePath){
