@@ -1,17 +1,31 @@
 package se.cth.hedgehogphoto.view;
 
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.util.logging.Level;
 
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayer;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import javax.swing.plaf.LayerUI;
 
 import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.log.Log;
-import java.awt.BorderLayout;
-import javax.swing.ImageIcon;
 
 /**
  * A simple startup/loaing screen that gets
@@ -21,6 +35,7 @@ import javax.swing.ImageIcon;
  * @author Barnabas Sapan
  */
 
+//JWindow
 public class StartUpView extends JFrame implements Runnable{
 	
 	public StartUpView(){
@@ -32,9 +47,13 @@ public class StartUpView extends JFrame implements Runnable{
 		setSize(new Dimension(Constants.PREFERRED_STARTUP_WINDOW_WIDTH, Constants.PREFERRED_STARTUP_WINDOW_HEIGHT));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		JPanel p = new JPanel();
 		JLabel image = new JLabel();
 		image.setIcon(new ImageIcon(StartUpView.class.getResource("/se/cth/hedgehogphoto/resources/boot.gif")));
-		add(image);
+		p.add(image);
+		
+		LoadingLayer layer = new LoadingLayer(p);
+		add(layer.getDecoratedPanel());
 		
 		//Center the screen
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -45,8 +64,9 @@ public class StartUpView extends JFrame implements Runnable{
 		setLocation(x, y);
 		
 		setVisible(true);
+		layer.start();
 		
-		//Start and wait for the database to finnish loading
+		//Start and wait for the database to finish loading
 		Thread t = new Thread(DatabaseHandler.getInstance());
 		t.run();
 		try {
@@ -54,5 +74,7 @@ public class StartUpView extends JFrame implements Runnable{
 		} catch (InterruptedException e) {
 			Log.getLogger().log(Level.WARNING, "Interrupted", e);
 		}
+		
+		layer.stopAndRemove();
 	}
 }

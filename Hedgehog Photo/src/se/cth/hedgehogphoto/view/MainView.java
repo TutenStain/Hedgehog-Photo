@@ -52,8 +52,8 @@ public class MainView implements Observer {
 	}
 
 	private void initialize(StartUpView startView) {
-		frame =  startView;
-
+		frame = startView;
+		
 		//TODO Minimum size?
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -165,6 +165,7 @@ public class MainView implements Observer {
 
 		});
 
+		frame.revalidate();
 		frame.setVisible(true);
 	}
 
