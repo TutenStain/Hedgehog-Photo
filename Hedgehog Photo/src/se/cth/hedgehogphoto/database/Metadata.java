@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.logging.Level;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.IImageMetadata;
 
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.ImageObject;
 
 
@@ -31,7 +33,6 @@ public class Metadata {
 			setFileProperties(io);
 			io.print();
 		} catch (IOException e) {
-			//IF POSSIBLE: Add exception handling
 			e.printStackTrace();
 		}
 	}
@@ -47,11 +48,9 @@ public class Metadata {
 			metadata = Sanselan.getMetadata(file);
 //			System.out.println(metadata.toString());
 		} catch (ImageReadException e) {
-			//IF POSSIBLE: Add exception handling
-			e.printStackTrace();
+			Log.getLogger().log(Level.WARNING, "Failed to read metadata from file " + Metadata.file, e);
 		} catch (IOException e) {
-			//IF POSSIBLE: Add exception handling
-			e.printStackTrace();
+			Log.getLogger().log(Level.WARNING, "Failed to read metadata from file " + Metadata.file, e);
 		}
 		
 		return metadata;
@@ -99,6 +98,8 @@ public class Metadata {
 		return line.substring(indexOfValueStarts);
 	}
 	
+	/** Does not work. */
+	@Deprecated
 	private static void setFileProperties(ImageObject io) {
 		io.setProperty("fileName", file.getName());
 		io.setProperty("filePath", file.getPath());
