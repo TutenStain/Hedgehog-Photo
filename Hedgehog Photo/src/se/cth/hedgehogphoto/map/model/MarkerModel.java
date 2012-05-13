@@ -24,11 +24,11 @@ public class MarkerModel extends AbstractMarkerModel {
 	}
 	
 	public double getLongitude() {
-		return this.picture.getLocation().getLongitude(); //TODO: Might want to access this.picture via getPicture() instead?
+		return getPicture().getLocation().getLongitude();
 	}
 	
 	public double getLatitude() {
-		return this.picture.getLocation().getLatitude();
+		return getPicture().getLocation().getLatitude();
 	}
 
 	@Override
