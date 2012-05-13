@@ -121,7 +121,7 @@ public class MainView implements Observer {
 
 		photoViewPanel = new JPanel();
 		photoView.setViewportView(photoViewPanel);
-
+		
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 
 		showHideComments.addActionListener(new ActionListener() {
@@ -164,9 +164,6 @@ public class MainView implements Observer {
 			}
 
 		});
-
-		frame.revalidate();
-		frame.setVisible(true);
 	}
 
 	private static BufferedImage resize(Image image, int width, int height) {
@@ -229,7 +226,6 @@ public class MainView implements Observer {
 				pp.setLocation(images.get(i).getLocation().getLocation());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
-				frame.revalidate();
 			}
 		}
 
@@ -242,8 +238,9 @@ public class MainView implements Observer {
 				pp.setLocation(images.get(i).getLocation().getLocation());
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
-				frame.revalidate();
 			}
 		}
+		
+		frame.revalidate();
 	}
 }

@@ -20,7 +20,7 @@ import se.cth.hedgehogphoto.view.MainView;
 
 //TODO FIX GETVISIBLEFILES PARSER (ADD IT TO THE API.JAR)!!!
 
-public class PluginLoader {
+public class PluginLoader{
 	private MainView view;
 	private FileClassLoader classLoader;
 	private String pluginRootDir;
@@ -28,7 +28,7 @@ public class PluginLoader {
 	public PluginLoader(MainView view, File pluginRootDir){
 		this(view, pluginRootDir.getAbsolutePath());
 	}
-
+	
 	/**
 	 * The one and only constructor. The main entry point for this class.
 	 * @param view the view the plugins will get placed onto
