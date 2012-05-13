@@ -3,6 +3,7 @@ package se.cth.hedgehogphoto.map.geocoding.model;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,18 +16,19 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.LocationObject;
 
 public class XMLParser {
 	private static XMLParser xmlParser;
 	private DocumentBuilder docBuilder;
-	
+
 	public static synchronized XMLParser getInstance() {
 		if (xmlParser == null) 
 			xmlParser = new XMLParser();
 		return xmlParser;
 	}
-	
+
 	private XMLParser() {
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		try {
@@ -36,54 +38,59 @@ public class XMLParser {
 		}
 	}
 
-    public List<LocationObject> processSearch(URL xmlFileUrl){
-    try {
-    	Document doc = docBuilder.parse(xmlFileUrl.toString()); //TODO: USE URI INSTEAD OF URL?
+	public List<LocationObject> processSearch(URL xmlFileUrl){
+		try {
+			Document doc = docBuilder.parse(xmlFileUrl.toString()); 
 
-    	// normalize text representation
-    	doc.getDocumentElement().normalize();
+			// normalize text representation
+			doc.getDocumentElement().normalize();
 
-    	NodeList listOfPlaces = doc.getElementsByTagName("place");
-    	int nbrOfPlaces = listOfPlaces.getLength();
-    	List<LocationObject> locations = new LinkedList<LocationObject>();
-    	
-    	for (int s = 0; s < nbrOfPlaces; s++) {
-    		
-    		Node placeID = listOfPlaces.item(s);
-    		if (placeID.getNodeType() == Node.ELEMENT_NODE) {
+			NodeList listOfPlaces = doc.getElementsByTagName("place");
+			int nbrOfPlaces = listOfPlaces.getLength();
+			List<LocationObject> locations = new LinkedList<LocationObject>();
 
-    			Element placeElement = (Element) placeID;
-    			String lat = placeElement.getAttribute("lat");
-    			String lon = placeElement.getAttribute("lon");
-    			String place = placeElement.getAttribute("display_name");
-    			LocationObject location = new LocationObject(place);
-    			try {
-    				location.setLongitude(Double.parseDouble(lon));
-    				location.setLatitude(Double.parseDouble(lat));
-    				locations.add(location);
-    			} catch (NumberFormatException nf) { //don't add location
-    			}
-    		}
-    	}
+			for (int index = 0; index < nbrOfPlaces; index++) {
 
-    	return locations;
+				Node placeID = listOfPlaces.item(index);
+				if (placeID.getNodeType() == Node.ELEMENT_NODE) {
 
-    } catch (SAXParseException err) {
-    	System.out.println("** Parsing error" + ", line "
-    			+ err.getLineNumber() + ", uri " + err.getSystemId());
-    	System.out.println(" " + err.getMessage());
+					Element placeElement = (Element) placeID;
+					String lat = placeElement.getAttribute("lat");
+					String lon = placeElement.getAttribute("lon");
+					String place = placeElement.getAttribute("display_name");
+					LocationObject location = new LocationObject(place);
+					try {
+						location.setLongitude(Double.parseDouble(lon));
+						location.setLatitude(Double.parseDouble(lat));
+						locations.add(location);
+					} catch (NumberFormatException nf) { //don't add location
+					}
+				}
+			}
 
-    } catch (SAXException e) {
-    	Exception x = e.getException();
-    	((x == null) ? e : x).printStackTrace();
+			return locations;
 
-    } catch (Throwable t) {
-    	t.printStackTrace();
-    }
+		} catch (SAXParseException error) {
+			//create error-message
+			StringBuilder sb = new StringBuilder("** Parsing error, line ");
+			sb.append(error.getLineNumber());
+			sb.append(", uri ");
+			sb.append(error.getSystemId());
+			sb.append(" ");
+			sb.append(error.getMessage());
+			Log.getLogger().log(Level.SEVERE, sb.toString(), error);
 
-    return null;
+		} catch (SAXException e) {
+			Exception x = e.getException();
+			Log.getLogger().log(Level.SEVERE, e.getMessage(), (x == null) ? e : x);
 
-    }// end of main
+		} catch (Throwable t) {
+			Log.getLogger().log(Level.SEVERE, "Error" , t);
+		}
+
+		return null; //Return empty list instead?
+
+	}
 
 
 }
