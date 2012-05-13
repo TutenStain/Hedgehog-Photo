@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.FileObject;
 
 
@@ -16,19 +17,17 @@ public class Files extends Observable{
 	private Files(){
 	} 
 	
-	public static Files getInstance(){
-		if(file == null){
+	public static Files getInstance() {
+		if(file == null)
 			file = new Files();
-			return file;
-		} else {
-			return file;
-		}
+		return file;
 	}
 	
 	public void setPictureList(List<Picture> list){
 		pictureList = list;
 		setChanged();
 		notifyObservers(this);
+		Log.getLogger().info("Files now contain " + pictureList.size() + " pictures.");
 	}
 	
 	public List<Picture> getPictureList(){
