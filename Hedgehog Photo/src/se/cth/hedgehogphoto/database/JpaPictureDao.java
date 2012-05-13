@@ -94,7 +94,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			List<Location> locations = jld.findByLike("location", search);
 			if(!(locations.isEmpty())){
 				for(Location l:locations){
-					pictures.addAll(findByEntity(l, "dao.database.Location"));
+					pictures.addAll(findByEntity(l, "se.cth.hedgehogphoto.database.Location"));
 				}
 			}
 			return pictures;

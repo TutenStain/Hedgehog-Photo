@@ -11,9 +11,12 @@ import se.cth.hedgehogphoto.view.PluginArea;
 author="David Grankvist", description="N/A")
 public class Main {
 	private NoteView view;
+	
 	@InitializePlugin
 	public void start() {
-		//TODO
+		NoteModel model = new NoteModel();
+		view = new NoteView(model);
+		model.addObserver(view);
 	}
 
 	@Panel(placement=PluginArea.LEFT_MIDDLE)
