@@ -54,7 +54,6 @@ public class MapController implements PropertyChangeListener {
 			arg0.getComponent().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			if (arg0.getSource() instanceof AbstractJOverlayPanel) {
 				AbstractJOverlayPanel marker = (AbstractJOverlayPanel) arg0.getSource();
-				System.out.println("x: " + marker.getModel().getXPosition() + "\t\ty: " + marker.getModel().getYPosition());
 			}
 			//TODO: don't check instanceof here
 			//call mapView.showInfoPanel(MouseEvent arg0)

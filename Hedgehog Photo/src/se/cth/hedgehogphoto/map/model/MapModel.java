@@ -12,6 +12,7 @@ import java.util.Observer;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.log.Log;
 
 public class MapModel extends Observable implements Observer, PropertyChangeListener {
 	private List<AbstractMarkerModel> markerModels;
@@ -37,14 +38,15 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 		List<Picture> pictures = Files.getInstance().getPictureList(); //fetch pictures
 		List<Location> locations = new LinkedList<Location>();
 		int nbrOfPictures = pictures.size();
+		Log.getLogger().info("\n" + "wtf happens????? \n" + nbrOfPictures);
 		int index;
 		for (index = 0; index < nbrOfPictures; index++) {
 			Picture picture = pictures.get(index);
 			Location location = picture.getLocation();
-		
 			if (location != null) { 
 				this.markerModels.add(new MarkerModel(picture));
 				locations.add(picture.getLocation());
+				Log.getLogger().info(location.getLocation() + "\n" + location.getLongitude() + ", " + location.getLatitude() + "\n");
 			}
 		}
 		
@@ -85,7 +87,6 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 				}
 			}
 		}
-		System.out.println("------------");
 	}
 	
 	public void calibrateMap(List<Location> locations) {
@@ -145,10 +146,10 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 			} while (hasChanged());
 			setChanged();
 			notifyObservers(Global.MARKERS_UPDATE); //setChanged called by organizeMarkers()
-			print(markerModels);
 		}
 	}
 	
+	@Deprecated
 	public void print(List<AbstractMarkerModel> models) {
 		for (AbstractMarkerModel model: models) {
 			model.print();
