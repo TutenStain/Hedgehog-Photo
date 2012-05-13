@@ -312,7 +312,7 @@ public class MapPanel extends JPanel {
 	 *  ie if it is part of the map. Returns false otherwise. */
 	private boolean validPixelPosition(Point pixelPosition) {
 		boolean longitudeOK = (pixelPosition.x > Constants.PREFERRED_MODULE_WIDTH * 0.05 && pixelPosition.x < Constants.PREFERRED_MODULE_WIDTH * 0.95);
-		boolean latitudeOK = (pixelPosition.y > Constants.PREFERRED_MODULE_WIDTH * 0.10 && pixelPosition.y < Constants.PREFERRED_MODULE_WIDTH * 0.90);
+		boolean latitudeOK = (pixelPosition.y > Constants.PREFERRED_MODULE_HEIGHT * 0.10 && pixelPosition.y < Constants.PREFERRED_MODULE_HEIGHT * 0.90);
 		return (longitudeOK && latitudeOK);
 	}
 	
