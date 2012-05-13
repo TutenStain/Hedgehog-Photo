@@ -43,10 +43,12 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 		for (index = 0; index < nbrOfPictures; index++) {
 			Picture picture = pictures.get(index);
 			Location location = picture.getLocation();
-			if (location != null) { 
-				this.markerModels.add(new MarkerModel(picture));
-				locations.add(picture.getLocation());
-				Log.getLogger().info(location.getLocation() + "\n" + location.getLongitude() + ", " + location.getLatitude() + "\n");
+			if (location != null) {
+				if (location.validPosition()) { 
+					this.markerModels.add(new MarkerModel(picture));
+					locations.add(picture.getLocation());
+					Log.getLogger().info(location.getLocation() + "\n" + location.getLongitude() + ", " + location.getLatitude() + "\n");
+				}
 			}
 		}
 		
