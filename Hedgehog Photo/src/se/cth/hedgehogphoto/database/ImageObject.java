@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.objects;
+package se.cth.hedgehogphoto.database;
 
 import java.util.ArrayList;
 import java.util.List;

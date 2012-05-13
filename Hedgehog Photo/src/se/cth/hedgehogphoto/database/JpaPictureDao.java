@@ -3,7 +3,8 @@ package se.cth.hedgehogphoto.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.cth.hedgehogphoto.objects.FileObject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao {
 	private static JpaAlbumDao jad = new JpaAlbumDao();
@@ -25,7 +26,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			if(commments != null){
 				List<Picture> pictures = new ArrayList<Picture>();
 				for(Comment c: commments){
-					pictures.addAll(findByEntity(c,"se.cth.hedgehogphoto.database.Comment"));
+					pictures.addAll(findByEntity(c,"Comment"));
 				}
 				return pictures;
 			}
@@ -94,7 +95,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			List<Location> locations = jld.findByLike("location", search);
 			if(!(locations.isEmpty())){
 				for(Location l:locations){
-					pictures.addAll(findByEntity(l, "se.cth.hedgehogphoto.database.Location"));
+					pictures.addAll(findByEntity(l, "dao.database.Location"));
 				}
 			}
 			return pictures;
@@ -631,6 +632,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					entityManager.getTransaction().begin();
 					System.out.print("hittar  ej loc");
 					Location location = new Location();
+					
 					location.setLatitude((f.getLocationObject().getLatitude()));
 					location.setLongitude(f.getLocationObject().getLongitude());
 					location.setLocation(f.getLocation().toLowerCase());

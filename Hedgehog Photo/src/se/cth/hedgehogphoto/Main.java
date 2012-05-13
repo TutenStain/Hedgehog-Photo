@@ -120,7 +120,7 @@ public class Main {
 			} catch (IOException e) {
 				Log.getLogger().log(Level.SEVERE, "IOException", e);
 			}
-			f.setCoverPath("blo");
+			//f.setCoverPath("blo");
 		
 		//	if (f.getLocationObject() == null || f.getLocation().equals("")) {
 				f.setLocationObject(new LocationObject("Japan"));

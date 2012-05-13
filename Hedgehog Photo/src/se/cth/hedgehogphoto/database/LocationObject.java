@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.objects;
+package se.cth.hedgehogphoto.database;
 
 public class LocationObject {
 	private String location;
