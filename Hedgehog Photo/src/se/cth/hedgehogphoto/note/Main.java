@@ -16,7 +16,7 @@ public class Main {
 	public void start() {
 		NoteModel model = new NoteModel();
 		view = new NoteView(model);
-		model.addObserver(view);
+		new NoteController(model, view);
 	}
 
 	@Panel(placement=PluginArea.LEFT_MIDDLE)
