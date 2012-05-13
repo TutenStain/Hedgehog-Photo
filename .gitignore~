@@ -1,7 +1,0 @@
-/Hedgehog Photo/bin
-/Hedgehog Photo/src/se/cth/hedgehogphoto/test/*
-/Hedgehog Photo/HedgeHogDB/*
-/Hedgehog Photo/HedgeHogDB/db.lck
-/Hedgehog Photo/HedgeHogDB/log/log.ctrl
-/Hedgehog Photo/HedgeHogDB/log/logmirror.ctrl
-/Hedgehog Photo/derby.log
