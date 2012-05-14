@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
 import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,7 +28,7 @@ import se.cth.hedgehogphoto.map.geocoding.model.URLCreator;
 import se.cth.hedgehogphoto.map.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.objects.LocationObject;
 
-public final class SearchPanel extends JPanel {
+public final class GeoSearchPanel extends JPanel {
 
 	private ConstrainedGrid resultPanel = new ConstrainedGrid();
 	private JComboBox<Object> searchBox = new JComboBox<Object>();
@@ -42,13 +43,13 @@ public final class SearchPanel extends JPanel {
 		JFrame frame = new JFrame();
 		frame.setPreferredSize(new Dimension(400,600));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(new SearchPanel());
+		frame.getContentPane().add(new GeoSearchPanel());
 		frame.pack();
 		frame.getContentPane().setVisible(true);
 		frame.setVisible(true);
 	}
 
-	public SearchPanel() {
+	public GeoSearchPanel() {
 		super(new BorderLayout(8, 8));
 		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 		setBackground(Color.white);
@@ -133,5 +134,9 @@ public final class SearchPanel extends JPanel {
 	private void setPreferredWidth() {
 		Dimension d = this.getPreferredSize();
 		d.width = resultPanel.getPreferredWidth() + 30;
+	}
+	
+	public void addResultPanelMouseListener(MouseAdapter adapter) {
+		this.resultPanel.setMouseAdapter(adapter);
 	}
 }
