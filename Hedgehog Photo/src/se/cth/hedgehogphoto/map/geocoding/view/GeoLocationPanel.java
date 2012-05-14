@@ -11,6 +11,11 @@ import javax.swing.SwingConstants;
 
 import se.cth.hedgehogphoto.objects.LocationObject;
 
+/**
+ * GUI-component used in the geocoding-system,
+ * representing a location.
+ * @author Florian Minges
+ */
 public class GeoLocationPanel extends JPanel {
 	private JLabel nameLabel;
 	private JLabel longitudeLabel, latitudeLabel;

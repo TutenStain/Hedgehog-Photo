@@ -9,7 +9,7 @@ import se.cth.hedgehogphoto.map.model.Global;
 /**
  * Abstract graphical representation of a marker
  * which shall be used in a JLayeredPane.
- * @author Florian
+ * @author Florian Minges
  */
 public class AbstractJOverlayMarker extends AbstractJOverlayPanel {
 	private JLabel iconContainer;

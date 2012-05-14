@@ -4,7 +4,7 @@ import se.cth.hedgehogphoto.map.model.MultipleMarkerModel;
 
 /**
  * Graphical representation of a "multiple marker".
- * @author Florian
+ * @author Florian Minges
  */
 public class JMultipleMarker extends AbstractJOverlayMarker {
 

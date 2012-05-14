@@ -15,6 +15,10 @@ import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.log.Log;
 
+/**
+ * The model-warpper-class in the map-subsystem.
+ * @author Florian Minges
+ */
 public class MapModel extends Observable implements Observer, PropertyChangeListener {
 	private List<AbstractMarkerModel> markerModels;
 	private MapPanel map;

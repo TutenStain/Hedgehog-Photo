@@ -6,6 +6,10 @@ import java.awt.event.MouseEvent;
 import se.cth.hedgehogphoto.map.geocoding.view.GeoLocationPanel;
 import se.cth.hedgehogphoto.map.geocoding.view.GeoSearchPanel;
 
+/**
+ * Controller-class for the geocoding-system.
+ * @author Florian Minges
+ */
 public class GeocodingController {
 	private GeoSearchPanel searchPanel;
 	

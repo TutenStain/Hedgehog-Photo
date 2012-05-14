@@ -11,8 +11,9 @@ import se.cth.hedgehogphoto.map.view.AbstractJOverlayPanel;
 import se.cth.hedgehogphoto.map.view.MapView;
 
 /**
- * MapController - handles mouseevents on the markers and calls the appropriate methods.
- * @author Florian
+ * MapController - handles mouseevents on the markers and
+ * calls the appropriate methods.
+ * @author Florian Minges
  */
 public class MapController implements PropertyChangeListener {
 	private MapView mapView;

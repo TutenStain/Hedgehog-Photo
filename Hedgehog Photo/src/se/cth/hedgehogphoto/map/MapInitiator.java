@@ -10,6 +10,11 @@ import se.cth.hedgehogphoto.plugin.Panel;
 import se.cth.hedgehogphoto.plugin.Plugin;
 import se.cth.hedgehogphoto.view.PluginArea;
 
+/**
+ * Initiates the map-plugin.
+ * @author Florian Minges
+ */
+
 @Plugin(name="Map", version="1.0", 
 author="Florian Minges", description="N/A")
 public class MapInitiator {

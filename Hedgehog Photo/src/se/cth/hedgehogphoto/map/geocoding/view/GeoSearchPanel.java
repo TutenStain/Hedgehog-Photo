@@ -28,6 +28,10 @@ import se.cth.hedgehogphoto.map.geocoding.model.URLCreator;
 import se.cth.hedgehogphoto.map.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.objects.LocationObject;
 
+/**
+ * The MainView in the geocoding-subsystem.
+ * @author Florian Minges
+ */
 public final class GeoSearchPanel extends JPanel {
 
 	private ConstrainedGrid resultPanel = new ConstrainedGrid();

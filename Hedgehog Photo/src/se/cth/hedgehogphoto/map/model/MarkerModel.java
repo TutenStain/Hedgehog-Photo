@@ -7,7 +7,7 @@ import se.cth.hedgehogphoto.database.Picture;
 
 /**
  * Logical representation of a single marker.
- * @author Florian
+ * @author Florian Minges
  */
 public class MarkerModel extends AbstractMarkerModel {
 	private Picture picture;

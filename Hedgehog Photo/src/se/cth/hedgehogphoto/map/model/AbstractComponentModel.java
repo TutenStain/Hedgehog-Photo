@@ -12,7 +12,7 @@ import se.cth.hedgehogphoto.Constants;
 /**
  * Abstract logical representation of a JComponent that
  * should be displayed in a JLayeredPane.
- * @author Florian
+ * @author Florian Minges
  */
 public abstract class AbstractComponentModel extends Observable
 												implements PropertyChangeListener { //doesn't need the propertychangelistener, but the propertyChange-method

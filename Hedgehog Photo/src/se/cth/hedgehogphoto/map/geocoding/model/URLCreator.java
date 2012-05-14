@@ -7,6 +7,11 @@ import java.net.URLEncoder;
 
 import javax.swing.SwingUtilities;
 
+/**
+ * Creates a valid URL for making a request to 
+ * the nominatim-server.
+ * @author Florian Minges
+ */
 public class URLCreator {
 	private static URLCreator urlCreator;
 	private StringBuilder builder;

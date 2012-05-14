@@ -13,7 +13,7 @@ import se.cth.hedgehogphoto.map.model.Global;
 /**
  * Abstract graphical representation of a JPanel that
  * should be displayed in a JLayeredPane.
- * @author Florian
+ * @author Florian Minges
  */
 public abstract class AbstractJOverlayPanel extends JPanel 
 											implements Observer {

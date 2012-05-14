@@ -4,7 +4,7 @@ import se.cth.hedgehogphoto.map.model.MarkerModel;
 
 /**
  * Graphical representation of a single marker.
- * @author Florian
+ * @author Florian Minges
  */
 public class JMarker extends AbstractJOverlayMarker {
 	

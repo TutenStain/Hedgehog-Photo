@@ -2,7 +2,7 @@ package se.cth.hedgehogphoto.map.model;
 
 /**
  * Constants used within the map-package.
- * @author Florian
+ * @author Florian Minges
  */
 public interface Global {
 

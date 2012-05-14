@@ -17,6 +17,10 @@ import se.cth.hedgehogphoto.map.model.MapModel;
 import se.cth.hedgehogphoto.map.model.MarkerModel;
 import se.cth.hedgehogphoto.map.model.MultipleMarkerModel;
 
+/**
+ * The topmost GUI-class of the map-subsystem.
+ * @author Florian Minges
+ */
 public class MapView extends JPanel implements Observer {
 	private JLayeredPane mainPane;
 	private List<AbstractJOverlayMarker> locationMarkers;

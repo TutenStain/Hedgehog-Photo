@@ -20,9 +20,11 @@ import javax.swing.border.EmptyBorder;
 import se.cth.hedgehogphoto.objects.LocationObject;
 
 /** This lays out components in a column that is constrained to the
-top of an area, like the entries in a list or table.  It uses a GridLayout
-for the main components, thus ensuring they are each of the same size.
-For variable height components, a BoxLayout would be better. */
+ * top of an area, like the entries in a list or table.  It uses a GridLayout
+ * for the main components, thus ensuring they are each of the same size.
+ * For variable height components, a BoxLayout would be better. 
+ * @author Florian Minges
+ */
 public class ConstrainedGrid extends JPanel {
 	private JPanel componentPanel;
 	private MouseAdapter mouseListener;

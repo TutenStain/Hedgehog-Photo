@@ -15,6 +15,10 @@ import se.cth.hedgehogphoto.plugin.Panel;
 import se.cth.hedgehogphoto.plugin.Plugin;
 import se.cth.hedgehogphoto.view.PluginArea;
 
+/**
+ * Initiates the geocoding-subsystem.
+ * @author Florian Minges
+ */
 public class GeocodingInitiator {
 	
 	public static void main(String [] args) {

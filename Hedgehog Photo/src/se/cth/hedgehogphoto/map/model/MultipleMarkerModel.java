@@ -11,7 +11,7 @@ import se.cth.hedgehogphoto.database.Picture;
 
 /**
  * Logical representation of a "multiple marker".
- * @author Florian
+ * @author Florian Minges
  */
 public class MultipleMarkerModel extends AbstractMarkerModel {
 	/* Will currently ALWAYS hold 2 markers. */

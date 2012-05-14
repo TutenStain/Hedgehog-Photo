@@ -31,7 +31,7 @@ import se.cth.hedgehogphoto.objects.LocationObject;
  * how fast the XML-documents are processed. This is
  * in line with the nominatim usage policy, which
  * should be provided with this software. 
- * @author Florian
+ * @author Florian Minges
  */
 public class XMLParser implements Runnable {
 	private static XMLParser xmlParser;

@@ -10,7 +10,7 @@ import se.cth.hedgehogphoto.database.Picture;
 /**
  * Abstract logical representation of a marker
  * which shall be used in a JLayeredPane.
- * @author Florian
+ * @author Florian Minges
  */
 public abstract class AbstractMarkerModel extends AbstractComponentModel {
 	private String iconPath;
