@@ -11,6 +11,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.net.URL;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.map.geocoding.model.URLCreator;
 import se.cth.hedgehogphoto.map.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.objects.LocationObject;
@@ -35,8 +37,6 @@ public final class SearchPanel extends JPanel {
 
 	private String oldSearch = "";
 	private boolean searching;
-	
-	private static final String NAMEFINDER_URL = "http://nominatim.openstreetmap.org/search?";
 	
 	public static void main(String [] args) {
 		JFrame frame = new JFrame();
@@ -96,9 +96,7 @@ public final class SearchPanel extends JPanel {
 		};
 		searching = true;
 		searchBox.setEnabled(false);
-//		editorPane.setText("<html><body><i>searching...</i></body></html>");
 		searchBox.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//		editorPane.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		Thread t = new Thread(r, "searcher " + newSearch);
 		t.start();
@@ -112,25 +110,18 @@ public final class SearchPanel extends JPanel {
 			resultPanel.addLocations(locations);
 			this.setPreferredWidth();
 		} catch (Exception e) {
-//			log.log(Level.SEVERE, "failed to search for \"" + newSearch + "\"",
-//					e);
-			System.out.println("ERROR HAHAHAHAHAHAHAHAHA \n" + e);
+			Log.getLogger().log(Level.SEVERE, "failed to search for \"" + newSearch + "\"", e);
 		}
 		
 
 		Runnable r = new Runnable() {
 			public void run() {
 				try {
-//					editorPane.setText("hej");
-//					editorPane.setCaretPosition(0);
-					DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) searchBox
-							.getModel();
+					DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) searchBox.getModel();
 					comboBoxModel.removeElement(newSearch);
 					comboBoxModel.addElement(newSearch);
 				} finally {
 					searchBox.setCursor(Cursor.getDefaultCursor());
-//					editorPane.setCursor(Cursor.getDefaultCursor());
-					
 					searching = false;
 					searchBox.setEnabled(true);
 				}
