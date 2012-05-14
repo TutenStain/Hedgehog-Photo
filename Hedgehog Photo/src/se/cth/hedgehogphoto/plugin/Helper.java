@@ -133,25 +133,28 @@ public final class Helper {
 		return new File(d.substring(0, d.lastIndexOf(System.getProperty("file.separator"))));
 	}
 	
+	/**
+	 * Copies the plugins folder from the executable to the user plugin folder
+	 * specified by the parameter 'folder' for parsing by the plugin-parsers.
+	 * @param folder the folder to copy the plugins to.
+	 * @return true if the operation was successful, false if not, 
+	 * logs IOException if and exception occurs. 
+	 */
 	public static boolean copyPluginsToFolder(final File folder){
 		if(folder.isDirectory()){
-			final Path targetPath = Paths.get(folder.getAbsolutePath());
-			final Path sourcePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "plugins");;
+			final Path target = Paths.get(folder.getAbsolutePath());
+			final Path source =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "plugins");;
 			try {
-				Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
+				Files.walkFileTree(source, new SimpleFileVisitor<Path>() {
 					@Override
-					public FileVisitResult preVisitDirectory(final Path dir,
-							final BasicFileAttributes attrs) throws IOException {
-						Files.createDirectories(targetPath.resolve(sourcePath
-								.relativize(dir)));
+					public FileVisitResult preVisitDirectory(final Path dir, final BasicFileAttributes attrs) throws IOException {
+						Files.createDirectories(target.resolve(source.relativize(dir)));
 						return FileVisitResult.CONTINUE;
 					}
 
 					@Override
-					public FileVisitResult visitFile(final Path file,
-							final BasicFileAttributes attrs) throws IOException {
-						Files.copy(file,
-								targetPath.resolve(sourcePath.relativize(file)));
+					public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
+						Files.copy(file, target.resolve(source.relativize(file)));
 						return FileVisitResult.CONTINUE;
 					}
 				});
