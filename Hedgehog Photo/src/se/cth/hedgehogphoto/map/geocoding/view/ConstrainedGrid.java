@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -24,6 +25,7 @@ for the main components, thus ensuring they are each of the same size.
 For variable height components, a BoxLayout would be better. */
 public class ConstrainedGrid extends JPanel {
 	private JPanel componentPanel;
+	private MouseAdapter mouseListener;
 
     public ConstrainedGrid() {
         this.setLayout(new BorderLayout(5,5));
@@ -55,9 +57,12 @@ public class ConstrainedGrid extends JPanel {
     	if (locations == null)
     		return;
     	this.componentPanel.removeAll();
-    	LocationPanel.resetColorScale();
+    	GeoLocationPanel.resetColorScale();
     	for (LocationObject location : locations) {
-    		addComponent(new LocationPanel(location));
+    		GeoLocationPanel panel = new GeoLocationPanel(location);
+    		if (this.mouseListener != null) 
+    			panel.addMouseListener(this.mouseListener);
+    		addComponent(panel);
     	}
     }
     
@@ -68,12 +73,8 @@ public class ConstrainedGrid extends JPanel {
     public int getPreferredWidth() {
     	return this.componentPanel.getPreferredSize().width;
     }
-
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                ConstrainedGrid cg = new ConstrainedGrid();
-//            }
-//        });
-//    }
+    
+    public void setMouseAdapter(MouseAdapter adapter) {
+    	this.mouseListener = adapter;
+    }
 }
