@@ -50,6 +50,10 @@ public class SearchView extends JPanel implements Observer{
 		searchBox.getDocument().addDocumentListener(dl);
 	}
 	
+	public void setSearchBoxActionListener(ActionListener l){
+		searchBox.addActionListener(l);
+	}
+	
 	public void setSearchButtonListener(ActionListener ac){
 		searchButton.addActionListener(ac);
 	}
