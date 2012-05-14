@@ -48,13 +48,8 @@ import javax.persistence.Query;
 			return (E) entityManager.find(entityClass, id); }
 		
 		public List<E> findByEntity(Object entity,String ent) { 
-		 
-			System.out.println("Simple name" + entityClass.getSimpleName());
-			//System.out.println("Simple name2" + entity.getSimpleName());
-			System.out.println("Entity" + entity);
 			String c = entity.getClass().getSimpleName().toLowerCase();
 			String s = "select t from " +entityClass.getSimpleName() + " t where t." + c + "=:" + c;
-			System.out.println("Query: " + s);
 			   Object something = entity;
 			    String theType = ent;
 			    Class<?> theClass = null;
@@ -67,28 +62,19 @@ import javax.persistence.Query;
 			    Object obj = theClass.cast(something);
 			Query q = entityManager.createQuery(s);
 			q.setParameter(c,obj);
-			System.out.println(q.getResultList());
 			return  (List<E>)q.getResultList();
 	}
 		public List<E> findByString(String quality,String search) {
-			System.out.print("Query " + "select t from " + entityClass.getSimpleName()  + " t where t." + quality + "=:" + quality);
-			System.out.println(quality + search);
 			Query q = entityManager.createQuery("select t from " + entityClass.getSimpleName()  + " t where t." + quality.toLowerCase() + "=:" + quality.toLowerCase());
 		
 			q.setParameter(quality.toLowerCase(),search.toLowerCase());
-			System.out.println(entityClass.getSimpleName());
 		
 			return  (List<E>)q.getResultList();
-		
 	}
 		public List<E> findByLike(String quality,String search) {
-			System.out.print("select t from " + entityClass.getSimpleName()  + " t where t." + quality +  " like '%" + search + "%'");
-			//System.out.println(quality + search);
 			Query q = entityManager.createQuery("select t from " + entityClass.getSimpleName()  + " t where t." + quality.toLowerCase() +  " like '%" + search.toLowerCase() + "%'");
 		
-		
-			return  (List<E>)q.getResultList();
-		
+			return  (List<E>)q.getResultList();	
 	}
 		public List<E> getAll(){
 			Query q = entityManager.createQuery("select t from " + entityClass.getSimpleName() + " t");

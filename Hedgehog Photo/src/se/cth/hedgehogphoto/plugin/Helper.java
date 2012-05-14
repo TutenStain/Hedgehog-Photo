@@ -125,4 +125,22 @@ public final class Helper {
 		String d = f.getAbsolutePath();
 		return new File(d.substring(0, d.lastIndexOf(System.getProperty("file.separator"))));
 	}
+	
+	public static List<File> removeDuplicateClasses(List<File> files){
+		List<File> ret = new ArrayList<File>();
+		for(File f : files){
+			for(File ff : files){
+				if(stripDotAndSlashFromString(f.getAbsolutePath()).equals(stripDotAndSlashFromString(ff.getAbsolutePath())) == false){
+					if(f.getName().endsWith(".class")){
+						System.out.println("name: " + f.getName());
+						ret.add(f);
+					} 
+					
+				}
+			}
+		}
+		
+		Log.getLogger().log(Level.SEVERE, ret.toString());
+		return null;
+	}
 }

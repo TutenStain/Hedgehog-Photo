@@ -85,8 +85,8 @@ public class Picture {
 	public String toString() {
 		tags.size();
 		
-		return "Pictures [Path= " + path + " Name="+name +"Date= " + date
-				+  album  + "Taggar" + tags  + comment  +  location +"]";
+		return "Pictures [Path= " + path + " Name=" + name + " Date= " + date
+				+  album  + " Taggar" + tags + comment  +  location +"]";
 	}
 
 }

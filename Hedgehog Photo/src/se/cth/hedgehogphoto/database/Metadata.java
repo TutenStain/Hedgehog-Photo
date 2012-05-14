@@ -46,7 +46,6 @@ public class Metadata {
 		IImageMetadata metadata = null;
 		try {
 			metadata = Sanselan.getMetadata(file);
-//			System.out.println(metadata.toString());
 		} catch (ImageReadException e) {
 			Log.getLogger().log(Level.WARNING, "Failed to read metadata from file " + file, e);
 		} catch (IOException e) {

@@ -38,7 +38,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	}
 	public  List<Picture> searchfromNames(String search){
 		if(!(search.equals(""))){
-
 			search = search.toLowerCase();
 			return findByLike("name",search);
 		}else{
@@ -70,7 +69,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			search = search.toLowerCase();
 			List<Tag> tags = jtd.findByLike("tag", search);
 			List<Picture> pictures = new ArrayList<Picture>();
-			System.out.print(tags);
 			if(!(tags.isEmpty())){
 				for(Tag t: tags){
 					try{
@@ -523,13 +521,9 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	public void setComment(FileObject f,Picture picture){
 		if(picture != null){
 			try{
-				System.out.print("commentry");
 				if(!(f.getComment().equals(""))){
-					System.out.print("comment not empty");
 					Comment comment = jcd.findById(f.getComment().toLowerCase());
-					System.out.print("commen" + jcd.findById(f.getComment()));
 					if(comment.getComment().equals(f.getComment().toLowerCase())){
-						System.out.print("commen" + comment);
 						entityManager.getTransaction().begin();
 						List<Picture> pics = comment.getPictures();
 						pics.add(picture);
@@ -543,7 +537,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 
 			catch(Exception k){
 				if(jcd.findById(f.getComment().toLowerCase())==null){
-					System.out.print("no com");
 					entityManager.getTransaction().begin();
 					Comment comment = new Comment();		
 					comment.setComment(f.getComment().toLowerCase());		
@@ -575,7 +568,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 						try{
 							if((tag!=null)){
 								entityManager.getTransaction().begin();
-								System.out.print(tag);
 								List<Picture> ptag= tag.getPictures();						
 								if(!(ptag.contains(picture))){
 									ptag.add(picture);
@@ -589,7 +581,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 								}
 							}
 							entityManager.getTransaction().commit();
-							System.out.print("FOUND");
 						}catch(Exception e){
 							entityManager.getTransaction().begin();
 
@@ -618,7 +609,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				try{
 					Location location = jld.findById(f.getLocation().toLowerCase());
 					if(location.getLocation().equals(f.getLocation().toLowerCase())){
-						System.out.print("hitta loc");
 						entityManager.getTransaction().begin();
 						location.setLatitude((f.getLocationObject().getLatitude()));
 						location.setLongitude(f.getLocationObject().getLongitude());
@@ -627,9 +617,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					}
 
 				}catch(Exception j){
-					System.out.print("catch");
 					entityManager.getTransaction().begin();
-					System.out.print("hittar  ej loc");
 					Location location = new Location();
 					
 					location.setLatitude((f.getLocationObject().getLatitude()));

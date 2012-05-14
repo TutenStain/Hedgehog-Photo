@@ -80,13 +80,7 @@ public class FileClassLoader extends URLClassLoader {
 		
 		javaFile = Helper.findFileInSubfolder(javaFile, fileStub ,".java", getURLs());
 		classFile = Helper.findFileInSubfolder(classFile, fileStub ,".class", getURLs());
-
-		
-		System.out.println("fileStub: " + fileStub);
-		System.out.println("javaString: " + javaFilenamePath);
-		System.out.println("JavaFile: " + javaFile.getAbsolutePath() + " " + javaFile.exists());
-		System.out.println("-------");
-		
+	
 		//Only compile if necessary
 		if (javaFile.exists() && (!classFile.exists() || javaFile.lastModified() > classFile.lastModified())) {
 			try {

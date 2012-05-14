@@ -28,7 +28,6 @@ public class PictureFetcher {
 		chooser.setDialogTitle("Choose pictures");
 
 		chooser.setCurrentDirectory(new java.io.File( System.getProperty("user.home") + "/Pictures"));
-		System.out.print(System.getProperty("user.home") + "/Pictures");
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		chooser.setAcceptAllFileFilterUsed(false);
 		chooser.setMultiSelectionEnabled(true);
@@ -45,13 +44,10 @@ public class PictureFetcher {
 	public static void fetchFiles() {
 		int returnVal = chooser.showOpenDialog(null);
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
-
-			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
 			File[] directorys = chooser.getSelectedFiles();
 			for(int i = 0; i < directorys.length;i++){
 				if(directorys[i].isDirectory()){
 					String album = directorys[i].getName();
-					System.out.print("ALBUM : " + album);
 				//if(chooser.getSelectedFile().isDirectory()){
 					//ArrayList<File> synonymer = files.get(chooser.getSelectedFile().getName());
 
@@ -61,12 +57,10 @@ public class PictureFetcher {
 							int pos = dirFiles[j].getName().lastIndexOf(".");              //find the pos of the . in the filename
 							String end =	dirFiles[j].getName().substring(pos + 1);      // get extension name and place into string ext
 							if (isValidFileExtension(end) && dirFiles[j].isFile()){ 
-								System.out.println(dirFiles[j]);      //send filename to client
 								ImageObject imageObject;
 								if(dirFiles[j].isDirectory()==false){
 									imageObject = metadata.getImageObject(dirFiles[j]);
 									imageObject.setAlbumName(album);
-									
 									imageObject.setFileName(dirFiles[j].getName());
 									imageObject.setFilePath(dirFiles[j].getPath());
 									imageObjects.add(imageObject);
