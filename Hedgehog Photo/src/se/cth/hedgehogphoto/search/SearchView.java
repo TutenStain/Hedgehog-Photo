@@ -20,6 +20,7 @@ import se.cth.hedgehogphoto.database.Picture;
  * @author Barnabas Sapan
  */
 
+@SuppressWarnings("serial")
 public class SearchView extends JPanel implements Observer{
 	private String searchButtonText = "Search";
 	private String placeHolderText = "Search...";
@@ -28,7 +29,7 @@ public class SearchView extends JPanel implements Observer{
 	private JTextField searchBox;
 	private JButton searchButton;
 	private SearchPreviewView spv = null;
-	
+
 	public SearchView(SearchPreviewView spv){
 		setLayout(new FlowLayout());
 		searchButton = new JButton(searchButtonText);
@@ -41,47 +42,47 @@ public class SearchView extends JPanel implements Observer{
 			this.setSearchPreview(spv);
 		}
 	}
-	
+
 	public void setSearchBoxFocusListener(FocusListener fl){
 		searchBox.addFocusListener(fl);
 	}
-	
+
 	public void setSeachBoxDocumentListener(DocumentListener dl){
 		searchBox.getDocument().addDocumentListener(dl);
 	}
-	
+
 	public void setSearchBoxActionListener(ActionListener l){
 		searchBox.addActionListener(l);
 	}
-	
+
 	public void setSearchButtonListener(ActionListener ac){
 		searchButton.addActionListener(ac);
 	}
-	
+
 	public String getPlaceholderText(){
 		return placeHolderText;
 	}
-	
+
 	public Dimension getSearchBoxSize(){
 		return searchBox.getSize();
 	}
-	
+
 	public void setSearchBoxSize(Dimension d){
 		searchBox.setPreferredSize(d);
 	}
-	
+
 	public Dimension getSearchButtonSize(){
 		return searchButton.getSize();
 	}
-	
+
 	public void setSearchButtonSize(Dimension d){
 		searchButton.setPreferredSize(d);
 	}
-	
+
 	/**
 	 * Specifies a popup search preview view. If not set no dynamic 
 	 * search preview will be shown.
-	 * @param _spv The search preview model.
+	 * @param spv The search preview model.
 	 */
 	//TODO Use interface argument instead.
 	public void setSearchPreview(SearchPreviewView spv){
@@ -89,11 +90,11 @@ public class SearchView extends JPanel implements Observer{
 		this.spv.setTextField(searchBox);
 		add(this.spv);
 	}
-	
+
 	public void setSearchBoxText(String txt){
 		searchBox.setText(txt);
 	}
-	
+
 	public String getSearchBoxText(){
 		return searchBox.getText();
 	}
@@ -104,7 +105,7 @@ public class SearchView extends JPanel implements Observer{
 		if(spv == null){
 			SearchModel model = (SearchModel)arg;
 			System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());
-			
+
 			List<Picture> pic = model.getSearchObjects();;
 			Files.getInstance().setPictureList(pic);
 		}

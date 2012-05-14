@@ -3,7 +3,6 @@ package se.cth.hedgehogphoto.search;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
@@ -20,6 +19,7 @@ import se.cth.hedgehogphoto.view.ImageUtils;
  * @author Barnabas Sapan
  */
 
+@SuppressWarnings("serial")
 public class SearchComponentView extends JPanel{
 	private JTextArea comment;
 	private JTextArea tags;

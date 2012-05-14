@@ -14,14 +14,13 @@ import se.cth.hedgehogphoto.database.Picture;
  */
 public class SearchComponentController{
 	private SearchComponentView view;
-	private SearchModel model;
 	private final Picture fo;
 	private Color oldColor;
-	
+
 	public SearchComponentController(SearchComponentView _view, final Picture _fo){
 		view = _view;
 		fo = _fo;
-		
+
 		view.addMouseListener(new MouseListener(){
 			//TODO This needs to be done.
 			@Override
