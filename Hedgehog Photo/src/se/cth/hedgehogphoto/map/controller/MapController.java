@@ -5,8 +5,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import se.cth.hedgehogphoto.database.Files;
+import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.map.model.Global;
+import se.cth.hedgehogphoto.map.view.AbstractJOverlayMarker;
 import se.cth.hedgehogphoto.map.view.AbstractJOverlayPanel;
 import se.cth.hedgehogphoto.map.view.MapView;
 
@@ -43,7 +48,12 @@ public class MapController implements PropertyChangeListener {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			//TODO: Make a search in the database
-			
+			if (arg0.getSource() instanceof AbstractJOverlayMarker) {
+				AbstractJOverlayMarker marker = (AbstractJOverlayMarker) arg0.getSource();
+				List<Picture> pictures = new ArrayList<Picture>();
+				marker.getModel().getPictures(pictures);
+				Files.getInstance().setPictureList(pictures);
+			}
 		}
 		@Override
 		public void mousePressed(MouseEvent arg0) {
