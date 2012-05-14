@@ -21,6 +21,18 @@ import org.xml.sax.SAXParseException;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.LocationObject;
 
+/**
+ * Parses XML-documents from the nominatim-server
+ * and extracts the essential information about the
+ * locations. Requests to the server are limited to 
+ * 1 per second, ie a new request can start 1000 ms
+ * after the last one was processed. This will result
+ * in a slightly longer waiting-period, depending on
+ * how fast the XML-documents are processed. This is
+ * in line with the nominatim usage policy, which
+ * should be provided with this software. 
+ * @author Florian
+ */
 public class XMLParser implements Runnable {
 	private static XMLParser xmlParser;
 	private DocumentBuilder docBuilder;
@@ -36,7 +48,7 @@ public class XMLParser implements Runnable {
 		try {
 			docBuilder = docBuilderFactory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) { 
-			//this better not happen.
+			//processSearch can't run if this happens, since docBuilder is null
 		}
 	}
 
