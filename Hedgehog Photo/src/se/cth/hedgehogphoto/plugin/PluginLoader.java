@@ -48,6 +48,7 @@ public class PluginLoader{
 			URL[] urls = new URL[]{url};
 			Log.getLogger().log(Level.INFO, "Setting plugin directory: " + urls[0].getPath());
 			Helper.createPluginFolder(new File(urls[0].getPath()));
+			Helper.copyPluginsToFolder(new File(urls[0].getPath()));
 			classLoader = new FileClassLoader(urls);
 		} catch (MalformedURLException e) {
 			Log.getLogger().log(Level.SEVERE, "MalformedURLException", e.getMessage());

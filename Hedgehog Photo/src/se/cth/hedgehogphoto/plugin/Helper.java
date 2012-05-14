@@ -2,7 +2,14 @@ package se.cth.hedgehogphoto.plugin;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -126,6 +133,39 @@ public final class Helper {
 		return new File(d.substring(0, d.lastIndexOf(System.getProperty("file.separator"))));
 	}
 	
+	public static boolean copyPluginsToFolder(final File folder){
+		if(folder.isDirectory()){
+			final Path targetPath = Paths.get(folder.getAbsolutePath());
+			final Path sourcePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "plugins");;
+			try {
+				Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
+					@Override
+					public FileVisitResult preVisitDirectory(final Path dir,
+							final BasicFileAttributes attrs) throws IOException {
+						Files.createDirectories(targetPath.resolve(sourcePath
+								.relativize(dir)));
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(final Path file,
+							final BasicFileAttributes attrs) throws IOException {
+						Files.copy(file,
+								targetPath.resolve(sourcePath.relativize(file)));
+						return FileVisitResult.CONTINUE;
+					}
+				});
+			} catch (IOException e) {
+				Log.getLogger().log(Level.SEVERE, "IOException", e);
+				return false;
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Deprecated /*Does not work */
 	public static List<File> removeDuplicateClasses(List<File> files){
 		List<File> ret = new ArrayList<File>();
 		for(File f : files){
