@@ -11,15 +11,17 @@ import javax.swing.SwingConstants;
 
 import se.cth.hedgehogphoto.objects.LocationObject;
 
-public class LocationPanel extends JPanel {
+public class GeoLocationPanel extends JPanel {
 	private JLabel nameLabel;
 	private JLabel longitudeLabel, latitudeLabel;
 	private LocationObject location;
 	private Color defaultColor;
+	private boolean isSelected;
 	private static Color color;
+	private static Color selectedPanelColor = new Color(255,150,95);
 	private static int colorScale;
 	
-	public LocationPanel(LocationObject location) {
+	public GeoLocationPanel(LocationObject location) {
 		//set instance variables
 		this.location = location;
 		this.nameLabel = new JLabel(location.getLocation());
@@ -64,12 +66,13 @@ public class LocationPanel extends JPanel {
 		//set background color
 		this.setBackground(color);
 		helpPanel.setBackground(Color.WHITE);
-		defaultColor = color;
+		this.defaultColor = color;
 		incrementColorScale();
+		this.isSelected = false;
 	}
 	
 	public static void resetColorScale() {
-		color = new Color(255,150,95); 
+		color = new Color(255,240,95); 
 		colorScale = 1;
 	}
 	
@@ -81,16 +84,43 @@ public class LocationPanel extends JPanel {
 		color = new Color(red,green,blue);
 	}
 	
-	public void brighter() {
-		this.setBackground(defaultColor.brighter());
+	public void defaultColor() {
+		if (isSelected()) {
+			this.setBackground(selectedPanelColor);
+		} else {
+			this.setBackground(this.defaultColor);
+		}
 	}
 	
-	public void defaultColor() {
-		this.setBackground(defaultColor);
+	public void brighter() {
+		this.setBackground(this.getBackground().brighter());
 	}
 	
 	public void darker() {
-		this.setBackground(defaultColor.darker());
+		this.setBackground(this.getBackground().darker());
+	}
+	
+	public void toggleSelection() {
+		setSelected(!isSelected());
+	}
+	
+	public void setSelected(boolean selected) {
+		this.isSelected = selected;
+		defaultColor();
+	}
+	
+	public boolean isSelected() {
+		return this.isSelected;
+	}
+	
+	
+	
+	public void mouseEntered() {
+		this.brighter();
+	}
+	
+	public void mouseExited() {
+		this.defaultColor();
 	}
 
 }
