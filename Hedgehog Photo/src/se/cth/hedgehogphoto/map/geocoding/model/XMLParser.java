@@ -24,7 +24,6 @@ import se.cth.hedgehogphoto.objects.LocationObject;
 public class XMLParser implements Runnable {
 	private static XMLParser xmlParser;
 	private DocumentBuilder docBuilder;
-	private Lock lock = new ReentrantLock();
 
 	public static synchronized XMLParser getInstance() {
 		if (xmlParser == null) 
@@ -41,9 +40,8 @@ public class XMLParser implements Runnable {
 		}
 	}
 
-	public List<LocationObject> processSearch(URL xmlFileUrl){
+	public synchronized List<LocationObject> processSearch(URL xmlFileUrl){
 		try {
-			lock.lock();
 			Document doc = docBuilder.parse(xmlFileUrl.toString()); 
 
 			// normalize text representation
@@ -93,7 +91,6 @@ public class XMLParser implements Runnable {
 		} finally {
 			Thread t = new Thread(this);
 			t.start();
-			lock.unlock();
 		}
 
 		return null; //Return empty list instead?
@@ -101,19 +98,12 @@ public class XMLParser implements Runnable {
 	}
 
 	@Override
-	public void run() {
-		   try {
-			  lock.lock();
-		      Thread.sleep(1000);
-		   } catch (InterruptedException ie) {
-			   //should not happen :(
-		   }
-		   finally {
-		      lock.unlock();
-		   }
-//		}
-
-		
+	public synchronized void run() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException ie) {
+			//should not happen :(
+		}
 	}
 
 
