@@ -7,6 +7,10 @@ import se.cth.hedgehogphoto.plugin.Panel;
 import se.cth.hedgehogphoto.plugin.Plugin;
 import se.cth.hedgehogphoto.view.PluginArea;
 
+/**
+ * @author David
+ */
+
 @Plugin(name="Note", version="1.0", 
 author="David Grankvist", description="N/A")
 public class Main {

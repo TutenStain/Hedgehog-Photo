@@ -71,7 +71,7 @@ public class PluginLoader{
 		List<File> files = Helper.getAllFilesInFolder(dir, new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
-				return (name.toString().endsWith(".java") || name.toString().endsWith(".class"));
+				return (name.toString().endsWith(".java"));// || name.toString().endsWith(".class"));
 			}
 		});
 		

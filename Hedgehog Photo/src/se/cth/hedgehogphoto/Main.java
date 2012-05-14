@@ -122,7 +122,6 @@ public class Main {
 			}
 			f.setCoverPath("blo");
 		
-
 			f.setAlbumName("Bra bilder");
 		
 			DatabaseHandler.getInstance().insertPicture(f);

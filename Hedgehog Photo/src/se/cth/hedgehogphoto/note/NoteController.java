@@ -11,6 +11,10 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * @author David
+ */
+
 public class NoteController {
 	private NoteModel model;
 	private NoteView view;

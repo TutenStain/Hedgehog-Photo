@@ -9,6 +9,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * @author David
+ */
+
 public class ColorChooser extends JPanel{
 	
 	private JButton[] grid = new JButton[9];

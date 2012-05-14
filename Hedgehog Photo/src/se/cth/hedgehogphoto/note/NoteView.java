@@ -16,6 +16,10 @@ import javax.swing.event.ChangeListener;
 
 import se.cth.hedgehogphoto.Constants;
 
+/**
+ * @author David
+ */
+
 public class NoteView extends JPanel implements Observer{
 	
 	private JPanel bottomPanel = new JPanel();

@@ -5,6 +5,10 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+/**
+ * @author David
+ */
+
 public class PaintUtils {
 	
 	public static void paintOval(Graphics g, int x, int y, int w, int h, Color c){

@@ -3,6 +3,10 @@ package se.cth.hedgehogphoto.note;
 import java.awt.Color;
 import java.util.Observable;
 
+/**
+ * @author David
+ */
+
 public class NoteModel extends Observable{
 	
 	private int circleDiam;
