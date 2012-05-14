@@ -3,7 +3,9 @@ package se.cth.hedgehogphoto.search;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -12,6 +14,7 @@ import javax.swing.JTextArea;
 
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.Tag;
+import se.cth.hedgehogphoto.view.ImageUtils;
 
 /**
  * @author Barnabas Sapan
@@ -28,10 +31,12 @@ public class SearchComponentView extends JPanel{
 		setLayout(flowLayout);
 		
 		JLabel image = new JLabel();
-		image.setMinimumSize(new Dimension(50, 50));
-		image.setMaximumSize(new Dimension(50, 50));
-		image.setPreferredSize(new Dimension(50, 50));
-		image.setIcon(new ImageIcon(pic.getPath()));
+		image.setMinimumSize(new Dimension(65, 50));
+		image.setMaximumSize(new Dimension(65, 50));
+		image.setPreferredSize(new Dimension(65, 50));
+		
+		BufferedImage bi = ImageUtils.resize(new ImageIcon(pic.getPath()).getImage(), 65, 50);
+		image.setIcon(new ImageIcon(bi));
 		add(image);
 		
 		//TODO Maybe a better implementation?
