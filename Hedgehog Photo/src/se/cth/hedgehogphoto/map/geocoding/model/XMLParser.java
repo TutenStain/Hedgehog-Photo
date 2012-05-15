@@ -1,6 +1,5 @@
 package se.cth.hedgehogphoto.map.geocoding.model;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Observable;
 
 import se.cth.hedgehogphoto.log.Log;
-import se.cth.hedgehogphoto.objects.FileObject;
 
 
 

@@ -1,27 +1,13 @@
 package se.cth.hedgehogphoto.view;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Composite;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
 import java.util.logging.Level;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayer;
 import javax.swing.JPanel;
-import javax.swing.Timer;
-import javax.swing.plaf.LayerUI;
 
 import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.DatabaseHandler;

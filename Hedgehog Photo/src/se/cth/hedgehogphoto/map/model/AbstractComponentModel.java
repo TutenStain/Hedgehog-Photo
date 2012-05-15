@@ -7,8 +7,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Observable;
 
-import se.cth.hedgehogphoto.Constants;
-
 /**
  * Abstract logical representation of a JComponent that
  * should be displayed in a JLayeredPane.
