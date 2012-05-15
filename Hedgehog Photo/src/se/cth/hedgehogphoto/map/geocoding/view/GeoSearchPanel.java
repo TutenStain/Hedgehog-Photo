@@ -110,8 +110,8 @@ public final class GeoSearchPanel extends JPanel {
 	private void doSearchInternal(final String newSearch) {
 		try {
 			// Create a URL for the desired page, and create objects for the searchResults
-			URL url = urlCreator.queryURL(newSearch);
-			List<LocationObject> locations = xmlParser.processSearch(url);
+			URL url = urlCreator.queryGeocodingURL(newSearch);
+			List<LocationObject> locations = xmlParser.processGeocodingSearch(url);
 			resultPanel.addLocations(locations);
 			this.setPreferredWidth();
 		} catch (Exception e) {
