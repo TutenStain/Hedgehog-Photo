@@ -52,7 +52,7 @@ public class XMLParser implements Runnable {
 	}
 
 	public List<LocationObject> processGeocodingSearch(URL xmlFileUrl) {
-		List<LocationObject> locations = processGeocoding(xmlFileUrl, RequestType.REVERSE_GEOCODING_REQUEST);
+		List<LocationObject> locations = processGeocoding(xmlFileUrl, RequestType.GEOCODING_REQUEST);
 		return locations;
 	}
 	
