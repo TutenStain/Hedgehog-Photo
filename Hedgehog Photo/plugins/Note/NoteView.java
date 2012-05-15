@@ -12,6 +12,7 @@ import java.util.Observer;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
+import se.cth.hedgehogphoto.Constants;
 
 public class NoteView extends JPanel implements Observer{
 	
@@ -23,7 +24,7 @@ public class NoteView extends JPanel implements Observer{
 	private NoteModel model;
 	
 	public NoteView(NoteModel model){
-		this.setPreferredSize(new Dimension(300, 300));
+		this.setPreferredSize(new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT));
 		this.setLayout(new BorderLayout());
 		this.add(drawArea, BorderLayout.CENTER);
 		this.add(bottomPanel, BorderLayout.SOUTH);
