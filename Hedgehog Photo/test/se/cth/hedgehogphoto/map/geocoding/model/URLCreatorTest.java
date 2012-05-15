@@ -33,22 +33,22 @@ public class URLCreatorTest {
 	}
 
 	@Test
-	public void testQueryURL() {
-		String path = "http://nominatim.openstreetmap.org/search?format=xml&addressdetails=1&q=";
+	public void testQueryGeocodingURL() {
+		String path = "http://nominatim.openstreetmap.org/search?format=xml&addressdetails=0&q=";
 		
 		String query = null; //handle null-query
-		assertTrue(path.equals(instance.queryURL(query).toString()));
+		assertTrue(path.equals(instance.queryGeocodingURL(query).toString()));
 		
 		query = ""; //handle empty query
-		assertTrue(path.equals(instance.queryURL(query).toString()));
+		assertTrue(path.equals(instance.queryGeocodingURL(query).toString()));
 		
 		query = "london"; //handle query
 		String queryPath = path + query;
-		assertTrue(queryPath.equals(instance.queryURL(query).toString()));
+		assertTrue(queryPath.equals(instance.queryGeocodingURL(query).toString()));
 		
 		query = "new york"; //handle space in search
 		queryPath = path + query;
-		assertTrue(!queryPath.equals(instance.queryURL(query).toString()));
+		assertTrue(!queryPath.equals(instance.queryGeocodingURL(query).toString()));
 		
 		try {
 			query = URLEncoder.encode(query, "UTF-8"); //should be 'new+york' now, ie URLcompatible
@@ -56,8 +56,8 @@ public class URLCreatorTest {
 			//fail?
 		} finally {
 			queryPath = path + query;
-			System.out.println(queryPath + "\nvs\n" + instance.queryURL(query).toString());
-			assertTrue(queryPath.equals(instance.queryURL("new york").toString())); //has to use old query-string
+			System.out.println(queryPath + "\nvs\n" + instance.queryGeocodingURL(query).toString());
+			assertTrue(queryPath.equals(instance.queryGeocodingURL("new york").toString())); //has to use old query-string
 		}
 		
 		
@@ -69,8 +69,8 @@ public class URLCreatorTest {
 			//fail?
 		} finally {
 			queryPath = path + query;
-			System.out.println(queryPath + "\nvs\n" + instance.queryURL("göteborg").toString());
-			assertTrue(queryPath.equals(instance.queryURL("göteborg").toString())); //has to use old query-string
+			System.out.println(queryPath + "\nvs\n" + instance.queryGeocodingURL("göteborg").toString());
+			assertTrue(queryPath.equals(instance.queryGeocodingURL("göteborg").toString())); //has to use old query-string
 		}
 	}
 	
