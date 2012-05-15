@@ -1,10 +1,9 @@
 package se.cth.hedgehogphoto.map.geocoding.model;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -52,14 +51,26 @@ public class XMLParser implements Runnable {
 		}
 	}
 
-	public synchronized List<LocationObject> processSearch(URL xmlFileUrl){
+	public List<LocationObject> processGeocodingSearch(URL xmlFileUrl) {
+		List<LocationObject> locations = processGeocoding(xmlFileUrl, RequestType.REVERSE_GEOCODING_REQUEST);
+		return locations;
+	}
+	
+	public LocationObject processReverseGeocodingSearch(URL xmlFileUrl) {
+		List<LocationObject> list = processGeocoding(xmlFileUrl, RequestType.REVERSE_GEOCODING_REQUEST);
+		return (list == null || list.size() == 0) ? null : list.get(0); 
+	}
+	
+	public synchronized List<LocationObject> processGeocoding(URL xmlFileUrl, RequestType type) {
 		try {
+			final String tagName = (type == RequestType.GEOCODING_REQUEST) ? "place" : "result";
+			
 			Document doc = docBuilder.parse(xmlFileUrl.toString()); 
 
 			// normalize text representation
 			doc.getDocumentElement().normalize();
 
-			NodeList listOfPlaces = doc.getElementsByTagName("place");
+			NodeList listOfPlaces = doc.getElementsByTagName(tagName);
 			int nbrOfPlaces = listOfPlaces.getLength();
 			List<LocationObject> locations = new LinkedList<LocationObject>();
 
@@ -71,7 +82,10 @@ public class XMLParser implements Runnable {
 					Element placeElement = (Element) placeID;
 					String lat = placeElement.getAttribute("lat");
 					String lon = placeElement.getAttribute("lon");
-					String place = placeElement.getAttribute("display_name");
+					String place = (type == RequestType.GEOCODING_REQUEST) ? 
+									placeElement.getAttribute("display_name") : 
+									placeElement.getTextContent();
+					
 					LocationObject location = new LocationObject(place);
 					try {
 						location.setLongitude(Double.parseDouble(lon));
