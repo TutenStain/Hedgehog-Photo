@@ -31,9 +31,6 @@ public class URLCreator {
 	private final String LATITUDE_QUERY = "lat=";
 	private final String ZOOM = "zoom=12";
 	
-	private enum RequestType { GEOCODING_REQUEST, REVERSE_GEOCODING_REQUEST };
-	
-	
 	private URLCreator() {
 	}
 	
@@ -116,28 +113,33 @@ public class URLCreator {
 	 */
 	private void initializeStringBuilder(RequestType requestType) {
 		this.builder = new StringBuilder(this.NAMEFINDER_URL);
-		this.builder.append(requestType);
-		this.builder.append(this.XML_FORMAT);
-		this.builder.append(this.AMPERSAND);
-		this.builder.append(this.ADDRESS_DETAILS);
-		this.builder.append(this.AMPERSAND);
 		
 		switch (requestType) {
-		case GEOCODING_REQUEST: prepareBuilderForGeocoding(); break;
-		case REVERSE_GEOCODING_REQUEST: prepareBuilderForReverseGeocoding(); break;
+		case GEOCODING_REQUEST: 
+			this.builder.append(this.GEOCODING_REQUEST);
+			prepareBuilder(); break;
+		case REVERSE_GEOCODING_REQUEST: 
+			this.builder.append(this.REVERSE_GEOCODING_REQUEST);
+			prepareBuilderForReverseGeocoding(); break;
 		default: break;
 		}
 		
 		//DO NOT ENCODE
 	}
 	
-	private void prepareBuilderForGeocoding() {
-		this.builder.append(this.GEOCODING_QUERY);
-	}
-	
 	private void prepareBuilderForReverseGeocoding() {
+		prepareBuilder();
 		this.builder.append(this.ZOOM);
 		this.builder.append(this.AMPERSAND);
 	}
+	
+	private void prepareBuilder() {
+		this.builder.append(this.XML_FORMAT);
+		this.builder.append(this.AMPERSAND);
+		this.builder.append(this.ADDRESS_DETAILS);
+		this.builder.append(this.AMPERSAND);
+	}
+	
+	
 	
 }
