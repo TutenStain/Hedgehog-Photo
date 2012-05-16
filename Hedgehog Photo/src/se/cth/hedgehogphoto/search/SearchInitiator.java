@@ -13,7 +13,9 @@ public class SearchInitiator {
 	public SearchInitiator() {
 		SearchPreviewView previewView = new SearchPreviewView();
 		SearchView view = new SearchView(previewView);
-		SearchModel model = new SearchModel(view, previewView);
+		SearchModel model = new SearchModel();
+		model.addObserver(view);
+		model.addObserver(previewView);
 		view.setPreferredSize(new Dimension(250, 30));
 		new SearchController(model, view);
 	}
