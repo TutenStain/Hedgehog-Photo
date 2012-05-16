@@ -116,14 +116,20 @@ public class XMLParser implements Runnable {
 		} finally {
 			Thread t = new Thread(this);
 			t.start();
+			try {
+				t.join(); //wait for sleep to finish before leaving the lock
+				//to this query-method
+			} catch (InterruptedException ie) {
+				Log.getLogger().log(Level.SEVERE, "Thread got interrupted.", ie);
+			}
 		}
 
-		return null; //Return empty list instead?
+		return null; 
 
 	}
 
 	@Override
-	public synchronized void run() {
+	public void run() {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException ie) {
