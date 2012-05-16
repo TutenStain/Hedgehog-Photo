@@ -105,11 +105,13 @@ public class SearchView extends JPanel implements Observer{
 	public void update(Observable o, Object arg) {
 		//If we dont have a spv specified, just make the search and update the view.
 		if(spv == null){
-			SearchModel model = (SearchModel)arg;
-			System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());
+			if (arg instanceof SearchModel) {
+				SearchModel model = (SearchModel)arg;
+				System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());
 
-			List<PictureObject> pic = model.getSearchObjects();;
-			Files.getInstance().setPictureList(pic);
+				List<PictureObject> pic = model.getSearchObjects();;
+				Files.getInstance().setPictureList(pic);				
+			}
 		}
 	}
 }

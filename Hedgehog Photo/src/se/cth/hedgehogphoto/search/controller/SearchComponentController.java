@@ -1,6 +1,7 @@
 package se.cth.hedgehogphoto.search.controller;
 
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -51,5 +52,45 @@ public class SearchComponentController{
 			public void mouseReleased(MouseEvent e) {
 			}
 		});
+	}
+	
+	public class ComponentMouseListener extends MouseAdapter {
+		//TODO This needs to be done.
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (e.getSource() instanceof SearchComponentView) {
+				SearchComponentView view = (SearchComponentView) e.getSource();
+				System.out.println("Clicked on: " + view.getPicture().getPath());
+				List<Picture> pic = new ArrayList<Picture>();
+				pic.add(view.getPicture());
+				Files.getInstance().setPictureList(pic);
+			}
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			if (e.getSource() instanceof SearchComponentView) {
+				SearchComponentView view = (SearchComponentView) e.getSource();
+				oldColor = view.getBackground();
+				view.setBackground(new Color(210, 210, 210));
+			}
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			if (e.getSource() instanceof SearchComponentView) {
+				SearchComponentView view = (SearchComponentView) e.getSource();
+				view.setBackground(oldColor);
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
 	}
 }

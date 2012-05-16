@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Observable;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
+import se.cth.hedgehogphoto.database.Files;
+import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 
 import se.cth.hedgehogphoto.search.view.SearchPreviewView;
@@ -51,6 +53,7 @@ public class SearchModel extends Observable{
 	
 	public void doSearch(){
 		System.out.println("Model searching with: " + searchText);
+//		Files.getInstance().setPictureList(getSearchObjects());
 		setChanged();
 		notifyObservers(this);
 	}
