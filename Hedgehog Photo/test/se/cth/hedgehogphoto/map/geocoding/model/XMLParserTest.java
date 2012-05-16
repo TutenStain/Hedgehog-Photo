@@ -25,6 +25,12 @@ public class XMLParserTest {
 		assertTrue(instance != null);
 	}
 
+	/**
+	 * When this class is implemented correctly, one should
+	 * avoid to run it too many times. Repeated request for the
+	 * same page on the nominatim-server are not encouraged,
+	 * and could ultimately result in a ban.
+	 */
 	@Test
 	public void testProcessSearch() {
 		String basePath = "http://nominatim.openstreetmap.org/search?format=xml&addressdetails=1&q=";

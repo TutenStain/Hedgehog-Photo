@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class MultipleThreadsCallingTest {
 	private List<Thread> threads;
-	private MaxOneRequestPerSecondTest instance;
+	private FakeXMLParserMock instance;
 	private List<Long> timesInMs = new ArrayList<Long>();
 	private final int nbrOfThreads = 10;
 	
@@ -18,7 +18,7 @@ public class MultipleThreadsCallingTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		instance = MaxOneRequestPerSecondTest.getInstance();
+		instance = FakeXMLParserMock.getInstance();
 		createThreads();
 	}
 	
@@ -51,7 +51,7 @@ public class MultipleThreadsCallingTest {
 	public void test() {
 		startAllThreads();
 		for (Long ms : timesInMs) {
-			assertTrue(ms > MaxOneRequestPerSecondTest.WAIT_MS); //threads wait at least as much as they have to
+			assertTrue(ms > FakeXMLParserMock.WAIT_MS); //threads wait at least as much as they have to
 		}
 	}
 
