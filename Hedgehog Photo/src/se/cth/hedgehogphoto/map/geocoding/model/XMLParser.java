@@ -60,6 +60,17 @@ public class XMLParser implements Runnable {
 		return (list == null || list.size() == 0) ? null : list.get(0); 
 	}
 	
+	/**
+	 * Processes an XML-file requested from the nominatim-server,
+	 * either from the geocoding, or the reverse-geocoding-service.
+	 * TODO: Should cache searchResults (see nominatim usage policy
+	 * for more about that).
+	 * @param xmlFileUrl the URL to the searchResult from the nominatim
+	 * server.
+	 * @param type the kind of request; Geocoding or Reverse-Geocoding.
+	 * @return a List of LocationObjects containing the result of the
+	 * search.
+	 */
 	public synchronized List<LocationObjectOther> processGeocoding(URL xmlFileUrl, RequestType type) {
 		try {
 			final String tagName = (type == RequestType.GEOCODING_REQUEST) ? "place" : "result";
