@@ -10,7 +10,7 @@ public interface PictureDao extends Dao<Picture, String> {
 	public void addLocation(String location, String filePath);
 	public  void addComment(String comment, String filePath);
 	public void addTag(String tag, String filePath);
-	public  Picture getfromPath(String search);
+	public  PictureObject getfromPath(String search);
 	public List<Picture> searchfromLocations(String search);
 	public List<Picture> searchfromTags(String search);
 	public List<Picture> searchfromDates(String search);

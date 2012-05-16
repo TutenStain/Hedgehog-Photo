@@ -7,6 +7,7 @@ import java.util.Observable;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 
 /**
@@ -34,8 +35,8 @@ public class SearchModel extends Observable{
 	}
 
 	//TODO Better implementation/better != null checks
-	public List<Picture> getSearchObjects(){
-		List<Picture> search = new ArrayList<Picture>();
+	public List<PictureObject> getSearchObjects(){
+		List<PictureObject> search = new ArrayList<PictureObject>();
 		
 		if(DatabaseHandler.getInstance().searchPicturefromsLocations(searchText) != null){
 			search.addAll(DatabaseHandler.getInstance().searchPicturefromsLocations(searchText));

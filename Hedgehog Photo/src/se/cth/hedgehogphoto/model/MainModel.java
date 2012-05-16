@@ -7,16 +7,17 @@ import java.util.Observable;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 public class MainModel extends Observable {
-	private List<Picture> images = new ArrayList<Picture>();
+	private List<PictureObject> images = new ArrayList<PictureObject>();
 	
 	public MainModel() {
-		this.images = DatabaseHandler.getInstance().getAllPictures();
+		this.images.addAll(DatabaseHandler.getInstance().getAllPictures());
 		Files.getInstance().setPictureList(this.images);
 	}
 	
-	public List<Picture> getImages() {
+	public List<PictureObject> getImages() {
 		System.out.println("IMAGES SIZE: " + this.images.size());
 		return this.images;
 	}

@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 /**
  * @author Barnabas Sapan
@@ -46,8 +47,8 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 		final SearchModel model = (SearchModel)arg;
 		System.out.println("UPDATE @ SEARCH_PREVIEW_VIEW: " + model.getSearchQueryText());
 		show(jtf, -50, jtf.getHeight()); //-50 to count for the offset of the textbox
-		List<Picture> fo = model.getSearchObjects();
-		Iterator<Picture> itr = fo.iterator();
+		List<PictureObject> fo = model.getSearchObjects();
+		Iterator<PictureObject> itr = fo.iterator();
 		panel.removeAll();
 
 		//Adds the search results to the popup, if result resulted in no matches, add
@@ -71,7 +72,7 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 
 			int i = 0;
 			while(itr.hasNext() && i < 5){
-				Picture pic = itr.next();
+				PictureObject pic = itr.next();
 				SearchComponentView view = new SearchComponentView(pic);
 				new SearchComponentController(view, pic);
 				panel.add(view);

@@ -13,6 +13,7 @@ import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.map.controller.MapController;
 import se.cth.hedgehogphoto.map.model.MapModel;
 
@@ -74,7 +75,7 @@ public class Test {
     	temp5.setLongitude(22.1);
     	temp5.setLatitude(33.2);
     	locations.add(temp5);
-		List<Picture> pictures = new ArrayList<Picture>();
+		List<PictureObject> pictures = new ArrayList<PictureObject>();
 		int nbrOfLocations = locations.size();
 		for (int index = 0; index < nbrOfLocations; index++) {
 			Picture pic = new Picture();

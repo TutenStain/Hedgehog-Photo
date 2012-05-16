@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.log.Log;
 
 /**
@@ -40,13 +41,13 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 	 */
 	protected void initialize() {
 		this.markerModels = new LinkedList<AbstractMarkerModel>();
-		List<Picture> pictures = Files.getInstance().getPictureList(); //fetch pictures
+		List<PictureObject> pictures = Files.getInstance().getPictureList(); //fetch pictures
 		List<Location> locations = new LinkedList<Location>();
 		int nbrOfPictures = pictures.size();
 		Log.getLogger().log(Level.INFO, nbrOfPictures + " pictures were found in the Files-class.");
 		int index;
 		for (index = 0; index < nbrOfPictures; index++) {
-			Picture picture = pictures.get(index);
+			PictureObject picture = pictures.get(index);
 			Location location = picture.getLocation();
 			if (location != null) {
 				if (location.validPosition()) { 

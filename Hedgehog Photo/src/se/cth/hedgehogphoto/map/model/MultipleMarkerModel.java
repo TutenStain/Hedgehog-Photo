@@ -8,6 +8,7 @@ import java.util.List;
 
 import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 /**
  * Logical representation of a "multiple marker".
@@ -93,7 +94,7 @@ public class MultipleMarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	public List<Picture> getPictures(List<Picture> pictures) {
+	public List<PictureObject> getPictures(List<PictureObject> pictures) {
 		int nbrOfMarkers = this.markers.size();
 		for (int index = 0; index < nbrOfMarkers; index++) {
 			pictures = this.markers.get(index).getPictures(pictures);
@@ -119,11 +120,11 @@ public class MultipleMarkerModel extends AbstractMarkerModel {
 	}
 	
 	private void computeLonglat() {
-		List<Picture> pictures = new LinkedList<Picture>();
+		List<PictureObject> pictures = new LinkedList<PictureObject>();
 		pictures = this.getPictures(pictures);
 		double averageLongitude = 0.0;
 		double averageLatitude = 0.0;
-		for (Picture picture : pictures) {
+		for (PictureObject picture : pictures) {
 			Location loc = picture.getLocation();
 			averageLongitude += loc.getLongitude();
 			averageLatitude += loc.getLatitude();

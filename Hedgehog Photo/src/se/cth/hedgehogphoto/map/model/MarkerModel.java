@@ -4,22 +4,23 @@ import java.awt.Point;
 import java.util.List;
 
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 /**
  * Logical representation of a single marker.
  * @author Florian Minges
  */
 public class MarkerModel extends AbstractMarkerModel {
-	private Picture picture;
+	private PictureObject picture;
 	
-	public MarkerModel(Picture picture) {
+	public MarkerModel(PictureObject picture) {
 		this.picture = picture;
 		setIconPath(Global.MARKER_ICON_PATH); //26x26
 		initialize();
 		handleVisibility();
 	}
 	
-	public Picture getPicture() {
+	public PictureObject getPicture() {
 		return this.picture;
 	}
 	
@@ -42,7 +43,7 @@ public class MarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	public List<Picture> getPictures(List<Picture> pictures) {
+	public List<PictureObject> getPictures(List<PictureObject> pictures) {
 		pictures.add(this.getPicture());
 		return pictures;
 	}

@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.database.Tag;
 import se.cth.hedgehogphoto.view.ImageUtils;
 
@@ -24,7 +24,7 @@ public class SearchComponentView extends JPanel{
 	private JTextArea comment;
 	private JTextArea tags;
 	
-	public SearchComponentView(final Picture pic) {
+	public SearchComponentView(final PictureObject pic) {
 		FlowLayout flowLayout = new FlowLayout();
 		flowLayout.setVgap(0);
 		flowLayout.setHgap(10);

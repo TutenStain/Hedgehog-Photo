@@ -29,6 +29,7 @@ import javax.swing.event.ChangeListener;
 import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.model.MainModel;
 
@@ -182,7 +183,7 @@ public class MainView implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		photoPanels = new ArrayList<PhotoPanel>();
-		List<Picture> images;
+		List<PictureObject> images;
 
 		//TODO Maybe refresh in another way than removing the PhotoPanels?
 		photoViewPanel.removeAll();

@@ -89,7 +89,8 @@ public class MultipleMarkerModelTest {
 			pic.setLocation(locations.get(index));
 			pictures.add(pic);
 		}
-		Files.getInstance().setPictureList(pictures);
+		//TODO Jag kommenterade bort det, fixa.
+		//Files.getInstance().setPictureList(pictures);
 		assertTrue(pictures.equals(Files.getInstance().getPictureList()));
 	}
 

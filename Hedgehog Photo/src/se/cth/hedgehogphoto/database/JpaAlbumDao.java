@@ -101,7 +101,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		return null;
 	}
 	public  void updateAddTag(String tag, String albumName){
-		for(Album f:albumList){
+		for(AlbumObject f:albumList){
 			if(f.getAlbumName().equals(albumName))
 				albumList.remove(f);
 		}
@@ -144,7 +144,7 @@ public void addTag(String tag, String albumName){
 
 }
 public  void updateAddComment(String comment, String albumName){
-	for(Album f:albumList){
+	for(AlbumObject f:albumList){
 		if(f.getAlbumName().equals(albumName))
 			albumList.remove(f);
 	}
@@ -186,7 +186,7 @@ public void addComment(String comment, String albumName){
 	}
 }
 public  void updateAddLocation(String location, String albumName){
-	for(Album f:albumList){
+	for(AlbumObject f:albumList){
 		if(f.getAlbumName().equals(albumName))
 			albumList.remove(f);
 	}
@@ -231,7 +231,7 @@ public void addLocation(String location, String albumName){
 }
 public  void updateDeleteComment(String albumName){
 	deleteComment(albumName);
-	for(Album f:albumList){
+	for(AlbumObject f:albumList){
 		if(f.getAlbumName().equals(albumName))
 			albumList.remove(f);
 	}
@@ -239,7 +239,7 @@ public  void updateDeleteComment(String albumName){
 }
 public void deleteComment(String albumName){
 	albumName = albumName.toLowerCase();
-	Album album = findById(albumName);
+	AlbumObject album = findById(albumName);
 	if(album != null){
 		Comment com = album.getComment();
 		beginTransaction();
@@ -252,14 +252,14 @@ public void deleteComment(String albumName){
 }
 public  void updateDeleteLocation(String albumName){
 	deleteLocation(albumName);
-	for(Album f:albumList){
+	for(AlbumObject f:albumList){
 		if(f.getAlbumName().equals(albumName))
 			albumList.remove(f);
 	}
 	files.setAlbumList(albumList);
 }
 public void deleteLocation(String albumName){
-	Album album = findById(albumName);
+	AlbumObject album = findById(albumName);
 	if(album!= null){
 		Location loc = album.getLocation();
 		beginTransaction();
@@ -273,7 +273,7 @@ public void deleteLocation(String albumName){
 
 public void updateDeleteTags(String albumName){
 	deleteTags(albumName);
-	for(Album f:albumList){
+	for(AlbumObject f:albumList){
 		if(f.getAlbumName().equals(albumName))
 			albumList.remove(f);
 	}
@@ -281,7 +281,7 @@ public void updateDeleteTags(String albumName){
 }
 public void deleteTags(String albumName){
 	albumName = albumName.toLowerCase();
-	Album album = findById(albumName);
+	AlbumObject album = findById(albumName);
 	if(album!= null){
 		List<Tag> tags = album.getTags();
 		for(Tag tag: tags){

@@ -11,6 +11,7 @@ import javax.swing.event.DocumentListener;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 /**
  * @author Barnabas Sapan
@@ -29,7 +30,7 @@ public class SearchController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
-					List<Picture> fo = model.getSearchObjects();
+					List<PictureObject> fo = model.getSearchObjects();
 					Files.getInstance().setPictureList(fo);
 				}	
 			}

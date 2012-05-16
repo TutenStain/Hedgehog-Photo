@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
  *
  */
 @Entity
-public class Album {
+public class Album implements AlbumObject, AlbumI {
 	@Id
 	private String albumName;
 	
@@ -29,6 +29,7 @@ public class Album {
 	private Location location;
 
 	
+	@Override
 	public List<Tag> getTags() {
 		return tags;
 	}
@@ -37,6 +38,7 @@ public class Album {
 	
 	}
 
+	@Override
 	public Comment getComment() {
 		return comment;
 	}
@@ -44,6 +46,7 @@ public class Album {
 		this.comment = comment;
 	}
 
+	@Override
 	public Location getLocation() {
 		return location;
 	}
@@ -52,6 +55,7 @@ public class Album {
 		this.location = location;
 	}
 	
+	@Override
 	public String getDate() {
 		return date;
 	}
@@ -59,15 +63,17 @@ public class Album {
 	protected void setDate(String date) {
 		this.date = date;
 	}	
-	public List<Picture> getPictures() {
+	@Override
+	public List<Picture> getPictures() {		
 		return pictures;
 	}
 
 
 
-	protected void setPictures(List<Picture> pictures) {
+	public void setPictures(List<Picture> pictures) {
 		this.pictures = pictures;
 	}
+	@Override
 	public String getAlbumName() {
 		return albumName;
 	}
@@ -78,10 +84,12 @@ public class Album {
 		this.albumName = albumName;
 	}
 	
+	@Override
 	public String getCoverPath() {
 		return coverPath;
 	}
 
+	@Override
 	public void setCoverPath(String coverPath) {
 		this.coverPath= coverPath;
 	}

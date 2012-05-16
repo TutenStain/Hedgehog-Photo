@@ -12,6 +12,7 @@ import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.JpaPictureDao;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 
 
@@ -19,12 +20,12 @@ import se.cth.hedgehogphoto.database.Picture;
 
 public class CalendarModel extends Observable {
 	private DatabaseAccess da;
-	private static List<Picture> pics;
+	private static List<PictureObject> pics;
 	private int month;
 	private int maxDays;
 	private int year;
 	private static CalendarModel m ;
-	private Map<Integer, List<Picture>> pictureDays;
+	private Map<Integer, List<PictureObject>> pictureDays;
 	private List<Integer> dayswithPicture = new ArrayList<Integer>();
 	private GregorianCalendar g= new GregorianCalendar();
 	private JpaPictureDao jpd;
@@ -73,11 +74,11 @@ public class CalendarModel extends Observable {
 		this.year = year;
 	}
 
-	public Map<Integer, List<Picture>> getPictureDays() {
+	public Map<Integer, List<PictureObject>> getPictureDays() {
 		return pictureDays;
 	}
 
-	public void setPictureDays(Map<Integer, List<Picture>> pictureDays) {
+	public void setPictureDays(Map<Integer, List<PictureObject>> pictureDays) {
 		this.pictureDays = pictureDays;
 	}
 
@@ -130,11 +131,12 @@ public class CalendarModel extends Observable {
 		notifyObservers();
 	}
 	public void getDates(){
-		pictureDays = new HashMap<Integer, List<Picture>>();
+		pictureDays = new HashMap<Integer, List<PictureObject>>();
 		dayswithPicture = new ArrayList<Integer>(); 
 		try{
 		for(int i = 1; i<=maxDays;i++){
-			List<Picture> pics=  jpd.searchfromDates(year + "-" + month + "-" + i);
+			List<PictureObject> pics =  new ArrayList<PictureObject>();
+			pics.addAll(jpd.searchfromDates(year + "-" + month + "-" + i));
 			pics.addAll( jpd.searchfromDates(year + ":" + month + ":" + i));
 			if(!(pics.isEmpty()) && pics != null){
 				pictureDays.put(i,pics);
@@ -145,7 +147,7 @@ public class CalendarModel extends Observable {
 			
 		}
 	}
-	public List<Picture> getPictures(Integer key){
+	public List<PictureObject> getPictures(Integer key){
 		if(!(pictureDays.isEmpty())){
 			return pictureDays.get(key);
 		}
@@ -154,7 +156,7 @@ public class CalendarModel extends Observable {
 	public List<Integer> getList(){
 		return dayswithPicture;
 	}
-	public Map<Integer, List<Picture>> getMap(){
+	public Map<Integer, List<PictureObject>> getMap(){
 		return pictureDays;
 	}
 

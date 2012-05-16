@@ -10,7 +10,7 @@ import se.cth.hedgehogphoto.log.Log;
 
 public class Files extends Observable{
 	private static Files file;
-	private List<Picture> pictureList = new ArrayList<Picture>();
+	private List<PictureObject> pictureList = new ArrayList<PictureObject>();
 	private List<Album> albumList = new ArrayList<Album>();
 	
 	private Files(){
@@ -22,14 +22,14 @@ public class Files extends Observable{
 		return file;
 	}
 	
-	public void setPictureList(List<Picture> list){
+	public void setPictureList(List<PictureObject> list){
 		pictureList = list;
 		setChanged();
 		notifyObservers(this);
 		Log.getLogger().info("Files now contain " + pictureList.size() + " pictures.");
 	}
 	
-	public List<Picture> getPictureList(){
+	public List<PictureObject> getPictureList(){
 		return pictureList;
 	}
 	

@@ -15,6 +15,7 @@ import javax.swing.event.DocumentListener;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 /**
  * @author Barnabas Sapan
@@ -106,7 +107,7 @@ public class SearchView extends JPanel implements Observer{
 			SearchModel model = (SearchModel)arg;
 			System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());
 
-			List<Picture> pic = model.getSearchObjects();;
+			List<PictureObject> pic = model.getSearchObjects();;
 			Files.getInstance().setPictureList(pic);
 		}
 	}

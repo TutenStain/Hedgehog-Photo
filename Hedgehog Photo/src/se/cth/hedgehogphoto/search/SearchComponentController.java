@@ -8,16 +8,17 @@ import java.util.List;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 /**
  * @author Barnabas Sapan
  */
 public class SearchComponentController{
 	private SearchComponentView view;
-	private final Picture fo;
+	private final PictureObject fo;
 	private Color oldColor;
 
-	public SearchComponentController(SearchComponentView _view, final Picture _fo){
+	public SearchComponentController(SearchComponentView _view, final PictureObject _fo){
 		view = _view;
 		fo = _fo;
 
@@ -26,7 +27,7 @@ public class SearchComponentController{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("Clicked on: " + fo.getPath());
-				List<Picture> pic = new ArrayList<Picture>();
+				List<PictureObject> pic = new ArrayList<PictureObject>();
 				pic.add(fo);
 				Files.getInstance().setPictureList(pic);
 			}

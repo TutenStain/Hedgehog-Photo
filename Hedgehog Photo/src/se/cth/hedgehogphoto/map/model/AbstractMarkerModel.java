@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 /**
  * Abstract logical representation of a marker
@@ -22,7 +23,7 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 		setNumberOfLocations(computeNumberOfLocations());
 	}
 	
-	public abstract List<Picture> getPictures(List<Picture> pictures);
+	public abstract List<PictureObject> getPictures(List<PictureObject> pictures);
 	abstract int computeNumberOfLocations();
 
 	public int getNumberOfLocations() {
