@@ -1,6 +1,5 @@
 package se.cth.hedgehogphoto;
 
-import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,10 +16,7 @@ import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 import se.cth.hedgehogphoto.plugin.PluginLoader;
-import se.cth.hedgehogphoto.search.controller.SearchController;
-import se.cth.hedgehogphoto.search.model.SearchModel;
-import se.cth.hedgehogphoto.search.view.SearchPreviewView;
-import se.cth.hedgehogphoto.search.view.SearchView;
+import se.cth.hedgehogphoto.search.SearchInitiator;
 import se.cth.hedgehogphoto.view.MainView;
 import se.cth.hedgehogphoto.view.PluginArea;
 import se.cth.hedgehogphoto.view.StartUpView;
@@ -73,15 +69,11 @@ public class Main {
 		view.addPlugin(map, PluginArea.LEFT_TOP);
 		
 		//Search
-		SearchPreviewView spv = new SearchPreviewView();
-		SearchView sv = new SearchView(spv);
-		SearchModel sm = new SearchModel(sv, spv);
-		sv.setPreferredSize(new Dimension(250, 30));
-		new SearchController(sm, sv);
+		SearchInitiator search = new SearchInitiator();
 
 		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(view);
 
-		view.addPlugin(sv, PluginArea.SEARCH);
+		view.addPlugin(search.getView(), PluginArea.SEARCH);
 
 		model.testNotify();
 	}
