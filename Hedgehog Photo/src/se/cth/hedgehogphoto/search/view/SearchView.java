@@ -49,7 +49,7 @@ public class SearchView extends JPanel implements Observer{
 		searchBox.addFocusListener(fl);
 	}
 
-	public void setSeachBoxDocumentListener(DocumentListener dl){
+	public void setSearchBoxDocumentListener(DocumentListener dl){
 		searchBox.getDocument().addDocumentListener(dl);
 	}
 

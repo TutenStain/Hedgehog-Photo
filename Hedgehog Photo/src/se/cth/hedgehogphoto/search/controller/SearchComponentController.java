@@ -33,7 +33,7 @@ public class SearchComponentController{
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {	
+			public void mouseEntered(MouseEvent e) {
 				oldColor = view.getBackground();
 				view.setBackground(new Color(210, 210, 210));
 			}

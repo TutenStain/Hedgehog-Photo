@@ -58,7 +58,7 @@ public class SearchController {
 		});
 		
 		//Calls update() on each keystroke by the user.
-		view.setSeachBoxDocumentListener(new DocumentListener() {
+		view.setSearchBoxDocumentListener(new DocumentListener() {
 			private Thread t = new SearchThread(model, 500);
 			
 	        @Override

@@ -76,6 +76,7 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 			while(itr.hasNext() && i < 5){
 				PictureObject pic = itr.next();
 				SearchComponentView view = new SearchComponentView(pic);
+//				firePropertyChange("updateListeners"
 				new SearchComponentController(view, pic);
 				panel.add(view);
 				i++;	
