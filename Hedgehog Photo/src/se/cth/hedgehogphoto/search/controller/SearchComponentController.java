@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.search;
+package se.cth.hedgehogphoto.search.controller;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -8,6 +8,7 @@ import java.util.List;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
+import se.cth.hedgehogphoto.search.view.SearchComponentView;
 
 /**
  * @author Barnabas Sapan

@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.search;
+package se.cth.hedgehogphoto.search.model;
 
 
 import java.util.ArrayList;
@@ -8,6 +8,8 @@ import java.util.Observable;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.PictureObject;
 
+import se.cth.hedgehogphoto.search.view.SearchPreviewView;
+import se.cth.hedgehogphoto.search.view.SearchView;
 
 /**
  * @author Barnabas Sapan

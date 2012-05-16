@@ -1,4 +1,5 @@
-package se.cth.hedgehogphoto.search;
+package se.cth.hedgehogphoto.search.model;
+
 
 
 /**

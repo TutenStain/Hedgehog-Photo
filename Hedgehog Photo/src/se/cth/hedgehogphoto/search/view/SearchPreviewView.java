@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.search;
+package se.cth.hedgehogphoto.search.view;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -18,6 +18,9 @@ import javax.swing.JTextField;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
+
+import se.cth.hedgehogphoto.search.controller.SearchComponentController;
+import se.cth.hedgehogphoto.search.model.SearchModel;
 
 /**
  * @author Barnabas Sapan

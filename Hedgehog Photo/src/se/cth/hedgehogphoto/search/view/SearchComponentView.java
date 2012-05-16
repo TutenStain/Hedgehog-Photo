@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.search;
+package se.cth.hedgehogphoto.search.view;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;

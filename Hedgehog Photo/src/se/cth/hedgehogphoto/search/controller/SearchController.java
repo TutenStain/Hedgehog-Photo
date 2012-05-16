@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.search;
+package se.cth.hedgehogphoto.search.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +11,10 @@ import javax.swing.event.DocumentListener;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
+
+import se.cth.hedgehogphoto.search.model.SearchModel;
+import se.cth.hedgehogphoto.search.model.SearchThread;
+import se.cth.hedgehogphoto.search.view.SearchView;
 
 /**
  * @author Barnabas Sapan

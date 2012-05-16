@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.search;
+package se.cth.hedgehogphoto.search.view;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,6 +15,8 @@ import javax.swing.event.DocumentListener;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
+
+import se.cth.hedgehogphoto.search.model.SearchModel;
 
 /**
  * @author Barnabas Sapan
