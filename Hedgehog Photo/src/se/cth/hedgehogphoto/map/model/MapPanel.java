@@ -61,6 +61,7 @@ import javax.swing.Timer;
 
 import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.Location;
+import se.cth.hedgehogphoto.database.LocationObject;
 
 
 /**
@@ -248,7 +249,7 @@ public class MapPanel extends JPanel {
     ---------------------------------------------------------------------*/
     
     private List<Location> locations;
-    private Location centerLocation;
+    private LocationObject centerLocation;
     
     public void calibrate(List<Location> locations) {
     	setBounds(0, 0, PREFERRED_WIDTH, PREFERRED_HEIGHT);
@@ -345,7 +346,7 @@ public class MapPanel extends JPanel {
     /** Returns a list of pixel coordinates for all Locations.
 	 *  These pixel coordinates specify where, relative to the map,
 	 *  where the locationMarkers have to be placed. */
-	public Point getPixelPosition(Location location) {
+	public Point getPixelPosition(LocationObject location) {
 		Point pixelPosition = computeMapPosition(location);
 		pixelPosition.x = pixelPosition.x - getMapPosition().x;
 		pixelPosition.y = pixelPosition.y - getMapPosition().y;
@@ -359,7 +360,7 @@ public class MapPanel extends JPanel {
 		return p;
 	}
     
-    private static Point computeMapPosition(Location location) {
+    private static Point computeMapPosition(LocationObject location) {
 		double longitude = location.getLongitude();
 		double latitude = location.getLatitude();
 		return computeMapPosition(longitude, latitude);

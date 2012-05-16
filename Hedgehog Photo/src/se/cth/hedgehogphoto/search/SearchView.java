@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
 
 import se.cth.hedgehogphoto.database.Files;
-import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 
 /**

@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import se.cth.hedgehogphoto.database.Tag;
+import se.cth.hedgehogphoto.database.TagI;
+import se.cth.hedgehogphoto.database.TagObject;
 import se.cth.hedgehogphoto.objects.FileObject;
 
 //TODO This class need to be fixed, photopanels gets a incorrect dimension that does
@@ -65,9 +67,9 @@ public class PhotoPanel extends JPanel {
 		commentsPanel.add(commentsLabel, BorderLayout.CENTER);
 		
 	}
-	public void setTags(List<Tag> tags){
+	public void setTags(List<? extends TagI> list){
 		String output = "";
-		for(Tag t : tags){
+		for(TagObject t : list){
 			output += t.getTag() + " ";
 		}
 		this.tagsLabel.setText(output);

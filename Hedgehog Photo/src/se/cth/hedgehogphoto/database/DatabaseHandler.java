@@ -21,7 +21,7 @@ import se.cth.hedgehogphoto.objects.FileObject;
 public class DatabaseHandler implements DatabaseAccess, Runnable{
 	private static Files files = Files.getInstance(); 
 	private static List<PictureObject> pictureList = files.getPictureList();
-	private static List<Album> albumList = files.getAlbumList();
+	private static List<AlbumObject> albumList = files.getAlbumList();
 	
 	/*private static JpaAlbumDao jad = new JpaAlbumDao();
 	private static JpaCommentDao jcd = new JpaCommentDao();
@@ -67,7 +67,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	public List<String> getTags(){
 		List<Tag> tags = jtd.getAll();
 		List<String> taggs = new ArrayList<String>();
-		for(Tag t:tags){
+		for(TagObject t:tags){
 			taggs.add(t.getTag());
 		}
 		return taggs;
@@ -79,7 +79,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	public List<String> getLocations(){
 		List<Location> location = jld.getAll();
 		List<String> locations = new ArrayList<String>();
-		for(Location l:location){
+		for(LocationObject l:location){
 			locations.add(l.getLocation());
 		}
 		return locations;
@@ -90,8 +90,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		pictureList.addAll(searchPictureNames(search));
 		files.setPictureList(pictureList);
 	}
-	public List<Picture> searchPictureNames(String search){
-
+	public List<? extends PictureI> searchPictureNames(String search){
 		return jpd.searchfromNames(search);
 	}
 	public void updateSearchPicturesfromDates(String search){
@@ -99,24 +98,26 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		pictureList.addAll(searchPicturesfromDates(search));
 		files.setPictureList(pictureList);
 	}
-	public List<Picture> searchPicturesfromDates(String search){
 	
-			List<Picture> pics = jpd.findByString("date", search);
-			return pics;
+	//TODO db acess
+	public List<Picture> searchPicturesfromDates(String search){
+			return jpd.findByString("date", search);
 	}
 	public void updateSearchAlbumsfromDates(String search){
-		albumList = searchAlbumsfromDates(search);
+		albumList.clear();
+		albumList.addAll(searchAlbumsfromDates(search));
 		files.setAlbumList(albumList);
 	}
-	public  List<Album>  searchAlbumsfromDates(String search){
+	public  List<? extends AlbumI>  searchAlbumsfromDates(String search){
 		return jad.searchfromDates(search);
 
 	}
 	public void updateSearchAlbumNames(String search){
-		albumList =searchAlbumNames(search);
+		albumList.clear();
+		albumList.addAll(searchAlbumNames(search));
 		files.setAlbumList(albumList);
 	}
-	public List<Album> searchAlbumNames(String search){
+	public List<? extends AlbumI> searchAlbumNames(String search){
 		return jad.searchfromNames(search);
 	}
 	public void updateSearchPicturesfromComments(String search){
@@ -124,14 +125,15 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		pictureList.addAll(searchPicturesfromComments(search));
 		files.setPictureList(pictureList);
 	}
-	public List<Picture> searchPicturesfromComments(String search){
+	public List<? extends PictureI> searchPicturesfromComments(String search){
 		return jpd.searchfromComments(search);
 	}
 	public void updateSearchAlbumsfromComments(String search){
-		albumList = searchAlbumsfromComments(search);
+		albumList.clear();
+		albumList.addAll(searchAlbumsfromComments(search));
 		files.setAlbumList(albumList);
 	}
-	public  List<Album> searchAlbumsfromComments(String search){
+	public  List<? extends AlbumI> searchAlbumsfromComments(String search){
 		return jad.searchfromComments(search);
 
 	}
@@ -142,7 +144,9 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		files.setPictureList(pictureList);
 	}
 
-	public List<Picture> searchPicturesfromTags(String search){
+	
+	@Override
+	public List<? extends PictureObject> searchPicturesfromTags(String search){
 		return jpd.searchfromTags(search);
 	}
 	public  void updateSearchPicturefromsLocations(String search){
@@ -150,21 +154,23 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		pictureList.addAll(searchPicturefromsLocations(search));
 		files.setPictureList(pictureList);
 	}
-	public List<Picture> searchPicturefromsLocations(String search){
+	public List<? extends PictureI> searchPicturefromsLocations(String search){
 		return jpd.searchfromLocations(search);
 	}
 	public void updateAlbumsfromSearchTags(String search){
-		albumList = searchAlbumfromTag(search);
+		albumList.clear();
+		albumList.addAll(searchAlbumfromTag(search));
 		files.setAlbumList(albumList);
 	}
-	public  List<Album> searchAlbumfromTag(String search){
+	public  List<? extends AlbumI> searchAlbumfromTag(String search){
 		return jad.searchfromTags(search);
 	}
 	public void updateSearchAlbumsfromLocations(String search){
-		albumList  =  searchAlbumsfromLocations(search);
+		albumList.clear();
+		albumList.addAll(searchAlbumsfromLocations(search));
 		files.setAlbumList(albumList);
 	}
-	public List<Album> searchAlbumsfromLocations(String search){
+	public List<? extends AlbumI> searchAlbumsfromLocations(String search){
 		return jad.searchfromTags(search);
 	}
 	public void updateAllPictures(){
@@ -179,10 +185,11 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 	}
 	public void updateAllAlbums(){
-		albumList = getAllAlbums();
+		albumList.clear();
+		albumList.addAll(getAllAlbums());
 		files.setAlbumList(albumList);
 	}
-	public List<Album> getAllAlbums(){
+	public List<? extends AlbumI> getAllAlbums(){
 		Query p = em.createQuery("select t from Album t");
 		return (List<Album>)p.getResultList();
 

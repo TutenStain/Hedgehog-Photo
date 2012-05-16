@@ -11,25 +11,29 @@ import javax.persistence.OneToMany;
  *
  */
 @Entity
-public class Location {
+public class Location implements LocationObject, LocationI {
 
 
 	@Id	
 	private String location;
 	private double longitude, latitude;
 
+	@Override
 	public double getLongitude() {
 		return longitude;
 	}
 
+	@Override
 	public void setLongitude(double lon) {
 		this.longitude = lon;
 	}
 
+	@Override
 	public double getLatitude() {
 		return latitude;
 	}
 
+	@Override
 	public void setLatitude(double lat) {
 		this.latitude = lat;
 	}
@@ -39,18 +43,22 @@ public class Location {
 	@OneToMany
 	private List<Album> albums;
 
-	public List<Picture> getPictures() {
+	@Override
+	public List<? extends PictureI> getPictures() {
 		return pictures;
 	}
 
-	public void setPictures(List<Picture> pictures) {
-		this.pictures = pictures;
+	@Override
+	public void setPictures(List<? extends PictureI> pictures) {
+		this.pictures = (List<Picture>) pictures;
 	}
 
+	@Override
 	public void setLocation(String location) {
 		this.location = location;
 	}
 
+	@Override
 	public String getLocation() {
 		return location;
 	}
@@ -59,16 +67,19 @@ public class Location {
 	public String toString() {
 		return "[Location=" + location+ " Longitude= " + longitude + " Latitude= " + latitude+ "] ";
 	}
+	@Override
 	public String getLocationasString(){
 		return location;
 	}
 
-	public List<Album> getAlbums() {
+	@Override
+	public List<? extends AlbumI> getAlbums() {
 		return albums;
 	}
 
-	public void setAlbums(List<Album> albums) {
-		this.albums = albums;
+	@Override
+	public void setAlbums(List<? extends AlbumI> albums) {
+		this.albums = (List<Album>) albums;
 	}
 
 	/**

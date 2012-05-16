@@ -17,7 +17,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import se.cth.hedgehogphoto.database.Files;
-import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 
 /**

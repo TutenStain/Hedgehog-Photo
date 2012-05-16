@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import se.cth.hedgehogphoto.database.PictureObject;
-import se.cth.hedgehogphoto.database.Tag;
+import se.cth.hedgehogphoto.database.TagObject;
 import se.cth.hedgehogphoto.view.ImageUtils;
 
 /**
@@ -41,7 +41,7 @@ public class SearchComponentView extends JPanel{
 		
 		//TODO Maybe a better implementation?
 		String str = "";
-		for(Tag t : pic.getTags()){
+		for(TagObject t : pic.getTags()){
 			str += t.getTag() + " ";
 		}
 		

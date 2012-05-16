@@ -30,12 +30,12 @@ public class Picture implements PictureObject, PictureI {
 	private Location location;
 
 	@Override
-	public List<Tag> getTags() {
+	public List<? extends TagI> getTags() {
 		return tags;
 	}
 	@Override
-	public void setTags(List<Tag> tags) {
-		this.tags = tags;
+	public void setTags(List<? extends TagI> tags) {
+		this.tags = (List<Tag>)tags;
 	}
 
 	@Override
@@ -43,18 +43,18 @@ public class Picture implements PictureObject, PictureI {
 		return comment;
 	}
 	@Override
-	public void setComment(Comment comment) {
-		this.comment = comment;
+	public void setComment(CommentI comment) {
+		this.comment = (Comment) comment;
 	}
 
 	@Override
-	public Location getLocation() {
+	public LocationI getLocation() {
 		return location;
 	}
 
 	@Override
-	public void setLocation(Location location) {
-		this.location = location;
+	public void setLocation(LocationI location) {
+		this.location = (Location) location;
 	}
 	@Override
 	public String getDate() {
@@ -72,8 +72,8 @@ public class Picture implements PictureObject, PictureI {
 	}
 
 	@Override
-	public void setAlbum(Album album) {
-		this.album = album;
+	public void setAlbum(AlbumI album) {
+		this.album = (Album)album;
 	}
 
 	@Override

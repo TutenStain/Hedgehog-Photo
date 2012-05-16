@@ -11,8 +11,9 @@ public interface PictureDao extends Dao<Picture, String> {
 	public  void addComment(String comment, String filePath);
 	public void addTag(String tag, String filePath);
 	public  PictureObject getfromPath(String search);
-	public List<Picture> searchfromLocations(String search);
-	public List<Picture> searchfromTags(String search);
-	public List<Picture> searchfromDates(String search);
-	public  List<Picture> searchfromNames(String search);	
+	public List<? extends PictureI> searchfromLocations(String search);
+	public List<? extends PictureI> searchfromTags(String search);
+	public List<? extends PictureI> searchfromDates(String search);
+	public  List<? extends PictureI> searchfromNames(String search);
+	public  List<? extends PictureI> searchfromComments(String search);
 }

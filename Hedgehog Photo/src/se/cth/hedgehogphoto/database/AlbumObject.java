@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface AlbumObject {
 
-	public List<Tag> getTags();
+	public List<? extends TagI> getTags();
 
-	public Comment getComment();
+	public CommentI getComment();
 
-	public Location getLocation();
+	public LocationI getLocation();
 
 	public String getDate();
 

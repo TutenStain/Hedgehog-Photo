@@ -15,7 +15,7 @@ import se.cth.hedgehogphoto.map.view.MapView;
 import se.cth.hedgehogphoto.metadata.Metadata;
 import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.objects.FileObject;
-import se.cth.hedgehogphoto.objects.LocationObject;
+import se.cth.hedgehogphoto.objects.LocationObjectOther;
 import se.cth.hedgehogphoto.plugin.PluginLoader;
 import se.cth.hedgehogphoto.search.SearchController;
 import se.cth.hedgehogphoto.search.SearchModel;
@@ -94,7 +94,7 @@ public class Main {
 		int i = 0;
 		for(File file : files) {
 			FileObject f = Metadata.getImageObject(file);
-			f.setLocationObject(new LocationObject("Japan"));
+			f.setLocationObject(new LocationObjectOther("Japan"));
 			f.setComment("Gutes bild");
 			f.setFileName(file.getName());
 			f.setDate("2012.12.02");

@@ -4,15 +4,15 @@ import java.util.List;
 
 public interface PictureI extends PictureObject {
 
-	public void setTags(List<Tag> tags);
+	public void setTags(List<? extends TagI> tags);
 
-	public void setComment(Comment comment);
+	public void setComment(CommentI comment);
 
-	public void setLocation(Location location);
+	public void setLocation(LocationI location);
 
 	public void setDate(String date);
 
-	public void setAlbum(Album album);
+	public void setAlbum(AlbumI album);
 
 	public void setPath(String path);
 

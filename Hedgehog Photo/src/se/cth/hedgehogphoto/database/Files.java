@@ -11,7 +11,7 @@ import se.cth.hedgehogphoto.log.Log;
 public class Files extends Observable{
 	private static Files file;
 	private List<PictureObject> pictureList = new ArrayList<PictureObject>();
-	private List<Album> albumList = new ArrayList<Album>();
+	private List<AlbumObject> albumList = new ArrayList<AlbumObject>();
 	
 	private Files(){
 	} 
@@ -33,13 +33,13 @@ public class Files extends Observable{
 		return pictureList;
 	}
 	
-	public void setAlbumList(List <Album> list){
+	public void setAlbumList(List<AlbumObject> list){
 		albumList = list;
 		setChanged();
 		notifyObservers(this);
 	}
 	
-	public List<Album> getAlbumList(){
+	public List<AlbumObject> getAlbumList(){
 		return albumList;
 	}
 	

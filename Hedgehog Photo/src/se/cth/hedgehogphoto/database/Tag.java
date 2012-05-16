@@ -11,7 +11,7 @@ import javax.persistence.ManyToMany;
  *
  */
 @Entity
-public class Tag {
+public class Tag implements TagObject, TagI {
 
 @Id	
 private String tag;
@@ -24,33 +24,41 @@ private List<Picture> pictures;
 
 private List<Album> albums;
 
+	@Override
 	public String getTag() {
 		return tag;
 	}
 
-	public void setPictures(List<Picture> pictures) {
-		this.pictures = pictures;
+	@Override
+	public void setPictures(List<? extends PictureI> pictures) {
+		this.pictures = (List<Picture>) pictures;
 	}
 
+	@Override
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
+	@Override
 	public List<Album> getAlbums() {
 		return albums;
 	}
 
-	public void setAlbums(List<Album> albums) {
-		this.albums = albums;
+	@Override
+	public void setAlbums(List<? extends AlbumI> albums) {
+		this.albums = (List<Album>) albums;
 	}
 
-	public List<Picture> getPictures() {
+	@Override
+	public List<? extends PictureI> getPictures() {
 		return pictures;
 	}
+	
 	@Override
 	public String toString() {
 		return "[Tag=" + tag+ "] ";
 	}
+	@Override
 	public String getTagAsString(){
 		return tag;
 	}

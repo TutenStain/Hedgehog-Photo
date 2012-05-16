@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import se.cth.hedgehogphoto.log.Log;
-import se.cth.hedgehogphoto.objects.LocationObject;
+import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
 /**
  * Parses XML-documents from the nominatim-server
@@ -50,17 +50,17 @@ public class XMLParser implements Runnable {
 		}
 	}
 
-	public List<LocationObject> processGeocodingSearch(URL xmlFileUrl) {
-		List<LocationObject> locations = processGeocoding(xmlFileUrl, RequestType.GEOCODING_REQUEST);
+	public List<LocationObjectOther> processGeocodingSearch(URL xmlFileUrl) {
+		List<LocationObjectOther> locations = processGeocoding(xmlFileUrl, RequestType.GEOCODING_REQUEST);
 		return locations;
 	}
 	
-	public LocationObject processReverseGeocodingSearch(URL xmlFileUrl) {
-		List<LocationObject> list = processGeocoding(xmlFileUrl, RequestType.REVERSE_GEOCODING_REQUEST);
+	public LocationObjectOther processReverseGeocodingSearch(URL xmlFileUrl) {
+		List<LocationObjectOther> list = processGeocoding(xmlFileUrl, RequestType.REVERSE_GEOCODING_REQUEST);
 		return (list == null || list.size() == 0) ? null : list.get(0); 
 	}
 	
-	public synchronized List<LocationObject> processGeocoding(URL xmlFileUrl, RequestType type) {
+	public synchronized List<LocationObjectOther> processGeocoding(URL xmlFileUrl, RequestType type) {
 		try {
 			final String tagName = (type == RequestType.GEOCODING_REQUEST) ? "place" : "result";
 			
@@ -71,7 +71,7 @@ public class XMLParser implements Runnable {
 
 			NodeList listOfPlaces = doc.getElementsByTagName(tagName);
 			int nbrOfPlaces = listOfPlaces.getLength();
-			List<LocationObject> locations = new LinkedList<LocationObject>();
+			List<LocationObjectOther> locations = new LinkedList<LocationObjectOther>();
 
 			for (int index = 0; index < nbrOfPlaces; index++) {
 
@@ -85,7 +85,7 @@ public class XMLParser implements Runnable {
 									placeElement.getAttribute("display_name") : 
 									placeElement.getTextContent();
 					
-					LocationObject location = new LocationObject(place);
+					LocationObjectOther location = new LocationObjectOther(place);
 					try {
 						location.setLongitude(Double.parseDouble(lon));
 						location.setLatitude(Double.parseDouble(lat));

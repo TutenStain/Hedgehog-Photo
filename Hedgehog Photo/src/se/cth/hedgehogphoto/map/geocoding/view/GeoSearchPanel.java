@@ -26,7 +26,7 @@ import javax.swing.SwingUtilities;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.map.geocoding.model.URLCreator;
 import se.cth.hedgehogphoto.map.geocoding.model.XMLParser;
-import se.cth.hedgehogphoto.objects.LocationObject;
+import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
 /**
  * The MainView in the geocoding-subsystem.
@@ -111,7 +111,7 @@ public final class GeoSearchPanel extends JPanel {
 		try {
 			// Create a URL for the desired page, and create objects for the searchResults
 			URL url = urlCreator.queryGeocodingURL(newSearch);
-			List<LocationObject> locations = xmlParser.processGeocodingSearch(url);
+			List<LocationObjectOther> locations = xmlParser.processGeocodingSearch(url);
 			resultPanel.addLocations(locations);
 			this.setPreferredWidth();
 		} catch (Exception e) {

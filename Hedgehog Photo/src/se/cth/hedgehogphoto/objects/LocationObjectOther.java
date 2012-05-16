@@ -1,16 +1,16 @@
 package se.cth.hedgehogphoto.objects;
 
-public class LocationObject {
+public class LocationObjectOther {
 	private String location;
 	private double longitude = 200;
 	private double latitude = 100;
 	
-	public LocationObject(String location) {
+	public LocationObjectOther(String location) {
 		setLocation(location);
 		
 	}
 	
-	public LocationObject(double longitude, double latitude) {
+	public LocationObjectOther(double longitude, double latitude) {
 		setLocation(longitude, latitude);
 	}
 	
@@ -168,7 +168,7 @@ public class LocationObject {
 	}
 	
 	@Deprecated
-	public boolean equals(LocationObject otherLocation) { //TODO: Make a proper equals-method! Not reliable at the moment.
+	public boolean equals(LocationObjectOther otherLocation) { //TODO: Make a proper equals-method! Not reliable at the moment.
 		super.equals(otherLocation);
 		String secondLocation = otherLocation.toString();
 		return location.equalsIgnoreCase(secondLocation);

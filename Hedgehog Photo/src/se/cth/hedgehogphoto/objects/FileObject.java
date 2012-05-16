@@ -11,14 +11,14 @@ public interface FileObject {
 	public void setFileName(String name);
 	public void setFilePath(String path);
 	public void setCoverPath(String path);
-	public void setLocationObject(LocationObject locationObject);
+	public void setLocationObject(LocationObjectOther locationObject);
 	public void setAlbumName(String albumName);
 	public void setLocation(String location);
 	public List<String> getTags();
 	public String getDate();
 	public String getComment();
 	public String getLocation();
-	public LocationObject getLocationObject();
+	public LocationObjectOther getLocationObject();
 	public String getFileName();
 	public String getFilePath();
 	public String getCoverPath();

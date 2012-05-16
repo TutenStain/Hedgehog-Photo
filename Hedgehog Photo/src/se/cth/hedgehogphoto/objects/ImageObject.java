@@ -14,7 +14,7 @@ public class ImageObject implements FileObject {
 	private List<String> tags;
 	private String tag;
 
-	private LocationObject locationObject = new LocationObject("");
+	private LocationObjectOther locationObject = new LocationObjectOther("");
 	private boolean legitGPSInfo;
 
 	public ImageObject() {
@@ -112,7 +112,7 @@ public class ImageObject implements FileObject {
 		this.fileName = fileName;
 	}
 
-	public LocationObject getLocationObject() {
+	public LocationObjectOther getLocationObject() {
 		return locationObject;
 	}
 	public String getLocation() {
@@ -140,7 +140,7 @@ public class ImageObject implements FileObject {
 	}
 
 	@Override
-	public void setLocationObject(LocationObject locationObject) {
+	public void setLocationObject(LocationObjectOther locationObject) {
 		this.locationObject=locationObject;
 		this.location=locationObject.getLocation();
 
@@ -200,7 +200,7 @@ public class ImageObject implements FileObject {
 	@Override
 	public void setLocation(String location) {
 		this.location=location;
-		locationObject = new LocationObject(location);
+		locationObject = new LocationObjectOther(location);
 
 	}
 

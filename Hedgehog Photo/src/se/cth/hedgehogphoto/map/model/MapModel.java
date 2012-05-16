@@ -11,7 +11,9 @@ import java.util.Observer;
 import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.database.Files;
+import se.cth.hedgehogphoto.database.LocationI;
 import se.cth.hedgehogphoto.database.Location;
+import se.cth.hedgehogphoto.database.LocationObject;
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.log.Log;
@@ -48,11 +50,11 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 		int index;
 		for (index = 0; index < nbrOfPictures; index++) {
 			PictureObject picture = pictures.get(index);
-			Location location = picture.getLocation();
+			LocationI location = picture.getLocation();
 			if (location != null) {
 				if (location.validPosition()) { 
 					this.markerModels.add(new MarkerModel(picture));
-					locations.add(picture.getLocation());
+					locations.add((Location) picture.getLocation());
 					Log.getLogger().info(location.getLocation() + "\n" + location.getLongitude() + ", " + location.getLatitude() + "\n");
 					Log.getLogger().log(Level.INFO, "en location!");
 				}
@@ -62,7 +64,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 		calibrateMap(locations); //make every location fit on the screen
 		int nbrOfMarkers = this.markerModels.size();
 		for (index = 0; index < nbrOfMarkers; index++) {
-			Location location = locations.get(index);
+			LocationObject location = locations.get(index);
 			Point pixelPosition = getMapPanel().getPixelPosition(location);
 			this.markerModels.get(index).setPointerPosition(pixelPosition);
 		}

@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
  *
  */
 @Entity
-public class Comment {
+public class Comment implements CommentObject, CommentI {
 
 @Id
 private String comment;
@@ -23,18 +23,22 @@ private List<Picture> pictures;
 private List<Album> albums;
 
 	
+	@Override
 	public List<Picture> getPictures() {
 	return pictures;
 }
 
-public void setPicture(List<Picture> pictures) {
-	this.pictures = pictures;
+@Override
+public void setPicture(List<? extends PictureI> pictures) {
+	this.pictures = (List<Picture>) pictures;
 }
 
+	@Override
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
+	@Override
 	public String getComment() {
 		return comment;
 	}
@@ -45,13 +49,16 @@ public void setPicture(List<Picture> pictures) {
 		return " [Comment= " + comment+ "] ";
 	}
 
+	@Override
 	public List<Album> getAlbums() {
 		return albums;
 	}
 
-	public void setAlbums(List<Album> albums) {
-		this.albums = albums;
+	@Override
+	public void setAlbums(List<? extends AlbumI> albums) {
+		this.albums = (List<Album>) albums;
 	}
+	@Override
 	public String getCommentAsString(){
 		return comment;
 	}

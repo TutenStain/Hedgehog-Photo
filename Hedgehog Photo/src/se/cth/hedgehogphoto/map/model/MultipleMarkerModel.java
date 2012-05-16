@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import se.cth.hedgehogphoto.database.Location;
+import se.cth.hedgehogphoto.database.LocationObject;
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 
@@ -125,7 +125,7 @@ public class MultipleMarkerModel extends AbstractMarkerModel {
 		double averageLongitude = 0.0;
 		double averageLatitude = 0.0;
 		for (PictureObject picture : pictures) {
-			Location loc = picture.getLocation();
+			LocationObject loc = picture.getLocation();
 			averageLongitude += loc.getLongitude();
 			averageLatitude += loc.getLatitude();
 		}

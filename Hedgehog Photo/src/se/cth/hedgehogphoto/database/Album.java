@@ -64,14 +64,14 @@ public class Album implements AlbumObject, AlbumI {
 		this.date = date;
 	}	
 	@Override
-	public List<Picture> getPictures() {		
+	public List<? extends PictureI> getPictures() {		
 		return pictures;
 	}
 
 
-
-	public void setPictures(List<Picture> pictures) {
-		this.pictures = pictures;
+	@Override
+	public void setPictures(List<? extends PictureI> pictures) {
+		this.pictures = (List<Picture>) pictures;
 	}
 	@Override
 	public String getAlbumName() {

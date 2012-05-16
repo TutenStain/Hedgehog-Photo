@@ -9,13 +9,14 @@ import java.util.List;
 
 public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 	private static Files files = Files.getInstance();
-	private static List<Album> albumList = files.getAlbumList();
+	private static List<AlbumObject> albumList = files.getAlbumList();
 	
 	public JpaAlbumDao(){
 		super();
 	}
 	public void updateAllAlbums(){
-		albumList = getAllAlbums();
+		albumList.clear();
+		albumList.addAll(getAllAlbums());
 		files.setAlbumList(albumList);
 	}
 	public List<Album> getAllAlbums(){
@@ -23,11 +24,13 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 
 	}
 	public void updateSearchfromDates(String search){
-		albumList = searchfromDates(search);
+		albumList.clear();
+		albumList.addAll(searchfromDates(search));
 		files.setAlbumList(albumList);
 	}
 	public void updateSearchPicturesfromDates(String search){
-		albumList  = searchfromDates(search);
+		albumList.clear();
+		albumList.addAll(searchfromDates(search));
 		files.setAlbumList(albumList );
 	}
 	public  List<Album>  searchfromDates(String search){
@@ -38,7 +41,8 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 	}
 	public void updateSearchfromNames(String search){
-		albumList  = searchfromNames(search);
+		albumList.clear();
+		albumList.addAll(searchfromNames(search));
 		files.setAlbumList(albumList );
 	}
 	public List<Album>  searchfromNames(String search){
@@ -50,7 +54,8 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 
 	}
 	public void updateSearchfromComments(String search){
-		albumList = searchfromComments(search);
+		albumList.clear();
+		albumList.addAll(searchfromComments(search));
 		files.setAlbumList(albumList);
 	}
 	public List<Album> searchfromComments(String search){
@@ -60,14 +65,15 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 			List<Comment> comments = jcd.findByLike("comment", search);
 			if(!(comments.isEmpty())){
 				List<Album> albums = new ArrayList<Album>();
-				for(Comment comment:comments)
+				for(CommentObject comment:comments)
 				albums.addAll(findByEntity(comment,"dao.database.Comment"));
 			}
 	}
 	return null;
 	}
 	public void updateSearchfromTags(String search){
-		albumList = searchfromTags(search);
+		albumList.clear();
+		albumList.addAll(searchfromTags(search));
 		files.setAlbumList(albumList);
 	}
 	public  List<Album> searchfromTags(String search){
@@ -76,7 +82,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 			JpaTagDao jtd = new JpaTagDao();
 			List<Tag> tags = jtd.findByLike("Tag", search);
 			List<Album> albums = new ArrayList<Album>();
- 			for(Tag t: tags){
+ 			for(TagObject t: tags){
 				albums.addAll(findByEntity(t,"dao.database.Tag"));
 			}
 			return albums;
@@ -84,7 +90,8 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		return null;
 	}
 	public void updateSearchfromLocations(String search){
-		albumList  =  searchfromLocations(search);
+		albumList.clear();
+		albumList.addAll(searchfromLocations(search));
 		files.setAlbumList(albumList);
 	}
 	public List<Album> searchfromLocations(String search){
@@ -93,7 +100,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 			JpaLocationDao jld = new JpaLocationDao();
 			List<Location> locations = jld.findByLike("Location", search);
 			List<Album> albums = new ArrayList<Album>();
-			for(Location l:locations){
+			for(LocationObject l:locations){
 				albums.addAll(findByEntity(l,"dao.database.Location"));
 			}
 			return albums;
@@ -202,7 +209,7 @@ public void addLocation(String location, String albumName){
 	JpaLocationDao jld = new JpaLocationDao();
 		Location loc = jld.findById(location);
 		if(loc != null){
-			List<Album> albums =loc.getAlbums();
+			List<AlbumI> albums = (List<AlbumI>) loc.getAlbums();
 
 			if((!albums.contains(album))){
 
@@ -241,9 +248,9 @@ public void deleteComment(String albumName){
 	albumName = albumName.toLowerCase();
 	AlbumObject album = findById(albumName);
 	if(album != null){
-		Comment com = album.getComment();
+		CommentI com = album.getComment();
 		beginTransaction();
-		List<Album> albums = com.getAlbums();
+		List<? extends AlbumI> albums = com.getAlbums();
 		albums.remove(album);
 		com.setAlbums(albums);
 		 entityManager.persist(com);
@@ -261,9 +268,9 @@ public  void updateDeleteLocation(String albumName){
 public void deleteLocation(String albumName){
 	AlbumObject album = findById(albumName);
 	if(album!= null){
-		Location loc = album.getLocation();
+		LocationI loc = album.getLocation();
 		beginTransaction();
-		List<Album> albums = loc.getAlbums();
+		List<? extends AlbumI> albums = loc.getAlbums();
 		albums.remove(album);
 		loc.setAlbums(albums);
 		 entityManager.persist(loc);
@@ -283,11 +290,11 @@ public void deleteTags(String albumName){
 	albumName = albumName.toLowerCase();
 	AlbumObject album = findById(albumName);
 	if(album!= null){
-		List<Tag> tags = album.getTags();
-		for(Tag tag: tags){
+		List<? extends TagI> tags = album.getTags();
+		for(TagI tag: tags){
 
 			beginTransaction();
-			List<Album> albums =tag.getAlbums();
+			List<? extends AlbumI> albums =tag.getAlbums();
 			albums .remove(album);
 			tag.setAlbums(albums);
 			 entityManager.persist(tag);
@@ -303,7 +310,7 @@ public void deletePicture(String filePath){
 	if(picture != null){
 		beginTransaction();
 		Album album = picture.getAlbum();
-		List<Picture> pics = album.getPictures();
+		List<? extends PictureI> pics = album.getPictures();
 		pics.remove(picture);
 		album.setPictures(pics);
 		persist(album);
