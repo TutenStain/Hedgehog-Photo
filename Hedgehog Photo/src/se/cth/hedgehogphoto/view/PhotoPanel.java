@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import se.cth.hedgehogphoto.database.Tag;
 import se.cth.hedgehogphoto.database.TagI;
 import se.cth.hedgehogphoto.database.TagObject;
 import se.cth.hedgehogphoto.objects.FileObject;

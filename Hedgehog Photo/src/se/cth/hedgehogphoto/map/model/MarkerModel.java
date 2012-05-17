@@ -3,7 +3,6 @@ package se.cth.hedgehogphoto.map.model;
 import java.awt.Point;
 import java.util.List;
 
-import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 
 /**

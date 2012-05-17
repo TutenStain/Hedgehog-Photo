@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import se.cth.hedgehogphoto.database.LocationObject;
-import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 
 /**

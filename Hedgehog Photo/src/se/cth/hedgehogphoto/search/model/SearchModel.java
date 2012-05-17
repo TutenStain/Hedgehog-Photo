@@ -6,12 +6,7 @@ import java.util.List;
 import java.util.Observable;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
-import se.cth.hedgehogphoto.database.Files;
-import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
-
-import se.cth.hedgehogphoto.search.view.SearchPreviewView;
-import se.cth.hedgehogphoto.search.view.SearchView;
 
 /**
  * @author Barnabas Sapan

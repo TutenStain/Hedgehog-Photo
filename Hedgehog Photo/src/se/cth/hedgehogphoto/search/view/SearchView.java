@@ -15,7 +15,6 @@ import javax.swing.event.DocumentListener;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
-
 import se.cth.hedgehogphoto.search.model.SearchModel;
 
 /**

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 
 /**

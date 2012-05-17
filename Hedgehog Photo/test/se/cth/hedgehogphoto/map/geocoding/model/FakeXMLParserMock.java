@@ -1,7 +1,5 @@
 package se.cth.hedgehogphoto.map.geocoding.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class represents the XMLParser. The reason

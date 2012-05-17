@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.cth.hedgehogphoto.database.Files;
+import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.search.view.SearchComponentView;
 

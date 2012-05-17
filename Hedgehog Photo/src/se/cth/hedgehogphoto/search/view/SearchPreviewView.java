@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
-
 import se.cth.hedgehogphoto.search.controller.SearchComponentController;
 import se.cth.hedgehogphoto.search.model.SearchModel;
 

@@ -11,10 +11,9 @@ import java.util.Observer;
 import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.database.Files;
-import se.cth.hedgehogphoto.database.LocationI;
 import se.cth.hedgehogphoto.database.Location;
+import se.cth.hedgehogphoto.database.LocationI;
 import se.cth.hedgehogphoto.database.LocationObject;
-import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.log.Log;
 

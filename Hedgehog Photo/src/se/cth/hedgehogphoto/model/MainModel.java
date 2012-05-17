@@ -6,7 +6,6 @@ import java.util.Observable;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.Files;
-import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
 
 public class MainModel extends Observable {
