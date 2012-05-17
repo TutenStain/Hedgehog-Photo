@@ -42,10 +42,11 @@ public class MainView implements Observer {
 	private	JPanel leftPanelView;
 	private JPanel[] panelHolder = new JPanel[3];
 	private JPanel topPanel;
-	private JButton btnShowhideTags = new JButton("Show/Hide tags");
-	private JButton btnShowhideLocation = new JButton("Show/Hide location");
+	private JButton btnShowHideName = new JButton("Show/Hide name");
+	private JButton btnShowHideTags = new JButton("Show/Hide tags");
+	private JButton btnShowHideLocation = new JButton("Show/Hide location");
+	private JButton btnshowHideComments = new JButton("Show/Hide comments");
 	private JSlider slider = new JSlider(50, 200);
-	private JButton showHideComments = new JButton("Show/Hide comments");
 	//TODO this list probably needs to be removed, not enough MVC
 	private List<PhotoPanel> photoPanels;
 
@@ -64,13 +65,15 @@ public class MainView implements Observer {
 		gl_bottomPanel.setHorizontalGroup(
 				gl_bottomPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_bottomPanel.createSequentialGroup()
-						.addGap(100)
-						.addComponent(btnShowhideTags)
+						.addGap(300)
+						.addComponent(btnShowHideTags)
 						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(btnShowhideLocation)
+						.addComponent(btnShowHideLocation)
 						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(showHideComments)
-						.addGap(202)
+						.addComponent(btnshowHideComments)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(btnShowHideName)
+						.addGap(150)
 						.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(59, Short.MAX_VALUE))
 				);
@@ -81,9 +84,10 @@ public class MainView implements Observer {
 						.addGroup(gl_bottomPanel.createParallelGroup(Alignment.LEADING)
 								.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_bottomPanel.createParallelGroup(Alignment.BASELINE)
-										.addComponent(btnShowhideLocation)
-										.addComponent(btnShowhideTags)
-										.addComponent(showHideComments)))
+										.addComponent(btnShowHideLocation)
+										.addComponent(btnShowHideTags)
+										.addComponent(btnshowHideComments)
+										.addComponent(btnShowHideName)))
 										.addContainerGap())
 				);
 		bottomPanel.setLayout(gl_bottomPanel);
@@ -114,13 +118,16 @@ public class MainView implements Observer {
 
 	}//init
 	public void setCommentsButtonListener(ActionListener l){
-		this.showHideComments.addActionListener(l);
+		this.btnshowHideComments.addActionListener(l);
 	}
 	public void setTagsButtonListener(ActionListener l){
-		this.btnShowhideTags.addActionListener(l);
+		this.btnShowHideTags.addActionListener(l);
 	}
 	public void setLocationButtonListener(ActionListener l){
-		this.btnShowhideLocation.addActionListener(l);
+		this.btnShowHideLocation.addActionListener(l);
+	}
+	public void setPhotoNameButtonListener(ActionListener l){
+		this.btnShowHideName.addActionListener(l);
 	}
 	public void setSliderListener(ChangeListener l){
 		this.slider.addChangeListener(l);

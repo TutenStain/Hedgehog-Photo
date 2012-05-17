@@ -27,6 +27,16 @@ public class DefaultController {
 		model = m;
 		view = v;
 
+		view.setPhotoNameButtonListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				for(int i=0;i<view.getPhotoPanels().size();i++){
+					view.getPhotoPanels().get(i).displayPhotoName(!view.getPhotoPanels().get(i).isVisiblePhotoName());
+				}
+			}
+
+		});		
 		view.setCommentsButtonListener(new ActionListener(){
 
 			@Override

@@ -21,16 +21,16 @@ import se.cth.hedgehogphoto.objects.FileObject;
 @SuppressWarnings("serial")
 public class PhotoPanel extends JPanel {
 
-	private JTextField comment = new 	JTextField();
-	private JTextField  tags = new 	JTextField();
-	private JTextField  location = new 	JTextField();
+	private JTextField photoName = new JTextField();
+	private JTextField comment = new JTextField();
+	private JTextField  tags = new JTextField();
+	private JTextField  location = new JTextField();
 	private JLabel commentLabel = new JLabel("Comments");
 	private JLabel tagsLabel = new JLabel("Tags:");
 	private JLabel locationLabel = new JLabel("Location:");
 	private JLabel iconLabel = new JLabel("");
+	private JLabel photoNameLabel = new JLabel("Name");
 	private ImageIcon icon;
-	private JLabel name = new JLabel("Name");
-	private JTextField photoName = new 	JTextField();
 
 	public PhotoPanel(FileObject f) {
 		this(f.getFilePath());
@@ -55,7 +55,7 @@ public class PhotoPanel extends JPanel {
 		tags.setPreferredSize(new Dimension(100,20));
 		tagsLabel.setPreferredSize(new Dimension(100,10));
 		photoName.setPreferredSize(new Dimension(100,20));
-		name.setPreferredSize(new Dimension(50,10));
+		photoNameLabel.setPreferredSize(new Dimension(50,10));
 
 		setLayout(new BorderLayout(0, 0));
 		this.setVisible(true);
@@ -85,8 +85,8 @@ public class PhotoPanel extends JPanel {
 		  nameBag.gridheight =1;
 		  nameBag.gridwidth = 1;
 
-		  gBig.setConstraints(name , nameBag);
-		  add(name );
+		  gBig.setConstraints(photoNameLabel , nameBag);
+		  add(photoNameLabel );
 		  GridBagConstraints photoNameBag = new GridBagConstraints();
 		  photoNameBag.gridx =2;
 		  photoNameBag .gridy =1;
@@ -228,25 +228,34 @@ public class PhotoPanel extends JPanel {
 		this.iconLabel.setIcon(icon);
 	}
 
-	public void displayComments(Boolean b){
+	public void displayComments(boolean b){
 		this.comment.setVisible(b);
 		this.commentLabel.setVisible(b);
 	}
 	public boolean isVisibleComments(){
 		return this.comment.isVisible();
 	}
-	public void displayTags(Boolean b){
+	public void displayTags(boolean b){
 		this.tags.setVisible(b);
 		this.tagsLabel.setVisible(b);
 	}
 	public boolean isVisibleTags(){
 		return this.tags.isVisible();
 	}
-	public void displayLocation(Boolean b){
+	public void displayLocation(boolean b){
 		this.location.setVisible(b);
 		this.locationLabel.setVisible(b);
 	}
 	public boolean isVisibleLocation(){
 		return this.location.isVisible();
+	}
+	
+	public void displayPhotoName(boolean b){
+		this.photoName.setVisible(b);
+		this.photoNameLabel.setVisible(b);
+	}
+	
+	public boolean isVisiblePhotoName(){
+		return this.photoName.isVisible();
 	}
 }
