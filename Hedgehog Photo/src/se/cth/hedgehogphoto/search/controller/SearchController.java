@@ -13,6 +13,7 @@ import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.search.model.SearchModel;
 import se.cth.hedgehogphoto.search.model.SearchThread;
+import se.cth.hedgehogphoto.search.view.JPopupPreview;
 import se.cth.hedgehogphoto.search.view.JSearchBox;
 
 /**
@@ -27,18 +28,22 @@ public class SearchController {
 		this.model = model;
 		this.view = view;
 		
-		//Enter is pressed from the textfield, do and display search!
 		this.view.setSearchBoxActionListener(new SearchBoxActionListener());
-		
-		//Changes between the standby text (no focus) and allowing the user to enter text (focus).
 		this.view.setSearchBoxFocusListener(new SearchBoxFocusListener());
-		
-		//Calls update() on each keystroke by the user.
 		this.view.setSearchBoxDocumentListener(new SearchBoxDocumentListener());
-		
 		this.view.setSearchButtonListener(new SearchButtonListener());
 	}
 	
+	public SearchController(SearchModel model, JSearchBox view, JPopupPreview preview){
+		this(model, view);
+		this.view.setSearchPreview(preview);
+	}
+	
+	//------------------------------SEARCHBOX-LISTENERS------------------------------
+	
+	//TODO: Use instanceof checks, and typecast before doing that stuff!
+	
+	/** Enter is pressed from the textfield, do and display search! */
 	public class SearchBoxActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -49,6 +54,7 @@ public class SearchController {
 		}
 	}
 	
+	/** Changes between the standby text (no focus) and allowing the user to enter text (focus). */
 	public class SearchBoxFocusListener implements FocusListener {
         @Override
         public void focusGained(FocusEvent e) {
@@ -66,6 +72,7 @@ public class SearchController {
 
 	}
 	
+	/** Calls update() on each keystroke by the user. */
 	public class SearchBoxDocumentListener implements DocumentListener {
 		private Thread t = new SearchThread(model, 500);
 		
