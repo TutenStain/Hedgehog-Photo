@@ -55,6 +55,7 @@ public class SearchComponentController{
 		});
 	}
 	
+	/*
 	public class ComponentMouseListener extends MouseAdapter {
 		//TODO This needs to be done.
 		@Override
@@ -93,5 +94,5 @@ public class SearchComponentController{
 		@Override
 		public void mouseReleased(MouseEvent e) {
 		}
-	}
+	}*/
 }
