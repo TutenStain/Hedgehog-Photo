@@ -1,7 +1,5 @@
 package se.cth.hedgehogphoto.view;
 
-
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -64,158 +62,101 @@ public class PhotoPanel extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		this.setVisible(true);
 
-
-
-		//	JPanel tagsPanel = new JPanel();
-		//tagsPanel.setLayout(new BoxLayout(getRootPane(),BoxLayout.X_AXIS));
-		/*for(JTextField jt: tagsField){
-			tagsPanel.add(jt);
-			//jt.setSize(20, 20);
-			//tagsPanel.setSize(new Dimension(30,20));
-		}
-		add(tagsPanel, BorderLayout.SOUTH);
-
-		 */JPanel commentsPanel = new JPanel();
-		 /*add(commentsPanel, BorderLayout.CENTER);
-		  */	commentsPanel.setLayout(new BorderLayout(0, 0));
-
-
-
-		  GridBagLayout gBig = new GridBagLayout();
-		  setLayout(gBig);
-		  GridBagConstraints nameBag = new GridBagConstraints();
-		  nameBag.gridx =1;
-		  nameBag .gridy =1;
-		  nameBag.gridheight =1;
-		  nameBag.gridwidth = 1;
-
-		  gBig.setConstraints(photoNameLabel , nameBag);
-		  add(photoNameLabel );
-		  GridBagConstraints photoNameBag = new GridBagConstraints();
-		  photoNameBag.gridx =2;
-		  photoNameBag .gridy =1;
-		  photoNameBag.gridheight =1;
-		  photoNameBag.gridwidth = 1;
-		  gBig.setConstraints(photoName , photoNameBag);
-		  add(photoName);
-
-		  GridBagConstraints con = new GridBagConstraints();
-		  con.gridx = 1;
-		  con.gridy = 2;
-		  con.gridheight = 3;
-		  con.gridwidth = 2;
-
-		  icon = new ImageIcon(path);
-		  iconLabel.setIcon(icon);
-		  gBig.setConstraints(iconLabel, con);
-		  add(iconLabel);
-		  //commentsPanel.add(iconLabel, BorderLayout.WEST);
-		  //commentsPanel.add(commentField, BorderLayout.CENTER);
-		  //commentsPanel.add(locationField, BorderLayout.CENTER);
-
-		  location.setBackground(Color.LIGHT_GRAY);
-		  GridBagConstraints loc = new GridBagConstraints();
-		  loc.gridx =2;
-		  loc.gridy =6;
-		  loc.gridheight =1;
-		  loc.gridwidth = 1;
-		  gBig.setConstraints(location, loc);
-		  add(location);
-		  GridBagConstraints locLabel = new GridBagConstraints();
-		  locLabel.gridx =1;
-		  locLabel.gridy =6;
-		  locLabel.gridheight =1;
-		  locLabel.gridwidth = 1;
-		  gBig.setConstraints(locationLabel, locLabel);
-		  add(locationLabel);
-
-		  GridBagConstraints comLabel = new GridBagConstraints();
-		  comLabel.gridx =3;
-		  comLabel.gridy =3;
-		  //		comLabel.gridheight =1;
-		  //		comLabel.gridwidth = 1;
-		  gBig.setConstraints(commentLabel, comLabel);
-		  add(commentLabel);
-		  comment.setBackground(Color.LIGHT_GRAY);
-		  GridBagConstraints com = new GridBagConstraints();
-		  com.gridx = 3;
-		  com.gridy = 4;
-		  //com.gridheight = 1;
-
-		  gBig.setConstraints(comment, com);
-		  add(comment);
-
-
-		  GridBagConstraints tagLabel = new GridBagConstraints();
-		  tagLabel.gridx =1;
-		  tagLabel.gridy =5;
-		  tagLabel.gridheight =1;
-		  tagLabel.gridwidth = 1;
-		  gBig.setConstraints(tagsLabel,  tagLabel);
-		  add(tagsLabel);
-		  int x= 0;
-		  //int y= 4;
-		  //	for(JLabel jt: tagsField){
-		  tags.setBackground(Color.LIGHT_GRAY);
-		  GridBagConstraints tag = new GridBagConstraints();
-		  tag.gridx = x + 2;
-		  tag.gridy = 5;
-		  tag.gridheight =1;
-		  tag.gridwidth = 1;
-
-		  gBig.setConstraints(tags,tag);
-		  add(tags);
-		  //}
-
-		  /*JPanel tagsLocationsPanel = new JPanel();
-		add(tagsLocationsPanel, BorderLayout.SOUTH);
-
-		GroupLayout gl_tagsLocationsPanel = new GroupLayout(tagsLocationsPanel);
-		gl_tagsLocationsPanel.setHorizontalGroup(
-			gl_tagsLocationsPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_tagsLocationsPanel.createSequentialGroup()
-					.addGroup(gl_tagsLocationsPanel.createParallelGroup(Alignment.LEADING)
-						//.addComponent(tagsField)
-						.addComponent(locationField))
-					.addContainerGap(405, Short.MAX_VALUE))
-		);
-		gl_tagsLocationsPanel.setVerticalGroup(
-			gl_tagsLocationsPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_tagsLocationsPanel.createSequentialGroup()
-					//.addComponent(tagsField)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(locationField))
-		);
-		tagsLocationsPanel.setLayout(gl_tagsLocationsPanel);
-
 		JPanel commentsPanel = new JPanel();
-		add(commentsPanel, BorderLayout.CENTER);
 		commentsPanel.setLayout(new BorderLayout(0, 0));
+
+		GridBagLayout gBig = new GridBagLayout();
+		setLayout(gBig);
+		GridBagConstraints nameBag = new GridBagConstraints();
+		nameBag.gridx =1;
+		nameBag .gridy =1;
+		nameBag.gridheight =1;
+		nameBag.gridwidth = 1;
+
+		gBig.setConstraints(photoNameLabel , nameBag);
+		add(photoNameLabel );
+		GridBagConstraints photoNameBag = new GridBagConstraints();
+		photoNameBag.gridx =2;
+		photoNameBag .gridy =1;
+		photoNameBag.gridheight =1;
+		photoNameBag.gridwidth = 1;
+		gBig.setConstraints(photoName , photoNameBag);
+		add(photoName);
+
+		GridBagConstraints con = new GridBagConstraints();
+		con.gridx = 1;
+		con.gridy = 2;
+		con.gridheight = 3;
+		con.gridwidth = 2;
 
 		icon = new ImageIcon(path);
 		iconLabel.setIcon(icon);
-		commentsPanel.add(iconLabel, BorderLayout.WEST);
-		commentsPanel.add(commentField, BorderLayout.CENTER);
+		gBig.setConstraints(iconLabel, con);
+		add(iconLabel);
 
-		commentField.setBackground(Color.LIGHT_GRAY);
+		location.setBackground(Color.LIGHT_GRAY);
+		GridBagConstraints loc = new GridBagConstraints();
+		loc.gridx =2;
+		loc.gridy =6;
+		loc.gridheight =1;
+		loc.gridwidth = 1;
+		gBig.setConstraints(location, loc);
+		add(location);
+		GridBagConstraints locLabel = new GridBagConstraints();
+		locLabel.gridx =1;
+		locLabel.gridy =6;
+		locLabel.gridheight =1;
+		locLabel.gridwidth = 1;
+		gBig.setConstraints(locationLabel, locLabel);
+		add(locationLabel);
 
-		   */}
+		GridBagConstraints comLabel = new GridBagConstraints();
+		comLabel.gridx =3;
+		comLabel.gridy =3;
+		gBig.setConstraints(commentLabel, comLabel);
+		add(commentLabel);
+		comment.setBackground(Color.LIGHT_GRAY);
+		GridBagConstraints com = new GridBagConstraints();
+		com.gridx = 3;
+		com.gridy = 4;
+
+		gBig.setConstraints(comment, com);
+		add(comment);
+
+		GridBagConstraints tagLabel = new GridBagConstraints();
+		tagLabel.gridx =1;
+		tagLabel.gridy =5;
+		tagLabel.gridheight =1;
+		tagLabel.gridwidth = 1;
+		gBig.setConstraints(tagsLabel,  tagLabel);
+		add(tagsLabel);
+
+		int x= 0;
+		tags.setBackground(Color.LIGHT_GRAY);
+		GridBagConstraints tag = new GridBagConstraints();
+		tag.gridx = x + 2;
+		tag.gridy = 5;
+		tag.gridheight =1;
+		tag.gridwidth = 1;
+
+		gBig.setConstraints(tags,tag);
+		add(tags);
+	}
+	
 	public void setName(String name){
 		this.photoName.setText(name);
 
 	}
+	
 	public void setTags(List<? extends TagObject> taggs){
 		String output = "";
 		for(TagObject t : taggs){
 			System.out.print(t);
 			output += t.getTag() + ";";
-			/*	JLabel tagsLabel = new JLabel();
-			tagsLabel.setText(t.getTag() +"");
-			tagsLabel.setVisible(true);
-			tagsField.add(tagsLabel);
-			 */}
+		}
 		tags.setText(output);
 	}
+
 	public void setLocation(String location){
 		this.location.setText(location);
 	}
@@ -236,29 +177,34 @@ public class PhotoPanel extends JPanel {
 		this.comment.setVisible(b);
 		this.commentLabel.setVisible(b);
 	}
+
 	public boolean isVisibleComments(){
 		return this.comment.isVisible();
 	}
+
 	public void displayTags(boolean b){
 		this.tags.setVisible(b);
 		this.tagsLabel.setVisible(b);
 	}
+
 	public boolean isVisibleTags(){
 		return this.tags.isVisible();
 	}
+
 	public void displayLocation(boolean b){
 		this.location.setVisible(b);
 		this.locationLabel.setVisible(b);
 	}
+
 	public boolean isVisibleLocation(){
 		return this.location.isVisible();
 	}
-	
+
 	public void displayPhotoName(boolean b){
 		this.photoName.setVisible(b);
 		this.photoNameLabel.setVisible(b);
 	}
-	
+
 	public boolean isVisiblePhotoName(){
 		return this.photoName.isVisible();
 	}

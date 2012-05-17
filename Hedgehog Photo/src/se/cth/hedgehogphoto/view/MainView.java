@@ -39,7 +39,7 @@ public class MainView implements Observer {
 
 	private JFrame frame;
 	private JPanel photoViewPanel;
-	private	JPanel leftPanelView;
+	private	 JPanel leftPanelView;
 	private JPanel[] panelHolder = new JPanel[3];
 	private JPanel topPanel;
 	private JButton btnShowHideName = new JButton("Show/Hide name");
@@ -116,25 +116,32 @@ public class MainView implements Observer {
 		photoView.setViewportView(photoViewPanel);
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 
-	}//init
+	}
+	
 	public void setCommentsButtonListener(ActionListener l){
 		this.btnshowHideComments.addActionListener(l);
 	}
+	
 	public void setTagsButtonListener(ActionListener l){
 		this.btnShowHideTags.addActionListener(l);
 	}
+	
 	public void setLocationButtonListener(ActionListener l){
 		this.btnShowHideLocation.addActionListener(l);
 	}
+	
 	public void setPhotoNameButtonListener(ActionListener l){
 		this.btnShowHideName.addActionListener(l);
 	}
+	
 	public void setSliderListener(ChangeListener l){
 		this.slider.addChangeListener(l);
 	}
+	
 	public List<PhotoPanel> getPhotoPanels(){
 		return this.photoPanels;
 	}
+	
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
 			if(placement == PluginArea.SEARCH){
