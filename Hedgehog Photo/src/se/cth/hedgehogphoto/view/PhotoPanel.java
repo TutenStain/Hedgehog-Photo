@@ -18,6 +18,7 @@ import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.TagObject;
 import se.cth.hedgehogphoto.objects.FileObject;
 
+@SuppressWarnings("serial")
 public class PhotoPanel extends JPanel {
 
 	private JTextField comment = new 	JTextField();
@@ -31,16 +32,11 @@ public class PhotoPanel extends JPanel {
 	private JLabel name = new JLabel("Name");
 	private JTextField photoName = new 	JTextField();
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public PhotoPanel(FileObject f) {
 		this(f.getFilePath());
 	}
 
 	public PhotoPanel(String path) {
-		//	photoName = new JLabel(DaoFactory.getInstance().getJpaPictureDao().findById(path).getName());
-
 		photoName.setBackground(Color.LIGHT_GRAY);
 		setName(DaoFactory.getInstance().getJpaPictureDao().findById(path).getName());
 		PhotoPanelController ppc = new PhotoPanelController(path);
@@ -234,18 +230,21 @@ public class PhotoPanel extends JPanel {
 
 	public void displayComments(Boolean b){
 		this.comment.setVisible(b);
+		this.commentLabel.setVisible(b);
 	}
 	public boolean isVisibleComments(){
 		return this.comment.isVisible();
 	}
 	public void displayTags(Boolean b){
 		this.tags.setVisible(b);
+		this.tagsLabel.setVisible(b);
 	}
 	public boolean isVisibleTags(){
 		return this.tags.isVisible();
 	}
 	public void displayLocation(Boolean b){
 		this.location.setVisible(b);
+		this.locationLabel.setVisible(b);
 	}
 	public boolean isVisibleLocation(){
 		return this.location.isVisible();
