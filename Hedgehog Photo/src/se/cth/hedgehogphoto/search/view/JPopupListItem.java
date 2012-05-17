@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -25,7 +26,7 @@ public class JPopupListItem extends JPanel {
 	private JTextArea tags;
 	private PictureObject picture;
 	
-	public JPopupListItem(final PictureObject pic) {
+	public JPopupListItem(PictureObject pic) {
 		this.picture = pic;
 		FlowLayout flowLayout = new FlowLayout();
 		flowLayout.setVgap(0);
@@ -40,40 +41,39 @@ public class JPopupListItem extends JPanel {
 		BufferedImage bi = ImageUtils.resize(new ImageIcon(pic.getPath()).getImage(), 65, 50);
 		image.setIcon(new ImageIcon(bi));
 		add(image);
-		
-		//TODO Maybe a better implementation?
-		String str = "";
+
+		StringBuilder sb = new StringBuilder("");
 		for(TagObject t : pic.getTags()){
-			str += t.getTag() + " ";
+			sb.append(t.getTag());
+			sb.append(' ');
 		}
 		
-		tags = new JTextArea(str);
-	    tags.setEditable(false);  
-	    tags.setCursor(null);  
-	    tags.setOpaque(false);  
-	    tags.setFocusable(false); 
-	    tags.setWrapStyleWord(true);
-	    tags.setLineWrap(true);
-	    tags.setAutoscrolls(false);
-		tags.setFont(new Font("Serif", Font.BOLD, 13));
-		tags.setMinimumSize(new Dimension(60, 50));
-		tags.setMaximumSize(new Dimension(60, 50));
-		tags.setPreferredSize(new Dimension(60, 50));
-		add(tags);
+		this.tags = new JTextArea(sb.toString());
+		initJTextArea(this.tags);
+		this.tags.setFont(new Font("Serif", Font.BOLD, 13));
+		this.tags.setMinimumSize(new Dimension(60, 50));
+		this.tags.setMaximumSize(new Dimension(60, 50));
+		this.tags.setPreferredSize(new Dimension(60, 50));
+		add(this.tags);
 		
-		comment = new JTextArea(pic.getComment().getComment());
-	    comment.setEditable(false);  
-	    comment.setCursor(null);  
-	    comment.setOpaque(false);  
-	    comment.setFocusable(false); 
-		comment.setWrapStyleWord(true);
-		comment.setLineWrap(true);
-		comment.setAutoscrolls(false);
-		comment.setFont(new Font("Serif", Font.PLAIN, 13));
-		comment.setMinimumSize(new Dimension(70, 50));
-		comment.setMaximumSize(new Dimension(70, 50));
-		comment.setPreferredSize(new Dimension(70, 50));
-		add(comment);
+		this.comment = new JTextArea(pic.getComment().getComment());
+	    initJTextArea(this.comment);
+		this.comment.setFont(new Font("Serif", Font.PLAIN, 13));
+		this.comment.setMinimumSize(new Dimension(70, 50));
+		this.comment.setMaximumSize(new Dimension(70, 50));
+		this.comment.setPreferredSize(new Dimension(70, 50));
+		add(this.comment);
+	}
+	
+	/** Mutates the component that gets passed in to this method. */
+	private void initJTextArea(JTextArea textArea) {
+		textArea.setEditable(false);  
+		textArea.setCursor(null);  
+		textArea.setOpaque(false);  
+		textArea.setFocusable(false); 
+		textArea.setWrapStyleWord(true);
+		textArea.setLineWrap(true);
+		textArea.setAutoscrolls(false);
 	}
 	
 	public void setPicture(PictureObject pic) {
@@ -87,7 +87,7 @@ public class JPopupListItem extends JPanel {
 	@Override
 	public void addMouseListener(MouseListener l){
 		super.addMouseListener(l);
-		tags.addMouseListener(l);
-		comment.addMouseListener(l);
+		this.tags.addMouseListener(l);
+		this.comment.addMouseListener(l);
 	}
 }
