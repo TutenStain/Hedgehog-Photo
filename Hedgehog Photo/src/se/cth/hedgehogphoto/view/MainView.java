@@ -191,16 +191,19 @@ public class MainView implements Observer {
 				photoViewPanel.add(pp);
 			}
 		}
-		frame.revalidate();
 		//TODO just a test
 		if(!photoPanels.isEmpty()){
 			for(int i=0;i<photoPanels.size();i++){
 				Image image = photoPanels.get(i).getIcon().getImage();
 				float scale = Constants.PREFERRED_PICTURE_HEIGHT/image.getHeight(null);
+				Image image2 = image.getScaledInstance(Math.round(image.getWidth(null)*scale), 
+						Math.round(Constants.PREFERRED_PICTURE_HEIGHT), Image.SCALE_DEFAULT);
 				BufferedImage bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
 						Math.round(Constants.PREFERRED_PICTURE_HEIGHT));
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanels.get(i).setIcon(icon2);
+				photoPanels.get(i).getIcon().setImage(image2);
+				frame.revalidate();
 			}
 		}
 	}
