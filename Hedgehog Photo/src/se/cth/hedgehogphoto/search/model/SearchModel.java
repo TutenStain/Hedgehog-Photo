@@ -12,7 +12,8 @@ import se.cth.hedgehogphoto.database.PictureObject;
  * @author Barnabas Sapan
  */
 
-public class SearchModel extends Observable{
+public class SearchModel extends Observable {
+	private List<PictureObject> pictures;
 	private String searchText = "";
 
 	public SearchModel(){

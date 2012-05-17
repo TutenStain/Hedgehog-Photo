@@ -22,54 +22,54 @@ import se.cth.hedgehogphoto.search.model.SearchModel;
  */
 
 @SuppressWarnings("serial")
-public class SearchView extends JPanel implements Observer{
-	private String searchButtonText = "Search";
-	private String placeHolderText = "Search...";
+public class JSearchBox extends JPanel implements Observer{
+	private final String searchButtonText = "Search";
+	private final String placeHolderText = "Search...";
 	private Dimension searchBoxSize = new Dimension(100, 30);
 	private Dimension searchButtonSize = new Dimension(100, 30);
 	private JTextField searchBox;
 	private JButton searchButton;
-	private SearchPreviewView spv = null;
+	private JPopupPreview preview = null;
 
-	public SearchView(SearchPreviewView spv){
+	public JSearchBox(JPopupPreview popup){
 		setLayout(new FlowLayout());
-		searchButton = new JButton(searchButtonText);
-		searchButton.setPreferredSize(searchButtonSize);
-		searchBox = new JTextField(placeHolderText);
-		searchBox.setPreferredSize(searchBoxSize);
-		add(searchBox);
-		add(searchButton);
-		if(spv != null){
-			this.setSearchPreview(spv);
+		this.searchButton = new JButton(this.searchButtonText);
+		this.searchButton.setPreferredSize(this.searchButtonSize);
+		this.searchBox = new JTextField(this.placeHolderText);
+		this.searchBox.setPreferredSize(this.searchBoxSize);
+		add(this.searchBox);
+		add(this.searchButton);
+		if(popup != null){
+			this.setSearchPreview(popup);
 		}
 	}
 
 	public void setSearchBoxFocusListener(FocusListener fl){
-		searchBox.addFocusListener(fl);
+		this.searchBox.addFocusListener(fl);
 	}
 
 	public void setSearchBoxDocumentListener(DocumentListener dl){
-		searchBox.getDocument().addDocumentListener(dl);
+		this.searchBox.getDocument().addDocumentListener(dl);
 	}
 
 	public void setSearchBoxActionListener(ActionListener l){
-		searchBox.addActionListener(l);
+		this.searchBox.addActionListener(l);
 	}
 
 	public void setSearchButtonListener(ActionListener ac){
-		searchButton.addActionListener(ac);
+		this.searchButton.addActionListener(ac);
 	}
 
 	public String getPlaceholderText(){
-		return placeHolderText;
+		return this.placeHolderText;
 	}
 
 	public Dimension getSearchBoxSize(){
-		return searchBox.getSize();
+		return this.searchBox.getSize();
 	}
 
 	public void setSearchBoxSize(Dimension d){
-		searchBox.setPreferredSize(d);
+		this.searchBox.setPreferredSize(d);
 	}
 
 	public Dimension getSearchButtonSize(){
@@ -77,7 +77,7 @@ public class SearchView extends JPanel implements Observer{
 	}
 
 	public void setSearchButtonSize(Dimension d){
-		searchButton.setPreferredSize(d);
+		this.searchButton.setPreferredSize(d);
 	}
 
 	/**
@@ -86,24 +86,24 @@ public class SearchView extends JPanel implements Observer{
 	 * @param spv The search preview model.
 	 */
 	//TODO Use interface argument instead.
-	public void setSearchPreview(SearchPreviewView spv){
-		this.spv = spv;
-		this.spv.setTextField(searchBox);
-		add(this.spv);
+	public void setSearchPreview(JPopupPreview spv){
+		this.preview = spv;
+		this.preview.setTextField(this.searchBox);
+		add(this.preview);
 	}
 
 	public void setSearchBoxText(String txt){
-		searchBox.setText(txt);
+		this.searchBox.setText(txt);
 	}
 
 	public String getSearchBoxText(){
-		return searchBox.getText();
+		return this.searchBox.getText();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		//If we dont have a spv specified, just make the search and update the view.
-		if(spv == null){
+		if(this.preview == null){
 			if (arg instanceof SearchModel) {
 				SearchModel model = (SearchModel)arg;
 				System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());

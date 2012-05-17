@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
@@ -26,13 +27,16 @@ import se.cth.hedgehogphoto.search.model.SearchModel;
  */
 
 @SuppressWarnings("serial")
-public class SearchPreviewView extends JPopupMenu implements Observer{
-	private JTextField jtf;
-	//Better to add everything to a JPanel first
-	//instead of adding directly to a JPopup to prevent some rendering issues.
+public class JPopupPreview extends JPopupMenu implements Observer {
+	/** Better to add everything to a JPanel first
+	 *  instead of adding directly to a JPopup to prevent some rendering issues. */
 	private JPanel panel;
+	private JTextField textField;
+	private final JPopupListItem [] listItems; //TODO: Might want to use an array/vector instead
+	private final int MAX_LIST_ITEMS = 5;
 
-	public SearchPreviewView(){
+	public JPopupPreview(){
+		this.listItems = new JPopupListItem[this.MAX_LIST_ITEMS];
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		add(panel);
@@ -40,14 +44,14 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 	}
 
 	public void setTextField(JTextField t){
-		jtf = t;
+		textField = t;
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		final SearchModel model = (SearchModel)arg;
 		System.out.println("UPDATE @ SEARCH_PREVIEW_VIEW: " + model.getSearchQueryText());
-		show(jtf, -50, jtf.getHeight()); //-50 to count for the offset of the textbox
+		show(textField, -50, textField.getHeight()); //-50 to count for the offset of the textbox
 		List<PictureObject> fo = model.getSearchObjects();
 		Iterator<PictureObject> itr = fo.iterator();
 		panel.removeAll();
@@ -74,7 +78,7 @@ public class SearchPreviewView extends JPopupMenu implements Observer{
 			int i = 0;
 			while(itr.hasNext() && i < 5){
 				PictureObject pic = itr.next();
-				SearchComponentView view = new SearchComponentView(pic);
+				JPopupListItem view = new JPopupListItem(pic);
 //				firePropertyChange("updateListeners"
 				new SearchComponentController(view, pic);
 				panel.add(view);

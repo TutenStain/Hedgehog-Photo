@@ -20,11 +20,13 @@ import se.cth.hedgehogphoto.view.ImageUtils;
  */
 
 @SuppressWarnings("serial")
-public class SearchComponentView extends JPanel{
+public class JPopupListItem extends JPanel {
 	private JTextArea comment;
 	private JTextArea tags;
+	private PictureObject picture;
 	
-	public SearchComponentView(final PictureObject pic) {
+	public JPopupListItem(final PictureObject pic) {
+		this.picture = pic;
 		FlowLayout flowLayout = new FlowLayout();
 		flowLayout.setVgap(0);
 		flowLayout.setHgap(10);
@@ -72,6 +74,14 @@ public class SearchComponentView extends JPanel{
 		comment.setMaximumSize(new Dimension(70, 50));
 		comment.setPreferredSize(new Dimension(70, 50));
 		add(comment);
+	}
+	
+	public void setPicture(PictureObject pic) {
+		this.picture = pic;
+	}
+	
+	public PictureObject getPicture() {
+		return this.picture;
 	}
 	
 	@Override
