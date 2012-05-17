@@ -20,31 +20,17 @@ import se.cth.hedgehogphoto.objects.ImageObject;
  */
 public class Metadata {
 	
-	private static File file = new File("test3.jpg"); //default file
 	private static final String[] metadataTypes = 
 			{"Modify Date", "Artist", "XPComment", "XPAuthor", 
 					"XPKeywords", "Date Time Original", "Interop Index", 
 					"Interop Version", "Unknown Tag (0x3)", "Unknown Tag (0x4)"};
-	
-	@Deprecated
-	public static void main(String [] args) {
-		IImageMetadata metadata = extractMetadata();
-		ImageObject io = getImageObject(metadata);
-		setFileProperties(io);
-		io.print();
-	}
 	
 	public static ImageObject getImageObject(File file) {
 		IImageMetadata metadata = extractMetadata(file);
 		return getImageObject(metadata); 
 	}
 	
-	private static IImageMetadata extractMetadata() {
-		return extractMetadata(file);
-	}
-	
 	public static IImageMetadata extractMetadata(File file) {
-		Metadata.file = file;
 		IImageMetadata metadata = null;
 		try {
 			metadata = Sanselan.getMetadata(file);
@@ -105,13 +91,6 @@ public class Metadata {
 	private static String getPropertyValue(String line) {
 		int indexOfValueStarts = line.indexOf(":") + 1;
 		return line.substring(indexOfValueStarts);
-	}
-	
-	/** Does not work. */
-	@Deprecated
-	private static void setFileProperties(ImageObject io) {
-		io.setProperty("fileName", file.getName());
-		io.setProperty("filePath", file.getPath());
 	}
 	
 }
