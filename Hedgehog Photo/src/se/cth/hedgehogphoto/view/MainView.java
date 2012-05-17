@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import se.cth.hedgehogphoto.Constants;
@@ -203,6 +201,7 @@ public class MainView implements Observer {
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanels.get(i).setIcon(icon2);
 				photoPanels.get(i).getIcon().setImage(image2);
+				frame.repaint();
 				frame.revalidate();
 			}
 		}
