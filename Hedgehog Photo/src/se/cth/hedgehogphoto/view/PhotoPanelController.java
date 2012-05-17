@@ -4,6 +4,7 @@ package se.cth.hedgehogphoto.view;
 
 
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,6 +15,7 @@ import se.cth.hedgehogphoto.database.JpaCommentDao;
 import se.cth.hedgehogphoto.database.JpaLocationDao;
 import se.cth.hedgehogphoto.database.JpaPictureDao;
 import se.cth.hedgehogphoto.database.JpaTagDao;
+import se.cth.hedgehogphoto.database.TagI;
 
 public class PhotoPanelController implements ActionListener {
 	static DaoFactory daoFactory = DaoFactory.getInstance();
@@ -38,13 +40,18 @@ public class PhotoPanelController implements ActionListener {
 			System.out.print(new JpaLocationDao().getAll());
 		}
 		if(a.getActionCommand().equals("tags")){
+			//for(int i = 0; i <jpd.findById(path).getTags().size();i++){
+		
+			//System.out.print(DaoFactory.getInstance().getJpaTagDao().getAll());
+		//}
+			jpd.deleteTags(path);
 			JTextField jtf = (JTextField)a.getSource();
 			String[] tags = jtf.getText().split(";");
 			for(int i = 0; i < tags.length; i++){
 				jpd.addTag(tags[i], path);
 				System.out.println("JTF" +jtf.getText());
 			}
-			System.out.print(new JpaTagDao().getAll());
+			System.out.print("ALL"+DaoFactory.getInstance().getJpaTagDao().getAll());
 		}
 		if(a.getActionCommand().equals("name")){
 			JTextField jtf = (JTextField)a.getSource();

@@ -4,6 +4,7 @@ package se.cth.hedgehogphoto.database;
 
 
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -285,18 +286,45 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	}
 
 	public void deleteTags(String filePath){
-		filePath = filePath.toLowerCase();
-		PictureObject picture = findById(filePath);
+		PictureI picture = findById(filePath);
+		
 		if(picture != null){
-			List<? extends TagI> tags = picture.getTags();
-			for(TagI tag: tags){
-				beginTransaction();
+
+			try{
+				List<? extends TagI> taggs = picture.getTags();
+			List<Tag> tags = new ArrayList<Tag>();
+			for(TagI t: picture.getTags())
+				tags.add((Tag) t);
+			int size = tags.size();
+			
+			
+			
+			
+			System.out.print("tagsize" + size);
+			
+			beginTransaction();
+			//for(int i = size; i > 0; i--){
+		for(TagI tag: tags){
+				System.out.print("Excn");
+				System.out.println("Remove"+ tag);
+				try{
+					taggs.remove(tag);
+				
+					picture.setTags(taggs);
 				List<? extends PictureI> pics =tag.getPictures();
+				System.out.print("Ex");
 				pics.remove(picture);
 				tag.setPictures(pics);
 				if(pics.isEmpty()==true)
-					entityManager.remove(tag);
-				commitTransaction();
+					jtd.remove((Tag)tag);
+				else
+				jtd.persist((Tag)tag);
+				this.persist((Picture) picture);
+				}catch(Exception y){
+					System.out.print("Exception");
+				}
+
+				
 			}
 			/*List<Tag> tags = picture.getTags();
 				for(Tag tag: tags){
@@ -306,7 +334,11 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					tag.setPictures(pics);
 					entityManager.persist(tag);
 					commitTransaction();
-			 */}
+			 */}catch(Exception y){	
+				}
+			commitTransaction();
+			
+	}
 	}
 	public  void updateDeleteComment(String filePath){
 		deleteComment(filePath);
