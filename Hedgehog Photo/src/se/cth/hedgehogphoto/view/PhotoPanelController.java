@@ -1,23 +1,12 @@
 package se.cth.hedgehogphoto.view;
 
-
-
-
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-
 import javax.swing.JTextField;
-
 import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.JpaCommentDao;
 import se.cth.hedgehogphoto.database.JpaLocationDao;
 import se.cth.hedgehogphoto.database.JpaPictureDao;
-import se.cth.hedgehogphoto.database.JpaTagDao;
-import se.cth.hedgehogphoto.database.TagI;
 
 public class PhotoPanelController implements ActionListener {
 	static DaoFactory daoFactory = DaoFactory.getInstance();
@@ -30,7 +19,6 @@ public class PhotoPanelController implements ActionListener {
 	public void actionPerformed(ActionEvent a) {
 		if(a.getActionCommand().equals("comment")){
 			JTextField jtf = (JTextField)a.getSource();
-			String x = jtf.getText();
 			jpd.addComment( jtf.getText(), path);
 			System.out.println("JTF" + jtf.getText() +" " +  path);
 			System.out.print(new JpaCommentDao().getAll());

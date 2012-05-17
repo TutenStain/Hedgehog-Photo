@@ -21,13 +21,13 @@ public class PhotoPanel extends JPanel {
 
 	private JTextField photoName = new JTextField();
 	private JTextField comment = new JTextField();
-	private JTextField  tags = new JTextField();
-	private JTextField  location = new JTextField();
+	private JTextField tags = new JTextField();
+	private JTextField location = new JTextField();
 	private JLabel commentLabel = new JLabel("Comments");
 	private JLabel tagsLabel = new JLabel("Tags:");
 	private JLabel locationLabel = new JLabel("Location:");
-	private JLabel iconLabel = new JLabel("");
 	private JLabel photoNameLabel = new JLabel("Name");
+	private JLabel iconLabel = new JLabel("");
 	private ImageIcon icon;
 
 	public PhotoPanel(FileObject f) {

@@ -52,6 +52,7 @@ import javax.swing.plaf.LayerUI;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@SuppressWarnings("serial")
 class LoadingLayer extends LayerUI<JPanel> implements ActionListener {
 	private JLayer<JPanel> decoratedPanel; 
 

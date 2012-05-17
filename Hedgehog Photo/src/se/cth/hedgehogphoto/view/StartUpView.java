@@ -21,7 +21,7 @@ import se.cth.hedgehogphoto.log.Log;
  * @author Barnabas Sapan
  */
 
-//JWindow
+@SuppressWarnings("serial")
 public class StartUpView extends JFrame implements Runnable{
 	
 	public StartUpView(){
