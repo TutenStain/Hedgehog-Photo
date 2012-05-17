@@ -40,6 +40,10 @@ public class PhotoPanel extends JPanel {
 		photoName.setBackground(Color.LIGHT_GRAY);
 		setName(DaoFactory.getInstance().getJpaPictureDao().findById(path).getName());
 		PhotoPanelController ppc = new PhotoPanelController(path);
+		comment.addFocusListener(new PhotoPanelFocusController(path,"comment"));
+		location.addFocusListener(new PhotoPanelFocusController(path,"location"));
+		photoName.addFocusListener(new PhotoPanelFocusController(path,"name"));
+		tags.addFocusListener(new PhotoPanelFocusController(path,"tags"));
 		comment.addActionListener(ppc);
 		tags.addActionListener(ppc);
 		location.addActionListener(ppc);
