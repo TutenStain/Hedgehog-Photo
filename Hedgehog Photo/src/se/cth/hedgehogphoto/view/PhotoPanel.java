@@ -66,7 +66,7 @@ public class PhotoPanel extends JPanel {
 		commentsPanel.add(commentsLabel, BorderLayout.CENTER);
 		
 	}
-	public void setTags(List<? extends TagI> list){
+	public void setTags(List<? extends TagObject> list){
 		String output = "";
 		for(TagObject t : list){
 			output += t.getTag() + " ";
