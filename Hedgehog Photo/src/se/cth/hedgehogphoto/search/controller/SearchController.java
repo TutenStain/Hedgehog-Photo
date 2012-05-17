@@ -13,7 +13,7 @@ import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.search.model.SearchModel;
 import se.cth.hedgehogphoto.search.model.SearchThread;
-import se.cth.hedgehogphoto.search.view.SearchView;
+import se.cth.hedgehogphoto.search.view.JSearchBox;
 
 /**
  * @author Barnabas Sapan
@@ -21,82 +21,90 @@ import se.cth.hedgehogphoto.search.view.SearchView;
 
 public class SearchController {
 	private SearchModel model;
-	private SearchView view;
+	private JSearchBox view;
 	
-	public SearchController(SearchModel _model, SearchView _view){
+	public SearchController(SearchModel _model, JSearchBox _view){
 		model = _model;
 		view = _view;
 		
 		//Enter is pressed from the textfield, do and display search!
-		view.setSearchBoxActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
-					List<PictureObject> fo = model.getSearchObjects();
-					Files.getInstance().setPictureList(fo);
-				}	
-			}
-		});
+		view.setSearchBoxActionListener(new SearchBoxActionListener());
 		
 		//Changes between the standby text (no focus) and allowing the user to enter text (focus).
-		view.setSearchBoxFocusListener(new FocusListener() {
-	        @Override
-	        public void focusGained(FocusEvent e) {
-	        	if (view.getSearchBoxText().equals(view.getPlaceholderText())) {   
-	            	view.setSearchBoxText("");
-	            }
-	        }
-	        
-	        @Override
-	        public void focusLost(FocusEvent e) {
-	        	if(view.getSearchBoxText().isEmpty()){
-	        		view.setSearchBoxText(view.getPlaceholderText());
-	        	}
-	        }
-
-		});
+		view.setSearchBoxFocusListener(new SearchBoxFocusListener());
 		
 		//Calls update() on each keystroke by the user.
-		view.setSearchBoxDocumentListener(new DocumentListener() {
-			private Thread t = new SearchThread(model, 500);
-			
-	        @Override
-	        public void changedUpdate(DocumentEvent e) {
-	            update();
-	        }
-	        
-	        @Override
-	        public void removeUpdate(DocumentEvent e) {
-	            update();
-	        }
-	        
-	        @Override
-	        public void insertUpdate(DocumentEvent e) {
-	            update();
-	        }
-	        
-	        private void update(){
-	        	if(!view.getSearchBoxText().isEmpty() && !view.getSearchBoxText().equals(view.getPlaceholderText())){
-	            	//Updates our model to always contain the latest and most recent search query.
-	        		model.setSearchQueryText(view.getSearchBoxText());
-	        		if(t.getState() == Thread.State.NEW){
-	            		t.start();
-	            	} else {
-	            		t.interrupt();
-	            		t = new SearchThread(model, 500);
-	            		t.start();
-	            	}
-	        	}
-	        }
-		});
+		view.setSearchBoxDocumentListener(new SearchBoxDocumentListener());
 		
-		view.setSearchButtonListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
-					new SearchThread(model, 0).start();
-				}
+		view.setSearchButtonListener(new SearchButtonListener());
+	}
+	
+	public class SearchBoxActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
+				List<PictureObject> fo = model.getSearchObjects();
+				Files.getInstance().setPictureList(fo);
+			}	
+		}
+	}
+	
+	public class SearchBoxFocusListener implements FocusListener {
+        @Override
+        public void focusGained(FocusEvent e) {
+        	if (view.getSearchBoxText().equals(view.getPlaceholderText())) {   
+            	view.setSearchBoxText("");
+            }
+        }
+        
+        @Override
+        public void focusLost(FocusEvent e) {
+        	if(view.getSearchBoxText().isEmpty()){
+        		view.setSearchBoxText(view.getPlaceholderText());
+        	}
+        }
+
+	}
+	
+	public class SearchBoxDocumentListener implements DocumentListener {
+		private Thread t = new SearchThread(model, 500);
+		
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            update();
+        }
+        
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            update();
+        }
+        
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            update();
+        }
+        
+        private void update(){
+        	if(!view.getSearchBoxText().isEmpty() && !view.getSearchBoxText().equals(view.getPlaceholderText())){
+            	//Updates our model to always contain the latest and most recent search query.
+        		model.setSearchQueryText(view.getSearchBoxText());
+        		if(t.getState() == Thread.State.NEW){
+            		t.start();
+            	} else {
+            		t.interrupt();
+            		t = new SearchThread(model, 500);
+            		t.start();
+            	}
+        	}
+        }
+	}
+	
+	public class SearchButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
+				new SearchThread(model, 0).start();
 			}
-		});
+		}
 	}
 }
