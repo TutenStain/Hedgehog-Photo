@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import se.cth.hedgehogphoto.controller.DefaultController;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.map.controller.MapController;
@@ -46,6 +47,7 @@ public class Main {
 		MainModel model = new MainModel();
 		MainView view = new MainView(start);
 		model.addObserver(view);
+		new DefaultController(model, view);
 		
 		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
 		PluginLoader p = new PluginLoader(view, pluginRooDir);

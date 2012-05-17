@@ -6,7 +6,8 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 /**
- * @author David
+ * 
+ * @author David Grankvist
  */
 
 public class PaintUtils {
@@ -28,8 +29,8 @@ public class PaintUtils {
 		g.setColor(c);
 		g.drawRect(x, y, w, h);
 	}
-	/*Graphically resets a white JPanel*/
+	
 	public static void erasePainting(JPanel panel){
-		paintRect(panel.getGraphics(), 0, 0, panel.getWidth(), panel.getHeight(), Color.white);
+		paintRect(panel.getGraphics(), 0, 0, panel.getWidth(), panel.getHeight(), panel.getBackground());
 	}
 }

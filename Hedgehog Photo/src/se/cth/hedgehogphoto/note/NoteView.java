@@ -10,6 +10,8 @@ import java.awt.event.MouseMotionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
@@ -17,7 +19,8 @@ import javax.swing.event.ChangeListener;
 import se.cth.hedgehogphoto.Constants;
 
 /**
- * @author David
+ * 
+ * @author David Grankvist
  */
 
 public class NoteView extends JPanel implements Observer{
@@ -25,6 +28,7 @@ public class NoteView extends JPanel implements Observer{
 	private JPanel bottomPanel = new JPanel();
 	private JPanel drawArea = new JPanel();
 	private JSlider slider = new JSlider(5, 15);
+	private JButton eraseButton = new JButton("Erase");
 	private NotePreview preview = new NotePreview();
 	private ColorChooser colorChooser = new ColorChooser();
 	private NoteModel model;
@@ -37,10 +41,12 @@ public class NoteView extends JPanel implements Observer{
 		
 		drawArea.setBackground(Color.white);
 		bottomPanel.setBackground(Color.white);
-		bottomPanel.setLayout(new GridLayout(1, 3));
+		bottomPanel.setLayout(new GridLayout(1, 4));
+		bottomPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		slider.setBackground(Color.white);
-	
+		
+		bottomPanel.add(eraseButton);
 		bottomPanel.add(preview);
 		bottomPanel.add(colorChooser);
 		bottomPanel.add(slider);
@@ -62,6 +68,14 @@ public class NoteView extends JPanel implements Observer{
 	public void setDrawAreaListeners(MouseListener ml, MouseMotionListener mml){
 		this.drawArea.addMouseListener(ml);
 		this.drawArea.addMouseMotionListener(mml);
+	}
+	
+	public void setEraseButtonListener(ActionListener l){
+		this.eraseButton.addActionListener(l);
+	}
+	
+	public JPanel getDrawArea(){
+		return this.drawArea;
 	}
 	
 	@Override

@@ -5,7 +5,8 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 /**
- * @author David
+ * 
+ * @author David Grankvist
  */
 
 public class NotePreview extends JPanel{

@@ -12,7 +12,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * @author David
+ * 
+ * @author David Grankvist
  */
 
 public class NoteController {
@@ -57,6 +58,14 @@ public class NoteController {
 					PaintUtils.paintCircle(drawArea.getGraphics(), me.getX(), me.getY(), model.getCircleDiam(), model.getColor());
 				}
 			}
+		});
+		view.setEraseButtonListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PaintUtils.erasePainting(view.getDrawArea());
+			}
+			
 		});
 	}
 }

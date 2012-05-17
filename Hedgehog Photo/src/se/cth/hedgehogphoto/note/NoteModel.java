@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.util.Observable;
 
 /**
- * @author David
+ * 
+ * @author David Grankvist
  */
 
 public class NoteModel extends Observable{

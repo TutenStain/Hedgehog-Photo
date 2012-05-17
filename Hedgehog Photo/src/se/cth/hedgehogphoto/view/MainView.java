@@ -44,7 +44,12 @@ public class MainView implements Observer {
 	private	JPanel leftPanelView;
 	private JPanel[] panelHolder = new JPanel[3];
 	private JPanel topPanel;
-	private /*static*/ List<PhotoPanel> photoPanels;
+	private JButton btnShowhideTags = new JButton("Show/Hide tags");
+	private JButton btnShowhideLocation = new JButton("Show/Hide location");
+	private JSlider slider = new JSlider(50, 200);
+	private JButton showHideComments = new JButton("Show/Hide comments");
+	//TODO this list probably needs to be removed, not enough MVC
+	private List<PhotoPanel> photoPanels;
 
 	public MainView(StartUpView startView) {
 		initialize(startView);
@@ -56,10 +61,6 @@ public class MainView implements Observer {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		JPanel bottomPanel = new JPanel();
 		frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
-		JButton btnShowhideTags = new JButton("Show/Hide tags");
-		JButton btnShowhideLocation = new JButton("Show/Hide location");
-		JSlider slider = new JSlider(50, 200);
-		JButton showHideComments = new JButton("Show/Hide comments");
 
 		GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);
 		gl_bottomPanel.setHorizontalGroup(
@@ -92,7 +93,7 @@ public class MainView implements Observer {
 		topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
 		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
-		
+
 		leftPanelView = new JPanel();
 		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
 		leftPanelView.setPreferredSize(d);
@@ -102,8 +103,8 @@ public class MainView implements Observer {
 		leftPanelView.setLayout(new GridLayout(3, 0, 0, 0));
 
 		for(int i = 0; i < 3; i++) {
-		    panelHolder[i] = new JPanel();
-		    leftPanelView.add(panelHolder[i]);
+			panelHolder[i] = new JPanel();
+			leftPanelView.add(panelHolder[i]);
 		}
 
 		JScrollPane photoView = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -113,44 +114,22 @@ public class MainView implements Observer {
 		photoView.setViewportView(photoViewPanel);
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 
-		showHideComments.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				for(int i=0;i<photoPanels.size();i++){
-					photoPanels.get(i).displayComments(!photoPanels.get(i).isVisibleComments());
-				}
-			}
-		});
-		btnShowhideTags.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				for(int i=0;i<photoPanels.size();i++){
-					photoPanels.get(i).displayTags(!photoPanels.get(i).isVisibleTags());
-				}
-			}
-		});
-		btnShowhideLocation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for(int i=0;i<photoPanels.size();i++){
-					photoPanels.get(i).displayLocation(!photoPanels.get(i).isVisibleLocation());
-				}
-			}
-		});
-		slider.addChangeListener(new ChangeListener(){
-
-			public void stateChanged(ChangeEvent arg0) {
-				JSlider slider = (JSlider)arg0.getSource();
-				float scale = (float)slider.getValue()/100;
-				for(int i=0;i<photoPanels.size();i++){
-					Image image = photoPanels.get(i).getIcon().getImage();
-					BufferedImage bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
-							Math.round(image.getHeight(null)*scale));
-					ImageIcon icon2 = new ImageIcon(bi);
-					photoPanels.get(i).setIcon(icon2);
-				}
-			}
-
-		});
+	}//init
+	public void setCommentsButtonListener(ActionListener l){
+		this.showHideComments.addActionListener(l);
 	}
-	
+	public void setTagsButtonListener(ActionListener l){
+		this.btnShowhideTags.addActionListener(l);
+	}
+	public void setLocationButtonListener(ActionListener l){
+		this.btnShowhideLocation.addActionListener(l);
+	}
+	public void setSliderListener(ChangeListener l){
+		this.slider.addChangeListener(l);
+	}
+	public List<PhotoPanel> getPhotoPanels(){
+		return this.photoPanels;
+	}
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
 			if(placement == PluginArea.SEARCH){
@@ -159,17 +138,17 @@ public class MainView implements Observer {
 				if(placement == PluginArea.LEFT_TOP){
 					panelHolder[0] = panel;
 				}
-	
+
 				if(placement == PluginArea.LEFT_MIDDLE){
 					panelHolder[1] = panel;
 				}
-	
+
 				if(placement == PluginArea.LEFT_BOTTOM){
 					panelHolder[2] = panel;
 				}
-				
+
 				leftPanelView.removeAll();
-				
+
 				for(int i = 0; i < 3; i++){
 					leftPanelView.add(panelHolder[i]);
 				}
@@ -186,11 +165,11 @@ public class MainView implements Observer {
 
 		//TODO Maybe refresh in another way than removing the PhotoPanels?
 		photoViewPanel.removeAll();
-		
+
 		if(arg1 instanceof MainModel) {
 			MainModel model = (MainModel)arg1;
 			images = model.getImages();
-			
+
 			for(int i = 0; i<images.size(); i++) {
 				PhotoPanel pp = new PhotoPanel(images.get(i).getPath());
 				pp.setComment(images.get(i).getComment().getComment());
@@ -212,7 +191,17 @@ public class MainView implements Observer {
 				photoViewPanel.add(pp);
 			}
 		}
-		
 		frame.revalidate();
+		//TODO just a test
+		if(!photoPanels.isEmpty()){
+			for(int i=0;i<photoPanels.size();i++){
+				Image image = photoPanels.get(i).getIcon().getImage();
+				float scale = Constants.PREFERRED_PICTURE_HEIGHT/image.getHeight(null);
+				BufferedImage bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
+						Math.round(Constants.PREFERRED_PICTURE_HEIGHT));
+				ImageIcon icon2 = new ImageIcon(bi);
+				photoPanels.get(i).setIcon(icon2);
+			}
+		}
 	}
 }

@@ -8,7 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
- * @author David
+ * 
+ * @author David Grankvist
  */
 
 public class ColorChooser extends JPanel{
