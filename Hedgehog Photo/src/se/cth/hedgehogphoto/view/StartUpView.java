@@ -1,7 +1,10 @@
 package se.cth.hedgehogphoto.view;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.logging.Level;
 
 import javax.swing.ImageIcon;
@@ -32,6 +35,9 @@ public class StartUpView extends JFrame implements Runnable{
 	public void run(){
 		setSize(new Dimension(Constants.PREFERRED_STARTUP_WINDOW_WIDTH, Constants.PREFERRED_STARTUP_WINDOW_HEIGHT));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		//Add icon
+		setIconImage(new ImageIcon(StartUpView.class.getResource("/se/cth/hedgehogphoto/resources/icon.gif")).getImage());
 		
 		JPanel p = new JPanel();
 		JLabel image = new JLabel();
