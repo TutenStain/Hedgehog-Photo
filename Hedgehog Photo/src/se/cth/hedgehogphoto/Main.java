@@ -41,8 +41,9 @@ public class Main {
 			Log.getLogger().log(Level.WARNING, "Interrupted", e);
 		}
 		
+		//TODO Uncomment these the first run if you need to recreate the database
 		//DatabaseHandler.getInstance().deleteAll();
-		insertFileObjectsIntoDatabase();
+		//insertFileObjectsIntoDatabase();
 		
 		MainModel model = new MainModel();
 		MainView view = new MainView(start);
@@ -71,11 +72,11 @@ public class Main {
 		view.addPlugin(map, PluginArea.LEFT_TOP);
 		
 		//Search
-		SearchInitiator search = new SearchInitiator();
+		//SearchInitiator search = new SearchInitiator();
 
 		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(view);
 
-		view.addPlugin(search.getView(), PluginArea.SEARCH);
+		//view.addPlugin(search.getView(), PluginArea.SEARCH);
 
 		model.testNotify();
 	}
