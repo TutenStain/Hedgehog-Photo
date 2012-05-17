@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class Log {
 	private static Logger logger;
 	
-	public static Logger getLogger(){
+	public synchronized static Logger getLogger(){
 		if(logger == null){
 			logger = Logger.getLogger("Hedgehog-logger");
 			

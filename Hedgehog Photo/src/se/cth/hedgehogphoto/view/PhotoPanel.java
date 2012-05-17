@@ -79,7 +79,7 @@ public class PhotoPanel extends JPanel {
 		
 		
 		
-		JPanel tagsPanel = new JPanel();
+	//	JPanel tagsPanel = new JPanel();
 		//tagsPanel.setLayout(new BoxLayout(getRootPane(),BoxLayout.X_AXIS));
 		/*for(JTextField jt: tagsField){
 			tagsPanel.add(jt);

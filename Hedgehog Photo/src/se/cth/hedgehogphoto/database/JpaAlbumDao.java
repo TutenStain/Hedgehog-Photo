@@ -117,8 +117,6 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 	}
 public void addTag(String tag, String albumName){
 	Album album = findById(albumName);
-	albumName = albumName.toLowerCase();
-	tag = tag.toLowerCase();
 	if(album != null) {
 	
 		JpaTagDao jtd = new JpaTagDao();

@@ -27,8 +27,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	@Override
 	public  List<? extends PictureI> searchfromComments(String search){
 		if(!(search.equals(""))){
-			search = search.toLowerCase();
-			List<Comment> commments = (List<Comment>)jcd.findByLike("comment", search);
+			List<Comment> commments = jcd.findByLike("comment", search);
 			if(commments != null){
 				List<Picture> pictures = new ArrayList<Picture>();
 				for(CommentObject c: commments){
@@ -47,7 +46,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	@Override
 	public  List<? extends PictureI> searchfromNames(String search){
 		if(!(search.equals(""))){
-			search = search.toLowerCase();
 			return findByLike("name",search);
 		}else{
 			return null;
@@ -61,7 +59,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	@Override
 	public List<? extends PictureI> searchfromDates(String search){
 		if(!(search.equals(""))){
-			search = search.toLowerCase();
 			return findByLike("date",search);
 		}else{
 			return null;
@@ -79,7 +76,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	@Override
 	public List<? extends PictureI> searchfromTags(String search){
 		if(!(search.equals(""))){
-			search = search.toLowerCase();
 			List<Tag> tags = jtd.findByLike("tag", search);
 			List<? extends PictureI> pictures = new ArrayList<Picture>();
 			if(!(tags.isEmpty())){
@@ -87,7 +83,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					try{
 						for(TagI tag: jtd.getAll()){
 							if(tag.getTag().equals(t.getTag())){
-								pictures = (List<Picture>) tag.getPictures();
+								pictures =  tag.getPictures();
 							}
 						}
 					}catch(Exception e){
@@ -102,7 +98,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	@Override
 	public List<? extends PictureI> searchfromLocations(String search){
 		if(!(search.equals(""))){
-			search = search.toLowerCase();
 			List<Picture> 	pictures = new ArrayList<Picture>();
 			List<Location> locations = jld.findByLike("location", search);
 			if(!(locations.isEmpty())){
@@ -118,7 +113,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	
 	@Override
 	public  PictureObject getfromPath(String search){
-		search = search.toLowerCase();
 		return findById(search);
 	}
 	public  void updateAddTag(String tag, String filePath){
@@ -130,9 +124,8 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		files.setPictureList(pictureList);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void addTag(String tag, String filePath){
-		tag = tag.toLowerCase();
-		filePath = filePath.toLowerCase();
 		Picture picture = findById(filePath);
 		List<TagI> tags = new ArrayList<TagI>();
 		try{
@@ -141,10 +134,14 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			
 		}
 		if( picture != null ){
-			TagI tagg = jtd.findById(tag);
+			Tag tagg = jtd.findById(tag);
 			if(tagg != null){
-				List<PictureI> pics = (List<PictureI>) tagg.getPictures();
-		
+				List<PictureI> pics = new ArrayList<PictureI>();
+				try{
+				pics = (List<PictureI>) tagg.getPictures();
+				}catch(Exception i){
+					
+				}
 				if(!(pics.contains(picture))){
 					beginTransaction();
 					pics.add(picture);
@@ -153,7 +150,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 						tags = new ArrayList<TagI>();
 					tags.add(tagg);
 					picture.setTags(tags);
-					entityManager.persist(tagg);
+					jtd.persist(tagg);
 					commitTransaction();	
 				}
 			}else{
@@ -163,7 +160,12 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				List<PictureI> pictures = new ArrayList<PictureI>();
 				pictures.add(picture);
 				newTag.setPictures(pictures);
-				List<TagI> taggs = (List<TagI>) picture.getTags();
+				List<TagI> taggs = new ArrayList<TagI>();
+				try{
+				taggs = (List<TagI>) picture.getTags();
+				}catch(Exception u){
+					
+				}
 				if(taggs == null)
 					taggs = new ArrayList<TagI>();
 				taggs.add(newTag);
@@ -183,12 +185,10 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		files.setPictureList(pictureList);
 	}
 	public  void addComment(String comment, String filePath){
-		//comment = comment.toLowerCase();
-		//filePath = filePath.toLowerCase();
-		try{
+		
 		Picture picture = findById(filePath);
+		if(picture != null){
 		System.out.print("1");	
-//		try{
 			Comment comm = jcd.findById(comment);
 			if(comm!=null){
 			System.out.print("2");	
@@ -204,11 +204,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					pics.add(picture);
 					comm.setPicture(pics);
 					picture.setComment(comm);
-					System.out.print("4");	
-					//entityManager.persist(picture);
-				//	entityManager.persist(comm);;
 					commitTransaction();
-				//}
 			}else{
 				beginTransaction();
 				System.out.print("5");	
@@ -221,12 +217,8 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				picture.setComment(com);
 				System.out.print("7");	
 				entityManager.persist(com);
-				entityManager.persist(picture);
 				commitTransaction();
 			}
-		}catch(Exception e){
-			System.out.print("8");	
-			
 		}
 	}
 	public  void updateAddLocation(String location, String filePath){
@@ -239,12 +231,11 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	}
 
 	public void addLocation(String location, String filePath){
-		location = location.toLowerCase();
-		filePath = filePath.toLowerCase();
 		Picture picture = findById(filePath);
 		if(picture != null) {
 			LocationI loc = (Location)jld.findById(location);
 			if(loc != null){
+				@SuppressWarnings("unchecked")
 				List<PictureI> pics = (List<PictureI>) loc.getPictures();
 				if((!pics.contains(picture))){
 					beginTransaction();
@@ -256,7 +247,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					commitTransaction();
 				}
 			}else{
-
 				beginTransaction();
 				loc= new Location();
 				loc.setLocation(location);
@@ -274,16 +264,12 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	public void updateAllPictures(){
 		pictureList.addAll(getAllPictures());
 		files.setPictureList(pictureList);
-
-
 	}
 	
 	public List<Picture> getAllPictures(){
 		return getAll();
-
 	}
 	public  void deleteAll(){
-		
 		List<Picture> allPictures = getAll();
 		for(PictureObject pic:allPictures){
 			deletePicture(pic.getPath());
@@ -304,15 +290,13 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		if(picture != null){
 			List<? extends TagI> tags = picture.getTags();
 			for(TagI tag: tags){
-				entityManager.getTransaction().begin();
+				beginTransaction();
 				List<? extends PictureI> pics =tag.getPictures();
 				pics.remove(picture);
 				tag.setPictures(pics);
 				if(pics.isEmpty()==true)
 					entityManager.remove(tag);
-				entityManager.persist(picture);
-				entityManager.persist(tag);
-				entityManager.getTransaction().commit();	
+				commitTransaction();
 			}
 			/*List<Tag> tags = picture.getTags();
 				for(Tag tag: tags){
@@ -329,16 +313,15 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		for(PictureObject f: pictureList){
 			if(f.getPath().equals(filePath))
 				pictureList.remove(f);
-
 		}
 		files.setPictureList(pictureList);
 	}
+	
 	public void deleteComment(String filePath){
-		filePath = filePath.toLowerCase();
 		PictureObject picture = findById(filePath);
 		if(picture != null){
 			CommentI com = picture.getComment();
-			entityManager.getTransaction().begin();
+			beginTransaction();
 			List<? extends PictureI> pictures = new ArrayList<Picture>();
 			try{
 				pictures = com.getPictures();
@@ -347,12 +330,10 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			}
 			if(pictures.isEmpty() && com!=null){
 				entityManager.remove(com);
-				entityManager.persist(com);
 			}else if(com != null){
 				com.setPicture(pictures);
-				entityManager.persist(com);
 			}
-			entityManager.getTransaction().commit();	
+			commitTransaction();	
 			/*	Comment com = picture.getComment();
 				beginTransaction();
 				List<Picture> pictures = com.getPictures();
@@ -363,23 +344,20 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			 */}
 	}
 	public void deleteLocation(String filePath){
-		filePath = filePath.toLowerCase();
 		PictureObject picture = findById(filePath);
 		if(picture != null){
 			try{
-				entityManager.getTransaction().begin();
+				beginTransaction();
 				LocationI location = picture.getLocation();
 				List<? extends PictureI>  picts = location.getPictures();
 				picts.remove(picture);
 				if(picts.isEmpty()){
 					entityManager.remove(location);
-					entityManager.persist( location);
 				}else
 					location.setPictures(picts);
-				entityManager.persist( location);
 			}catch(Exception e){
 			}
-			entityManager.getTransaction().commit();	
+			commitTransaction();	
 			/*	Location loc = picture.getLocation();
 				beginTransaction();
 				List<Picture>  picts = loc.getPictures();
@@ -407,12 +385,11 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		}
 	}
 	public void deletePicturefromAlbum(String filePath){
-		filePath = filePath.toLowerCase();
 		Picture picture = findById(filePath);
 		if(picture != null){
 			Album album = picture.getAlbum();
 			if(album!=null){
-				entityManager.getTransaction().begin();
+				beginTransaction();
 				List<? extends PictureI> pics = album.getPictures();
 				pics.remove(picture);
 				album.setPictures(pics);
@@ -420,7 +397,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					entityManager.remove(album);
 				}
 				entityManager.persist(album);
-			entityManager.getTransaction().commit();	
+				commitTransaction();	
 			}
 		}
 	}
@@ -435,47 +412,43 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			//this.deleteTags(filePath);
 			List<? extends TagI> tags = picture.getTags();
 			for(TagI tag: tags){
-				entityManager.getTransaction().begin();
+				beginTransaction();
 				List<? extends PictureI> pics =tag.getPictures();
 				pics.remove(picture);
 				tag.setPictures(pics);
 				if(pics.isEmpty()==true)
 					entityManager.remove(tag);
-				entityManager.persist(tag);
-				entityManager.getTransaction().commit();	
+				commitTransaction();
 			}
 			//this.deletePicturefromAlbum(filePath);
 			Album album = picture.getAlbum();
 			if(album!=null){
-				entityManager.getTransaction().begin();
+				beginTransaction();
 				List<? extends PictureI> pics = album.getPictures();
 				pics.remove(picture);
 				album.setPictures(pics);
 				if(album.getPictures().isEmpty()){
 					entityManager.remove(album);
 				}
-				entityManager.persist(album);
-				entityManager.getTransaction().commit();	
+				commitTransaction();
 			}
 
 			//this.deleteLocation(filePath);
 			try{
-				entityManager.getTransaction().begin();
+				beginTransaction();
 				LocationI location = picture.getLocation();
 				List<? extends PictureI>  picts = location.getPictures();
 				picts.remove(picture);
 				if(picts.isEmpty()){
 					entityManager.remove(location);
-					entityManager.persist( location);
 				}else
 					location.setPictures(picts);
-				entityManager.persist( location);
 			}catch(Exception e){
 			}
-			entityManager.getTransaction().commit();	
-			//		this.deleteComment(filePath);
+			commitTransaction();
+			
 			Comment com = picture.getComment();
-			entityManager.getTransaction().begin();
+			beginTransaction();
 			List<Picture> pictures = new ArrayList<Picture>();
 			try{
 				pictures = com.getPictures();
@@ -484,22 +457,17 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			}
 			if(pictures.isEmpty() && com!=null){
 				entityManager.remove(com);
-				entityManager.persist(com);
-				entityManager.getTransaction().commit();	
+				commitTransaction();	
 			}else if(com != null){
 				com.setPicture(pictures);
-				entityManager.persist(com);
-				entityManager.getTransaction().commit();	
+				commitTransaction();
 			}
-		
-			entityManager.getTransaction().begin();
+			beginTransaction();
 			entityManager.remove(picture);
-			entityManager.getTransaction().commit();
+			commitTransaction();
 		}
 	}
 	public  void insertPicture(FileObject f){
-		System.out.println("INSERT");
-	//	try{
 		if(findById(f.getFilePath())==null){
 			System.out.println("INSERT2" +
 					"");
@@ -511,32 +479,25 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				if(!(albumName.equals(""))){
 					try{
 					album = jad.findById(albumName);
-					
-						entityManager.getTransaction().begin();	
+					beginTransaction();
 						try{
 						if(album.getCoverPath().equals("")|| album.getCoverPath()==null)
 							album.setCoverPath(f.getFilePath());
-						}catch(Exception o){
-							
+						}catch(Exception o){		
 						}
-					entityManager.getTransaction().commit();
+						commitTransaction();
 						}
 					catch(Exception i){
-						entityManager.getTransaction().begin();
+						beginTransaction();
 						album = new Album();	
 						album.setAlbumName(albumName);
 						album.setCoverPath(f.getFilePath());
 						entityManager.persist(album);
-						entityManager.getTransaction().commit();
-					
+						commitTransaction();
 					}
 					}
-			
 				}
-			
-			
 				Picture picture = new Picture();
-				boolean pictureExist = false;
 				String date= f.getDate().toLowerCase();
 				String s =f.getDate().charAt(0)+"";
 				date  = s.toUpperCase() + date.substring(1);
@@ -545,7 +506,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				 fileName  = s.toUpperCase() + fileName.substring(1);
 				 try{
 				picture = findById(f.getFilePath());
-					entityManager.getTransaction().begin();
+				beginTransaction();
 					if(!(f.getDate().equals("")))
 						picture.setDate(date);
 					if(picture.getName().equals(""))
@@ -555,12 +516,11 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					if(!(thePictures.contains(picture)))
 						thePictures.add(picture);
 					album.setPictures(thePictures);
-					entityManager.getTransaction().commit();
-
+					commitTransaction();
 				}catch(Exception o){
 					if(entityManager.getTransaction().isActive())
 					entityManager.getTransaction().commit();
-					entityManager.getTransaction().begin();
+					beginTransaction();
 					picture = new Picture();
 					picture.setPath(f.getFilePath());	
 					picture.setDate(date);
@@ -578,8 +538,8 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				if(album != null)
 						album.setPictures(thePictures);
 						entityManager.persist(picture);
-						entityManager.getTransaction().commit();
-						pictureExist=true;
+						commitTransaction();
+					
 					}
 				}	
 				setTags(f,picture);
@@ -595,12 +555,12 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				if(!(f.getComment().equals(""))){
 					Comment comment = jcd.findById(f.getComment().toLowerCase());
 					if(comment.getComment().equals(f.getComment().toLowerCase())){
-						entityManager.getTransaction().begin();
+						beginTransaction();
 						List<Picture> pics = comment.getPictures();
 						pics.add(picture);
 						comment.setPicture(pics);
 						picture.setComment(comment);							
-						entityManager.getTransaction().commit();
+						commitTransaction();
 					}
 
 				}
@@ -608,7 +568,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 
 			catch(Exception k){
 				if(jcd.findById(f.getComment().toLowerCase())==null){
-					entityManager.getTransaction().begin();
+					beginTransaction();
 					Comment comment = new Comment();		
 					comment.setComment(f.getComment().toLowerCase());		
 					List<Picture> pics = new ArrayList<Picture>();
@@ -616,7 +576,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					comment.setPicture(pics);
 					picture.setComment(comment);
 					entityManager.persist(comment);
-					entityManager.getTransaction().commit();
+					commitTransaction();
 				}
 			}
 		}
@@ -638,7 +598,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 						TagI tag= jtd.findById(tags.get(i));
 						try{
 							if((tag!=null)){
-								entityManager.getTransaction().begin();
+								beginTransaction();
 								List<PictureI> ptag= (List<PictureI>) tag.getPictures();				
 								if(!(ptag.contains(picture))){
 									ptag.add(picture);
@@ -651,10 +611,9 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 									}
 								}
 							}
-							entityManager.getTransaction().commit();
+							commitTransaction();
 						}catch(Exception e){
-							entityManager.getTransaction().begin();
-
+							beginTransaction();
 							tag = new Tag();
 							tag.setTag(tags.get(i));			
 							List<Picture> peg = new ArrayList<Picture>();
@@ -666,7 +625,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 							pTags.add(tag);		
 							picture.setTags(pTags);
 							entityManager.persist(tag);
-							entityManager.getTransaction().commit();
+							commitTransaction();
 						}
 					}
 				}
@@ -680,15 +639,15 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				try{
 					Location location = jld.findById(f.getLocation().toLowerCase());
 					if(location.getLocation().equals(f.getLocation().toLowerCase())){
-						entityManager.getTransaction().begin();
+						beginTransaction();
 						location.setLatitude((f.getLocationObject().getLatitude()));
 						location.setLongitude(f.getLocationObject().getLongitude());
 						picture.setLocation(location);
-						entityManager.getTransaction().commit();
+						commitTransaction();
 					}
 
 				}catch(Exception j){
-					entityManager.getTransaction().begin();
+					beginTransaction();
 					Location location = new Location();
 					
 					location.setLatitude((f.getLocationObject().getLatitude()));
@@ -699,7 +658,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					location.setPictures(pics);
 					picture.setLocation(location);
 					entityManager.persist(location);
-					entityManager.getTransaction().commit();
+					commitTransaction();
 
 				}
 			}

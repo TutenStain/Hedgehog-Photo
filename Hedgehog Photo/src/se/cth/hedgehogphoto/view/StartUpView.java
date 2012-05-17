@@ -54,7 +54,7 @@ public class StartUpView extends JFrame implements Runnable{
 		
 		//Start and wait for the database to finish loading
 		Thread t = new Thread(DatabaseHandler.getInstance());
-		t.run();
+		t.start();
 		try {
 			t.join();
 		} catch (InterruptedException e) {

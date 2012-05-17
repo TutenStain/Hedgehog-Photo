@@ -40,7 +40,7 @@ public class Main {
 			Log.getLogger().log(Level.WARNING, "Interrupted", e);
 		}
 		
-		DatabaseHandler.getInstance().deleteAll();
+		//DatabaseHandler.getInstance().deleteAll();
 		insertFileObjectsIntoDatabase();
 		
 		MainModel model = new MainModel();

@@ -15,16 +15,14 @@ import se.cth.hedgehogphoto.objects.ImageObject;
  *
  */
 public class PictureFetcher {
-	private  static JFileChooser chooser;
+	private  static JFileChooser chooser =  new JFileChooser();;
 	//	private  static List<File> files;
 	//private static Map<String, ArrayList<File>> files = new HashMap<String, ArrayList<File>>();
 	private static List<ImageObject> imageObjects = new ArrayList<ImageObject>(); 
 	private static Metadata metadata = new Metadata();
 	private static String [] validFileExtensions = {"png", "jpg", "gif"};
 
-	public PictureFetcher() {
-
-		chooser = new JFileChooser();
+	public PictureFetcher() { 
 		chooser.setDialogTitle("Choose pictures");
 
 		chooser.setCurrentDirectory(new java.io.File( System.getProperty("user.home") + "/Pictures"));

@@ -44,7 +44,7 @@ public class MainView implements Observer {
 	private	JPanel leftPanelView;
 	private JPanel[] panelHolder = new JPanel[3];
 	private JPanel topPanel;
-	private static List<PhotoPanel> photoPanels;
+	private /*static*/ List<PhotoPanel> photoPanels;
 
 	public MainView(StartUpView startView) {
 		initialize(startView);

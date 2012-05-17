@@ -10,19 +10,19 @@ import se.cth.hedgehogphoto.objects.ImageObject;
  *
  */
 public class PictureInserter {
-	private static PictureFetcher pictureFetcher;
-	private static Metadata metadata;
-	private static List<ImageObject> imageObjects; 
+	private /*static*/ PictureFetcher pictureFetcher = new PictureFetcher();;
+	//private /*static*/ Metadata metadata;
+	private  List<ImageObject> imageObjects  =  pictureFetcher.getImageObjects(); 
 	 
 	public PictureInserter(){
-		pictureFetcher = new PictureFetcher();
-		metadata = new Metadata();
-		imageObjects =  pictureFetcher.getImageObjects();
+
+	//	metadata = new Metadata();
+	
 		insertImageObject();
 		//DatabaseHandler.searchPictureNames("IMG_0175");
 	}
 	
-	public static void insertImageObject(){	
+	public synchronized  void insertImageObject(){	
 		for(ImageObject io: imageObjects){
 			io.setComment("BAJS");
 			System.out.print(io.getFileName());
