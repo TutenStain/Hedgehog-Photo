@@ -10,17 +10,17 @@ import java.util.List;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
-import se.cth.hedgehogphoto.search.view.SearchComponentView;
+import se.cth.hedgehogphoto.search.view.JPopupListItem;
 
 /**
  * @author Barnabas Sapan
  */
 public class SearchComponentController{
-	private SearchComponentView view;
+	private JPopupListItem view;
 	private final PictureObject fo;
 	private Color oldColor;
 
-	public SearchComponentController(SearchComponentView _view, final PictureObject _fo){
+	public SearchComponentController(JPopupListItem _view, final PictureObject _fo){
 		view = _view;
 		fo = _fo;
 
@@ -55,15 +55,15 @@ public class SearchComponentController{
 		});
 	}
 	
-	/*
+	
 	public class ComponentMouseListener extends MouseAdapter {
 		//TODO This needs to be done.
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (e.getSource() instanceof SearchComponentView) {
-				SearchComponentView view = (SearchComponentView) e.getSource();
+			if (e.getSource() instanceof JPopupListItem) {
+				JPopupListItem view = (JPopupListItem) e.getSource();
 				System.out.println("Clicked on: " + view.getPicture().getPath());
-				List<Picture> pic = new ArrayList<Picture>();
+				List<PictureObject> pic = new ArrayList<PictureObject>();
 				pic.add(view.getPicture());
 				Files.getInstance().setPictureList(pic);
 			}
@@ -72,8 +72,8 @@ public class SearchComponentController{
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			if (e.getSource() instanceof SearchComponentView) {
-				SearchComponentView view = (SearchComponentView) e.getSource();
+			if (e.getSource() instanceof JPopupListItem) {
+				JPopupListItem view = (JPopupListItem) e.getSource();
 				oldColor = view.getBackground();
 				view.setBackground(new Color(210, 210, 210));
 			}
@@ -81,8 +81,8 @@ public class SearchComponentController{
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			if (e.getSource() instanceof SearchComponentView) {
-				SearchComponentView view = (SearchComponentView) e.getSource();
+			if (e.getSource() instanceof JPopupListItem) {
+				JPopupListItem view = (JPopupListItem) e.getSource();
 				view.setBackground(oldColor);
 			}
 		}
@@ -94,5 +94,5 @@ public class SearchComponentController{
 		@Override
 		public void mouseReleased(MouseEvent e) {
 		}
-	}*/
+	}
 }

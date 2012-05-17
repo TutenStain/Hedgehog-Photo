@@ -23,20 +23,20 @@ public class SearchController {
 	private SearchModel model;
 	private JSearchBox view;
 	
-	public SearchController(SearchModel _model, JSearchBox _view){
-		model = _model;
-		view = _view;
+	public SearchController(SearchModel model, JSearchBox view){
+		this.model = model;
+		this.view = view;
 		
 		//Enter is pressed from the textfield, do and display search!
-		view.setSearchBoxActionListener(new SearchBoxActionListener());
+		this.view.setSearchBoxActionListener(new SearchBoxActionListener());
 		
 		//Changes between the standby text (no focus) and allowing the user to enter text (focus).
-		view.setSearchBoxFocusListener(new SearchBoxFocusListener());
+		this.view.setSearchBoxFocusListener(new SearchBoxFocusListener());
 		
 		//Calls update() on each keystroke by the user.
-		view.setSearchBoxDocumentListener(new SearchBoxDocumentListener());
+		this.view.setSearchBoxDocumentListener(new SearchBoxDocumentListener());
 		
-		view.setSearchButtonListener(new SearchButtonListener());
+		this.view.setSearchButtonListener(new SearchButtonListener());
 	}
 	
 	public class SearchBoxActionListener implements ActionListener {
