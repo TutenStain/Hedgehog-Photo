@@ -1,5 +1,9 @@
 package se.cth.hedgehogphoto.database;
 
+
+
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,7 +134,12 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		tag = tag.toLowerCase();
 		filePath = filePath.toLowerCase();
 		Picture picture = findById(filePath);
-		List<TagI> tags = (List<TagI>) picture.getTags();
+		List<TagI> tags = new ArrayList<TagI>();
+		try{
+		tags = (List<TagI>) picture.getTags();
+		}catch(Exception y){
+			
+		}
 		if( picture != null ){
 			TagI tagg = jtd.findById(tag);
 			if(tagg != null){
@@ -174,36 +183,52 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		files.setPictureList(pictureList);
 	}
 	public  void addComment(String comment, String filePath){
-		comment = comment.toLowerCase();
-		filePath = filePath.toLowerCase();
+		//comment = comment.toLowerCase();
+		//filePath = filePath.toLowerCase();
+		try{
 		Picture picture = findById(filePath);
-		if(picture != null ) {
+		System.out.print("1");	
+//		try{
 			Comment comm = jcd.findById(comment);
-			if(comm!= null){
+			if(comm!=null){
+			System.out.print("2");	
 				beginTransaction();
-				List<Picture> pics = comm.getPictures();
-				if((!pics.contains(picture))){
+				List<Picture> pics;
+				try{
+				pics = comm.getPictures();
+				}catch(Exception j){
+				pics =new ArrayList<Picture>();
+				}
+				System.out.print("3");	
+				if((!pics.contains(picture)))
 					pics.add(picture);
 					comm.setPicture(pics);
-					entityManager.persist(picture);
-					entityManager.persist(comm);;
+					picture.setComment(comm);
+					System.out.print("4");	
+					//entityManager.persist(picture);
+				//	entityManager.persist(comm);;
 					commitTransaction();
-				}
+				//}
 			}else{
 				beginTransaction();
+				System.out.print("5");	
 				Comment com = new Comment();
 				com.setComment(comment);
 				List<Picture> pictures = new ArrayList<Picture>();
 				pictures.add(picture);
+				System.out.print("6");	
 				com.setPicture(pictures);
 				picture.setComment(com);
+				System.out.print("7");	
 				entityManager.persist(com);
 				entityManager.persist(picture);
 				commitTransaction();
 			}
+		}catch(Exception e){
+			System.out.print("8");	
+			
 		}
 	}
-
 	public  void updateAddLocation(String location, String filePath){
 		for(PictureObject f:pictureList){
 			if(f.getPath().equals(filePath))
@@ -430,8 +455,9 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					entityManager.remove(album);
 				}
 				entityManager.persist(album);
+				entityManager.getTransaction().commit();	
 			}
-			entityManager.getTransaction().commit();	
+
 			//this.deleteLocation(filePath);
 			try{
 				entityManager.getTransaction().begin();
@@ -459,71 +485,97 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			if(pictures.isEmpty() && com!=null){
 				entityManager.remove(com);
 				entityManager.persist(com);
+				entityManager.getTransaction().commit();	
 			}else if(com != null){
 				com.setPicture(pictures);
 				entityManager.persist(com);
+				entityManager.getTransaction().commit();	
 			}
-			entityManager.getTransaction().commit();	
+		
 			entityManager.getTransaction().begin();
 			entityManager.remove(picture);
 			entityManager.getTransaction().commit();
 		}
 	}
 	public  void insertPicture(FileObject f){
-		try{
+		System.out.println("INSERT");
+	//	try{
 		if(findById(f.getFilePath())==null){
+			System.out.println("INSERT2" +
+					"");
 			Album album = new Album();
 			if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
 				String albumName= f.getAlbumName().toLowerCase();
+				String s =f.getAlbumName().charAt(0)+"";
+				 albumName  = s.toUpperCase() + albumName.substring(1);
 				if(!(albumName.equals(""))){
+					try{
 					album = jad.findById(albumName);
-					if(album!=null){
+					
 						entityManager.getTransaction().begin();	
+						try{
 						if(album.getCoverPath().equals("")|| album.getCoverPath()==null)
-							album.setCoverPath(f.getFilePath().toLowerCase());
-						entityManager.getTransaction().commit();
-					}else {
+							album.setCoverPath(f.getFilePath());
+						}catch(Exception o){
+							
+						}
+					entityManager.getTransaction().commit();
+						}
+					catch(Exception i){
 						entityManager.getTransaction().begin();
 						album = new Album();	
 						album.setAlbumName(albumName);
 						album.setCoverPath(f.getFilePath());
-						entityManager.persist(album);	
+						entityManager.persist(album);
 						entityManager.getTransaction().commit();
+					
 					}
+					}
+			
 				}
+			
+			
 				Picture picture = new Picture();
 				boolean pictureExist = false;
+				String date= f.getDate().toLowerCase();
+				String s =f.getDate().charAt(0)+"";
+				date  = s.toUpperCase() + date.substring(1);
+				String fileName= f.getFileName().toLowerCase();
+				 s = f.getFileName().charAt(0)+"";
+				 fileName  = s.toUpperCase() + fileName.substring(1);
+				 try{
 				picture = findById(f.getFilePath());
-				if(picture != null){
 					entityManager.getTransaction().begin();
 					if(!(f.getDate().equals("")))
-						picture.setDate(f.getDate().toLowerCase());
+						picture.setDate(date);
 					if(picture.getName().equals(""))
-						picture.setName(f.getFileName().toLowerCase());
-					//List<? extends PictureI> thePictures = album.getPictures();
-					
+						picture.setName(fileName);
 					List<PictureI> thePictures = new ArrayList<PictureI>();
 					thePictures.addAll(album.getPictures());
-					
 					if(!(thePictures.contains(picture)))
 						thePictures.add(picture);
 					album.setPictures(thePictures);
 					entityManager.getTransaction().commit();
 
-				}else{
+				}catch(Exception o){
+					if(entityManager.getTransaction().isActive())
+					entityManager.getTransaction().commit();
 					entityManager.getTransaction().begin();
 					picture = new Picture();
 					picture.setPath(f.getFilePath());	
-					picture.setDate(f.getDate().toLowerCase());
+					picture.setDate(date);
 					if(f.getFileName() != null ||(!f.getFileName().equals(""))){
-						picture.setName(f.getFileName().toLowerCase());
+						picture.setName(fileName);
 						picture.setAlbum(album);
-						//List<? extends PictureI> thePictures = album.getPictures();
-						
 						List<PictureI> thePictures = new ArrayList<PictureI>();
+						try{
 						thePictures.addAll(album.getPictures());
-						
+						}catch(Exception p){
+							
+						}
 						thePictures.add(picture);
+						
+				if(album != null)
 						album.setPictures(thePictures);
 						entityManager.persist(picture);
 						entityManager.getTransaction().commit();
@@ -533,11 +585,9 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				setTags(f,picture);
 				setComment(f,picture);
 				setLocation(f,picture);
+				System.out.println("FINISH");
+				
 			}
-		}
-		}catch(Exception j){
-			
-		}
 	}
 	public void setComment(FileObject f,Picture picture){
 		if(picture != null){
@@ -653,6 +703,14 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 
 				}
 			}
+		}
+	}
+	public void setName(String name, String path){
+		Picture p = findById(path);
+		if(p != null){
+			beginTransaction();
+			p.setName(name);
+			commitTransaction();
 		}
 	}
 }
