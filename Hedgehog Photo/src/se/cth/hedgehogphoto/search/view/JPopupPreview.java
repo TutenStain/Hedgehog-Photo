@@ -27,34 +27,36 @@ import se.cth.hedgehogphoto.search.model.SearchModel;
  */
 
 @SuppressWarnings("serial")
-public class JPopupPreview extends JPopupMenu implements Observer {
+public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 	/** Better to add everything to a JPanel first
 	 *  instead of adding directly to a JPopup to prevent some rendering issues. */
 	private JPanel panel;
 	private JTextField textField;
-	private final JPopupListItem [] listItems; //TODO: Might want to use an array/vector instead
+	
+	private final JPopupListItem [] listItems;
 	private final int MAX_LIST_ITEMS = 5;
 
 	public JPopupPreview(){
 		this.listItems = new JPopupListItem[this.MAX_LIST_ITEMS];
-		panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		add(panel);
+		this.panel = new JPanel();
+		this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.PAGE_AXIS));
+		add(this.panel);
 		setFocusable(false);
 	}
 
+	@Override
 	public void setTextField(JTextField t){
-		textField = t;
+		this.textField = t;
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		final SearchModel model = (SearchModel)arg;
 		System.out.println("UPDATE @ SEARCH_PREVIEW_VIEW: " + model.getSearchQueryText());
-		show(textField, -50, textField.getHeight()); //-50 to count for the offset of the textbox
+		show(this.textField, -50, this.textField.getHeight()); //-50 to count for the offset of the textbox
 		List<PictureObject> fo = model.getSearchObjects();
 		Iterator<PictureObject> itr = fo.iterator();
-		panel.removeAll();
+		this.panel.removeAll();
 
 		//Adds the search results to the popup, if result resulted in no matches, add
 		//a no result label.
@@ -71,8 +73,8 @@ public class JPopupPreview extends JPopupMenu implements Observer {
 						Files.getInstance().setPictureList(model.getSearchObjects());
 					}
 				});
-				panel.add(p);
-				panel.add(new JSeparator());
+				this.panel.add(p);
+				this.panel.add(new JSeparator());
 			}
 
 			int i = 0;
@@ -81,7 +83,7 @@ public class JPopupPreview extends JPopupMenu implements Observer {
 				JPopupListItem view = new JPopupListItem(pic);
 //				firePropertyChange("updateListeners"
 				new SearchComponentController(view, pic);
-				panel.add(view);
+				this.panel.add(view);
 				i++;	
 			}
 
@@ -91,10 +93,10 @@ public class JPopupPreview extends JPopupMenu implements Observer {
 			p.setLayout(new FlowLayout());
 			p.setBackground(Color.GRAY);
 			p.add(new JLabel("No results for '" + model.getSearchQueryText() + "'. Try again!"));
-			panel.add(p);
+			this.panel.add(p);
 			setPopupSize(250, 40);
 		}
 
-		panel.revalidate();
+		this.panel.revalidate();
 	}
 }

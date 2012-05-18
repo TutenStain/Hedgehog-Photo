@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
@@ -29,7 +30,8 @@ public class JSearchBox extends JPanel implements Observer{
 	private Dimension searchButtonSize = new Dimension(100, 30);
 	private JTextField searchBox;
 	private JButton searchButton;
-	private JPopupPreview preview = null;
+	
+	private JPopupPreview preview;
 
 	public JSearchBox(JPopupPreview popup){
 		setLayout(new FlowLayout());
@@ -41,6 +43,7 @@ public class JSearchBox extends JPanel implements Observer{
 		add(this.searchButton);
 		if(popup != null){
 			this.setSearchPreview(popup);
+			//TODO: SHould listen to the searchModel
 		}
 	}
 
@@ -86,8 +89,8 @@ public class JSearchBox extends JPanel implements Observer{
 	 * @param spv The search preview model.
 	 */
 	//TODO Use interface argument instead.
-	public void setSearchPreview(JPopupPreview spv){
-		this.preview = spv;
+	public void setSearchPreview(JPopupPreview preview){
+		this.preview = preview;
 		this.preview.setTextField(this.searchBox);
 		add(this.preview);
 	}
