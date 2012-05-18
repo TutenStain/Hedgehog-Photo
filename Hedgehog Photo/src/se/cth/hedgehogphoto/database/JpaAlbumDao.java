@@ -11,30 +11,34 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		super();
 	}
 
+	@Override
 	public void updateAllAlbums(){
 		albumList.clear();
 		albumList.addAll(getAllAlbums());
 		files.setAlbumList(albumList);
 	}
 	
-	public List<Album> getAllAlbums(){
+	@Override
+	public List<? extends AlbumI> getAllAlbums(){
 		return getAll();
-
 	}
 	
+	@Override
 	public void updateSearchfromDates(String search){
 		albumList.clear();
 		albumList.addAll(searchfromDates(search));
 		files.setAlbumList(albumList);
 	}
 	
+	@Override
 	public void updateSearchPicturesfromDates(String search){
 		albumList.clear();
 		albumList.addAll(searchfromDates(search));
 		files.setAlbumList(albumList );
 	}
 	
-	public  List<Album>  searchfromDates(String search){
+	@Override
+	public List<? extends AlbumI> searchfromDates(String search){
 		if(search.equals("")){
 			return findByLike("date",search.toLowerCase());
 		}else{
@@ -42,13 +46,15 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 	}
 	
+	@Override
 	public void updateSearchfromNames(String search){
 		albumList.clear();
 		albumList.addAll(searchfromNames(search));
 		files.setAlbumList(albumList );
 	}
 	
-	public List<Album>  searchfromNames(String search){
+	@Override
+	public List<? extends AlbumI> searchfromNames(String search){
 		if(search.equals("")){
 			return findByLike("albumName", search.toLowerCase());
 		}else{
@@ -57,13 +63,15 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 
 	}
 	
+	@Override
 	public void updateSearchfromComments(String search){
 		albumList.clear();
 		albumList.addAll(searchfromComments(search));
 		files.setAlbumList(albumList);
 	}
 	
-	public List<Album> searchfromComments(String search){
+	@Override
+	public List<? extends AlbumI> searchfromComments(String search){
 		search = search.toLowerCase();
 		if(!(search.equals(""))){
 			JpaCommentDao jcd = new JpaCommentDao();
@@ -77,13 +85,15 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		return null;
 	}
 	
+	@Override
 	public void updateSearchfromTags(String search){
 		albumList.clear();
 		albumList.addAll(searchfromTags(search));
 		files.setAlbumList(albumList);
 	}
 	
-	public  List<Album> searchfromTags(String search){
+	@Override
+	public List<? extends AlbumI> searchfromTags(String search){
 		search = search.toLowerCase();
 		if(!(search.equals(""))){
 			JpaTagDao jtd = new JpaTagDao();
@@ -97,13 +107,15 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		return null;
 	}
 	
+	@Override
 	public void updateSearchfromLocations(String search){
 		albumList.clear();
 		albumList.addAll(searchfromLocations(search));
 		files.setAlbumList(albumList);
 	}
 	
-	public List<Album> searchfromLocations(String search){
+	@Override
+	public List<? extends AlbumI> searchfromLocations(String search){
 		search = search.toLowerCase();
 		if(!(search.equals(""))){
 			JpaLocationDao jld = new JpaLocationDao();
@@ -117,7 +129,8 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		return null;
 	}
 	
-	public  void updateAddTag(String tag, String albumName){
+	@Override
+	public void updateAddTag(String tag, String albumName){
 		for(AlbumObject f:albumList){
 			if(f.getAlbumName().equals(albumName))
 				albumList.remove(f);
@@ -126,6 +139,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		files.setAlbumList(albumList);
 	}
 	
+	@Override
 	public void addTag(String tag, String albumName){
 		Album album = findById(albumName);
 		if(album != null) {
@@ -160,7 +174,8 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 
 	}
 	
-	public  void updateAddComment(String comment, String albumName){
+	@Override
+	public void updateAddComment(String comment, String albumName){
 		for(AlbumObject f:albumList){
 			if(f.getAlbumName().equals(albumName))
 				albumList.remove(f);
@@ -169,6 +184,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		files.setAlbumList(albumList);
 	}
 
+	@Override
 	public void addComment(String comment, String albumName){
 		albumName = albumName.toLowerCase();
 		comment = comment.toLowerCase();
@@ -187,7 +203,6 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 					commitTransaction();
 				}
 
-
 			}else{
 				beginTransaction();
 				Comment com = new Comment();
@@ -203,7 +218,8 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 	}
 	
-	public  void updateAddLocation(String location, String albumName){
+	@Override
+	public void updateAddLocation(String location, String albumName){
 		for(AlbumObject f:albumList){
 			if(f.getAlbumName().equals(albumName))
 				albumList.remove(f);
@@ -212,6 +228,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		files.setAlbumList(albumList);
 	}
 
+	@Override
 	public void addLocation(String location, String albumName){
 		albumName = albumName.toLowerCase();
 		location = location.toLowerCase();
@@ -248,7 +265,8 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 
 	}
 	
-	public  void updateDeleteComment(String albumName){
+	@Override
+	public void updateDeleteComment(String albumName){
 		deleteComment(albumName);
 		for(AlbumObject f:albumList){
 			if(f.getAlbumName().equals(albumName))
@@ -257,6 +275,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		files.setAlbumList(albumList);
 	}
 	
+	@Override
 	public void deleteComment(String albumName){
 		albumName = albumName.toLowerCase();
 		AlbumObject album = findById(albumName);
@@ -271,7 +290,8 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 	}
 	
-	public  void updateDeleteLocation(String albumName){
+	@Override
+	public void updateDeleteLocation(String albumName){
 		deleteLocation(albumName);
 		for(AlbumObject f:albumList){
 			if(f.getAlbumName().equals(albumName))
@@ -279,7 +299,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 		files.setAlbumList(albumList);
 	}
-	
+	@Override
 	public void deleteLocation(String albumName){
 		AlbumObject album = findById(albumName);
 		if(album!= null){
@@ -293,6 +313,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 	}
 
+	@Override
 	public void updateDeleteTags(String albumName){
 		deleteTags(albumName);
 		for(AlbumObject f:albumList){
@@ -302,13 +323,13 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		files.setAlbumList(albumList);
 	}
 	
+	@Override
 	public void deleteTags(String albumName){
 		albumName = albumName.toLowerCase();
 		AlbumObject album = findById(albumName);
 		if(album!= null){
 			List<? extends TagI> tags = album.getTags();
 			for(TagI tag: tags){
-
 				beginTransaction();
 				List<? extends AlbumI> albums =tag.getAlbums();
 				albums .remove(album);
@@ -319,6 +340,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 	}
 
+	@Override
 	public void deletePicture(String filePath){
 		JpaPictureDao jpd = new JpaPictureDao();
 		Picture picture = jpd.findById(filePath);
