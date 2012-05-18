@@ -18,13 +18,17 @@ public class Album implements AlbumObject, AlbumI {
 	
 	private String coverPath;
 	
+	private String date;
+	
 	@OneToMany
-	List<Picture> pictures;
+	private List<Picture> pictures;
+	
 	@OneToMany
 	private List<Tag> tags;
-	private String date;
+	
 	@ManyToOne
 	private Comment comment;
+	
 	@ManyToOne
 	private Location location;
 
@@ -42,6 +46,7 @@ public class Album implements AlbumObject, AlbumI {
 	public Comment getComment() {
 		return comment;
 	}
+	
 	protected void setComment(Comment comment) {
 		this.comment = comment;
 	}
@@ -63,23 +68,23 @@ public class Album implements AlbumObject, AlbumI {
 	protected void setDate(String date) {
 		this.date = date;
 	}	
+	
 	@Override
 	public List<? extends PictureI> getPictures() {		
 		return pictures;
 	}
 
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public void setPictures(List<? extends PictureI> pictures) {
 		this.pictures = (List<Picture>) pictures;
 	}
+	
 	@Override
 	public String getAlbumName() {
 		return albumName;
 	}
-
-
-
+	
 	protected void setAlbumName(String albumName) {
 		this.albumName = albumName;
 	}

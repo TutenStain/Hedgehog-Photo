@@ -13,10 +13,15 @@ import javax.persistence.OneToMany;
 @Entity
 public class Location implements LocationObject, LocationI {
 
-
 	@Id	
 	private String location;
+	
 	private double longitude, latitude;
+	
+	@OneToMany
+	private List<Picture> pictures;
+	@OneToMany
+	private List<Album> albums;
 
 	@Override
 	public double getLongitude() {
@@ -38,16 +43,12 @@ public class Location implements LocationObject, LocationI {
 		this.latitude = lat;
 	}
 
-	@OneToMany
-	private List<Picture> pictures;
-	@OneToMany
-	private List<Album> albums;
-
 	@Override
 	public List<? extends PictureI> getPictures() {
 		return pictures;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void setPictures(List<? extends PictureI> pictures) {
 		this.pictures = (List<Picture>) pictures;
@@ -64,10 +65,6 @@ public class Location implements LocationObject, LocationI {
 	}
 
 	@Override
-	public String toString() {
-		return "[Location=" + location+ " Longitude= " + longitude + " Latitude= " + latitude+ "] ";
-	}
-	@Override
 	public String getLocationasString(){
 		return location;
 	}
@@ -77,6 +74,7 @@ public class Location implements LocationObject, LocationI {
 		return albums;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void setAlbums(List<? extends AlbumI> albums) {
 		this.albums = (List<Album>) albums;
@@ -93,6 +91,11 @@ public class Location implements LocationObject, LocationI {
 		boolean longitudeOK = Math.abs(this.getLongitude()) < 180.0;
 		boolean latitudeOK = Math.abs(this.getLatitude()) < 90.0;
 		return (longitudeOK && latitudeOK);
+	}
+	
+	@Override
+	public String toString() {
+		return "[Location=" + location+ " Longitude= " + longitude + " Latitude= " + latitude+ "] ";
 	}
 
 }

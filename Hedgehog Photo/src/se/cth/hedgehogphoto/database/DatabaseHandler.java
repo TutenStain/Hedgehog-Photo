@@ -8,26 +8,15 @@ import javax.persistence.Query;
 
 import se.cth.hedgehogphoto.objects.FileObject;
 
-
-
-
 /**
  * 
  * @author Julia
  *
  */
-
-
 public class DatabaseHandler implements DatabaseAccess, Runnable{
 	private static Files files = Files.getInstance(); 
 	private static List<PictureObject> pictureList = files.getPictureList();
 	private static List<AlbumObject> albumList = files.getAlbumList();
-	
-	/*private static JpaAlbumDao jad = new JpaAlbumDao();
-	private static JpaCommentDao jcd = new JpaCommentDao();
-	private static JpaLocationDao jld = new JpaLocationDao();
-	private static JpaTagDao jtd = new JpaTagDao();
-	private static JpaPictureDao jpd = new JpaPictureDao();*/
 	
 	private JpaAlbumDao jad;
 	private JpaCommentDao jcd;

@@ -9,7 +9,4 @@ public interface TagObject {
 	public List<? extends AlbumI> getAlbums();
 
 	public List<? extends PictureI> getPictures();
-
-	public String getTagAsString();
-
 }

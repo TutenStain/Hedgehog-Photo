@@ -18,14 +18,16 @@ public class Picture implements PictureObject, PictureI {
 	private String path;
 	private String name;
 	private String date;
+	
 	@ManyToOne
-	 private Album album;
+	private Album album;
 
 	@ManyToMany
 	private List<Tag> tags;
-	
+
 	@ManyToOne
 	private Comment comment;
+	
 	@ManyToOne
 	private Location location;
 
@@ -33,6 +35,8 @@ public class Picture implements PictureObject, PictureI {
 	public List<? extends TagI> getTags() {
 		return tags;
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void setTags(List<? extends TagI> tags) {
 		this.tags = (List<Tag>)tags;
@@ -42,6 +46,7 @@ public class Picture implements PictureObject, PictureI {
 	public Comment getComment() {
 		return comment;
 	}
+	
 	@Override
 	public void setComment(CommentI comment) {
 		this.comment = (Comment) comment;
@@ -56,6 +61,7 @@ public class Picture implements PictureObject, PictureI {
 	public void setLocation(LocationI location) {
 		this.location = (Location) location;
 	}
+	
 	@Override
 	public String getDate() {
 		return date;
@@ -65,7 +71,7 @@ public class Picture implements PictureObject, PictureI {
 	public void setDate(String date) {
 		this.date = date;
 	}	
-	
+
 	@Override
 	public Album getAlbum() {
 		return album;
@@ -90,6 +96,7 @@ public class Picture implements PictureObject, PictureI {
 	public String getName() {
 		return name;
 	}
+	
 	@Override
 	public void setName(String name) {
 		this.name = name;
@@ -97,8 +104,6 @@ public class Picture implements PictureObject, PictureI {
 
 	@Override
 	public String toString() {
-		tags.size();
-		
 		return "Pictures [Path= " + path + " Name=" + name + " Date= " + date
 				+  album  + " Taggar" + tags + comment  +  location +"]";
 	}
