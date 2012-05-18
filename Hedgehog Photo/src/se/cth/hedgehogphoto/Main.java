@@ -33,10 +33,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		StartUpView start = new StartUpView();
-		Thread t = new Thread(start);
-		t.start();
+		Thread startUpViewT = new Thread(start);
+		startUpViewT.start();
 		try {
-			t.join();
+			startUpViewT.join();
 		} catch (InterruptedException e) {
 			Log.getLogger().log(Level.WARNING, "Interrupted", e);
 		}
@@ -52,6 +52,7 @@ public class Main {
 		
 		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
 		PluginLoader p = new PluginLoader(view, pluginRooDir);
+		//Thread pluginLoaderT = new Thread(p);
 		p.loadAllPlugins();
 		//File tagCloudDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin/TagCloud");
 		//p.loadPluginFromDirectory(tagCloudDir);

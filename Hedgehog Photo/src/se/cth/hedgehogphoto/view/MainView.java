@@ -18,6 +18,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLayer;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
@@ -40,7 +41,7 @@ public class MainView implements Observer {
 	private JFrame frame;
 	private JPanel photoViewPanel;
 	private	 JPanel leftPanelView;
-	private JPanel[] panelHolder = new JPanel[3];
+	private LoadingLayer[] layers = new LoadingLayer[3];
 	private JPanel topPanel;
 	private JButton btnShowHideName = new JButton("Show/Hide name");
 	private JButton btnShowHideTags = new JButton("Show/Hide tags");
@@ -104,9 +105,11 @@ public class MainView implements Observer {
 		frame.getContentPane().add(leftPanelView, BorderLayout.WEST);
 		leftPanelView.setLayout(new GridLayout(3, 0, 0, 0));
 
+		//Lays out the placeholder widgets
 		for(int i = 0; i < 3; i++) {
-			panelHolder[i] = new JPanel();
-			leftPanelView.add(panelHolder[i]);
+			layers[i] = new LoadingLayer(new JPanel());
+			leftPanelView.add(layers[i].getDecoratedPanel());	
+			layers[i].start();
 		}
 
 		JScrollPane photoView = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -148,21 +151,22 @@ public class MainView implements Observer {
 				topPanel.add(panel, BorderLayout.EAST);
 			} else {	
 				if(placement == PluginArea.LEFT_TOP){
-					panelHolder[0] = panel;
+					layers[0].stopAndRemove();
+					leftPanelView.remove(0);
+					leftPanelView.add(panel, 0);
+					
 				}
 
 				if(placement == PluginArea.LEFT_MIDDLE){
-					panelHolder[1] = panel;
+					layers[1].stopAndRemove();
+					leftPanelView.remove(1);
+					leftPanelView.add(panel, 1);
 				}
 
 				if(placement == PluginArea.LEFT_BOTTOM){
-					panelHolder[2] = panel;
-				}
-
-				leftPanelView.removeAll();
-
-				for(int i = 0; i < 3; i++){
-					leftPanelView.add(panelHolder[i]);
+					layers[2].stopAndRemove();
+					leftPanelView.remove(2);
+					leftPanelView.add(panel, 2);
 				}
 			}
 		} else {

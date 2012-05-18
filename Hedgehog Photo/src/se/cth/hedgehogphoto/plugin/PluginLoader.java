@@ -18,12 +18,22 @@ import se.cth.hedgehogphoto.view.MainView;
  * @author Barnabas Sapan
  */
 
-//TODO FIX GETVISIBLEFILES PARSER (ADD IT TO THE API.JAR)!!!
-
-public class PluginLoader{
+public class PluginLoader implements Runnable{
 	private MainView view;
 	private FileClassLoader classLoader;
 	private String pluginRootDir;
+	private boolean preLoad = false;
+	private List<Class<?>> loadedClasses = new LinkedList<Class<?>>();
+	
+	@Override
+	public void run(){
+		if(preLoad){
+			preLoad = true;
+			loadAllPlugins();
+		} else {
+			throw new NullPointerException();
+		}
+	}
 		
 	public PluginLoader(MainView view, File pluginRootDir){
 		this(view, pluginRootDir.getAbsolutePath());
@@ -38,6 +48,7 @@ public class PluginLoader{
 	public PluginLoader(MainView view, String pluginRootDir) {
 		this.view = view;
 		this.pluginRootDir = pluginRootDir;
+		this.preLoad = preLoad;
 		
 		try {		
 			File f = new File(pluginRootDir);
@@ -65,7 +76,6 @@ public class PluginLoader{
 	 * @param dir the absolute path of the directory to the plugin
 	 */
 	public void loadPluginFromDirectory(File dir){
-		List<Class<?>> loadedClasses = new LinkedList<Class<?>>();
 		List<File> files = Helper.getAllFilesInFolder(dir, new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
@@ -86,7 +96,16 @@ public class PluginLoader{
 				loadedClasses.add(c);
 			}	
 		}
-		Log.getLogger().log(Level.INFO, loadedClasses.toString());
+		Log.getLogger().log(Level.INFO, "Loaded classes: " + loadedClasses.toString());
+		
+		if(preLoad == false){
+			parseClasses(loadedClasses, Helper.getDefaultPluginParsers());
+		} else {
+			preLoad = false;
+		}
+	}
+	
+	public void parseClasses(){
 		parseClasses(loadedClasses, Helper.getDefaultPluginParsers());
 	}
 
