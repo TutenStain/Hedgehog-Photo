@@ -24,7 +24,7 @@ public class MapInitiator {
 	public void initialize() {
 		MapModel mapModel = new MapModel();
 		this.map = new MapView(mapModel);
-        MapController mapController = new MapController(map);
+        new MapController(map);
 	}
 	
 	@Panel(placement=PluginArea.LEFT_MIDDLE)

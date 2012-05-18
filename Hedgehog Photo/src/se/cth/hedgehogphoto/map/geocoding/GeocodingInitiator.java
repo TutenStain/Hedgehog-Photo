@@ -19,7 +19,7 @@ public class GeocodingInitiator {
 	
 	public GeocodingInitiator() {
 		GeoSearchPanel view = new GeoSearchPanel();
-		GeocodingController controller = new GeocodingController(view);
+		new GeocodingController(view);
 		
 		JFrame frame = new JFrame();
 		frame.setPreferredSize(new Dimension(400,600));
