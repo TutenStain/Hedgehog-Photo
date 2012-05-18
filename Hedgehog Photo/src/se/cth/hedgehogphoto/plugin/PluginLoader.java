@@ -22,21 +22,23 @@ public class PluginLoader implements Runnable{
 	private MainView view;
 	private FileClassLoader classLoader;
 	private String pluginRootDir;
-	private boolean preLoad = false;
+	private boolean threaded = false;
 	private List<Class<?>> loadedClasses = new LinkedList<Class<?>>();
+	
 	
 	@Override
 	public void run(){
-		if(preLoad){
-			preLoad = true;
-			loadAllPlugins();
+		if(threaded == true){
+			threaded = true;
+			this.loadAllPlugins();
+			this.parseClasses();
 		} else {
-			throw new NullPointerException();
+			throw new NotThreadedException();
 		}
 	}
 		
-	public PluginLoader(MainView view, File pluginRootDir){
-		this(view, pluginRootDir.getAbsolutePath());
+	public PluginLoader(MainView view, File pluginRootDir, boolean preLoad){
+		this(view, pluginRootDir.getAbsolutePath(), preLoad);
 	}
 	
 	/**
@@ -45,10 +47,10 @@ public class PluginLoader implements Runnable{
 	 * @param pluginFolderName the plugin folder name, the folder will be
 	 * created in the users home folder.
 	 */
-	public PluginLoader(MainView view, String pluginRootDir) {
+	public PluginLoader(MainView view, String pluginRootDir, boolean preLoad) {
 		this.view = view;
 		this.pluginRootDir = pluginRootDir;
-		this.preLoad = preLoad;
+		this.threaded = preLoad;
 		
 		try {		
 			File f = new File(pluginRootDir);
@@ -59,7 +61,7 @@ public class PluginLoader implements Runnable{
 			Helper.copyPluginsToFolder(new File(urls[0].getPath()));
 			classLoader = new FileClassLoader(urls);
 		} catch (MalformedURLException e) {
-			Log.getLogger().log(Level.SEVERE, "MalformedURLException", e.getMessage());
+			Log.getLogger().log(Level.SEVERE, "MalformedURLException", e);
 		}
 	}
 	
@@ -98,14 +100,19 @@ public class PluginLoader implements Runnable{
 		}
 		Log.getLogger().log(Level.INFO, "Loaded classes: " + loadedClasses.toString());
 		
-		if(preLoad == false){
+		if(threaded == false){
 			parseClasses(loadedClasses, Helper.getDefaultPluginParsers());
 		} else {
-			preLoad = false;
+			threaded = false;
 		}
 	}
 	
-	public void parseClasses(){
+	/**
+	 * Lazy method that just calls 
+	 * parseClasses(List<Class<?>> list, List<Parsable> parsableAnnotations)
+	 * with the appropriate parameters
+	 */
+	private void parseClasses(){
 		parseClasses(loadedClasses, Helper.getDefaultPluginParsers());
 	}
 

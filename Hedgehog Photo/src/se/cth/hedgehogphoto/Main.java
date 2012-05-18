@@ -51,21 +51,13 @@ public class Main {
 		new DefaultController(model, view);
 		
 		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
-		PluginLoader p = new PluginLoader(view, pluginRooDir);
-		//Thread pluginLoaderT = new Thread(p);
-		p.loadAllPlugins();
+		PluginLoader p = new PluginLoader(view, pluginRooDir, true);
+		Thread pluginLoaderT = new Thread(p);
+		pluginLoaderT.start();
+		//p.loadAllPlugins();
 		//File tagCloudDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin/TagCloud");
 		//p.loadPluginFromDirectory(tagCloudDir);
-		
-		//TagCloud
-		/*List<String> l = new ArrayList<String>();
-		l = new DatabaseHandler().getTags();
-		TagCloudModel tgm = new TagCloudModel();
-		TagCloudView tgv = new TagCloudView();
-		tgm.addObserver(tgv);
-		tgm.setTags(l);
-		view.addToLeftPanel(tgv);*/
-		
+				
 		//map
 		MapModel mapModel = new MapModel();
 		MapView map = new MapView(mapModel);

@@ -12,13 +12,12 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLayer;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
@@ -107,7 +106,9 @@ public class MainView implements Observer {
 
 		//Lays out the placeholder widgets
 		for(int i = 0; i < 3; i++) {
-			layers[i] = new LoadingLayer(new JPanel());
+			JPanel p = new JPanel();
+			p.add(new JLabel("Loading plugin..."));
+			layers[i] = new LoadingLayer(p);
 			leftPanelView.add(layers[i].getDecoratedPanel());	
 			layers[i].start();
 		}
