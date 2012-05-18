@@ -5,14 +5,15 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import se.cth.hedgehogphoto.database.PictureObject;
+import se.cth.hedgehogphoto.database.TagI;
 import se.cth.hedgehogphoto.database.TagObject;
 import se.cth.hedgehogphoto.view.ImageUtils;
 
@@ -22,9 +23,14 @@ import se.cth.hedgehogphoto.view.ImageUtils;
 
 @SuppressWarnings("serial")
 public class JPopupListItem extends JPanel {
+	private JLabel image;
 	private JTextArea comment;
 	private JTextArea tags;
 	private PictureObject picture;
+	
+	private final Dimension IMAGE_SIZE = new Dimension(65, 50);
+	private final Dimension COMMENT_AREA_SIZE = new Dimension(70, 50);
+	private final Dimension TAG_AREA_SIZE = new Dimension(60, 50);
 	
 	public JPopupListItem(PictureObject pic) {
 		this.picture = pic;
@@ -33,36 +39,29 @@ public class JPopupListItem extends JPanel {
 		flowLayout.setHgap(10);
 		setLayout(flowLayout);
 		
-		JLabel image = new JLabel();
-		image.setMinimumSize(new Dimension(65, 50));
-		image.setMaximumSize(new Dimension(65, 50));
-		image.setPreferredSize(new Dimension(65, 50));
+		this.image = new JLabel();
+		this.image.setMinimumSize(this.IMAGE_SIZE);
+		this.image.setMaximumSize(this.IMAGE_SIZE);
+		this.image.setPreferredSize(this.IMAGE_SIZE);
+		add(this.image);
 		
-		BufferedImage bi = ImageUtils.resize(new ImageIcon(pic.getPath()).getImage(), 65, 50);
-		image.setIcon(new ImageIcon(bi));
-		add(image);
-
-		StringBuilder sb = new StringBuilder("");
-		for(TagObject t : pic.getTags()){
-			sb.append(t.getTag());
-			sb.append(' ');
-		}
-		
-		this.tags = new JTextArea(sb.toString());
+		this.tags = new JTextArea();
 		initJTextArea(this.tags);
 		this.tags.setFont(new Font("Serif", Font.BOLD, 13));
-		this.tags.setMinimumSize(new Dimension(60, 50));
-		this.tags.setMaximumSize(new Dimension(60, 50));
-		this.tags.setPreferredSize(new Dimension(60, 50));
+		this.tags.setMinimumSize(this.TAG_AREA_SIZE);
+		this.tags.setMaximumSize(this.TAG_AREA_SIZE);
+		this.tags.setPreferredSize(this.TAG_AREA_SIZE);
 		add(this.tags);
 		
-		this.comment = new JTextArea(pic.getComment().getComment());
+		this.comment = new JTextArea();
 	    initJTextArea(this.comment);
 		this.comment.setFont(new Font("Serif", Font.PLAIN, 13));
-		this.comment.setMinimumSize(new Dimension(70, 50));
-		this.comment.setMaximumSize(new Dimension(70, 50));
-		this.comment.setPreferredSize(new Dimension(70, 50));
+		this.comment.setMinimumSize(this.COMMENT_AREA_SIZE);
+		this.comment.setMaximumSize(this.COMMENT_AREA_SIZE);
+		this.comment.setPreferredSize(this.COMMENT_AREA_SIZE);
 		add(this.comment);
+		
+		updateGUI();
 	}
 	
 	/** Mutates the component that gets passed in to this method. */
@@ -82,6 +81,20 @@ public class JPopupListItem extends JPanel {
 	
 	public PictureObject getPicture() {
 		return this.picture;
+	}
+	
+	public void updateGUI() {
+		BufferedImage bi = ImageUtils.resize(new ImageIcon(getPicture().getPath()).getImage(), this.IMAGE_SIZE);
+		this.image.setIcon(new ImageIcon(bi));
+		this.comment.setText(getPicture().getComment().getComment());
+		
+		StringBuilder sb = new StringBuilder("");
+		List<? extends TagI> tagList = getPicture().getTags();
+		for(TagObject tag : tagList){
+			sb.append(tag.getTag());
+			sb.append(' ');
+		}
+		this.tags.setText(sb.toString());
 	}
 	
 	@Override
