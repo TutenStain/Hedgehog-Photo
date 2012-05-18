@@ -5,24 +5,22 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import se.cth.hedgehogphoto.database.DatabaseAccess;
-
 /**
  * @author Barnabas Sapan
  */
 public class TagComponentController implements MouseListener{
+	private TagCloudModel model;
 	private TagCloudView view;
 	private TagComponent tag;
-	private DatabaseAccess db;
 	private Font oldFont;
 	private Cursor oldCursor;
 
 	public TagComponentController(){}
 	
-	public TagComponentController(TagCloudView _view, TagComponent _tag, DatabaseAccess _db){
-		view = _view;
-		tag = _tag;
-		db = _db;
+	public TagComponentController(TagCloudModel model, TagCloudView view, TagComponent tag){
+		this.model = model;
+		this.view = view;
+		this.tag = tag;
 	}
 	
 	@Override
@@ -50,7 +48,6 @@ public class TagComponentController implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("Clicked on: " + tag.getText());
-		//Files.getInstance().setPictureList((DatabaseHandler.searchPicturesfromTags(tag.getText())));
-		db.updateSearchPicturesfromTags(tag.getText());
+		model.updateSearchPicturesfromTags(tag.getText());
 	}
 }

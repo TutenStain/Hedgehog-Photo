@@ -151,7 +151,6 @@ public class PhotoPanel extends JPanel {
 	public void setTags(List<? extends TagObject> taggs){
 		String output = "";
 		for(TagObject t : taggs){
-			System.out.print(t);
 			output += t.getTag() + ";";
 		}
 		tags.setText(output);

@@ -17,7 +17,6 @@ public class MainModel extends Observable {
 	}
 	
 	public List<PictureObject> getImages() {
-		System.out.println("IMAGES SIZE: " + this.images.size());
 		return this.images;
 	}
 	

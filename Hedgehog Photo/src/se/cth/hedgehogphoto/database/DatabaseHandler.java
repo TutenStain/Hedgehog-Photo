@@ -67,7 +67,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	public List<String> getTags(){
 		List<Tag> tags = jtd.getAll();
 		List<String> taggs = new ArrayList<String>();
-		for(TagObject t:tags){
+		for(TagObject t : tags){
 			taggs.add(t.getTag());
 		}
 		return taggs;
@@ -149,11 +149,13 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	public List<? extends PictureObject> searchPicturesfromTags(String search){
 		return jpd.searchfromTags(search);
 	}
-	public  void updateSearchPicturefromsLocations(String search){
+	
+	public void updateSearchPicturefromsLocations(String search){
 		pictureList.clear();
 		pictureList.addAll(searchPicturefromsLocations(search));
 		files.setPictureList(pictureList);
 	}
+	
 	public List<? extends PictureI> searchPicturefromsLocations(String search){
 		return jpd.searchfromLocations(search);
 	}
@@ -180,10 +182,10 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	}
-	public List<Picture> getAllPictures(){
+	public List<? extends PictureI> getAllPictures(){
 		return jpd.getAll();
-
 	}
+	
 	public void updateAllAlbums(){
 		albumList.clear();
 		albumList.addAll(getAllAlbums());
