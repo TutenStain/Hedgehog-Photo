@@ -145,7 +145,7 @@ public class MainView implements Observer {
 	public List<PhotoPanel> getPhotoPanels(){
 		return this.photoPanels;
 	}
-	
+
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
 			if(placement == PluginArea.SEARCH){
@@ -220,9 +220,9 @@ public class MainView implements Observer {
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanels.get(i).setIcon(icon2);
 				photoPanels.get(i).getIcon().setImage(image2);
-				frame.repaint();
-				frame.revalidate();
 			}
 		}
+		
+		frame.revalidate();
 	}
 }

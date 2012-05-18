@@ -46,6 +46,8 @@ public class PluginLoader implements Runnable{
 	 * @param view the view the plugins will get placed onto
 	 * @param pluginFolderName the plugin folder name, the folder will be
 	 * created in the users home folder.
+	 * @param preLoad true if this instance will be put in a separate thread
+	 * false if not.
 	 */
 	public PluginLoader(MainView view, String pluginRootDir, boolean preLoad) {
 		this.view = view;
@@ -84,8 +86,6 @@ public class PluginLoader implements Runnable{
 				return (name.toString().endsWith(".java"));// || name.toString().endsWith(".class"));
 			}
 		});
-		
-		//Helper.removeDuplicateClasses(files);
 		
 		//Loop trough all files and load the classes.
 		//Only add classes the the loadedClasses list if they were loaded (!=null)

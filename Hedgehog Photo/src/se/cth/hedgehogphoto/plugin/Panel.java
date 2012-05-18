@@ -14,8 +14,8 @@ import se.cth.hedgehogphoto.view.PluginArea;
 /**
  * The method containing this annotation will be called
  * to get the view representation of the plugin.
- * This method will get called every time the
- * system feels it will want to refresh the view of the plugin.
+ * This method will get called once to get the panel and 
+ * attach it to the main view.
  * @param PluginArea the placement the placement of this plugin.
  * @return JPanel the view that will get added to program
  */ 

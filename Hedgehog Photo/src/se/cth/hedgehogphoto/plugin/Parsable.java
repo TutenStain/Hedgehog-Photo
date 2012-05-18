@@ -14,7 +14,7 @@ public interface Parsable {
 	 * @param view the view the plugins should be added to
 	 * @return Object the resulting object after invoking methods defined by this function, 
 	 * probably a (new)instance of the class if the class had to be instantiated, or null if
-	 * the class were ontouched.
+	 * the class were untouched.
 	 */
 	public Object parseClass(Class<?> c, Object o, MainView view);
 }
