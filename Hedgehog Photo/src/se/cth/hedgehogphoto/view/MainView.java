@@ -42,11 +42,11 @@ public class MainView implements Observer {
 	private	 JPanel leftPanelView;
 	private LoadingLayer[] layers = new LoadingLayer[3];
 	private JPanel topPanel;
-	private JButton btnShowHideName = new JButton("Show/Hide name");
-	private JButton btnShowHideTags = new JButton("Show/Hide tags");
-	private JButton btnShowHideLocation = new JButton("Show/Hide location");
-	private JButton btnshowHideComments = new JButton("Show/Hide comments");
-	private JSlider slider = new JSlider(50, 200);
+	final private JButton btnShowHideName = new JButton("Show/Hide name");
+	final private JButton btnShowHideTags = new JButton("Show/Hide tags");
+	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
+	final private JButton btnshowHideComments = new JButton("Show/Hide comments");
+	final private JSlider slider = new JSlider(50, 200);
 	//TODO this list probably needs to be removed, not enough MVC
 	private List<PhotoPanel> photoPanels;
 

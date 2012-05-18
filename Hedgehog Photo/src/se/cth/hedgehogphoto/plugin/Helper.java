@@ -22,14 +22,15 @@ import se.cth.hedgehogphoto.log.Log;
  */
 
 public final class Helper {
-
+	private Helper(){
+	}
 	/**
 	 * Lists all files including the ones in subfolders
 	 * @param dir the root folder to list files from
 	 * @param filter the filter to apply when searching for files
 	 * @return all the files that match the filter in the directory and subfolders to it
 	 */
-	public static List<File> getAllFilesInFolder(File dir, FilenameFilter filter) {
+	public static List<File> getAllFilesInFolder(File dir, final FilenameFilter filter) {
 	    List<File> filesToReturn = new ArrayList<File>();
 	    for (File f : dir.listFiles()) {
 	        if (f.isDirectory()) {
@@ -47,7 +48,7 @@ public final class Helper {
 	 * @param s the string to strip the dot and forward-slash from
 	 * @return the stripped String
 	 */
-	public static String stripDotAndSlashFromString(String s){
+	public static String stripDotAndSlashFromString(final String s){
 		int dividerIndex = s.lastIndexOf(System.getProperty("file.separator")) + 1;
 		int dotPath = s.lastIndexOf(".");
 		String finalString = s.substring(dividerIndex, dotPath);
@@ -108,7 +109,7 @@ public final class Helper {
 	 * @param subFolders the subfolders to search the file in
 	 * @return a File object with the absolute path with filestub and suffic appended.
 	 */
-	public static File findFileInSubfolder(File f, String filestub, String suffix, URL[] subFolders){
+	public static File findFileInSubfolder(File f, final String filestub, String suffix, URL[] subFolders){
 		if(f.exists() == false){
 			for(URL u : subFolders){
 				f = new File(u.getPath() + filestub + suffix);
@@ -143,7 +144,7 @@ public final class Helper {
 	public static boolean copyPluginsToFolder(final File folder){
 		if(folder.isDirectory()){
 			final Path target = Paths.get(folder.getAbsolutePath());
-			final Path source =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "plugins");;
+			final Path source =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "plugins");
 			try {
 				Files.walkFileTree(source, new SimpleFileVisitor<Path>() {
 					@Override

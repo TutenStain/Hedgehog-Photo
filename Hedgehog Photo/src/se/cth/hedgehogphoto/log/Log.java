@@ -25,12 +25,8 @@ public class Log {
 			
 			logger.setLevel(Level.ALL);
 			logger.setUseParentHandlers(false);
-			
-			return logger;
 		}
-		
-		else{
-			return logger;
-		}
-	}	
-}
+	
+		return logger;
+	}
+}	

@@ -66,14 +66,14 @@ public class FileClassLoader extends URLClassLoader {
 	 * excluding .java or .class at the end.
 	 */
 	@Override
-	public Class<?> loadClass(String file){
+	public Class<?> loadClass(final String file){
 		Class<?> c = null;
 		
 		//Replace packages to a proper folderstructure
-		String fileStub = file.replace( '.', '/' );
+		final String fileStub = file.replace( '.', '/' );
 
-		String javaFilenamePath = pluginRootDirectory.getAbsolutePath() + fileStub + ".java";
-		String classFilenamePath = pluginRootDirectory.getAbsolutePath() + fileStub + ".class";
+		final String javaFilenamePath = pluginRootDirectory.getAbsolutePath() + fileStub + ".java";
+		final String classFilenamePath = pluginRootDirectory.getAbsolutePath() + fileStub + ".class";
 		
 		File javaFile = new File(javaFilenamePath);
 		File classFile = new File(classFilenamePath);
@@ -86,7 +86,7 @@ public class FileClassLoader extends URLClassLoader {
 			try {
 				Log.getLogger().log(Level.INFO, ".class is outdated/nonexistent, compilation needed...");
 
-				if(compile(javaFile) == true){
+				if(compile(javaFile)){
 					Log.getLogger().log(Level.INFO, "Compilation succesfull!");
 				} else {
 					Log.getLogger().log(Level.SEVERE, "Compilation failed!");
@@ -120,11 +120,11 @@ public class FileClassLoader extends URLClassLoader {
 	 * to compilation errors or if JDK is not installed on the system
 	 * @throws IOException
 	 */
-	private boolean compile(File fileToCompile) throws IOException {
+	private boolean compile(final File fileToCompile) throws IOException {
 		Log.getLogger().log(Level.INFO, "Compiling " + fileToCompile.getAbsolutePath() + "...");
 
 		//Copy our API to plugin dir
-		Path target = Paths.get(pluginRootDirectory.getAbsolutePath() + System.getProperty("file.separator")  + "API.jar");
+		final Path target = Paths.get(pluginRootDirectory.getAbsolutePath() + System.getProperty("file.separator")  + "API.jar");
 		if(Files.exists(target) == false) {
 			Log.getLogger().log(Level.INFO, "Copying API.jar to: " + pluginRootDirectory.getAbsolutePath() + "...");
 			Path source = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "API.jar");

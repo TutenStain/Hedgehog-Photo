@@ -4,7 +4,7 @@ package se.cth.hedgehogphoto.database;
  * 
  * @author Julia Gustafsson
  */
-public class DaoFactory {
+public final class DaoFactory {
 
 	private JpaAlbumDao jad;
 	private JpaCommentDao jcd;

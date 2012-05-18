@@ -45,7 +45,7 @@ public class ImageObject implements FileObject {
 		System.out.println("artist: " + artist);
 		System.out.println("comment: " + comment);
 		System.out.println("tags: " + tags);
-		System.out.println("location: " + location.toString());
+		System.out.println("location: " + location);
 	}
 
 	public String getAlbumName() {

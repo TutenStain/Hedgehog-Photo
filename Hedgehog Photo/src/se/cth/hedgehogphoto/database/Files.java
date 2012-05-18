@@ -8,7 +8,7 @@ import se.cth.hedgehogphoto.log.Log;
 
 
 
-public class Files extends Observable{
+public final class Files extends Observable{
 	private static Files file;
 	private List<PictureObject> pictureList = new ArrayList<PictureObject>();
 	private List<AlbumObject> albumList = new ArrayList<AlbumObject>();
