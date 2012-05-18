@@ -5,10 +5,15 @@ package se.cth.hedgehogphoto.database;
 
 
 
+import java.awt.Point;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.cth.hedgehogphoto.map.geocoding.model.URLCreator;
+import se.cth.hedgehogphoto.map.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.objects.FileObject;
+import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
 public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao {
 	private static JpaAlbumDao jad = new JpaAlbumDao();
@@ -259,6 +264,8 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				beginTransaction();
 				loc= new Location();
 				loc.setLocation(location);
+				URL url = URLCreator.getInstance().queryGeocodingURL(location);
+				List<LocationObjectOther> lo = XMLParser.getInstance().processGeocodingSearch(url);
 				List<Picture> pictures = new ArrayList<Picture>();
 				pictures.add(picture);
 				loc.setPictures(pictures);
@@ -651,8 +658,8 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		if(picture != null){
 			if(!(f.getLocation().equals(""))){
 				try{
-					Location location = jld.findById(f.getLocation().toLowerCase());
-					if(location.getLocation().equals(f.getLocation().toLowerCase())){
+					Location location = jld.findById(f.getLocation());
+					if(location.getLocation().equals(f.getLocation())){
 						beginTransaction();
 						location.setLatitude((f.getLocationObject().getLatitude()));
 						location.setLongitude(f.getLocationObject().getLongitude());
@@ -666,7 +673,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 
 					location.setLatitude((f.getLocationObject().getLatitude()));
 					location.setLongitude(f.getLocationObject().getLongitude());
-					location.setLocation(f.getLocation().toLowerCase());
+					location.setLocation(f.getLocation());
 					List<Picture> pics = new ArrayList<Picture>();
 					pics.add(picture);
 					location.setPictures(pics);
@@ -675,6 +682,23 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					commitTransaction();
 
 				}
+			}else if(f.getLocationObject().getLatitude()!=100 && f.getLocationObject().getLongitude() != 200 ){
+				//queryReverseGeocodingURL(Point.Double coords) URL creator
+				Point.Double p= new Point.Double();
+				p.setLocation(f.getLocationObject().getLatitude(), f.getLocationObject().getLongitude());
+				URL url =URLCreator.getInstance().queryReverseGeocodingURL(p);
+				LocationObjectOther lo = XMLParser.getInstance().processReverseGeocodingSearch(url);
+				beginTransaction();
+				Location location = new Location();
+				location.setLatitude((f.getLocationObject().getLatitude()));
+				location.setLongitude(f.getLocationObject().getLongitude());
+				location.setLocation(lo.getLocation());
+				List<Picture> pics = new ArrayList<Picture>();
+				pics.add(picture);
+				location.setPictures(pics);
+				picture.setLocation(location);
+				entityManager.persist(location);
+				commitTransaction();
 			}
 		}
 	}
