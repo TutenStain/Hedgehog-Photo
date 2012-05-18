@@ -44,8 +44,6 @@ public class TagCloudModel extends Observable implements Observer {
 				int occurrences = Collections.frequency(tags, o);
 				map.put(o, occurrences);
 			}
-			System.out.println("MAP: " + map);
-			System.out.println("TAGS: " + tags);
 			
 			setChanged();
 			notifyObservers(this);
