@@ -3,7 +3,7 @@ package se.cth.hedgehogphoto.search.view;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -22,7 +22,7 @@ import se.cth.hedgehogphoto.view.ImageUtils;
  */
 
 @SuppressWarnings("serial")
-public class JPopupListItem extends JPanel {
+public class JPopupListItem extends JPanel implements JPopupItemI {
 	private JLabel image;
 	private JTextArea comment;
 	private JTextArea tags;
@@ -98,9 +98,9 @@ public class JPopupListItem extends JPanel {
 	}
 	
 	@Override
-	public void addMouseListener(MouseListener l){
-		super.addMouseListener(l);
-		this.tags.addMouseListener(l);
-		this.comment.addMouseListener(l);
+	public void addMouseListener(MouseAdapter listener){
+		super.addMouseListener(listener);
+		this.tags.addMouseListener(listener);
+		this.comment.addMouseListener(listener);
 	}
 }

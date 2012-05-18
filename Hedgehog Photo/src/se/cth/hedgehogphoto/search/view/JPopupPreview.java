@@ -33,6 +33,7 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 	private JPanel panel;
 	private JTextField textField;
 	
+	private final NotificationListItem messageItem = new NotificationListItem();
 	private final JPopupListItem [] listItems;
 	private final int MAX_LIST_ITEMS = 5;
 
@@ -48,32 +49,32 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 	public void setTextField(JTextField t){
 		this.textField = t;
 	}
+	
+	public void updateGUI() {
+		
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		final SearchModel model = (SearchModel)arg;
 		System.out.println("UPDATE @ SEARCH_PREVIEW_VIEW: " + model.getSearchQueryText());
 		show(this.textField, -50, this.textField.getHeight()); //-50 to count for the offset of the textbox
-		List<PictureObject> fo = model.getSearchObjects();
-		Iterator<PictureObject> itr = fo.iterator();
+		List<PictureObject> pictures = model.getSearchObjects();
+		Iterator<PictureObject> itr = pictures.iterator();
 		this.panel.removeAll();
 
 		//Adds the search results to the popup, if result resulted in no matches, add
 		//a no result label.
-		if(fo.isEmpty() == false){
-			//TODO Change this value to reflect the max size of the popup.
-			//Adds "more result for" text to the popup
-			if(fo.size() > 2){
-				JPanel p = new JPanel();
-				p.setLayout(new FlowLayout());
-				p.add(new JLabel("More results for '" + model.getSearchQueryText() + "'"));
-				p.addMouseListener(new MouseAdapter() {     
+		if (!pictures.isEmpty()) {
+			if (pictures.size() > 2) {
+				this.messageItem.setMessage("More results for \"" + model.getSearchQueryText() + "\"");
+				this.messageItem.addMouseListener(new MouseAdapter() {     
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						Files.getInstance().setPictureList(model.getSearchObjects());
 					}
 				});
-				this.panel.add(p);
+				this.panel.add(this.messageItem);
 				this.panel.add(new JSeparator());
 			}
 
