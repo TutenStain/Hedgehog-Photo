@@ -34,7 +34,6 @@ public class Metadata {
 		IImageMetadata metadata = null;
 		try {
 			metadata = Sanselan.getMetadata(file);
-			/* TODO: Add exception handling. */
 		} catch (ImageReadException e) {
 			Log.getLogger().log(Level.WARNING, "Failed to read metadata from file " + file, e);
 		} 
@@ -47,22 +46,23 @@ public class Metadata {
 	
 	public static ImageObject getImageObject(IImageMetadata imageMetadata) {
 		ImageObject imageObject = new ImageObject();
-		if (imageMetadata != null) {
-			String metadata = imageMetadata.toString(); 
-			
-			/* New Feature in java 1.7 - closes stream automatically */
-			try (BufferedReader br = new BufferedReader( new StringReader(metadata) )) {
-				String line;
-				while((line = br.readLine()) != null) {		
-					if (containsTargetMetadata(line)) {
-						setPropertyFromString(imageObject, line);
-					}
-				}
-			} catch (IOException io) {
-				
-			} 
-		}
+		if (imageMetadata == null) 
+			return imageObject;
+		
+		String metadata = imageMetadata.toString(); 
 
+		/* New Feature in java 1.7 - closes stream automatically */
+		try (BufferedReader br = new BufferedReader( new StringReader(metadata) )) {
+			String line;
+			while((line = br.readLine()) != null) {		
+				if (containsTargetMetadata(line)) {
+					setPropertyFromString(imageObject, line);
+				}
+			}
+		} catch (IOException io) {
+
+		} 
+		
 		return imageObject;
 	}
 	
