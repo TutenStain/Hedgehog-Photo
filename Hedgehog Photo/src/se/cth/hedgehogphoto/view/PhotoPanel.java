@@ -20,10 +20,10 @@ import se.cth.hedgehogphoto.objects.FileObject;
 @SuppressWarnings("serial")
 public class PhotoPanel extends JPanel {
 
-	private JTextField photoName = new JTextField();
-	private JTextField comment = new JTextField();
-	private JTextField tags = new JTextField();
-	private JTextField location = new JTextField();
+	private JTextField nameTextField = new JTextField();
+	private JTextField commentTextField = new JTextField();
+	private JTextField tagsTextField = new JTextField();
+	private JTextField locationTextField = new JTextField();
 	private JLabel commentLabel = new JLabel("Comments");
 	private JLabel tagsLabel = new JLabel("Tags:");
 	private JLabel locationLabel = new JLabel("Location:");
@@ -36,28 +36,28 @@ public class PhotoPanel extends JPanel {
 	}
 
 	public PhotoPanel(String path) {
-		photoName.setBackground(Color.LIGHT_GRAY);
+		nameTextField.setBackground(Color.LIGHT_GRAY);
 		setName(DaoFactory.getInstance().getJpaPictureDao().findById(path).getName());
 		PhotoPanelController ppc = new PhotoPanelController(path);
-		comment.addFocusListener(new PhotoPanelFocusController(path,"comment"));
-		location.addFocusListener(new PhotoPanelFocusController(path,"location"));
-		photoName.addFocusListener(new PhotoPanelFocusController(path,"name"));
-		tags.addFocusListener(new PhotoPanelFocusController(path,"tags"));
-		comment.addActionListener(ppc);
-		tags.addActionListener(ppc);
-		location.addActionListener(ppc);
-		photoName.addActionListener(ppc);
-		photoName.setActionCommand("name");
-		comment.setActionCommand("comment");
-		tags.setActionCommand("tags");
-		location.setActionCommand("location");
-		comment.setPreferredSize(new Dimension(100,20));
+		commentTextField.addFocusListener(new PhotoPanelFocusController(path,"comment"));
+		locationTextField.addFocusListener(new PhotoPanelFocusController(path,"location"));
+		nameTextField.addFocusListener(new PhotoPanelFocusController(path,"name"));
+		tagsTextField.addFocusListener(new PhotoPanelFocusController(path,"tags"));
+		commentTextField.addActionListener(ppc);
+		tagsTextField.addActionListener(ppc);
+		locationTextField.addActionListener(ppc);
+		nameTextField.addActionListener(ppc);
+		nameTextField.setActionCommand("name");
+		commentTextField.setActionCommand("comment");
+		tagsTextField.setActionCommand("tags");
+		locationTextField.setActionCommand("location");
+		commentTextField.setPreferredSize(new Dimension(100,20));
 		commentLabel.setPreferredSize(new Dimension(100,10));
-		location.setPreferredSize(new Dimension(100,20));
+		locationTextField.setPreferredSize(new Dimension(100,20));
 		locationLabel.setPreferredSize(new Dimension(100,10));
-		tags.setPreferredSize(new Dimension(100,20));
+		tagsTextField.setPreferredSize(new Dimension(100,20));
 		tagsLabel.setPreferredSize(new Dimension(100,10));
-		photoName.setPreferredSize(new Dimension(100,20));
+		nameTextField.setPreferredSize(new Dimension(100,20));
 		photoNameLabel.setPreferredSize(new Dimension(50,10));
 
 		setLayout(new BorderLayout(0, 0));
@@ -81,8 +81,8 @@ public class PhotoPanel extends JPanel {
 		photoNameBag .gridy =1;
 		photoNameBag.gridheight =1;
 		photoNameBag.gridwidth = 1;
-		gBig.setConstraints(photoName , photoNameBag);
-		add(photoName);
+		gBig.setConstraints(nameTextField , photoNameBag);
+		add(nameTextField);
 
 		GridBagConstraints con = new GridBagConstraints();
 		con.gridx = 1;
@@ -95,14 +95,14 @@ public class PhotoPanel extends JPanel {
 		gBig.setConstraints(iconLabel, con);
 		add(iconLabel);
 
-		location.setBackground(Color.LIGHT_GRAY);
+		locationTextField.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints loc = new GridBagConstraints();
 		loc.gridx =2;
 		loc.gridy =6;
 		loc.gridheight =1;
 		loc.gridwidth = 1;
-		gBig.setConstraints(location, loc);
-		add(location);
+		gBig.setConstraints(locationTextField, loc);
+		add(locationTextField);
 		GridBagConstraints locLabel = new GridBagConstraints();
 		locLabel.gridx =1;
 		locLabel.gridy =6;
@@ -116,13 +116,13 @@ public class PhotoPanel extends JPanel {
 		comLabel.gridy =3;
 		gBig.setConstraints(commentLabel, comLabel);
 		add(commentLabel);
-		comment.setBackground(Color.LIGHT_GRAY);
+		commentTextField.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints com = new GridBagConstraints();
 		com.gridx = 3;
 		com.gridy = 4;
 
-		gBig.setConstraints(comment, com);
-		add(comment);
+		gBig.setConstraints(commentTextField, com);
+		add(commentTextField);
 
 		GridBagConstraints tagLabel = new GridBagConstraints();
 		tagLabel.gridx =1;
@@ -133,15 +133,15 @@ public class PhotoPanel extends JPanel {
 		add(tagsLabel);
 
 		int x= 0;
-		tags.setBackground(Color.LIGHT_GRAY);
+		tagsTextField.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints tag = new GridBagConstraints();
 		tag.gridx = x + 2;
 		tag.gridy = 5;
 		tag.gridheight =1;
 		tag.gridwidth = 1;
 
-		gBig.setConstraints(tags,tag);
-		add(tags);
+		gBig.setConstraints(tagsTextField,tag);
+		add(tagsTextField);
 		PhotoPanelMouseController ppmc = new PhotoPanelMouseController(this);
 	}
 	
@@ -150,7 +150,7 @@ public class PhotoPanel extends JPanel {
 	}
 	
 	public void setName(String name){
-		this.photoName.setText(name);
+		this.nameTextField.setText(name);
 
 	}
 	
@@ -159,15 +159,15 @@ public class PhotoPanel extends JPanel {
 		for(TagObject t : taggs){
 			output += t.getTag() + ";";
 		}
-		tags.setText(output);
+		tagsTextField.setText(output);
 	}
 
 	public void setLocation(String location){
-		this.location.setText(location);
+		this.locationTextField.setText(location);
 	}
 
 	public void setComment(String comment){
-		this.comment.setText(comment);
+		this.commentTextField.setText(comment);
 	}
 
 	public ImageIcon getIcon(){
@@ -179,38 +179,38 @@ public class PhotoPanel extends JPanel {
 	}
 
 	public void displayComments(boolean b){
-		this.comment.setVisible(b);
+		this.commentTextField.setVisible(b);
 		this.commentLabel.setVisible(b);
 	}
 
 	public boolean isVisibleComments(){
-		return this.comment.isVisible();
+		return this.commentTextField.isVisible();
 	}
 
 	public void displayTags(boolean b){
-		this.tags.setVisible(b);
+		this.tagsTextField.setVisible(b);
 		this.tagsLabel.setVisible(b);
 	}
 
 	public boolean isVisibleTags(){
-		return this.tags.isVisible();
+		return this.tagsTextField.isVisible();
 	}
 
 	public void displayLocation(boolean b){
-		this.location.setVisible(b);
+		this.locationTextField.setVisible(b);
 		this.locationLabel.setVisible(b);
 	}
 
 	public boolean isVisibleLocation(){
-		return this.location.isVisible();
+		return this.locationTextField.isVisible();
 	}
 
 	public void displayPhotoName(boolean b){
-		this.photoName.setVisible(b);
+		this.nameTextField.setVisible(b);
 		this.photoNameLabel.setVisible(b);
 	}
 
 	public boolean isVisiblePhotoName(){
-		return this.photoName.isVisible();
+		return this.nameTextField.isVisible();
 	}
 }
