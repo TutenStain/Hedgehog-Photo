@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
+import se.cth.hedgehogphoto.search.model.SearchConstants;
 import se.cth.hedgehogphoto.search.model.SearchModel;
 
 /**
@@ -28,6 +29,7 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 	 *  instead of adding directly to a JPopup to prevent some rendering issues. */
 	private JPanel panel;
 	private JTextField textField;
+	private SearchModel model;
 	
 	private final NotificationListItem messageItem = new NotificationListItem();
 	private final JPopupListItem [] listItems;
@@ -35,10 +37,26 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 
 	public JPopupPreview(){
 		this.listItems = new JPopupListItem[this.MAX_LIST_ITEMS];
+		for (int index = 0; index < this.MAX_LIST_ITEMS; index++) {
+			this.listItems[index] = new JPopupListItem();
+		}
+		
 		this.panel = new JPanel();
 		this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.PAGE_AXIS));
 		add(this.panel);
 		setFocusable(false);
+	}
+	
+	/**
+	 * Adds the same listener to all the PopupPreview's
+	 * items.
+	 * @param listener the PopupItem-listener
+	 */
+	public void addMouseListener(MouseAdapter listener) {
+		this.messageItem.addMouseListener(listener);
+		for (JPopupListItem item : listItems) {
+			item.addMouseListener(listener);
+		}
 	}
 
 	@Override
@@ -46,16 +64,29 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 		this.textField = t;
 	}
 	
-	public void updateGUI() {
+	public void setListItems(List<PictureObject> pictures) {
+		this.messageItem.setPictures(pictures);
 		
+		for (int index = 0; index < this.MAX_LIST_ITEMS; index++) {
+			if (pictures.size() > index)
+				this.listItems[index].setPicture(pictures.get(index));
+			else
+				this.listItems[index].setPicture(null);
+		}
+	}
+	
+	public void setModel(SearchModel model) {
+		this.model = model;
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		final SearchModel model = (SearchModel)arg;
-		System.out.println("UPDATE @ SEARCH_PREVIEW_VIEW: " + model.getSearchQueryText());
+		if (arg instanceof SearchModel) {
+			this.model = (SearchModel) arg;
+		}
 		show(this.textField, -50, this.textField.getHeight()); //-50 to count for the offset of the textbox
-		List<PictureObject> pictures = model.getSearchObjects();
+		List<PictureObject> pictures = this.model.getPictures();
+		setListItems(pictures);
 		Iterator<PictureObject> itr = pictures.iterator();
 		this.panel.removeAll();
 
@@ -63,29 +94,35 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 		//a no result label.
 		if (!pictures.isEmpty()) {
 			if (pictures.size() > 2) {
-				this.messageItem.setMessage("More results for \"" + model.getSearchQueryText() + "\"");
-				this.messageItem.addMouseListener(new MouseAdapter() {     
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						Files.getInstance().setPictureList(model.getSearchObjects());
-					}
-				});
+				this.messageItem.setMessage(SearchConstants.SEE_MORE);
 				this.panel.add(this.messageItem);
 				this.panel.add(new JSeparator());
 			}
 
-			int i = 0;
-			while(itr.hasNext() && i < 5){
-				PictureObject pic = itr.next();
-				JPopupListItem item = new JPopupListItem(pic);
-				this.panel.add(item);
-				i++;	
+			int nbrOfItems = 0;
+			for (JPopupListItem item : listItems) {
+				if (item.hasPicture()) {
+					this.panel.add(item);
+					nbrOfItems++;
+				}
 			}
+//			while(itr.hasNext() && index < this.MAX_LIST_ITEMS){
+//				PictureObject pic = itr.next();
+//				this.listItems[index].setPicture(pic);
+//				this.panel.add(this.listItems[index]);
+//				index++;	
+//			}
+//			
+//			for ( ; index < this.MAX_LIST_ITEMS ; index++) {
+//				this.listItems[index].setPicture(null);
+//			}
+			
+			
 
-			setPopupSize(250, (i * 70));
+			setPopupSize(250, (nbrOfItems * 70));
 		} else {
 			this.messageItem.setBackground(Color.GRAY);
-			this.messageItem.setMessage("No results for '" + model.getSearchQueryText() + "'. Try again!");
+			this.messageItem.setMessage(SearchConstants.NO_ITEMS);
 			this.panel.add(this.messageItem);
 			setPopupSize(250, 40);
 		}

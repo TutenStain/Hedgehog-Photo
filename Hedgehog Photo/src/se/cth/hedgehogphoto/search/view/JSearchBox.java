@@ -4,18 +4,17 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
-import java.util.List;
+import java.awt.event.KeyAdapter;
+import java.awt.event.MouseAdapter;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
 
-import se.cth.hedgehogphoto.database.Files;
-import se.cth.hedgehogphoto.database.PictureObject;
+import se.cth.hedgehogphoto.search.model.SearchConstants;
 import se.cth.hedgehogphoto.search.model.SearchModel;
 
 /**
@@ -24,27 +23,39 @@ import se.cth.hedgehogphoto.search.model.SearchModel;
 
 @SuppressWarnings("serial")
 public class JSearchBox extends JPanel implements Observer{
-	private final String searchButtonText = "Search";
-	private final String placeHolderText = "Search...";
 	private Dimension searchBoxSize = new Dimension(100, 30);
 	private Dimension searchButtonSize = new Dimension(100, 30);
 	private JTextField searchBox;
 	private JButton searchButton;
 	
 	private JPopupPreview preview;
+	private SearchModel model;
 
-	public JSearchBox(JPopupPreview popup){
+	public JSearchBox(SearchModel model, JPopupPreview popup){
 		setLayout(new FlowLayout());
-		this.searchButton = new JButton(this.searchButtonText);
+		this.searchButton = new JButton(SearchConstants.SEARCH_BUTTON_TEXT);
 		this.searchButton.setPreferredSize(this.searchButtonSize);
-		this.searchBox = new JTextField(this.placeHolderText);
+		this.searchBox = new JTextField(SearchConstants.PLACE_HOLDER_TEXT);
 		this.searchBox.setPreferredSize(this.searchBoxSize);
 		add(this.searchBox);
 		add(this.searchButton);
-		if(popup != null){
-			this.setSearchPreview(popup);
-			//TODO: SHould listen to the searchModel
-		}
+		
+		this.setModel(model);
+		this.setSearchPreview(popup);
+		
+		addObserverToModel();
+		
+		setPreferredSize(new Dimension(250, 30));
+	}
+	
+	public JSearchBox(SearchModel model) {
+		this(model, null);
+	}
+	
+	public void addObserverToModel() {
+		this.model.addObserver(this);
+		if (this.preview != null) 
+			this.model.addObserver(this.preview);
 	}
 
 	public void setSearchBoxFocusListener(FocusListener fl){
@@ -55,8 +66,8 @@ public class JSearchBox extends JPanel implements Observer{
 		this.searchBox.getDocument().addDocumentListener(dl);
 	}
 
-	public void setSearchBoxActionListener(ActionListener l){
-		this.searchBox.addActionListener(l);
+	public void setSearchBoxEnterListener(KeyAdapter keyListener){
+		this.searchBox.addKeyListener(keyListener);
 	}
 
 	public void setSearchButtonListener(ActionListener ac){
@@ -64,7 +75,7 @@ public class JSearchBox extends JPanel implements Observer{
 	}
 
 	public String getPlaceholderText(){
-		return this.placeHolderText;
+		return SearchConstants.PLACE_HOLDER_TEXT;
 	}
 
 	public Dimension getSearchBoxSize(){
@@ -90,9 +101,17 @@ public class JSearchBox extends JPanel implements Observer{
 	 */
 	//TODO Use interface argument instead.
 	public void setSearchPreview(JPopupPreview preview){
-		this.preview = preview;
-		this.preview.setTextField(this.searchBox);
-		add(this.preview);
+		if (preview != null) {
+			this.preview = preview;
+			this.preview.setTextField(this.searchBox);
+			add(this.preview);
+		}
+	}
+	
+	public void setModel(SearchModel model) {
+		this.model = model;
+		if (this.preview != null)
+			this.preview.setModel(model);
 	}
 
 	public void setSearchBoxText(String txt){
@@ -102,18 +121,14 @@ public class JSearchBox extends JPanel implements Observer{
 	public String getSearchBoxText(){
 		return this.searchBox.getText();
 	}
+	
+	public void setPreviewComponentListener(MouseAdapter listener) {
+		if (this.preview != null) {
+			this.preview.addMouseListener(listener);
+		}
+	}
 
 	@Override
-	public void update(Observable o, Object arg) {
-		//If we dont have a spv specified, just make the search and update the view.
-		if(this.preview == null){
-			if (arg instanceof SearchModel) {
-				SearchModel model = (SearchModel)arg;
-				System.out.println("UPDATE @ VIEW: " + model.getSearchQueryText());
-
-				List<PictureObject> pic = model.getSearchObjects();;
-				Files.getInstance().setPictureList(pic);				
-			}
-		}
+	public void update(Observable o, Object arg) { //TODO: Do we need to listen?				
 	}
 }

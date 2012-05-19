@@ -33,8 +33,7 @@ public class JPopupListItem extends JPanel implements JPopupItemI {
 	private final Dimension COMMENT_AREA_SIZE = new Dimension(70, 50);
 	private final Dimension TAG_AREA_SIZE = new Dimension(60, 50);
 	
-	public JPopupListItem(PictureObject pic) {
-		this.picture = pic;
+	public JPopupListItem() {
 		FlowLayout flowLayout = new FlowLayout();
 		flowLayout.setVgap(0);
 		flowLayout.setHgap(10);
@@ -61,7 +60,12 @@ public class JPopupListItem extends JPanel implements JPopupItemI {
 		this.comment.setMaximumSize(this.COMMENT_AREA_SIZE);
 		this.comment.setPreferredSize(this.COMMENT_AREA_SIZE);
 		add(this.comment);
+	}
+	
+	public JPopupListItem(PictureObject pic) {
+		this();
 		
+		this.picture = pic;
 		updateGUI();
 	}
 	
@@ -78,6 +82,7 @@ public class JPopupListItem extends JPanel implements JPopupItemI {
 	
 	public void setPicture(PictureObject pic) {
 		this.picture = pic;
+		updateGUI();
 	}
 	
 	public PictureObject getPicture() {
@@ -90,7 +95,13 @@ public class JPopupListItem extends JPanel implements JPopupItemI {
 		return pictures;
 	}
 	
+	public boolean hasPicture() {
+		return (getPicture() != null);
+	}
+	
 	public void updateGUI() {
+		if (this.picture == null)
+			return;
 		BufferedImage bi = ImageUtils.resize(new ImageIcon(getPicture().getPath()).getImage(), this.IMAGE_SIZE);
 		this.image.setIcon(new ImageIcon(bi));
 		this.comment.setText(getPicture().getComment().getComment());
