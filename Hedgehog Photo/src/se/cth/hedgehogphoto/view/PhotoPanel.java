@@ -31,6 +31,7 @@ public class PhotoPanel extends JPanel {
 	private JLabel photoNameLabel = new JLabel("Name");
 	private JLabel iconLabel = new JLabel("");
 	private ImageIcon icon;
+	private boolean isClicked;
 
 	public PhotoPanel(FileObject f) {
 		this(f.getFilePath());
@@ -150,7 +151,7 @@ public class PhotoPanel extends JPanel {
 	}
 	
 	public boolean isClicked(){
-		return this.isVisible();
+		return this.isClicked;
 	}
 	public void setMouseListener(MouseListener l){
 		this.iconLabel.addMouseListener(l);
