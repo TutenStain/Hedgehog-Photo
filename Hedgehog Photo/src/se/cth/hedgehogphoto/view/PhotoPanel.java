@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -141,6 +142,10 @@ public class PhotoPanel extends JPanel {
 
 		gBig.setConstraints(tags,tag);
 		add(tags);
+	}
+	
+	public void setMouseListener(MouseListener l){
+		this.iconLabel.addMouseListener(l);
 	}
 	
 	public void setName(String name){
