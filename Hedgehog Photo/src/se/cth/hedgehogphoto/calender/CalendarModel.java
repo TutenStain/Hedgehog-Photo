@@ -7,19 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
-
-import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
-import se.cth.hedgehogphoto.database.JpaPictureDao;
 import se.cth.hedgehogphoto.database.PictureObject;
 
-
-
-
-
 public class CalendarModel extends Observable {
-	private DatabaseAccess da;
-	private static List<PictureObject> pics;
+	private DatabaseAccess db;
 	private int month;
 	private int maxDays;
 	private int year;
@@ -27,10 +19,8 @@ public class CalendarModel extends Observable {
 	private Map<Integer, List<PictureObject>> pictureDays;
 	private List<Integer> dayswithPicture = new ArrayList<Integer>();
 	private GregorianCalendar g= new GregorianCalendar();
-	private JpaPictureDao jpd;
-	private  CalendarModel(DaoFactory df){
-		DaoFactory daoFactory = df.getInstance();
-		jpd = daoFactory.getJpaPictureDao();
+	private  CalendarModel(DatabaseAccess db){
+		this.db = db;
 		month = g.get(g.MONTH)+1; //TODO: Change g.MONTH to GregorianCalendar.MONTH (below as well)
 		System.out.print(g.get(g.MONTH)+1);
 		year = g.get(g.YEAR);
@@ -41,9 +31,9 @@ public class CalendarModel extends Observable {
 
 
 	}
-	public static CalendarModel getInstance(DaoFactory df){
+	public static CalendarModel getInstance(DatabaseAccess db){
 	if(m==null){
-			m = new CalendarModel(df);
+			m = new CalendarModel(db);
 	}
 		return m;
 	}
@@ -135,8 +125,8 @@ public class CalendarModel extends Observable {
 		try{
 		for(int i = 1; i<=maxDays;i++){
 			List<PictureObject> pics =  new ArrayList<PictureObject>();
-			pics.addAll(jpd.searchfromDates(year + "-" + month + "-" + i));
-			pics.addAll( jpd.searchfromDates(year + ":" + month + ":" + i));
+			pics.addAll(db.searchPicturesfromDates(year + "-" + month + "-" + i));
+			pics.addAll(db.searchPicturesfromDates(year + ":" + month + ":" + i));
 			if(!(pics.isEmpty()) && pics != null){
 				pictureDays.put(i,pics);
 				dayswithPicture.add(i);

@@ -17,7 +17,7 @@ public class CalendarTest {
 	
 	@Before
 	public void setUp(){
-		cm = CalendarModel.getInstance(DaoFactory.getInstance());
+		cm = CalendarModel.getInstance(null);
 		
 	}
 	

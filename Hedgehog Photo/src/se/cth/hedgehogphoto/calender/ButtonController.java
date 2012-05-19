@@ -3,12 +3,13 @@ package se.cth.hedgehogphoto.calender;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import se.cth.hedgehogphoto.database.DaoFactory;
+import se.cth.hedgehogphoto.database.DatabaseAccess;
 
-public class ButtonController  implements ActionListener{
+
+public class ButtonController implements ActionListener{
 	CalendarModel m;
-	public ButtonController(DaoFactory df){
-		 m = CalendarModel.getInstance(df);
+	public ButtonController(DatabaseAccess db){
+		m = CalendarModel.getInstance(db);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -19,8 +20,8 @@ public class ButtonController  implements ActionListener{
 			m.forwards();
 			System.out.print("Forwards");
 		}
-		
-		
+
+
 	}
 
 }

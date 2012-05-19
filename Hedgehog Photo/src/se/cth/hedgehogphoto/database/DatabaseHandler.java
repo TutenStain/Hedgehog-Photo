@@ -26,8 +26,6 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	
 	private EntityManager em;// = Entity.entityManager;
 	private static DatabaseHandler db = null;
-
-	private static Thread t = Thread.currentThread();
 	
 	public DatabaseHandler () {}
 
@@ -87,20 +85,21 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		pictureList.addAll(searchPicturesfromDates(search));
 		files.setPictureList(pictureList);
 	}
-	
-	//TODO db acess
-	public List<Picture> searchPicturesfromDates(String search){
+
+	public List<? extends PictureObject> searchPicturesfromDates(String search){
 			return jpd.findByString("date", search);
 	}
+	
 	public void updateSearchAlbumsfromDates(String search){
 		albumList.clear();
 		albumList.addAll(searchAlbumsfromDates(search));
 		files.setAlbumList(albumList);
 	}
+	
 	public  List<? extends AlbumI>  searchAlbumsfromDates(String search){
 		return jad.searchfromDates(search);
-
 	}
+	
 	public void updateSearchAlbumNames(String search){
 		albumList.clear();
 		albumList.addAll(searchAlbumNames(search));
