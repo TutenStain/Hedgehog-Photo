@@ -23,11 +23,11 @@ public class CalendarModel extends Observable {
 
 	private  CalendarModel(DatabaseAccess db){
 		this.db = db;
-		month = g.get(g.MONTH) + 1; //TODO: Change g.MONTH to GregorianCalendar.MONTH (below as well)
-		System.out.print(g.get(g.MONTH) + 1);
-		year = g.get(g.YEAR);
+		month = g.get(GregorianCalendar.MONTH) + 1; 
+		System.out.print(g.get(GregorianCalendar.MONTH) + 1);
+		year = g.get(GregorianCalendar.YEAR);
 		System.out.println(year);
-		maxDays = g.getActualMaximum(g.DAY_OF_MONTH);
+		maxDays = g.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 		getDates();
 	}
 
@@ -90,7 +90,7 @@ public class CalendarModel extends Observable {
 		
 		Date date = new Date(year,month-1,1); //TODO: Might want to change to Calendar.set(year + 1900, month, date) or GregorianCalendar(year + 1900, month, date)?
 		g.setTime(date);
-		maxDays = g.getActualMaximum(g.DAY_OF_MONTH);
+		maxDays = g.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 		getDates();
 		
 		setChanged();
@@ -107,7 +107,7 @@ public class CalendarModel extends Observable {
 		@SuppressWarnings("deprecation")
 		Date date = new Date(year,month-1,1);
 		g.setTime(date);
-		maxDays = g.getActualMaximum(g.DAY_OF_MONTH);
+		maxDays = g.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 		getDates();
 		
 		setChanged();

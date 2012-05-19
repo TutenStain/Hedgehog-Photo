@@ -20,7 +20,7 @@ public class URLCreator {
 	private final String NAMEFINDER_URL = "http://nominatim.openstreetmap.org/";
 	private final String XML_FORMAT = "format=xml";
 	private final String ADDRESS_DETAILS = "addressdetails=0";
-	private final String EMAIL = "email=";
+	private final String EMAIL = "email=hedgehogphoto.chalmers@gmail.com";
 	private final char AMPERSAND = '&';
 	
 	private final String GEOCODING_REQUEST = "search?";
@@ -137,6 +137,8 @@ public class URLCreator {
 		this.builder.append(this.XML_FORMAT);
 		this.builder.append(this.AMPERSAND);
 		this.builder.append(this.ADDRESS_DETAILS);
+		this.builder.append(this.AMPERSAND);
+		this.builder.append(this.EMAIL);
 		this.builder.append(this.AMPERSAND);
 	}
 	

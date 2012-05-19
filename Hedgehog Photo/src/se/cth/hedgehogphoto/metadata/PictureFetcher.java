@@ -57,7 +57,7 @@ public class PictureFetcher {
 							if (isValidFileExtension(end) && dirFiles[j].isFile()){ 
 								ImageObject imageObject;
 								if(dirFiles[j].isDirectory()==false){
-									imageObject = metadata.getImageObject(dirFiles[j]);
+									imageObject = Metadata.getImageObject(dirFiles[j]);
 									imageObject.setAlbumName(album);
 									imageObject.setFileName(dirFiles[j].getName());
 									imageObject.setFilePath(dirFiles[j].getPath());

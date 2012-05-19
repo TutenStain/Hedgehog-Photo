@@ -495,9 +495,9 @@ public class MapPanel extends JPanel {
     }
 
     public void setZoom(int zoom) {
-        if (zoom == this.zoom) //TODO: see eclipse warnings for reason
+        if (zoom == MapPanel.zoom) 
             return;
-        this.zoom = Math.min(getTileServer().getMaxZoom(), zoom);
+        MapPanel.zoom = Math.min(getTileServer().getMaxZoom(), zoom);
         mapSize.width = getXMax();
         mapSize.height = getYMax();
     }
