@@ -16,11 +16,11 @@ import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
 public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao {
-	private static JpaAlbumDao jad = new JpaAlbumDao();
-	private static JpaCommentDao jcd = new JpaCommentDao();
-	private static JpaLocationDao jld = new JpaLocationDao();
-	private static JpaTagDao jtd = new JpaTagDao();
-	private static JpaPictureDao jpd = new JpaPictureDao();
+	private static JpaAlbumDao albumDao = new JpaAlbumDao();
+	private static JpaCommentDao commentDao = new JpaCommentDao();
+	private static JpaLocationDao locationDao = new JpaLocationDao();
+	private static JpaTagDao tagDao = new JpaTagDao();
+	private static JpaPictureDao pictureDao = new JpaPictureDao();
 	private static Files files = Files.getInstance();
 	private static List<AlbumObject> albumList = files.getAlbumList();
 	private static List<PictureObject> pictureList = files.getPictureList();
@@ -33,7 +33,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	@Override
 	public  List<? extends PictureI> searchfromComments(String search){
 		if(!(search.equals(""))){
-			List<Comment> commments = jcd.findByLike("comment", search);
+			List<Comment> commments = commentDao.findByLike("comment", search);
 			if(commments != null){
 				List<Picture> pictures = new ArrayList<Picture>();
 				for(CommentObject c: commments){
@@ -86,12 +86,12 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	@Override
 	public List<? extends PictureI> searchfromTags(String search){
 		if(!(search.equals(""))){
-			List<Tag> tags = jtd.findByLike("tag", search);
+			List<Tag> tags = tagDao.findByLike("tag", search);
 			List<? extends PictureI> pictures = new ArrayList<Picture>();
 			if(!(tags.isEmpty())){
 				for(TagI t: tags){
 					try{
-						for(TagI tag: jtd.getAll()){
+						for(TagI tag: tagDao.getAll()){
 							if(tag.getTag().equals(t.getTag())){
 								pictures =  tag.getPictures();
 							}
@@ -109,7 +109,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	public List<? extends PictureI> searchfromLocations(String search){
 		if(!(search.equals(""))){
 			List<Picture> 	pictures = new ArrayList<Picture>();
-			List<Location> locations = jld.findByLike("location", search);
+			List<Location> locations = locationDao.findByLike("location", search);
 			if(!(locations.isEmpty())){
 				for(LocationObject l:locations){
 					pictures.addAll(findByEntity(l, "se.cth.hedgehogphoto.database.Location"));
@@ -145,7 +145,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 
 		}
 		if( picture != null ){
-			Tag tagg = jtd.findById(tag);
+			Tag tagg = tagDao.findById(tag);
 			if(tagg != null){
 				List<PictureI> pics = new ArrayList<PictureI>();
 				try{
@@ -161,7 +161,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 						tags = new ArrayList<TagI>();
 					tags.add(tagg);
 					picture.setTags(tags);
-					jtd.persist(tagg);
+					tagDao.persist(tagg);
 					commitTransaction();	
 				}
 			}else{
@@ -202,7 +202,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		Picture picture = findById(filePath);
 		if(picture != null){
 			System.out.print("1");	
-			Comment comm = jcd.findById(comment);
+			Comment comm = commentDao.findById(comment);
 			if(comm!=null){
 				System.out.print("2");	
 				beginTransaction();
@@ -247,7 +247,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	public void addLocation(String location, String filePath){
 		Picture picture = findById(filePath);
 		if(picture != null) {
-			LocationI loc = (Location)jld.findById(location);
+			LocationI loc = (Location)locationDao.findById(location);
 			if(loc != null){
 				@SuppressWarnings("unchecked")
 				List<PictureI> pics = (List<PictureI>) loc.getPictures();
@@ -325,9 +325,9 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 						pics.remove(picture);
 						tag.setPictures(pics);
 						if(pics.isEmpty()==true)
-							jtd.remove((Tag)tag);
+							tagDao.remove((Tag)tag);
 						else
-							jtd.persist((Tag)tag);
+							tagDao.persist((Tag)tag);
 						this.persist((Picture) picture);
 					}catch(Exception y){
 						System.out.print("Exception");
@@ -391,7 +391,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			 }
 	}
 	public void updateDeletePicturefromAlbum(String filePath){
-		jad.deletePicture(filePath);
+		albumDao.deletePicture(filePath);
 		String albumName = "";
 		for(PictureObject f: pictureList){
 			if(f.getPath().equals(filePath))
@@ -498,7 +498,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				albumName  = s.toUpperCase() + albumName.substring(1);
 				if(!(albumName.equals(""))){
 					try{
-						album = jad.findById(albumName);
+						album = albumDao.findById(albumName);
 						beginTransaction();
 						try{
 							if(album.getCoverPath().equals("")|| album.getCoverPath()==null)
@@ -572,7 +572,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		if(picture != null){
 			try{
 				if(!(f.getComment().equals(""))){
-					Comment comment = jcd.findById(f.getComment().toLowerCase());
+					Comment comment = commentDao.findById(f.getComment().toLowerCase());
 					if(comment.getComment().equals(f.getComment().toLowerCase())){
 						beginTransaction();
 						List<Picture> pics = comment.getPictures();
@@ -586,7 +586,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			}
 
 			catch(Exception k){
-				if(jcd.findById(f.getComment().toLowerCase())==null){
+				if(commentDao.findById(f.getComment().toLowerCase())==null){
 					beginTransaction();
 					Comment comment = new Comment();		
 					comment.setComment(f.getComment().toLowerCase());		
@@ -615,7 +615,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 
 				for(int i = 0; i <tags.size();i++){	
 					if(!(pictags.contains(tags.get(i)) && tags.get(i).equals(""))){
-						TagI tag= jtd.findById(tags.get(i));
+						TagI tag= tagDao.findById(tags.get(i));
 						try{
 							if((tag!=null)){
 								beginTransaction();
@@ -658,7 +658,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		if(picture != null){
 			if(!(f.getLocation().equals(""))){
 				try{
-					Location location = jld.findById(f.getLocation());
+					Location location = locationDao.findById(f.getLocation());
 					if(location.getLocation().equals(f.getLocation())){
 						beginTransaction();
 						location.setLatitude((f.getLocationObject().getLatitude()));
