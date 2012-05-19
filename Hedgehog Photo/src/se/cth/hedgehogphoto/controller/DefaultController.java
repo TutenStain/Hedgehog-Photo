@@ -1,9 +1,11 @@
 package se.cth.hedgehogphoto.controller;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JSlider;
@@ -76,8 +78,9 @@ public class DefaultController {
 					float scale = (float)slider.getValue()/100;
 					for(int i=0;i<view.getPhotoPanels().size();i++){
 						Image image = view.getPhotoPanels().get(i).getIcon().getImage();
-						BufferedImage bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
-								Math.round(image.getHeight(null)*scale));
+						List<Dimension> dims = view.getNewDimensions();
+						BufferedImage bi = ImageUtils.resize(image, Math.round(dims.get(i).width*scale),
+								Math.round(dims.get(i).height*scale));
 						ImageIcon icon2 = new ImageIcon(bi);
 						view.getPhotoPanels().get(i).setIcon(icon2);
 					}
