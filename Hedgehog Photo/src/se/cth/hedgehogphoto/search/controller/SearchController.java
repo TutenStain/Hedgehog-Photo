@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.event.DocumentEvent;
@@ -13,6 +15,7 @@ import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.search.model.SearchModel;
 import se.cth.hedgehogphoto.search.model.SearchThread;
+import se.cth.hedgehogphoto.search.view.JPopupItemI;
 import se.cth.hedgehogphoto.search.view.JPopupPreview;
 import se.cth.hedgehogphoto.search.view.JSearchBox;
 
@@ -37,6 +40,44 @@ public class SearchController {
 	public SearchController(SearchModel model, JSearchBox view, JPopupPreview preview){
 		this(model, view);
 		this.view.setSearchPreview(preview);
+	}
+	
+	//-----------------------------LISTENERS-----------------------------------
+
+	/** Listens to mouse-events of the JPopupItemI. */
+	public class PreviewComponentMouseListener extends MouseAdapter {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (e.getSource() instanceof JPopupItemI) {
+				JPopupItemI item = (JPopupItemI) e.getSource();
+				Files.getInstance().setPictureList(item.getPictures());
+			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			if (e.getSource() instanceof JPopupItemI) {
+				JPopupItemI view = (JPopupItemI) e.getSource();
+				view.setBackground(JPopupItemI.HOVER_COLOR);
+			}
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			if (e.getSource() instanceof JPopupItemI) {
+				JPopupItemI view = (JPopupItemI) e.getSource();
+				view.setBackground(JPopupItemI.DEFAULT_COLOR);
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
 	}
 	
 	//------------------------------SEARCHBOX-LISTENERS------------------------------
