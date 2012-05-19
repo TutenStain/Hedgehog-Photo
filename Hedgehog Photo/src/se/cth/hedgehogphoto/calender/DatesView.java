@@ -12,26 +12,28 @@ import javax.swing.JPanel;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.Files;
 
+@SuppressWarnings("serial")
 public class DatesView extends JPanel implements Observer{
 	private static DatesView dw;
-	private CalendarModel m;
+	private CalendarModel model;
 	private JPanel jp;
 	private Files f;
+	
 	private DatesView(DatabaseAccess db, Files f) { 
 		this.f = f;
 		this.setPreferredSize(new Dimension(150,75));
 		this.setLayout(new BorderLayout());
-		m = CalendarModel.getInstance(db);
-		m.addObserver(this);
-		jp = new JPanel();
-		jp.setLayout(new GridLayout(5,7));
-		this.setVisible(true);
+		this.model = CalendarModel.getInstance(db);
+		this.model.addObserver(this);
+		this.jp = new JPanel();
+		this.jp.setLayout(new GridLayout(5,7));
+		setVisible(true);
 		addDays();
 	}
+	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		addDays();
-		System.out.print("UPDATE MAINVIEW");
 	}
 
 	public static DatesView getInstance(DatabaseAccess db, Files f){
@@ -40,12 +42,13 @@ public class DatesView extends JPanel implements Observer{
 		}
 		return dw;
 	}
-	public void addDays(){
+	
+	private void addDays(){
 		this.removeAll();
-		jp.removeAll();
-		for(int i=1;i<=m.getMaxDays();i++){
-			Button j = new Button(i+"");
-			for(Integer integer:m.getList()){
+		this.jp.removeAll();
+		for(int i=1 ; i<=model.getMaxDays(); i++){
+			Button j = new Button(i + "");
+			for(Integer integer : model.getList()){
 				if(integer.equals(i)){
 					j.setBackground(Color.BLACK);
 					j.addActionListener(new DayController(i, f));
@@ -56,10 +59,9 @@ public class DatesView extends JPanel implements Observer{
 				}
 			}
 			j.setVisible(true);
-			jp.add(j);
-			this.add(jp, BorderLayout.CENTER);
-			this.revalidate();
-
+			this.jp.add(j);
+			add(this.jp, BorderLayout.CENTER);
+			revalidate();
 		}
 	}
 }

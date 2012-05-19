@@ -3,7 +3,6 @@ package se.cth.hedgehogphoto.calender;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.GregorianCalendar;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,20 +13,22 @@ import javax.swing.JPanel;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.Files;
 
+@SuppressWarnings("serial")
 public class CalendarView extends JPanel implements Observer{
 	private static CalendarView cv;
 	private JLabel monthText;
 	private CalendarModel calendarModel;
+	
 	private CalendarView(){
 	}
 
 	private CalendarView(DatabaseAccess da, Files f){
 		setLayout(new BorderLayout());
 		setSize(new Dimension(200,200));
-		calendarModel = CalendarModel.getInstance(da);
+		this.calendarModel = CalendarModel.getInstance(da);
 		ButtonController bc = new ButtonController(da);
 		JPanel jp = new JPanel();
-		calendarModel.addObserver(this);
+		this.calendarModel.addObserver(this);
 		jp.setLayout(new GridLayout(1,3));
 		jp.setSize(30, 30);
 		JButton back = new JButton("Back");
@@ -37,27 +38,28 @@ public class CalendarView extends JPanel implements Observer{
 		jp.add(back);
 		JPanel month = new JPanel();
 		month.setLayout(new BorderLayout());
-		monthText = new JLabel(); 
+		this.monthText = new JLabel(); 
 		changeMonthText();
-		month.add(monthText,BorderLayout.SOUTH);
+		month.add(this.monthText, BorderLayout.SOUTH);
 		jp.add(month, BorderLayout.SOUTH);
 		jp.add(forward);
 		back.addActionListener(bc);
 		back.setActionCommand("Back");
 		forward.addActionListener(bc);
 		forward.setActionCommand("Forward");
-		GregorianCalendar g = calendarModel.getCalendar();
 		add(jp,BorderLayout.NORTH);
 		add(DatesView.getInstance(da, f),BorderLayout.CENTER);
 		setVisible(true);
 		addObserverto(calendarModel);
 	}
+	
 	public static CalendarView getInstance(DatabaseAccess db, Files f){
 		if(cv == null){
 			cv = new CalendarView(db, f);
 		}
 		return cv;
 	}
+	
 	public void addObserverto(Observable o){
 		o.addObserver(this);
 	}
@@ -65,9 +67,9 @@ public class CalendarView extends JPanel implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		changeMonthText();
-		System.out.print("UPPDATE MAIN");
 	}
-	public void changeMonthText(){
+	
+	private void changeMonthText(){
 		monthText.setText(calendarModel.getMonthasString());
 	}
 }
