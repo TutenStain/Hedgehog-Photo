@@ -17,16 +17,16 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	private static Files files = Files.getInstance(); 
 	private static List<PictureObject> pictureList = files.getPictureList();
 	private static List<AlbumObject> albumList = files.getAlbumList();
-	
-	private JpaAlbumDao jad;
-	private JpaCommentDao jcd;
-	private JpaLocationDao jld;
-	private JpaTagDao jtd;
-	private JpaPictureDao jpd;
-	
+
+	private JpaAlbumDao albumDao;
+	private JpaCommentDao commentDao;
+	private JpaLocationDao locationDao;
+	private JpaTagDao tagDao;
+	private JpaPictureDao pictureDao;
+
 	private EntityManager em;// = Entity.entityManager;
 	private static DatabaseHandler db = null;
-	
+
 	public DatabaseHandler () {}
 
 	public static DatabaseHandler getInstance(){
@@ -36,23 +36,23 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 		return db;
 	}
-	
+
 	@Override
 	public void run(){
-		jad = new JpaAlbumDao();
-		jcd = new JpaCommentDao();
-		jld = new JpaLocationDao();
-		jtd = new JpaTagDao();
-		jpd = new JpaPictureDao();
+		albumDao = new JpaAlbumDao();
+		commentDao = new JpaCommentDao();
+		locationDao = new JpaLocationDao();
+		tagDao = new JpaTagDao();
+		pictureDao = new JpaPictureDao();
 		em = Entity.entityManager;
 	}
-		
+
 	/**
 	 * A method that return all tags in the database as strings.
 	 * @return List<String>
 	 */
 	public List<String> getTags(){
-		List<Tag> tags = jtd.getAll();
+		List<Tag> tags = tagDao.getAll();
 		List<String> taggs = new ArrayList<String>();
 		for(TagObject t : tags){
 			taggs.add(t.getTag());
@@ -64,7 +64,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	 * @return List<String>
 	 */
 	public List<String> getLocations(){
-		List<Location> location = jld.getAll();
+		List<Location> location = locationDao.getAll();
 		List<String> locations = new ArrayList<String>();
 		for(LocationObject l:location){
 			locations.add(l.getLocation());
@@ -78,7 +78,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		files.setPictureList(pictureList);
 	}
 	public List<? extends PictureI> searchPictureNames(String search){
-		return jpd.searchfromNames(search);
+		return pictureDao.searchfromNames(search);
 	}
 	public void updateSearchPicturesfromDates(String search){
 		pictureList.clear();
@@ -87,26 +87,26 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	}
 
 	public List<? extends PictureObject> searchPicturesfromDates(String search){
-			return jpd.findByString("date", search);
+		return pictureDao.findByString("date", search);
 	}
-	
+
 	public void updateSearchAlbumsfromDates(String search){
 		albumList.clear();
 		albumList.addAll(searchAlbumsfromDates(search));
 		files.setAlbumList(albumList);
 	}
-	
+
 	public  List<? extends AlbumI>  searchAlbumsfromDates(String search){
-		return jad.searchfromDates(search);
+		return albumDao.searchfromDates(search);
 	}
-	
+
 	public void updateSearchAlbumNames(String search){
 		albumList.clear();
 		albumList.addAll(searchAlbumNames(search));
 		files.setAlbumList(albumList);
 	}
 	public List<? extends AlbumI> searchAlbumNames(String search){
-		return jad.searchfromNames(search);
+		return albumDao.searchfromNames(search);
 	}
 	public void updateSearchPicturesfromComments(String search){
 		pictureList.clear();
@@ -114,7 +114,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		files.setPictureList(pictureList);
 	}
 	public List<? extends PictureI> searchPicturesfromComments(String search){
-		return jpd.searchfromComments(search);
+		return pictureDao.searchfromComments(search);
 	}
 	public void updateSearchAlbumsfromComments(String search){
 		albumList.clear();
@@ -122,7 +122,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		files.setAlbumList(albumList);
 	}
 	public  List<? extends AlbumI> searchAlbumsfromComments(String search){
-		return jad.searchfromComments(search);
+		return albumDao.searchfromComments(search);
 
 	}
 
@@ -132,20 +132,20 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		files.setPictureList(pictureList);
 	}
 
-	
+
 	@Override
 	public List<? extends PictureObject> searchPicturesfromTags(String search){
-		return jpd.searchfromTags(search);
+		return pictureDao.searchfromTags(search);
 	}
-	
+
 	public void updateSearchPicturefromsLocations(String search){
 		pictureList.clear();
 		pictureList.addAll(searchPicturefromsLocations(search));
 		files.setPictureList(pictureList);
 	}
-	
+
 	public List<? extends PictureI> searchPicturefromsLocations(String search){
-		return jpd.searchfromLocations(search);
+		return pictureDao.searchfromLocations(search);
 	}
 	public void updateAlbumsfromSearchTags(String search){
 		albumList.clear();
@@ -153,7 +153,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		files.setAlbumList(albumList);
 	}
 	public  List<? extends AlbumI> searchAlbumfromTag(String search){
-		return jad.searchfromTags(search);
+		return albumDao.searchfromTags(search);
 	}
 	public void updateSearchAlbumsfromLocations(String search){
 		albumList.clear();
@@ -161,7 +161,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		files.setAlbumList(albumList);
 	}
 	public List<? extends AlbumI> searchAlbumsfromLocations(String search){
-		return jad.searchfromTags(search);
+		return albumDao.searchfromTags(search);
 	}
 	public void updateAllPictures(){
 		pictureList.clear();
@@ -171,9 +171,9 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 	}
 	public List<? extends PictureI> getAllPictures(){
-		return jpd.getAll();
+		return pictureDao.getAll();
 	}
-	
+
 	public void updateAllAlbums(){
 		albumList.clear();
 		albumList.addAll(getAllAlbums());
@@ -186,10 +186,10 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	}
 
 	public  void insertPicture(FileObject f){
-		jpd.insertPicture(f);
+		pictureDao.insertPicture(f);
 	}
-		
-		public  void updateAddTagtoPicture(String tag, String filePath){
+
+	public  void updateAddTagtoPicture(String tag, String filePath){
 		for(PictureObject f:pictureList){
 			if(f.getPath().equals(filePath))
 				pictureList.remove(f);
@@ -200,7 +200,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	public  void addTagtoPicture(String tag, String filePath){
-		jpd.addTag(tag, filePath);
+		pictureDao.addTag(tag, filePath);
 	}
 	public  void updateAddTagtoAlbum(String tag, String albumName){
 		for(AlbumObject f:albumList){
@@ -211,7 +211,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		files.setAlbumList(albumList);
 	}
 	public  void addTagtoAlbum(String tag, String albumName){
-		jad.addTag(tag, albumName);
+		albumDao.addTag(tag, albumName);
 
 	}
 	public  void updateaddCommenttoPicture(String comment, String filePath){
@@ -226,7 +226,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	public  void addCommenttoPicture(String comment, String filePath){
-		jpd.addComment(comment, filePath);
+		pictureDao.addComment(comment, filePath);
 	}
 	public  void updateAddCommenttoAlbum(String comment, String albumName){
 		for(AlbumObject f:albumList){
@@ -239,7 +239,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	public  void addCommenttoAlbum(String comment, String filePath){
-		jad.addComment(comment, filePath);
+		albumDao.addComment(comment, filePath);
 	}
 
 	public  void updateAddLocationtoPicture(String location, String filePath){
@@ -254,7 +254,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	public  void addLocationtoPicture(String location, String filePath){
-		jpd.addLocation(location, filePath);
+		pictureDao.addLocation(location, filePath);
 	}
 	public  void updateAddLocationtoAlbum(String location, String albumName){
 		for(AlbumObject f:albumList){
@@ -267,11 +267,11 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	public  void addLocationtoAlbum(String location, String albumName){
-		jad.addLocation(location, albumName);
+		albumDao.addLocation(location, albumName);
 	}
 	public  void deleteAll(){
-	
-		List<Picture> allPictures = jpd.getAll();
+
+		List<Picture> allPictures = pictureDao.getAll();
 		for(PictureObject pic:allPictures){
 			deletePicture(pic.getPath());
 		}
@@ -286,10 +286,10 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	public void deletePicture (String filePath){
-		jpd.deletePicture(filePath);		
+		pictureDao.deletePicture(filePath);		
 	}
 
-	
+
 
 	public void updateDeleteTagsfromPictures(String filePath){
 		deleteTagsfromPicture(filePath);
@@ -301,10 +301,10 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	}
 
 	public void deleteTagsfromPicture(String filePath){
-		jpd.deleteTags(filePath);
+		pictureDao.deleteTags(filePath);
 	}
 	public void updateDeletePicturefromAlbum(String filePath){
-		jad.deletePicture(filePath);
+		albumDao.deletePicture(filePath);
 		String albumName = "";
 		for(PictureObject f: pictureList){
 			if(f.getPath().equals(filePath))
@@ -322,7 +322,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	}
 
 	public void deletePicturefromAlbum(String filePath){
-		jpd.deletePicture(filePath);
+		pictureDao.deletePicture(filePath);
 	}
 	public  void updateDeleteCommentfromPicture(String filePath){
 		deleteCommentfromPicture(filePath);
@@ -336,7 +336,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	public  void deleteCommentfromPicture(String filePath){
-		jpd.deleteComment(filePath);
+		pictureDao.deleteComment(filePath);
 	}
 	public  void updateDeleteLocationfromPicture(String filePath){
 		deleteLocationfromPicture(filePath);
@@ -350,7 +350,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	public  void deleteLocationfromPicture(String filePath){
-		jpd.deleteLocation(filePath);
+		pictureDao.deleteLocation(filePath);
 	}
 	public  void updateDeleteCommentfromAlbum(String albumName){
 		deleteCommentfromAlbum(albumName);
@@ -363,7 +363,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	public void deleteCommentfromAlbum(String albumName){
-		jad.deleteComment(albumName);
+		albumDao.deleteComment(albumName);
 	}
 	public  void updateDeleteLocationfromAlbum(String albumName){
 		deleteLocationfromAlbum(albumName);
@@ -375,7 +375,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	}
 
 	public void deleteLocationfromAlbum(String albumName){
-		jad.deleteLocation(albumName);
+		albumDao.deleteLocation(albumName);
 	}
 	public void updateDeleteTagsfromAlbum(String albumName){
 		deleteTagsfromAlbum(albumName);
@@ -387,7 +387,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	}
 
 	public void deleteTagsfromAlbum(String albumName){
-		jad.deleteTags(albumName);
+		albumDao.deleteTags(albumName);
 	}
 	@Override
 	public DaoFactory getFactory() {
