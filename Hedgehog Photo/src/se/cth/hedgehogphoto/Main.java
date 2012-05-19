@@ -48,7 +48,7 @@ public class Main {
 		MainModel model = new MainModel();
 		MainView view = new MainView(start);
 		model.addObserver(view);
-		new DefaultController(model, view);
+		new DefaultController(view);
 		
 		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
 		PluginLoader p = new PluginLoader(view, pluginRooDir, true);
@@ -61,7 +61,7 @@ public class Main {
 		//map
 		MapModel mapModel = new MapModel();
 		MapView map = new MapView(mapModel);
-        MapController mapController = new MapController(map);
+		new MapController(map);
 		view.addPlugin(map, PluginArea.LEFT_TOP);
 		
 		//Search gets loaded from plugin dir now

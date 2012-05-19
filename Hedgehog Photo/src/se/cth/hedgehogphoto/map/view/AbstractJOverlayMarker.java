@@ -11,6 +11,7 @@ import se.cth.hedgehogphoto.map.model.Global;
  * which shall be used in a JLayeredPane.
  * @author Florian Minges
  */
+@SuppressWarnings("serial")
 public class AbstractJOverlayMarker extends AbstractJOverlayPanel {
 	private JLabel iconContainer;
 	

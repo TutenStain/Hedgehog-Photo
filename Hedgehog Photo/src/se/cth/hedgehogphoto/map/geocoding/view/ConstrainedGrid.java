@@ -25,6 +25,7 @@ import se.cth.hedgehogphoto.objects.LocationObjectOther;
  * For variable height components, a BoxLayout would be better. 
  * @author Florian Minges
  */
+@SuppressWarnings("serial")
 public class ConstrainedGrid extends JPanel {
 	private JPanel componentPanel;
 	private MouseAdapter mouseListener;

@@ -1,6 +1,5 @@
 package se.cth.hedgehogphoto.search.view;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;

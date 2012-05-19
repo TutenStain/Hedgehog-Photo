@@ -103,6 +103,7 @@ import se.cth.hedgehogphoto.log.Log;
  * @author stepan.rutz
  * @modifiedby Florian Minges
  */
+@SuppressWarnings("serial")
 public class MapPanel extends JPanel {
 
     private static final Logger log = Log.getLogger();
@@ -1180,7 +1181,8 @@ public class MapPanel extends JPanel {
         }
     }
     
-    public static class CustomSplitPane extends JComponent  {
+    @SuppressWarnings("serial")
+	public static class CustomSplitPane extends JComponent  {
         private static final int SPACER_SIZE = 4;
         private final boolean horizonal;
         private final JComponent spacer;
@@ -1409,7 +1411,8 @@ public class MapPanel extends JPanel {
         }
     }
 
-    public final class OverlayPanel extends JPanel {
+    @SuppressWarnings("serial")
+	public final class OverlayPanel extends JPanel {
 
         private OverlayPanel() {
             setOpaque(false);
@@ -1452,7 +1455,8 @@ public class MapPanel extends JPanel {
         }
     }
 
-    public final class ControlPanel extends JPanel {
+    @SuppressWarnings("serial")
+	public final class ControlPanel extends JPanel {
 
         protected static final int MOVE_STEP = 32;
 

@@ -16,6 +16,7 @@ import se.cth.hedgehogphoto.objects.LocationObjectOther;
  * representing a location.
  * @author Florian Minges
  */
+@SuppressWarnings("serial")
 public class GeoLocationPanel extends JPanel {
 	private JLabel nameLabel;
 	private JLabel longitudeLabel, latitudeLabel;

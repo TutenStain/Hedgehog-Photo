@@ -15,6 +15,7 @@ import se.cth.hedgehogphoto.map.model.Global;
  * should be displayed in a JLayeredPane.
  * @author Florian Minges
  */
+@SuppressWarnings("serial")
 public abstract class AbstractJOverlayPanel extends JPanel 
 											implements Observer {
 	protected AbstractComponentModel model;

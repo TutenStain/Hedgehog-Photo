@@ -65,7 +65,6 @@ class LoadingLayer extends LayerUI<JPanel> implements ActionListener {
 	private int mFadeLimit = 20;
 
 	/**
-	 * 
 	 * @param panel the panel to decorate with a loading spinner.
 	 */
 	public LoadingLayer(JPanel panel){
@@ -73,7 +72,6 @@ class LoadingLayer extends LayerUI<JPanel> implements ActionListener {
 	}
 
 	/**
-	 * 
 	 * @return returns the decorated animated layer ready to be added to a container.
 	 */
 	public JLayer<JPanel> getDecoratedPanel(){
@@ -174,6 +172,7 @@ class LoadingLayer extends LayerUI<JPanel> implements ActionListener {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void applyPropertyChange(PropertyChangeEvent pce, JLayer l) {
 		if ("tick".equals(pce.getPropertyName())) {

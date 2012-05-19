@@ -23,6 +23,7 @@ import se.cth.hedgehogphoto.Constants;
  * @author David Grankvist
  */
 
+@SuppressWarnings("serial")
 public class NoteView extends JPanel implements Observer{
 	
 	private JPanel bottomPanel = new JPanel();

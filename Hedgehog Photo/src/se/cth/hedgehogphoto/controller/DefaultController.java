@@ -12,7 +12,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.view.ImageUtils;
 import se.cth.hedgehogphoto.view.MainView;
 
@@ -22,11 +21,9 @@ import se.cth.hedgehogphoto.view.MainView;
  */
 
 public class DefaultController {
-	private MainModel model;
 	private MainView view;
 
-	public DefaultController(MainModel m, MainView v){
-		model = m;
+	public DefaultController(MainView v){
 		view = v;
 
 		view.setPhotoNameButtonListener(new ActionListener(){

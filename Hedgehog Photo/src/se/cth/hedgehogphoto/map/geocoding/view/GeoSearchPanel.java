@@ -32,6 +32,7 @@ import se.cth.hedgehogphoto.objects.LocationObjectOther;
  * The MainView in the geocoding-subsystem.
  * @author Florian Minges
  */
+@SuppressWarnings("serial")
 public final class GeoSearchPanel extends JPanel {
 
 	private ConstrainedGrid resultPanel = new ConstrainedGrid();

@@ -9,6 +9,7 @@ import javax.swing.JPanel;
  * @author David Grankvist
  */
 
+@SuppressWarnings("serial")
 public class NotePreview extends JPanel{
 	
 	public NotePreview(){

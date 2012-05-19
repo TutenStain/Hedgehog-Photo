@@ -12,6 +12,7 @@ import javax.swing.JPanel;
  * @author David Grankvist
  */
 
+@SuppressWarnings("serial")
 public class ColorChooser extends JPanel{
 	
 	private JButton[] grid = new JButton[9];
