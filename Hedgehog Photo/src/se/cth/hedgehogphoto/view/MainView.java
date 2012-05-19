@@ -47,6 +47,7 @@ public class MainView implements Observer {
 	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
 	final private JButton btnshowHideComments = new JButton("Show/Hide comments");
 	final private JSlider slider = new JSlider(50, 200);
+	private List<Dimension> newDimensions;
 	//TODO this list probably needs to be removed, not enough MVC
 	private List<PhotoPanel> photoPanels;
 
@@ -208,18 +209,16 @@ public class MainView implements Observer {
 				photoViewPanel.add(pp);
 			}
 		}
+		newDimensions = new ArrayList<Dimension>();
 		//TODO just a test
 		if(!photoPanels.isEmpty()){
 			for(int i=0;i<photoPanels.size();i++){
 				Image image = photoPanels.get(i).getIcon().getImage();
 				float scale = Constants.PREFERRED_PICTURE_HEIGHT/image.getHeight(null);
-				Image image2 = image.getScaledInstance(Math.round(image.getWidth(null)*scale), 
-						Math.round(Constants.PREFERRED_PICTURE_HEIGHT), Image.SCALE_DEFAULT);
 				BufferedImage bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
 						Math.round(Constants.PREFERRED_PICTURE_HEIGHT));
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanels.get(i).setIcon(icon2);
-				photoPanels.get(i).getIcon().setImage(image2);
 			}
 		}
 		
