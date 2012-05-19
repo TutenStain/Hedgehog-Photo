@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -18,8 +16,8 @@ import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.search.model.SearchModel;
 import se.cth.hedgehogphoto.search.model.SearchThread;
 import se.cth.hedgehogphoto.search.view.JPopupItemI;
-import se.cth.hedgehogphoto.search.view.JPopupPreview;
 import se.cth.hedgehogphoto.search.view.JSearchBox;
+import se.cth.hedgehogphoto.search.view.PreviewI;
 
 /**
  * @author Barnabas Sapan
@@ -28,14 +26,12 @@ import se.cth.hedgehogphoto.search.view.JSearchBox;
 public class SearchController {
 	private SearchModel model;
 	private JSearchBox view;
-	private JPopupPreview preview;
 	
 	private Thread searchThread;
 	
-	public SearchController(SearchModel model, JSearchBox view, JPopupPreview preview){
+	public SearchController(SearchModel model, JSearchBox view, PreviewI preview){
 		this.model = model;
 		this.view = view;
-		this.preview = preview;
 		this.view.setSearchPreview(preview);
 		this.searchThread = new SearchThread(this.model, this.view.getSearchBoxText());
 		
@@ -100,17 +96,7 @@ public class SearchController {
 	//------------------------------SEARCHBOX-LISTENERS------------------------------
 	
 	//TODO: Use instanceof checks, and typecast before doing that stuff!
-	
-	
-//	public class SearchBoxActionListener implements ActionListener {
-//		@Override
-//		public void actionPerformed(ActionEvent e) {e.
-//			if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
-//				List<PictureObject> pictures = model.getPictures(); //TODO: Interrupt searchThread, if it is running, so we don't search 2 times
-//				Files.getInstance().setPictureList(pictures);
-//			}	
-//		}
-//	}
+
 	/** Enter is pressed from the textfield, do and display search! */
 	public class SearchBoxEnterListener implements ActionListener {
 		@Override

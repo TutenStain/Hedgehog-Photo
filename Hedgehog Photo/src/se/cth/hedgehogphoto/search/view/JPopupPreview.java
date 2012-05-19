@@ -2,10 +2,8 @@ package se.cth.hedgehogphoto.search.view;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -22,9 +20,9 @@ import se.cth.hedgehogphoto.search.model.SearchModel;
  */
 
 @SuppressWarnings("serial")
-public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
+public class JPopupPreview extends JPopupMenu implements PreviewI {
 	/** Better to add everything to a JPanel first
-	 *  instead of adding directly to a JPopup to prevent some rendering issues. */
+	 *  instead of adding directly to Showa JPopup to prevent some rendering issues. */
 	private JPanel panel;
 	private JTextField textField;
 	private SearchModel model;
@@ -50,6 +48,7 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 	 * items.
 	 * @param listener the PopupItem-listener
 	 */
+	@Override
 	public void addMouseListener(MouseAdapter listener) {
 		this.messageItem.addMouseListener(listener);
 		for (JPopupListItem item : listItems) {
@@ -73,8 +72,14 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 		}
 	}
 	
+	@Override
 	public void setModel(SearchModel model) {
 		this.model = model;
+	}
+	
+	@Override
+	public JPopupMenu getPopupView() {
+		return this;
 	}
 	
 	@Override
@@ -82,13 +87,16 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 		if (arg instanceof SearchModel) {
 			this.model = (SearchModel) arg;
 		}
-		show(this.textField, -50, this.textField.getHeight()); //-50 to count for the offset of the textbox
+		
+		/**-50 to count for the offset of the textbox*/
+		show(this.textField, -50, this.textField.getHeight());
 		List<PictureObject> pictures = this.model.getPictures();
 		setListItems(pictures);
+		
 		this.panel.removeAll();
 
-		//Adds the search results to the popup, if result resulted in no matches, add
-		//a no result label.
+		/**Adds the search results to the popup, if result resulted in no matches, add
+		a no result label.*/
 		if (!pictures.isEmpty()) {
 			if (pictures.size() > 2) {
 				this.messageItem.setMessage(SearchConstants.SEE_MORE);
@@ -103,20 +111,9 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 					nbrOfItems++;
 				}
 			}
-//			while(itr.hasNext() && index < this.MAX_LIST_ITEMS){
-//				PictureObject pic = itr.next();
-//				this.listItems[index].setPicture(pic);
-//				this.panel.add(this.listItems[index]);
-//				index++;	
-//			}
-//			
-//			for ( ; index < this.MAX_LIST_ITEMS ; index++) {
-//				this.listItems[index].setPicture(null);
-//			}
-			
-			
 
 			setPopupSize(250, (nbrOfItems * 70));
+			
 		} else {
 			this.messageItem.setBackground(Color.GRAY);
 			this.messageItem.setMessage(SearchConstants.NO_ITEMS);

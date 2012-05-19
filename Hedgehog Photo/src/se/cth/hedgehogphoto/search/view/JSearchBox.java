@@ -1,10 +1,10 @@
 package se.cth.hedgehogphoto.search.view;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.util.Observable;
 import java.util.Observer;
@@ -28,7 +28,7 @@ public class JSearchBox extends JPanel implements Observer{
 	private JTextField searchBox;
 	private JButton searchButton;
 	
-	private JPopupPreview preview;
+	private PreviewI preview;
 	private SearchModel model;
 
 	public JSearchBox(SearchModel model, JPopupPreview popup){
@@ -97,14 +97,13 @@ public class JSearchBox extends JPanel implements Observer{
 	/**
 	 * Specifies a popup search preview view. If not set no dynamic 
 	 * search preview will be shown.
-	 * @param spv The search preview model.
+	 * @param previw The search preview veiw
 	 */
-	//TODO Use interface argument instead.
-	public void setSearchPreview(JPopupPreview preview){
-		if (preview != null) {
+	public void setSearchPreview(PreviewI preview){
+		if (preview != null && preview.getPopupView() != null) {
 			this.preview = preview;
 			this.preview.setTextField(this.searchBox);
-			add(this.preview);
+			add(this.preview.getPopupView());
 		}
 	}
 	
