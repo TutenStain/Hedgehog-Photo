@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -29,7 +30,6 @@ import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.model.MainModel;
-import se.cth.hedgehogphoto.note.PaintUtils;
 
 /**
  * 

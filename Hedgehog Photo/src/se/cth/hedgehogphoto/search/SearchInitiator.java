@@ -1,7 +1,5 @@
 package se.cth.hedgehogphoto.search;
 
-import java.awt.Dimension;
-
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.search.controller.SearchController;

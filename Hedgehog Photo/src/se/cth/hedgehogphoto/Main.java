@@ -17,6 +17,7 @@ import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 import se.cth.hedgehogphoto.plugin.PluginLoader;
+import se.cth.hedgehogphoto.search.SearchInitiator;
 import se.cth.hedgehogphoto.view.MainView;
 import se.cth.hedgehogphoto.view.PluginArea;
 import se.cth.hedgehogphoto.view.StartUpView;

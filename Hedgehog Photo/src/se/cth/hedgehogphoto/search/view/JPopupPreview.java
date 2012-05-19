@@ -2,7 +2,6 @@ package se.cth.hedgehogphoto.search.view;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
@@ -14,7 +13,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
-import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.search.model.SearchConstants;
 import se.cth.hedgehogphoto.search.model.SearchModel;

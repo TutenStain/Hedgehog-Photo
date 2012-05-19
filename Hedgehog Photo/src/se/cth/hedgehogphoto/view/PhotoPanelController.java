@@ -2,7 +2,9 @@ package se.cth.hedgehogphoto.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
+
 import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.JpaCommentDao;
 import se.cth.hedgehogphoto.database.JpaLocationDao;

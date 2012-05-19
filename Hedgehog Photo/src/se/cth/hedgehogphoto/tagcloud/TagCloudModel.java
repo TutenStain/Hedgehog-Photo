@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.database.TagObject;

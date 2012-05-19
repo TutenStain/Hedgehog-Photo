@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import se.cth.hedgehogphoto.calender.CalendarModel;
-import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.Picture;
 public class CalendarTest {
 	private CalendarModel cm;
