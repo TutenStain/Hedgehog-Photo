@@ -2,6 +2,9 @@ package se.cth.hedgehogphoto.database;
 
 import java.util.List;
 
+/**
+ * Getters for the Location table in the database. 
+ */
 public interface LocationObject {
 
 	public double getLongitude();

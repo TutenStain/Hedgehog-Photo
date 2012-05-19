@@ -2,6 +2,9 @@ package se.cth.hedgehogphoto.database;
 
 import java.util.List;
 
+/**
+ * Getters for the Album table in the database. 
+ */
 public interface AlbumObject {
 
 	public List<? extends TagI> getTags();

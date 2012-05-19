@@ -2,6 +2,9 @@ package se.cth.hedgehogphoto.database;
 
 import java.util.List;
 
+/**
+ * Getters for the Comment table in the database. 
+ */
 public interface CommentObject {
 
 	public List<? extends PictureI> getPictures();

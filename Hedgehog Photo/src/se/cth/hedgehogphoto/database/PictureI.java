@@ -2,6 +2,11 @@ package se.cth.hedgehogphoto.database;
 
 import java.util.List;
 
+/**
+ * Modifiers for the Picture table. This interface only contains setters
+ * but by extending PictureObject which just includes getters this
+ * is a complete accessor interface to the database. 
+ */
 public interface PictureI extends PictureObject {
 
 	public void setTags(List<? extends TagI> tags);
