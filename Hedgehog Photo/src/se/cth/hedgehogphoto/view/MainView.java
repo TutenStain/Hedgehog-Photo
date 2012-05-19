@@ -146,6 +146,10 @@ public class MainView implements Observer {
 	public List<PhotoPanel> getPhotoPanels(){
 		return this.photoPanels;
 	}
+	
+	public List<Dimension> getNewDimensions(){
+		return this.newDimensions;
+	}
 
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
@@ -219,6 +223,9 @@ public class MainView implements Observer {
 						Math.round(Constants.PREFERRED_PICTURE_HEIGHT));
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanels.get(i).setIcon(icon2);
+				newDimensions.add(new Dimension(Math.round(image.getWidth(null)*scale), 
+												Math.round(image.getHeight(null)*scale)));
+				
 			}
 		}
 		
