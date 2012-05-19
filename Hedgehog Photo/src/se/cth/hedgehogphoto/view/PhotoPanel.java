@@ -153,6 +153,10 @@ public class PhotoPanel extends JPanel {
 	public boolean isClicked(){
 		return this.isClicked;
 	}
+	
+	public void setClicked(Boolean b){
+		this.isClicked = b;
+	}
 	public void setMouseListener(MouseListener l){
 		this.iconLabel.addMouseListener(l);
 	}
