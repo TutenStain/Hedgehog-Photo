@@ -142,6 +142,7 @@ public class PhotoPanel extends JPanel {
 
 		gBig.setConstraints(tags,tag);
 		add(tags);
+		PhotoPanelMouseController ppmc = new PhotoPanelMouseController(this);
 	}
 	
 	public void setMouseListener(MouseListener l){
