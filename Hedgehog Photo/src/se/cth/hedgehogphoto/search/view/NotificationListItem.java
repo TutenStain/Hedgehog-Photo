@@ -16,6 +16,7 @@ import se.cth.hedgehogphoto.database.PictureObject;
  * behaves exactly as any other item in the preview.
  * @author Florian Minges
  */
+@SuppressWarnings("serial")
 public class NotificationListItem extends JPanel implements JPopupItemI {
 	private JLabel notification;
 	private List<PictureObject> pictures;
@@ -47,6 +48,7 @@ public class NotificationListItem extends JPanel implements JPopupItemI {
 		this.notification.setText(message);
 	}
 	
+	@Override
 	public void addMouseListener(MouseAdapter listener) {
 		super.addMouseListener(listener);
 		this.notification.addMouseListener(listener);

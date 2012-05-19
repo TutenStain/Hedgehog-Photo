@@ -66,8 +66,8 @@ public class JSearchBox extends JPanel implements Observer{
 		this.searchBox.getDocument().addDocumentListener(dl);
 	}
 
-	public void setSearchBoxEnterListener(KeyAdapter keyListener){
-		this.searchBox.addKeyListener(keyListener);
+	public void setSearchBoxActionListener(ActionListener al){
+		this.searchBox.addActionListener(al);
 	}
 
 	public void setSearchButtonListener(ActionListener ac){

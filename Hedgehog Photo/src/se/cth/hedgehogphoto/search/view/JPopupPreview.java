@@ -76,7 +76,7 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 	public void setModel(SearchModel model) {
 		this.model = model;
 	}
-
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		if (arg instanceof SearchModel) {
@@ -85,7 +85,6 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 		show(this.textField, -50, this.textField.getHeight()); //-50 to count for the offset of the textbox
 		List<PictureObject> pictures = this.model.getPictures();
 		setListItems(pictures);
-		Iterator<PictureObject> itr = pictures.iterator();
 		this.panel.removeAll();
 
 		//Adds the search results to the popup, if result resulted in no matches, add

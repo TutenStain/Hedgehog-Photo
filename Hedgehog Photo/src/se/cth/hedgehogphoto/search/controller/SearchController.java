@@ -28,16 +28,18 @@ import se.cth.hedgehogphoto.search.view.JSearchBox;
 public class SearchController {
 	private SearchModel model;
 	private JSearchBox view;
+	private JPopupPreview preview;
 	
 	private Thread searchThread;
 	
 	public SearchController(SearchModel model, JSearchBox view, JPopupPreview preview){
 		this.model = model;
 		this.view = view;
+		this.preview = preview;
 		this.view.setSearchPreview(preview);
 		this.searchThread = new SearchThread(this.model, this.view.getSearchBoxText());
 		
-		this.view.setSearchBoxEnterListener(new SearchBoxEnterListener());
+		this.view.setSearchBoxActionListener(new SearchBoxEnterListener());
 		this.view.setSearchBoxFocusListener(new SearchBoxFocusListener());
 		this.view.setSearchBoxDocumentListener(new SearchBoxDocumentListener());
 		this.view.setSearchButtonListener(new SearchButtonListener());
@@ -110,18 +112,17 @@ public class SearchController {
 //		}
 //	}
 	/** Enter is pressed from the textfield, do and display search! */
-	public class SearchBoxEnterListener extends KeyAdapter {
+	public class SearchBoxEnterListener implements ActionListener {
 		@Override
-		public void keyReleased(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
-					List<PictureObject> pictures = model.getPictures(); //TODO: Interrupt searchThread, if it is running, so we don't search 2 times
-					Files.getInstance().setPictureList(pictures);
-				}	
+		public void actionPerformed(ActionEvent e) {
+			if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
+				List<PictureObject> pictures = model.getPictures(); //TODO: Interrupt searchThread, if it is running, so we don't search 2 times
+				Files.getInstance().setPictureList(pictures);
 			}
-		}
+		}	
 	}
-	
+
+
 	/** Changes between the standby text (no focus) and allowing the user to enter text (focus). */
 	public class SearchBoxFocusListener implements FocusListener {
         @Override
@@ -142,8 +143,6 @@ public class SearchController {
 	
 	/** Calls update() on each keystroke by the user. */
 	public class SearchBoxDocumentListener implements DocumentListener {
-		
-		
         @Override
         public void changedUpdate(DocumentEvent e) {
             update();

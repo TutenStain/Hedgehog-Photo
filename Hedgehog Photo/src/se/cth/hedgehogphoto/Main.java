@@ -85,7 +85,7 @@ public class Main {
 			f.setLocationObject(new LocationObjectOther("Japan"));
 			f.setComment("Gutes bild");
 			f.setFileName(file.getName());
-			f.setDate("2012.12.02");
+			f.setDate("2012.05.19");
 			//Just some random tags to test the TagCloud
 			List<String> l = new ArrayList<String>();
 			l.add("Snyggt");

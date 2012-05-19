@@ -53,7 +53,7 @@ public class SearchThread extends Thread {
 	/** Removes duplicates from a list.
 	 *  List order is not maintained 
 	 *  @source http://www.devx.com/tips/Tip/20864 */
-	public static void removeDuplicates(List<PictureObject> list) {
+	private static void removeDuplicates(List<PictureObject> list) {
 		HashSet<PictureObject> h = new HashSet<PictureObject>(list);
 		list.clear();
 		list.addAll(h);
@@ -63,14 +63,15 @@ public class SearchThread extends Thread {
 	//ie, when you write something, and delay is 1000 ms. After 300ms user clicks enter.
 	//then the delayThread should stop and the pictures be sent to the searchmodel AND
 	//THEN to the Files-class.
+	@Override
 	public void run(){
 		try {
 			delayThread = new DelayThread(this.delay);
 			delayThread.start();
-			
-			this.pictures = search();
+		
 			delayThread.join(); //wait for the delay-time to pass
-
+			this.pictures = search();
+			
 			this.model.setPictures(this.pictures);
 		} catch (InterruptedException e) {
 			//Do not do anything if we get interrupted
