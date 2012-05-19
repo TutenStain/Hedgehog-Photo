@@ -15,43 +15,23 @@ import se.cth.hedgehogphoto.database.PictureObject;
 
 public class SearchModel extends Observable {
 	private List<PictureObject> pictures;
-	private String searchText = "";
 
-	public SearchModel(){
-		
+	public SearchModel() {
+		this.pictures = new ArrayList<PictureObject>();
 	}
 	
-	public String getSearchQueryText(){
-		return searchText;
+	public List<PictureObject> getPictures() {
+		return this.pictures != null ? this.pictures : new ArrayList<PictureObject>();
 	}
 	
-	public void setSearchQueryText(String txt){
-		searchText = txt;
-	}
-
-	//TODO Better implementation/better != null checks
-	public List<PictureObject> getSearchObjects(){
-		List<PictureObject> search = new ArrayList<PictureObject>();
-
-		if(DatabaseHandler.getInstance().searchPicturefromsLocations(searchText) != null){
-			search.addAll(DatabaseHandler.getInstance().searchPicturefromsLocations(searchText));
-		}
+	public void setPictures(List<PictureObject> pictures) {
+		if (pictures != null)
+			this.pictures = pictures;
+		else
+			this.pictures = new ArrayList<PictureObject>();
 		
-		if(DatabaseHandler.getInstance().searchPicturesfromTags(searchText) != null){
-			search.addAll(DatabaseHandler.getInstance().searchPicturesfromTags(searchText));
-		}
-		
-		if(DatabaseHandler.getInstance().searchPicturesfromComments(searchText) != null){
-			search.addAll(DatabaseHandler.getInstance().searchPicturesfromComments(searchText));
-		}
-		
-		return search;
-	}
-	
-	public void doSearch(){
-		System.out.println("Model searching with: " + searchText);
-//		Files.getInstance().setPictureList(getSearchObjects());
 		setChanged();
 		notifyObservers(this);
 	}
+
 }

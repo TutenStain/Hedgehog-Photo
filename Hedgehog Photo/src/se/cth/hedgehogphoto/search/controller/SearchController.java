@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -27,48 +29,61 @@ public class SearchController {
 	private SearchModel model;
 	private JSearchBox view;
 	
-	public SearchController(SearchModel model, JSearchBox view){
+	private Thread searchThread;
+	
+	public SearchController(SearchModel model, JSearchBox view, JPopupPreview preview){
 		this.model = model;
 		this.view = view;
+		this.view.setSearchPreview(preview);
+		this.searchThread = new SearchThread(this.model, this.view.getSearchBoxText());
 		
-		this.view.setSearchBoxActionListener(new SearchBoxActionListener());
+		this.view.setSearchBoxEnterListener(new SearchBoxEnterListener());
 		this.view.setSearchBoxFocusListener(new SearchBoxFocusListener());
 		this.view.setSearchBoxDocumentListener(new SearchBoxDocumentListener());
 		this.view.setSearchButtonListener(new SearchButtonListener());
+		
+		this.view.setPreviewComponentListener(new PreviewComponentMouseListener());
 	}
 	
-	public SearchController(SearchModel model, JSearchBox view, JPopupPreview preview){
-		this(model, view);
-		this.view.setSearchPreview(preview);
+	public SearchController(SearchModel model, JSearchBox view){
+		this(model, view, null);
 	}
 	
 	//-----------------------------LISTENERS-----------------------------------
 
 	/** Listens to mouse-events of the JPopupItemI. */
 	public class PreviewComponentMouseListener extends MouseAdapter {
+		
+		private JPopupItemI getItem(MouseEvent e) {
+			JPopupItemI item = null;
+			if (e.getSource() instanceof JPopupItemI) {
+				item = (JPopupItemI) e.getSource();
+			} else if (e.getComponent().getParent() instanceof JPopupItemI) {
+				item = (JPopupItemI) e.getComponent().getParent();
+			}
+			
+			return item;
+		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (e.getSource() instanceof JPopupItemI) {
-				JPopupItemI item = (JPopupItemI) e.getSource();
+			JPopupItemI item = getItem(e);
+			if (item != null)
 				Files.getInstance().setPictureList(item.getPictures());
-			}
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			if (e.getSource() instanceof JPopupItemI) {
-				JPopupItemI view = (JPopupItemI) e.getSource();
-				view.setBackground(JPopupItemI.HOVER_COLOR);
-			}
+			JPopupItemI item = getItem(e);
+			if (item != null)
+				item.setBackground(JPopupItemI.HOVER_COLOR);
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			if (e.getSource() instanceof JPopupItemI) {
-				JPopupItemI view = (JPopupItemI) e.getSource();
-				view.setBackground(JPopupItemI.DEFAULT_COLOR);
-			}
+			JPopupItemI item = getItem(e);
+			if (item != null)
+				item.setBackground(JPopupItemI.DEFAULT_COLOR);
 		}
 
 		@Override
@@ -84,14 +99,26 @@ public class SearchController {
 	
 	//TODO: Use instanceof checks, and typecast before doing that stuff!
 	
+	
+//	public class SearchBoxActionListener implements ActionListener {
+//		@Override
+//		public void actionPerformed(ActionEvent e) {e.
+//			if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
+//				List<PictureObject> pictures = model.getPictures(); //TODO: Interrupt searchThread, if it is running, so we don't search 2 times
+//				Files.getInstance().setPictureList(pictures);
+//			}	
+//		}
+//	}
 	/** Enter is pressed from the textfield, do and display search! */
-	public class SearchBoxActionListener implements ActionListener {
+	public class SearchBoxEnterListener extends KeyAdapter {
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
-				List<PictureObject> fo = model.getSearchObjects();
-				Files.getInstance().setPictureList(fo);
-			}	
+		public void keyReleased(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
+					List<PictureObject> pictures = model.getPictures(); //TODO: Interrupt searchThread, if it is running, so we don't search 2 times
+					Files.getInstance().setPictureList(pictures);
+				}	
+			}
 		}
 	}
 	
@@ -115,7 +142,7 @@ public class SearchController {
 	
 	/** Calls update() on each keystroke by the user. */
 	public class SearchBoxDocumentListener implements DocumentListener {
-		private Thread t = new SearchThread(model, 500);
+		
 		
         @Override
         public void changedUpdate(DocumentEvent e) {
@@ -132,18 +159,25 @@ public class SearchController {
             update();
         }
         
+        /** Updates our model to always contain the latest 
+         *  and most recent search query. */
         private void update(){
-        	if(!view.getSearchBoxText().isEmpty() && !view.getSearchBoxText().equals(view.getPlaceholderText())){
-            	//Updates our model to always contain the latest and most recent search query.
-        		model.setSearchQueryText(view.getSearchBoxText());
-        		if(t.getState() == Thread.State.NEW){
-            		t.start();
-            	} else {
-            		t.interrupt();
-            		t = new SearchThread(model, 500);
-            		t.start();
+        	if (searchBoxContainsQuery()) {
+        		if (searchThread.getState() != Thread.State.NEW) {
+            		searchThread.interrupt();
+            		searchThread = new SearchThread(model, view.getSearchBoxText());
             	}
+        		searchThread.start();
         	}
+        }
+        
+        private boolean searchBoxContainsQuery() {
+        	String text = view.getSearchBoxText();
+        	text = text.trim();
+        	boolean noQuery = (text.isEmpty()) || (text.equals(view.getPlaceholderText()));
+        	boolean shortQuery = text.length() < 2; //don't search if only 1 letter
+        	
+        	return !(noQuery || shortQuery);
         }
 	}
 	
@@ -151,7 +185,9 @@ public class SearchController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
-				new SearchThread(model, 0).start();
+				Thread searchThread = new SearchThread(model, view.getSearchBoxText(), 0);
+				searchThread.start();
+				Files.getInstance().setPictureList(model.getPictures());
 			}
 		}
 	}
