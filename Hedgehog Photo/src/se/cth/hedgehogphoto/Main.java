@@ -42,8 +42,8 @@ public class Main {
 		}
 		
 		//TODO Uncomment these the first run if you need to recreate the database
-		//DatabaseHandler.getInstance().deleteAll();
-		//insertFileObjectsIntoDatabase();
+//		DatabaseHandler.getInstance().deleteAll();
+//		insertFileObjectsIntoDatabase();
 		
 		MainModel model = new MainModel();
 		MainView view = new MainView(start);
