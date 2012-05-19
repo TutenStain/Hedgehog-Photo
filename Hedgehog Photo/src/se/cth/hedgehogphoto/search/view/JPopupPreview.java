@@ -1,17 +1,14 @@
 package se.cth.hedgehogphoto.search.view;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -19,7 +16,6 @@ import javax.swing.JTextField;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
-import se.cth.hedgehogphoto.search.controller.SearchComponentController;
 import se.cth.hedgehogphoto.search.model.SearchModel;
 
 /**
@@ -81,20 +77,16 @@ public class JPopupPreview extends JPopupMenu implements Observer, PreviewI {
 			int i = 0;
 			while(itr.hasNext() && i < 5){
 				PictureObject pic = itr.next();
-				JPopupListItem view = new JPopupListItem(pic);
-//				firePropertyChange("updateListeners"
-				new SearchComponentController(view, pic);
-				this.panel.add(view);
+				JPopupListItem item = new JPopupListItem(pic);
+				this.panel.add(item);
 				i++;	
 			}
 
 			setPopupSize(250, (i * 70));
 		} else {
-			JPanel p = new JPanel();
-			p.setLayout(new FlowLayout());
-			p.setBackground(Color.GRAY);
-			p.add(new JLabel("No results for '" + model.getSearchQueryText() + "'. Try again!"));
-			this.panel.add(p);
+			this.messageItem.setBackground(Color.GRAY);
+			this.messageItem.setMessage("No results for '" + model.getSearchQueryText() + "'. Try again!");
+			this.panel.add(this.messageItem);
 			setPopupSize(250, 40);
 		}
 

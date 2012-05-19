@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -81,6 +82,12 @@ public class JPopupListItem extends JPanel implements JPopupItemI {
 	
 	public PictureObject getPicture() {
 		return this.picture;
+	}
+	
+	public List<PictureObject> getPictures() {
+		List<PictureObject> pictures = new ArrayList<PictureObject>();
+		pictures.add(this.picture);
+		return pictures;
 	}
 	
 	public void updateGUI() {

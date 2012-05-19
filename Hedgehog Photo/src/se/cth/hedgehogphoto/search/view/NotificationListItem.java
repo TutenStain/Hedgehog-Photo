@@ -2,9 +2,13 @@ package se.cth.hedgehogphoto.search.view;
 
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import se.cth.hedgehogphoto.database.PictureObject;
 
 /**
  * Represents an item which is added to the popup-preview.
@@ -14,14 +18,28 @@ import javax.swing.JPanel;
  */
 public class NotificationListItem extends JPanel implements JPopupItemI {
 	private JLabel notification;
-
+	private List<PictureObject> pictures;
+	
 	public NotificationListItem() {
-		this("default text");
+		initialize();
 	}
 	
+	@Deprecated
+	public NotificationListItem(List<PictureObject> pictures) {
+		this();
+		this.pictures = pictures;
+	}
+	
+	@Deprecated
 	public NotificationListItem(String message) {
+		this();
+		setMessage(message);
+	}
+	
+	private void initialize() {
 		setLayout(new FlowLayout());
-		this.notification = new JLabel(message);
+		this.pictures = new ArrayList<PictureObject>();
+		this.notification = new JLabel("default text");
 		add(this.notification);
 	}
 	
@@ -32,5 +50,14 @@ public class NotificationListItem extends JPanel implements JPopupItemI {
 	public void addMouseListener(MouseAdapter listener) {
 		super.addMouseListener(listener);
 		this.notification.addMouseListener(listener);
+	}
+	
+	public void setPictures(List<PictureObject> pictures) {
+		this.pictures = pictures;
+	}
+
+	@Override
+	public List<PictureObject> getPictures() {
+		return this.pictures;
 	}
 }
