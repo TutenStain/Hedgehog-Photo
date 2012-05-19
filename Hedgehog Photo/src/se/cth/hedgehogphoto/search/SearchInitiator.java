@@ -14,12 +14,9 @@ public class SearchInitiator {
 	
 	//TODO: Add plugin-annotations here?
 	public SearchInitiator() {
-		JPopupPreview previewView = new JPopupPreview();
-		this.view = new JSearchBox(previewView);
 		SearchModel model = new SearchModel();
-		model.addObserver(this.view);
-		model.addObserver(previewView);
-		this.view.setPreferredSize(new Dimension(250, 30));
+		JPopupPreview previewView = new JPopupPreview();
+		this.view = new JSearchBox(model, previewView);
 		new SearchController(model, this.view);
 	}
 	
