@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.List;
 
@@ -36,32 +37,28 @@ public class PhotoPanel extends JPanel {
 	}
 
 	public PhotoPanel(String path) {
-		nameTextField.setBackground(Color.LIGHT_GRAY);
-		setName(DaoFactory.getInstance().getJpaPictureDao().findById(path).getName());
-		PhotoPanelController ppc = new PhotoPanelController(path);
-		commentTextField.addFocusListener(new PhotoPanelFocusController(path,"comment"));
-		locationTextField.addFocusListener(new PhotoPanelFocusController(path,"location"));
-		nameTextField.addFocusListener(new PhotoPanelFocusController(path,"name"));
-		tagsTextField.addFocusListener(new PhotoPanelFocusController(path,"tags"));
-		commentTextField.addActionListener(ppc);
-		tagsTextField.addActionListener(ppc);
-		locationTextField.addActionListener(ppc);
-		nameTextField.addActionListener(ppc);
-		nameTextField.setActionCommand("name");
-		commentTextField.setActionCommand("comment");
-		tagsTextField.setActionCommand("tags");
-		locationTextField.setActionCommand("location");
-		commentTextField.setPreferredSize(new Dimension(100,20));
-		commentLabel.setPreferredSize(new Dimension(100,10));
-		locationTextField.setPreferredSize(new Dimension(100,20));
-		locationLabel.setPreferredSize(new Dimension(100,10));
-		tagsTextField.setPreferredSize(new Dimension(100,20));
-		tagsLabel.setPreferredSize(new Dimension(100,10));
-		nameTextField.setPreferredSize(new Dimension(100,20));
-		photoNameLabel.setPreferredSize(new Dimension(50,10));
+		this.nameTextField.setBackground(Color.LIGHT_GRAY);
+		this.setName(DaoFactory.getInstance().getJpaPictureDao().findById(path).getName());
+		this.commentTextField.addFocusListener(new PhotoPanelFocusController(path,"comment"));
+		this.locationTextField.addFocusListener(new PhotoPanelFocusController(path,"location"));
+		this.nameTextField.addFocusListener(new PhotoPanelFocusController(path,"name"));
+		this.tagsTextField.addFocusListener(new PhotoPanelFocusController(path,"tags"));
+		this.setTextFieldActionListeners(new PhotoPanelController(path));
+		this.nameTextField.setActionCommand("name");
+		this.commentTextField.setActionCommand("comment");
+		this.tagsTextField.setActionCommand("tags");
+		this.locationTextField.setActionCommand("location");
+		this.commentTextField.setPreferredSize(new Dimension(100,20));
+		this.commentLabel.setPreferredSize(new Dimension(100,10));
+		this.locationTextField.setPreferredSize(new Dimension(100,20));
+		this.locationLabel.setPreferredSize(new Dimension(100,10));
+		this.tagsTextField.setPreferredSize(new Dimension(100,20));
+		this.tagsLabel.setPreferredSize(new Dimension(100,10));
+		this.nameTextField.setPreferredSize(new Dimension(100,20));
+		this.photoNameLabel.setPreferredSize(new Dimension(50,10));
 
 		setLayout(new BorderLayout(0, 0));
-		this.setVisible(true);
+		setVisible(true);
 
 		JPanel commentsPanel = new JPanel();
 		commentsPanel.setLayout(new BorderLayout(0, 0));
@@ -142,7 +139,14 @@ public class PhotoPanel extends JPanel {
 
 		gBig.setConstraints(tagsTextField,tag);
 		add(tagsTextField);
-		PhotoPanelMouseController ppmc = new PhotoPanelMouseController(this);
+		new PhotoPanelMouseController(this);
+	}
+	
+	public void setTextFieldActionListeners(ActionListener al) {
+		this.commentTextField.addActionListener(al);
+		this.tagsTextField.addActionListener(al);
+		this.locationTextField.addActionListener(al);
+		this.nameTextField.addActionListener(al);
 	}
 	
 	public void setMouseListener(MouseListener l){
