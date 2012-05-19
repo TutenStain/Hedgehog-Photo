@@ -62,6 +62,7 @@ import javax.swing.Timer;
 import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.LocationObject;
+import se.cth.hedgehogphoto.log.Log;
 
 
 /**
@@ -104,7 +105,7 @@ import se.cth.hedgehogphoto.database.LocationObject;
  */
 public class MapPanel extends JPanel {
 
-    private static final Logger log = Logger.getLogger(MapPanel.class.getName());
+    private static final Logger log = Log.getLogger();
 
     public static final class TileServer {
         private final String url;
