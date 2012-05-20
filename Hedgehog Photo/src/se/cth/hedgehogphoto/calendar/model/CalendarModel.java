@@ -16,31 +16,31 @@ public class CalendarModel extends Observable {
 	private int month;
 	private int maxDays;
 	private int year;
-	private static CalendarModel m ;
+	private static CalendarModel model ;
 	private Map<Integer, List<PictureObject>> pictureDays;
 	private List<Integer> dayswithPicture = new ArrayList<Integer>();
-	private GregorianCalendar g= new GregorianCalendar();
+	private GregorianCalendar gregorianCalendar= new GregorianCalendar();
 
 	private  CalendarModel(DatabaseAccess db){
 		this.db = db;
-		month = g.get(GregorianCalendar.MONTH) + 1; 
-		System.out.print(g.get(GregorianCalendar.MONTH) + 1);
-		year = g.get(GregorianCalendar.YEAR);
-		System.out.println(year);
-		maxDays = g.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+		this.month = gregorianCalendar.get(GregorianCalendar.MONTH) + 1; 
+		System.out.print(gregorianCalendar.get(GregorianCalendar.MONTH) + 1);
+		this.year = gregorianCalendar.get(GregorianCalendar.YEAR);
+		System.out.println(this.year);
+		this.maxDays = gregorianCalendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 		getDates();
 	}
 
 	public static CalendarModel getInstance(DatabaseAccess db){
-		if(m==null){
-			m = new CalendarModel(db);
+		if(model == null){
+			model = new CalendarModel(db);
 		}
-		return m;
+		return model;
 	}
 
 
 	public int getMonth() {
-		return month;
+		return this.month;
 	}
 
 	public void setMonth(int month) {
@@ -48,7 +48,7 @@ public class CalendarModel extends Observable {
 	}
 
 	public int getMaxDays() {
-		return maxDays;
+		return this.maxDays;
 	}
 
 	public void setMaxDays(int maxDays) {
@@ -56,7 +56,7 @@ public class CalendarModel extends Observable {
 	}
 
 	public int getYear() {
-		return year;
+		return this.year;
 	}
 
 	public void setYear(int year) {
@@ -80,34 +80,34 @@ public class CalendarModel extends Observable {
 	}
 
 	public void backwards(){
-		if(((month) % 12) != 1){
-			month = month - 1;
+		if(((this.month) % 12) != 1){
+			this.month = this.month - 1;
 
 		}else{
-			month = 12;
-			year = year -1;
+			this.month = 12;
+			this.year = this.year -1;
 		}
 		
-		Date date = new Date(year,month-1,1); //TODO: Might want to change to Calendar.set(year + 1900, month, date) or GregorianCalendar(year + 1900, month, date)?
-		g.setTime(date);
-		maxDays = g.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+		Date date = new Date(this.year,this.month-1,1); //TODO: Might want to change to Calendar.set(this.year + 1900, this.month, date) or GregorianCalendar(this.year + 1900, this.month, date)?
+		gregorianCalendar.setTime(date);
+		this.maxDays = gregorianCalendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 		getDates();
 		
 		setChanged();
 		notifyObservers();
 	}
 	public void forwards(){
-		if(((month) % 12) != 0){
-			month = month + 1;
+		if(((this.month) % 12) != 0){
+			this.month = this.month + 1;
 		}else{
-			month = 1;
-			year = year + 1;
+			this.month = 1;
+			this.year = this.year + 1;
 		}
 		
 		@SuppressWarnings("deprecation")
-		Date date = new Date(year,month-1,1);
-		g.setTime(date);
-		maxDays = g.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+		Date date = new Date(this.year,this.month-1,1);
+		gregorianCalendar.setTime(date);
+		this.maxDays = gregorianCalendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 		getDates();
 		
 		setChanged();
@@ -119,10 +119,10 @@ public class CalendarModel extends Observable {
 		dayswithPicture = new ArrayList<Integer>(); 
 		
 		try{
-			for(int i = 1; i<=maxDays;i++){
+			for(int i = 1; i<=this.maxDays;i++){
 				List<PictureObject> pics =  new ArrayList<PictureObject>();
-				pics.addAll(db.searchPicturesfromDates(year + "-" + month + "-" + i));
-				pics.addAll(db.searchPicturesfromDates(year + ":" + month + ":" + i));
+				pics.addAll(db.searchPicturesfromDates(this.year + "-" + this.month + "-" + i));
+				pics.addAll(db.searchPicturesfromDates(this.year + ":" + this.month + ":" + i));
 				
 				if(!(pics.isEmpty()) && pics != null){
 					pictureDays.put(i, pics);
@@ -149,11 +149,11 @@ public class CalendarModel extends Observable {
 	}
 
 	public GregorianCalendar getCalendar() {
-		return g;
+		return gregorianCalendar;
 	}
 	
 	public String getMonthasString(){
-		switch (month){
+		switch (this.month){
 		case 1:
 			return "January";
 		case 2:
