@@ -19,4 +19,5 @@ public interface LocationObject {
 
 	public List<? extends AlbumI> getAlbums();
 
+	public boolean validPosition();
 }

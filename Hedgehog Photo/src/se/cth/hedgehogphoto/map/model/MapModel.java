@@ -11,8 +11,6 @@ import java.util.Observer;
 import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.database.Files;
-import se.cth.hedgehogphoto.database.Location;
-import se.cth.hedgehogphoto.database.LocationI;
 import se.cth.hedgehogphoto.database.LocationObject;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.log.Log;
@@ -43,17 +41,17 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 	protected void initialize() {
 		this.markerModels = new LinkedList<AbstractMarkerModel>();
 		List<PictureObject> pictures = Files.getInstance().getPictureList(); //fetch pictures
-		List<Location> locations = new LinkedList<Location>();
+		List<LocationObject> locations = new LinkedList<LocationObject>();
 		int nbrOfPictures = pictures.size();
 		Log.getLogger().log(Level.INFO, nbrOfPictures + " pictures were found in the Files-class.");
 		int index;
 		for (index = 0; index < nbrOfPictures; index++) {
 			PictureObject picture = pictures.get(index);
-			LocationI location = picture.getLocation();
+			LocationObject location = picture.getLocation();
 			if (location != null) {
 				if (location.validPosition()) { 
 					this.markerModels.add(new MarkerModel(picture));
-					locations.add((Location) picture.getLocation());
+					locations.add(picture.getLocation());
 					Log.getLogger().info(location.getLocation() + "\n" + location.getLongitude() + ", " + location.getLatitude() + "\n");
 					Log.getLogger().log(Level.INFO, "en location!");
 				}
@@ -99,7 +97,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 		}
 	}
 	
-	public void calibrateMap(List<Location> locations) {
+	public void calibrateMap(List<LocationObject> locations) {
 		getMapPanel().calibrate(locations);
 		getMapPanel().addPropertyChangeListener(this);
 	}

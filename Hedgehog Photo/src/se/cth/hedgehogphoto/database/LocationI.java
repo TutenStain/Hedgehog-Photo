@@ -18,7 +18,4 @@ public interface LocationI extends LocationObject {
 	public void setLocation(String location);
 
 	public void setAlbums(List<? extends AlbumI> albums);
-	
-	public boolean validPosition();
-
 }

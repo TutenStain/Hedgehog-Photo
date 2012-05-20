@@ -250,10 +250,10 @@ public class MapPanel extends JPanel {
     					HERE COMES SOME IMPORTANT CODE @author Florian
     ---------------------------------------------------------------------*/
     
-    private List<Location> locations;
+    private List<LocationObject> locations;
     private LocationObject centerLocation;
     
-    public void calibrate(List<Location> locations) {
+    public void calibrate(List<LocationObject> locations) {
     	setBounds(0, 0, PREFERRED_WIDTH, PREFERRED_HEIGHT);
     	this.locations = locations;
     	updateCenterLocation();

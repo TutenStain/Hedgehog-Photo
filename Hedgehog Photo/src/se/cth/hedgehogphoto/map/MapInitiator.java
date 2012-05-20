@@ -27,7 +27,7 @@ public class MapInitiator {
         new MapController(map);
 	}
 	
-	@Panel(placement=PluginArea.LEFT_MIDDLE)
+	@Panel(placement=PluginArea.LEFT_TOP)
 	public JPanel getJPanel() {
 		return this.map;
 	}
