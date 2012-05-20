@@ -41,7 +41,6 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
-import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
