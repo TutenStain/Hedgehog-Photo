@@ -1181,7 +1181,6 @@ public class MapPanel extends JPanel {
         }
     }
     
-    @SuppressWarnings("serial")
 	public static class CustomSplitPane extends JComponent  {
         private static final int SPACER_SIZE = 4;
         private final boolean horizonal;
@@ -1411,7 +1410,7 @@ public class MapPanel extends JPanel {
         }
     }
 
-    @SuppressWarnings("serial")
+  
 	public final class OverlayPanel extends JPanel {
 
         private OverlayPanel() {
@@ -1455,7 +1454,6 @@ public class MapPanel extends JPanel {
         }
     }
 
-    @SuppressWarnings("serial")
 	public final class ControlPanel extends JPanel {
 
         protected static final int MOVE_STEP = 32;

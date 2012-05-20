@@ -1,12 +1,9 @@
-package se.cth.hedgehogphoto.search.model;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.PictureObject;
-
 
 
 /**
@@ -37,20 +34,21 @@ public class SearchThread extends Thread {
 	public List<PictureObject> search(){
 		List<PictureObject> search = new ArrayList<PictureObject>();
 
-		if(db.searchPicturefromsLocations(searchText) != null){
+		/*if(db.searchPicturefromsLocations(searchText) != null){
 			search.addAll(db.searchPicturefromsLocations(searchText));
-		}
+		}*/
 		
-		if(db.searchPicturesfromTags(searchText) != null){
+		/*if(db.searchPicturesfromTags(searchText) != null){
 			search.addAll(db.searchPicturesfromTags(searchText));
-		}
+		}*/
 		
 		if(db.searchPicturesfromComments(searchText) != null){
 			search.addAll(db.searchPicturesfromComments(searchText));
 		}
 		
 		removeDuplicates(search);
-		
+				
+		System.out.println("-------Returning Search: " + search);
 		return search;
 	}
 	

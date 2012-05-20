@@ -1,5 +1,3 @@
-package se.cth.hedgehogphoto.search.view;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -14,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import se.cth.hedgehogphoto.database.PictureObject;
+import se.cth.hedgehogphoto.database.TagI;
 import se.cth.hedgehogphoto.database.TagObject;
 import se.cth.hedgehogphoto.view.ImageUtils;
 

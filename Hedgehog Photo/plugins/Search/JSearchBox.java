@@ -1,5 +1,3 @@
-package se.cth.hedgehogphoto.search.view;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -12,9 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
-
-import se.cth.hedgehogphoto.search.model.SearchConstants;
-import se.cth.hedgehogphoto.search.model.SearchModel;
 
 /**
  * @author Barnabas Sapan

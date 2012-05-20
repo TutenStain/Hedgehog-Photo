@@ -1,19 +1,12 @@
-package se.cth.hedgehogphoto.search;
-
 import javax.swing.JPanel;
 
+import se.cth.hedgehogphoto.plugin.InitializePlugin;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.plugin.GetDatabase;
 import se.cth.hedgehogphoto.plugin.GetVisibleFiles;
-import se.cth.hedgehogphoto.plugin.InitializePlugin;
 import se.cth.hedgehogphoto.plugin.Panel;
 import se.cth.hedgehogphoto.plugin.Plugin;
-import se.cth.hedgehogphoto.search.controller.SearchController;
-import se.cth.hedgehogphoto.search.model.SearchModel;
-import se.cth.hedgehogphoto.search.view.JPopupPreview;
-import se.cth.hedgehogphoto.search.view.JSearchBox;
-import se.cth.hedgehogphoto.search.view.PreviewI;
 import se.cth.hedgehogphoto.view.PluginArea;
 
 @Plugin(name="Search", version="1.0", 

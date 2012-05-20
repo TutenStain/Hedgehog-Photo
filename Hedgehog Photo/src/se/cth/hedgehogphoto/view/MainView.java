@@ -161,7 +161,6 @@ public class MainView implements Observer {
 					layers[0].stopAndRemove();
 					leftPanelView.remove(0);
 					leftPanelView.add(panel, 0);
-					
 				}
 
 				if(placement == PluginArea.LEFT_MIDDLE){

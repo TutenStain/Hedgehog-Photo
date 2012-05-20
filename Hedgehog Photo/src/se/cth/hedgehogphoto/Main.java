@@ -64,12 +64,7 @@ public class Main {
 		new MapController(map);
 		view.addPlugin(map, PluginArea.LEFT_TOP);
 		
-		//Search gets loaded from plugin dir now
-		SearchInitiator search = new SearchInitiator();
-
 		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(view);
-
-		view.addPlugin(search.getView(), PluginArea.SEARCH);
 
 		model.testNotify();
 	}
