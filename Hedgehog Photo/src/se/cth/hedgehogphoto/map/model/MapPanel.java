@@ -461,11 +461,11 @@ public class MapPanel extends JPanel {
         setMapPosition(mapPosition.x + tx, mapPosition.y + ty);
     }
 
-    public int getZoom() {
+    protected int getZoom() {
         return zoom;
     }
 
-    public void setZoom(int zoom) {
+    protected void setZoom(int zoom) {
         if (zoom == MapPanel.zoom) 
             return;
         MapPanel.zoom = Math.min(getTileServer().getMaxZoom(), zoom);
