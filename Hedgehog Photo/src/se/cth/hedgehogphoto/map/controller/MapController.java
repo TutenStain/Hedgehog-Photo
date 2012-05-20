@@ -47,7 +47,6 @@ public class MapController implements PropertyChangeListener {
 		public void mouseReleased(MouseEvent arg0) {}
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			//TODO: Make a search in the database
 			if (arg0.getSource() instanceof AbstractJOverlayMarker) {
 				AbstractJOverlayMarker marker = (AbstractJOverlayMarker) arg0.getSource();
 				List<PictureObject> pictures = new ArrayList<PictureObject>();
@@ -66,11 +65,6 @@ public class MapController implements PropertyChangeListener {
 			if (arg0.getSource() instanceof AbstractJOverlayPanel) {
 				AbstractJOverlayPanel marker = (AbstractJOverlayPanel) arg0.getSource();
 			}
-			//TODO: don't check instanceof here
-			//call mapView.showInfoPanel(MouseEvent arg0)
-			//Create class called LocationInfoPanel (or something like that)
-			//	let it extend AbstractJOverlayLabel (which has to change name ending to Component?)
-			//Create new class AbstractMarker, which extends AbstractJOverlayComponent and implements a method getPictures()
 		}
 
 		@Override
