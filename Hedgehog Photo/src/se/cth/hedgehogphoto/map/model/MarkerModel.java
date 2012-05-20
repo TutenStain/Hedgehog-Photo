@@ -32,12 +32,12 @@ public class MarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	int getXOffset() {
+	protected int getXOffset() {
 		return getComponentWidth() / 2;
 	}
 
 	@Override
-	int getYOffset() {
+	protected int getYOffset() {
 		return getComponentHeight();
 	}
 
@@ -48,7 +48,7 @@ public class MarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	int computeNumberOfLocations() {
+	protected int computeNumberOfLocations() {
 		return 1;
 	}
 
@@ -58,7 +58,7 @@ public class MarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	Point.Double getLonglat() {
+	protected Point.Double getLonglat() {
 		return new Point.Double(getLongitude(), getLatitude());
 	}
 

@@ -32,8 +32,8 @@ public class JPopupPreview extends JPopupMenu implements PreviewI {
 	private static final int MAX_LIST_ITEMS = 5;
 
 	public JPopupPreview(){
-		this.listItems = new JPopupListItem[this.MAX_LIST_ITEMS];
-		for (int index = 0; index < this.MAX_LIST_ITEMS; index++) {
+		this.listItems = new JPopupListItem[JPopupPreview.MAX_LIST_ITEMS];
+		for (int index = 0; index < JPopupPreview.MAX_LIST_ITEMS; index++) {
 			this.listItems[index] = new JPopupListItem();
 		}
 		

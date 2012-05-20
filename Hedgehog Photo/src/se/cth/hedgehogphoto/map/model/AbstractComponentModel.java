@@ -68,8 +68,8 @@ public abstract class AbstractComponentModel extends Observable
 	
 	/** Returns the distance from the stored position to
 	 * the X and Y position that it actually points at. */
-	abstract int getXOffset();
-	abstract int getYOffset();
+	protected abstract int getXOffset();
+	protected abstract int getYOffset();
 	
 	/** Sets the position. */
 	public void setPosition(Point p) {

@@ -14,7 +14,7 @@ import se.cth.hedgehogphoto.database.PictureObject;
  */
 public abstract class AbstractMarkerModel extends AbstractComponentModel {
 	private String iconPath;
-	int numberOfLocations; 
+	private int numberOfLocations; 
 	
 	@Override
 	public void initialize() {
@@ -59,14 +59,14 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 	
 	/** Returns the x-difference between the top-left corner and the
 	 *  position this marker points at. */
-	abstract int getXOffset(); 
+	protected abstract int getXOffset(); 
 	
 	/** Returns the y-difference between the top-left corner and the
 	 *  position this marker points at. */
-	abstract int getYOffset(); 
+	protected abstract int getYOffset(); 
 	
-	abstract void handleVisibility();
-	abstract Point.Double getLonglat();
+	protected abstract void handleVisibility();
+	protected abstract Point.Double getLonglat();
 	
 	@Override
 	protected void handleZoom() { 

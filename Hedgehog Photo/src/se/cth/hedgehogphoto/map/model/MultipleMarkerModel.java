@@ -17,6 +17,7 @@ public class MultipleMarkerModel extends AbstractMarkerModel {
 	/* Will currently ALWAYS hold 2 markers. */
 	private List<AbstractMarkerModel> markers; 
 	private Point.Double longlat;
+	
 	public MultipleMarkerModel(AbstractMarkerModel markerOne, AbstractMarkerModel markerTwo) {
 		this.markers = new ArrayList<AbstractMarkerModel>();
 		this.markers.add(markerOne);
@@ -83,12 +84,12 @@ public class MultipleMarkerModel extends AbstractMarkerModel {
 	}
 	
 	@Override
-	int getXOffset() {
+	protected int getXOffset() {
 		return getComponentWidth() / 2;
 	}
 
 	@Override
-	int getYOffset() {
+	protected int getYOffset() {
 		return getComponentHeight() / 2;
 	}
 
@@ -102,7 +103,7 @@ public class MultipleMarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	int computeNumberOfLocations() {
+	protected int computeNumberOfLocations() {
 		int nbrOfPictures = 0;
 		int nbrOfMarkers = this.markers.size();
 		for (int index = 0; index < nbrOfMarkers; index++) {
@@ -112,7 +113,7 @@ public class MultipleMarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	Point.Double getLonglat() {
+	protected Point.Double getLonglat() {
 		if (this.longlat == null)
 			computeLonglat();
 		return this.longlat;
