@@ -59,7 +59,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import se.cth.hedgehogphoto.Constants;
-import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.LocationObject;
 import se.cth.hedgehogphoto.log.Log;
 
@@ -228,7 +227,6 @@ public class MapPanel extends JPanel {
         setZoom(zoom);
         updateMapPositionWithoutFire(mapPosition.x, mapPosition.y);
 
-//        searchPanel = new SearchPanel(); /* IF POSSIBLE: check if it is possible to remove this panel, since it is not used right now */
         checkTileServers();
         checkActiveTileServer();
         interactionEnabled = false; //will prevent listener to work correctly
@@ -243,7 +241,7 @@ public class MapPanel extends JPanel {
     ---------------------------------------------------------------------*/
     
     private List<LocationObject> locations;
-    private LocationObject centerLocation;
+    private Point.Double centerLocation;
     
     public void calibrate(List<LocationObject> locations) {
     	setBounds(0, 0, PREFERRED_WIDTH, PREFERRED_HEIGHT);
@@ -258,7 +256,7 @@ public class MapPanel extends JPanel {
     /** Calculates the proper zoom so that every location fits on the 
 	 *  visible part of the map. */
 	private void adjustZoom() {
-		if (centerLocation.getLongitude() == 0.0 && centerLocation.getLatitude() == 0.0) {
+		if (centerLocation.getX() == 0.0 && centerLocation.getY() == 0.0) {
 			setZoom(1);
 			centerMap();
 			return;
@@ -277,15 +275,14 @@ public class MapPanel extends JPanel {
 	private void updateCenterLocation() {
 		//TODO FLORAN, somehow remove the dependency on Location, 
 		//use LocationI or LocatioObject instead.
-		Location location = new Location();
-		location.setLongitude(averageLongitude());
-		location.setLatitude(averageLatitude());
+		Point.Double location = new Point.Double();
+		location.setLocation(averageLongitude(), averageLatitude());
 		centerLocation = location;
 	}
 	
 	/** Tells the map to center its' view to the specified centerLocation. */
 	private void centerMap() {
-		Point position = computeMapPosition(centerLocation);
+		Point position = computeMapPosition(centerLocation.getX(), centerLocation.getY());
 		setCenterPosition(position);
 	}
 	
