@@ -493,21 +493,27 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		if(findById(f.getFilePath())==null){
 			Album album = new Album();
 			if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
-				String albumName= f.getAlbumName().toLowerCase();
+				String albumName ="";
+				try{
+				albumName= f.getAlbumName().toLowerCase();
 				String s =f.getAlbumName().charAt(0) + "";
 				albumName  = s.toUpperCase() + albumName.substring(1);
+				}catch(Exception u){
+					
+				}
 				if(!(albumName.equals(""))){
-					try{
+					
 						album = albumDao.findById(albumName);
+						if(album != null){
 						beginTransaction();
 						try{
+							
 							if(album.getCoverPath().equals("")|| album.getCoverPath()==null)
 								album.setCoverPath(f.getFilePath());
 						}catch(Exception o){		
 						}
 						commitTransaction();
-					}
-					catch(Exception i){
+					}else{
 						beginTransaction();
 						album = new Album();	
 						album.setAlbumName(albumName);
@@ -518,14 +524,25 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				}
 			}
 			Picture picture = new Picture();
-			String date = f.getDate().toLowerCase();
+			String date  = "";
+			String fileName = "";
+			try{
+		 date = f.getDate().toLowerCase();
 			String s = f.getDate().charAt(0) + "";
 			date  = s.toUpperCase() + date.substring(1);
-			String fileName = f.getFileName().toLowerCase();
-			s = f.getFileName().charAt(0) + "";
-			fileName = s.toUpperCase() + fileName.substring(1);
+			}catch(Exception u){
+				
+			}
 			try{
+			 fileName = f.getFileName().toLowerCase();
+			String s = f.getFileName().charAt(0) + "";
+			fileName = s.toUpperCase() + fileName.substring(1);
+	}catch(Exception u){
+				
+			}
+				
 				picture = findById(f.getFilePath());
+				if(picture != null){
 				beginTransaction();
 				if(!(f.getDate().equals("")))
 					picture.setDate(date);
@@ -537,7 +554,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					thePictures.add(picture);
 				album.setPictures(thePictures);
 				commitTransaction();
-			}catch(Exception o){
+			}else{
 				if(entityManager.getTransaction().isActive())
 					entityManager.getTransaction().commit();
 				beginTransaction();
@@ -586,7 +603,8 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			}
 
 			catch(Exception k){
-				if(commentDao.findById(f.getComment().toLowerCase())==null){
+	
+				if(commentDao.findById(f.getComment())==null){
 					beginTransaction();
 					Comment comment = new Comment();		
 					comment.setComment(f.getComment().toLowerCase());		
@@ -606,7 +624,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			if(f.getTags() != null){
 				List<String> tags = new ArrayList<String>();
 				for(String tagg: f.getTags()){
-					tags.add(tagg.toLowerCase());
+					tags.add(tagg);
 				}
 				List<String> pictags = new ArrayList<String>();
 				for(TagObject tagg: picture.getTags()){

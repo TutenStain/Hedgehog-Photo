@@ -101,7 +101,11 @@ public class Album implements AlbumObject, AlbumI {
 
 	@Override
 	public String toString() {
+		try{
 		tags.size();
+		}catch(Exception o){
+			
+		}
 		return " Album [CoverPath=  " + coverPath+ ", AlbumName= " + albumName + "Location= " + location + "Comment= "+ comment + "Tags= " + tags +"Date= " + date+  "] ";
 	}
 }
