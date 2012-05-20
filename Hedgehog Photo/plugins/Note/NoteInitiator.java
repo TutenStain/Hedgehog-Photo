@@ -1,4 +1,3 @@
-
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.plugin.InitializePlugin;
@@ -6,20 +5,24 @@ import se.cth.hedgehogphoto.plugin.Panel;
 import se.cth.hedgehogphoto.plugin.Plugin;
 import se.cth.hedgehogphoto.view.PluginArea;
 
+/**
+ * @author David
+ */
+
 @Plugin(name="Note", version="1.0", 
 author="David Grankvist", description="N/A")
-public class Mainn {
+public class NoteInitiator {
 	private NoteView view;
 	
 	@InitializePlugin
 	public void start() {
 		NoteModel model = new NoteModel();
-		view = new NoteView(model);
+		this.view = new NoteView(model);
 		new NoteController(model, view);
 	}
 
 	@Panel(placement=PluginArea.LEFT_MIDDLE)
 	public JPanel get(){
-		return view;	
+		return this.view;	
 	}
 }

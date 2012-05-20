@@ -3,6 +3,11 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author David Grankvist
+ */
+
 public class PaintUtils {
 	
 	public static void paintOval(Graphics g, int x, int y, int w, int h, Color c){
@@ -22,8 +27,8 @@ public class PaintUtils {
 		g.setColor(c);
 		g.drawRect(x, y, w, h);
 	}
-	/*Graphically resets a white JPanel*/
+	
 	public static void erasePainting(JPanel panel){
-		paintRect(panel.getGraphics(), 0, 0, panel.getWidth(), panel.getHeight(), Color.white);
+		paintRect(panel.getGraphics(), 0, 0, panel.getWidth(), panel.getHeight(), panel.getBackground());
 	}
 }

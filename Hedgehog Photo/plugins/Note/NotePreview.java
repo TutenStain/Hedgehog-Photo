@@ -1,17 +1,13 @@
-
-
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Observable;
 
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
+/**
+ * 
+ * @author David Grankvist
+ */
+
+@SuppressWarnings("serial")
 public class NotePreview extends JPanel{
 	
 	public NotePreview(){
