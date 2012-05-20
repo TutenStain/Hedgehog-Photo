@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ChangeListener;
 
 import se.cth.hedgehogphoto.Constants;
+import se.cth.hedgehogphoto.controller.PhotoPanelActionListener;
+import se.cth.hedgehogphoto.controller.PhotoPanelFocusListener;
+import se.cth.hedgehogphoto.controller.PhotoPanelMouseListener;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.log.Log;
@@ -52,13 +57,18 @@ public class MainView implements Observer {
 	private List<Dimension> newDimensions;
 	//TODO this list probably needs to be removed, not enough MVC
 	private List<PhotoPanel> photoPanels;
+	
+	private ActionListener actionListener;
+	private FocusListener focusListener;
+	private MouseAdapter mouseListener;
 
-	public MainView(StartUpView startView) {
+	public MainView(JFrame startView) {
 		initialize(startView);
 	}
 
-	private void initialize(StartUpView startView) {
+	private void initialize(JFrame startView) {
 		frame = startView;
+		this.photoPanels = new ArrayList<PhotoPanel>();
 		//TODO Minimum size?
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		JPanel bottomPanel = new JPanel();
@@ -184,6 +194,33 @@ public class MainView implements Observer {
 			Log.getLogger().log(Level.SEVERE, "Could not add plugin panel to the view, panel is null");
 		}
 	}
+	
+	public void addPhotoPanelActionListeners(ActionListener listener) {
+		this.actionListener = listener;
+		for (PhotoPanel panel : photoPanels) {
+			panel.setTextFieldActionListeners(listener);
+		}
+	}
+	
+	public void addPhotoPanelMouseListener(MouseAdapter listener) {
+		this.mouseListener = listener;
+		for (PhotoPanel panel : photoPanels) {
+			panel.addMouseListener(listener);
+		}
+	}
+	
+	public void addPhotoPanelFocusListener(FocusListener listener) {
+		this.focusListener = listener;
+		for (PhotoPanel panel : photoPanels) {
+			panel.setTextFieldFocusListeners(listener);
+		}
+	}
+	
+	private void addListenersToAll() {
+		addPhotoPanelActionListeners(actionListener);
+		addPhotoPanelFocusListener(focusListener);
+		addPhotoPanelMouseListener(mouseListener);
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -205,6 +242,7 @@ public class MainView implements Observer {
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 			}
+			addListenersToAll();
 		}
 
 		if(arg1 instanceof Files){
@@ -217,6 +255,7 @@ public class MainView implements Observer {
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
 			}
+			addListenersToAll();
 		}
 		newDimensions = new ArrayList<Dimension>();
 		//TODO just a test

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseListener;
 import java.util.List;
 
@@ -14,8 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import se.cth.hedgehogphoto.controller.PhotoPanelFocusListener;
 import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.TagObject;
+import se.cth.hedgehogphoto.model.PhotoPanelConstantsI;
 import se.cth.hedgehogphoto.objects.FileObject;
 
 @SuppressWarnings("serial")
@@ -32,19 +35,20 @@ public class PhotoPanel extends JPanel {
 	private JLabel iconLabel = new JLabel("");
 	private ImageIcon icon;
 	private boolean isClicked;
+	private String path;
 
 	public PhotoPanel(FileObject f) {
 		this(f.getFilePath());
 	}
 
 	public PhotoPanel(String path) {
+		this.path = path;
 		this.nameTextField.setBackground(Color.LIGHT_GRAY);
 		this.setName(DaoFactory.getInstance().getJpaPictureDao().findById(path).getName());
-		this.commentTextField.addFocusListener(new PhotoPanelFocusController(path,"comment"));
-		this.locationTextField.addFocusListener(new PhotoPanelFocusController(path,"location"));
-		this.nameTextField.addFocusListener(new PhotoPanelFocusController(path,"name"));
-		this.tagsTextField.addFocusListener(new PhotoPanelFocusController(path,"tags"));
-		this.setTextFieldActionListeners(new PhotoPanelController(path));
+		this.commentTextField.setName(PhotoPanelConstantsI.COMMENT);
+		this.locationTextField.setName(PhotoPanelConstantsI.LOCATION);
+		this.nameTextField.setName(PhotoPanelConstantsI.NAME);
+		this.tagsTextField.setName(PhotoPanelConstantsI.TAGS);
 		this.nameTextField.setActionCommand("name");
 		this.commentTextField.setActionCommand("comment");
 		this.tagsTextField.setActionCommand("tags");
@@ -140,7 +144,10 @@ public class PhotoPanel extends JPanel {
 
 		gBig.setConstraints(tagsTextField,tag);
 		add(tagsTextField);
-		new PhotoPanelMouseController(this);
+	}
+	
+	public String getPath() {
+		return this.path;
 	}
 	
 	public void setTextFieldActionListeners(ActionListener al) {
@@ -148,6 +155,13 @@ public class PhotoPanel extends JPanel {
 		this.tagsTextField.addActionListener(al);
 		this.locationTextField.addActionListener(al);
 		this.nameTextField.addActionListener(al);
+	}
+	
+	public void setTextFieldFocusListeners(FocusListener listener) {
+		this.commentTextField.addFocusListener(listener);
+		this.tagsTextField.addFocusListener(listener);
+		this.locationTextField.addFocusListener(listener);
+		this.nameTextField.addFocusListener(listener);
 	}
 	
 	public boolean isClicked(){
