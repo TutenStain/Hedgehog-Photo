@@ -90,25 +90,6 @@ public class MapView extends JPanel implements Observer {
 		this.validate(); //have to validate to see changes
 	}
 	
-	@Deprecated
-	private AbstractJOverlayMarker getMarkerGUI(AbstractMarkerModel model) 
-													throws NoMatchingGUIException { //TODO: Do we need this method?
-		int nbrOfModels = this.locationMarkers.size();
-		for (int index = 0; index < nbrOfModels; index++) {
-			AbstractJOverlayMarker marker = this.locationMarkers.get(index);
-			if (marker.getModel() == model)
-				return marker;
-		}
-		throw new NoMatchingGUIException();
-	}
-	
-	@Deprecated
-	private class NoMatchingGUIException extends Exception {
-		public NoMatchingGUIException() {
-			super("No GUI with that model found.");
-		}
-	}
-	
 	public void addListener(MouseAdapter mouseAdapter) {
 		int nbrOfMarkers = this.locationMarkers.size();
 		for (int index = 0; index < nbrOfMarkers; index++) {

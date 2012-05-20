@@ -42,7 +42,7 @@ public class MapController implements PropertyChangeListener {
 	 * MouseListener-class for the markers.
 	 * @author Florian
 	 */
-	public class MarkerListener extends MouseAdapter {
+	public static class MarkerListener extends MouseAdapter {
 		@Override
 		public void mouseReleased(MouseEvent arg0) {}
 		@Override
