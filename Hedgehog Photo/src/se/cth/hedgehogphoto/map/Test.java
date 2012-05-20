@@ -19,7 +19,7 @@ import se.cth.hedgehogphoto.map.model.MapModel;
 
 public class Test {
     private JFrame frame = new JFrame();
-    public static List<Location> locations;
+    protected static List<Location> locations;
     
     public Test(List<Location> locations)
     {

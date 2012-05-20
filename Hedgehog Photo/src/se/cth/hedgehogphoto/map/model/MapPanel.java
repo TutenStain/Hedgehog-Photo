@@ -181,7 +181,7 @@ public class MapPanel extends JPanel {
     // map impl.
     
     private static Point mapPosition = new Point(0, 0);
-    public static int zoom;
+    protected static int zoom;
     private Dimension mapSize = new Dimension(0, 0);
     private Point centerPosition = new Point(0, 0);
 
