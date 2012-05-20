@@ -64,6 +64,7 @@ public class MapController implements PropertyChangeListener {
 			arg0.getComponent().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			if (arg0.getSource() instanceof AbstractJOverlayPanel) {
 				AbstractJOverlayPanel marker = (AbstractJOverlayPanel) arg0.getSource();
+				//TODO: Show an overlay info-label in the map (not yet created)
 			}
 		}
 

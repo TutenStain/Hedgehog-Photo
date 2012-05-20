@@ -167,8 +167,6 @@ public class MapPanel extends JPanel {
         "Please visit and support the actual projects at http://www.openstreetmap.org/.\r\n" +
         "And keep in mind this application is just a simple alternative renderer for swing.\r\n";
 
-    /* Has to do with the maps size (ie whats visible). 
-     * Don't change this (Stepan Rutz implementation)*/
     private static final int MAGNIFIER_SIZE = 100; 
 
     //-------------------------------------------------------------------------
@@ -178,7 +176,6 @@ public class MapPanel extends JPanel {
     public static String getTileString(TileServer tileServer, int xtile, int ytile, int zoom) {
         String number = ("" + zoom + "/" + xtile + "/" + ytile);
         String url = tileServer.getURL() + number + ".png";
-        //System.err.println(url);
         return url;
     }
 
@@ -194,8 +191,6 @@ public class MapPanel extends JPanel {
 
     private DragListener mouseListener = new DragListener();
     private TileCache cache = new TileCache();
-    private Stats stats = new Stats();
-    private OverlayPanel overlayPanel = new OverlayPanel(); /* TODO: Eliminate the need of this class, and then erase it. */
     private ControlPanel controlPanel = new ControlPanel(); /* IF POSSIBLE: Modify this class to better serve our purposes? */
 
     private boolean useAnimations = true;
@@ -204,7 +199,6 @@ public class MapPanel extends JPanel {
     protected double smoothScale = 1.0D;
     private int smoothOffset = 0;
     private Point smoothPosition, smoothPivot;
-//    private SearchPanel searchPanel;
     private Rectangle magnifyRegion;
     
     /** If true, it's possible to move around and scroll in the map. 
@@ -228,7 +222,6 @@ public class MapPanel extends JPanel {
         setLayout(new MapLayout());
         setOpaque(true);
         setBackground(new Color(0xc0, 0xc0, 0xc0));
-        add(overlayPanel); /* TODO: Erase this line OR make the overlayPanel display buttons where the locations are */
         add(controlPanel);
         addMouseListener(mouseListener);
         addMouseMotionListener(mouseListener);
@@ -258,7 +251,6 @@ public class MapPanel extends JPanel {
     	this.locations = locations;
     	updateCenterLocation();
     	adjustZoom();
-    	enableOverlayPanel(false);
 		enableControlPanel(true);
 		enableInteraction(true);
 		setOpaque(true);
@@ -386,6 +378,7 @@ public class MapPanel extends JPanel {
 //    	}
 //    }
 
+	@SuppressWarnings("unused")
 	private void checkTileServers() {
         for (TileServer tileServer : TILESERVERS) {
             String urlstring = getTileString(tileServer, 1, 1, 1);
@@ -405,11 +398,12 @@ public class MapPanel extends JPanel {
         if (getTileServer() != null && getTileServer().isBroken()) {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
+                	String error = "The tileserver \"" + getTileServer().getURL() + "\" could not be reached.\r\nMaybe configuring a http-proxy is required.";
                     JOptionPane.showMessageDialog(
                             SwingUtilities.getWindowAncestor(MapPanel.this),
-                            "The tileserver \"" + getTileServer().getURL() + "\" could not be reached.\r\nMaybe configuring a http-proxy is required.",
-                            "TileServer not reachable.", JOptionPane.ERROR_MESSAGE);
-//                    throw new TileServerException();
+                            error, "TileServer not reachable.", JOptionPane.ERROR_MESSAGE);
+                    Log.getLogger().log(Level.SEVERE, error);
+                    //TODO: Instead of loading markers, display error-screen?
                 }
             });
         }
@@ -444,24 +438,12 @@ public class MapPanel extends JPanel {
         this.useAnimations = useAnimations;
     }
 
-    public OverlayPanel getOverlayPanel() {
-        return overlayPanel;
-    }
-
     public ControlPanel getControlPanel() {
         return controlPanel;
     }
-    /*
-    public SearchPanel getSearchPanel() {
-        return searchPanel;
-    }*/
     
     public TileCache getCache() {
         return cache;
-    }
-    
-    public Stats getStats() {
-        return stats;
     }
 
     public Point getMapPosition() {
@@ -513,14 +495,7 @@ public class MapPanel extends JPanel {
     
     /** Hides/shows overlay and control panel */
     public void enableAllOverlayPanels(boolean state) {
-    	enableOverlayPanel(state);
     	enableControlPanel(state);
-    }
-    
-    /** Doesn't actually enable/disable the panel,
-     * just hides or shows it. */
-    public void enableOverlayPanel(boolean state) {
-    	getOverlayPanel().setVisible(state);
     }
     
     /** Doesn't actually enable/disable the panel,
@@ -733,7 +708,6 @@ public class MapPanel extends JPanel {
                     for (int x = x0; x < x1; ++x) {
                         paintTile(g, dx, dy, x, y);
                         dx += TILE_SIZE;
-                        ++mapPanel.getStats().tileCount;
                     }
                     dy += TILE_SIZE;
                 }
@@ -791,8 +765,6 @@ public class MapPanel extends JPanel {
     }
 
     private void paintInternal(Graphics2D g) {
-        stats.reset();
-        long t0 = System.currentTimeMillis();
 
         if (smoothPosition != null) {
             {
@@ -822,11 +794,6 @@ public class MapPanel extends JPanel {
             Painter painter = new Painter(this, getZoom());
             painter.paint(g, position, null);
         }
-
-        /* IF POSSIBLE: Only used once, when to write how long it took to paint = unneccesary! 
-         * Delete the time-counting lines... */
-        long t1 = System.currentTimeMillis();
-        stats.dt = t1 - t0; 
         
         /** DO NOT REMOVE THIS CASE
          *	Since width/height of the panel initially is 0 before its painted,
@@ -837,7 +804,7 @@ public class MapPanel extends JPanel {
          **/
         if (centerPosition.equals(mapPosition) && legitMapSize()) {
         	setCenterPosition(centerPosition); 
-        	paintInternal(g); /* calls itself */
+        	paintInternal(g); /* calls itself, DANGEROUS. Could end up in eternal loop. */
         }
     }
     
@@ -1158,28 +1125,20 @@ public class MapPanel extends JPanel {
                 return remove;
             }
         };
+        
         public void put(TileServer tileServer, int x, int y, int z, Image image) {
             map.put(new Tile(tileServer.getURL(), x, y, z), image);
         }
+        
         public Image get(TileServer tileServer, int x, int y, int z) {
             //return map.get(new Tile(x, y, z));
             Image image = map.get(new Tile(tileServer.getURL(), x, y, z));
             return image;
         }
+        
+        @SuppressWarnings("unused")
         public int getSize() {
             return map.size();
-        }
-    }
-
-    private static class Stats {
-        private int tileCount;
-        private long dt;
-        private Stats() {
-            reset();
-        }
-        private void reset() {
-            tileCount = 0;
-            dt = 0;
         }
     }
     
@@ -1380,8 +1339,7 @@ public class MapPanel extends JPanel {
 
         private void handlePosition(MouseEvent e) {
             mouseCoords = e.getPoint();
-            if (overlayPanel.isVisible())
-                MapPanel.this.repaint();
+            MapPanel.this.repaint();
         }
 
         private void handleDrag(MouseEvent e) {
@@ -1409,50 +1367,6 @@ public class MapPanel extends JPanel {
             } else {
                 zoomOutAnimated(new Point(mouseCoords.x, mouseCoords.y));
             }
-        }
-    }
-
-  
-	public final class OverlayPanel extends JPanel {
-
-        private OverlayPanel() {
-            setOpaque(false);
-            setPreferredSize(new Dimension(370, 12 * 16 + 12));
-        }
-
-        protected void paintComponent(Graphics gOrig) {
-            super.paintComponent(gOrig);
-            Graphics2D g = (Graphics2D) gOrig.create();
-            try {
-                paintOverlay(g);
-            } finally {
-                g.dispose();
-            }
-        }
-
-        //WATCH THIS: Query info from mappanel
-        private void paintOverlay(Graphics2D g) {
-            drawBackground(g, getWidth(), getHeight());
-            g.setColor(Color.black);
-            drawString(g, 0, "Zoom", Integer.toString(getZoom()));
-            drawString(g, 1, "MapSize", mapSize.width + ", " + mapSize.height);
-            drawString(g, 2, "MapPosition", mapPosition.x + ", " + mapPosition.y);
-            drawString(g, 3, "CursorPosition", (getCursorPosition().x + ", " + getCursorPosition().y)); //removed mapPosition.x & mapPosition.y
-//            drawString(g, 4, "CenterPosition", (mapPosition.x + getWidth() / 2) + ", " + (mapPosition.y + getHeight() / 2));
-            drawString(g, 4, "CenterPosition", (mapPosition.x + MapPanel.PREFERRED_WIDTH / 2) + ", " + (mapPosition.y + MapPanel.PREFERRED_HEIGHT / 2));
-            drawString(g, 5, "Tilescount", getXTileCount() + ", " + getYTileCount() + " (" + (NumberFormat.getIntegerInstance().format((long)getXTileCount() * getYTileCount())) + " total)");
-            drawString(g, 6, "Painted-Tilescount", Integer.toString(stats.tileCount));
-            drawString(g, 7, "Paint-Time", stats.dt + " ms.");
-            drawString(g, 8, "Active Tile", getTile(getCursorPosition()).x + ", " + getTile(getCursorPosition()).y);
-            drawString(g, 9, "Tile Box Lon/Lat", format(tile2lon(getTile(getCursorPosition()).x, getZoom())) + ", " + format(tile2lat(getTile(getCursorPosition()).y, getZoom())));
-            drawString(g, 10, "Cursor Lon/Lat", format(position2lon(getCursorPosition().x, getZoom())) + ", " + format(position2lat(getCursorPosition().y, getZoom())));
-            drawString(g, 11, "Tilecache", String.format("%3d / %3d", cache.getSize(), CACHE_SIZE));
-        }
-
-        private void drawString(Graphics2D g, int row, String key, String value) {
-            int y = 16 + row * 16;
-            g.drawString(key, 20, y);
-            g.drawString(value, 150, y);
         }
     }
 
@@ -1600,11 +1514,6 @@ public class MapPanel extends JPanel {
             return new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT);
         }
         public void layoutContainer(Container parent) {
-            int width = parent.getWidth();
-            {
-                Dimension psize = overlayPanel.getPreferredSize();
-                overlayPanel.setBounds(width - psize.width - 20, 20, psize.width, psize.height);
-            }
             {
                 Dimension psize = controlPanel.getPreferredSize();
                 controlPanel.setBounds(20, 20, psize.width, psize.height);
