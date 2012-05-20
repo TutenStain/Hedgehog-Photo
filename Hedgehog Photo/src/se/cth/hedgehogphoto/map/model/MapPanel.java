@@ -189,7 +189,7 @@ public class MapPanel extends JPanel {
 
     private DragListener mouseListener = new DragListener();
     private TileCache cache = new TileCache();
-    private ControlPanel controlPanel = new ControlPanel(); /* IF POSSIBLE: Modify this class to better serve our purposes? */
+    private ControlPanel controlPanel = new ControlPanel();
 
     private boolean useAnimations = true;
     private Animation animation;
@@ -237,7 +237,7 @@ public class MapPanel extends JPanel {
     }
     
     /*---------------------------------------------------------------------
-    					HERE COMES SOME IMPORTANT CODE @author Florian
+    					HERE COMES SOME IMPORTANT CODE FOR OURS IMPLEMENTATION OF THE MAPPANEL@author Florian
     ---------------------------------------------------------------------*/
     
     private List<LocationObject> locations;
@@ -273,8 +273,6 @@ public class MapPanel extends JPanel {
 	
 	/** Internal method for updating the centerLocation-variable. */
 	private void updateCenterLocation() {
-		//TODO FLORAN, somehow remove the dependency on Location, 
-		//use LocationI or LocatioObject instead.
 		Point.Double location = new Point.Double();
 		location.setLocation(averageLongitude(), averageLatitude());
 		centerLocation = location;
@@ -365,14 +363,6 @@ public class MapPanel extends JPanel {
     /*---------------------------------------------------------------------
 						HERE ENDS SOME IMPORTANT CODE
 	---------------------------------------------------------------------*/
-    
-//    public class TileServerException extends Exception {
-//    	public TileServerException() { }
-//    	@Override
-//    	public String toString() {
-//    		return "The tileserver \"" + getTileServer().getURL() + "\" could not be reached.\r\nMaybe configuring a http-proxy is required.";
-//    	}
-//    }
 
 	@SuppressWarnings("unused")
 	private void checkTileServers() {
@@ -683,7 +673,6 @@ public class MapPanel extends JPanel {
                 }
 
                 if (getScale() != 1d) {
-                    //Point scalePosition = new Point(component.getWidth()/ 2, component.getHeight() / 2);
                     AffineTransform xform = new AffineTransform();
                     xform.translate(scalePosition.x, scalePosition.y);
                     xform.scale(scale, scale);
@@ -735,7 +724,6 @@ public class MapPanel extends JPanel {
                 if (image == null) {
                     final String url = getTileString(tileServer, x, y, zoom);
                     try {
-                        //System.err.println("loading: " + url);
                         image = Toolkit.getDefaultToolkit().getImage(new URL(url));
                     } catch (Exception e) {
                         log.log(Level.SEVERE, "failed to load url \"" + url + "\"", e);
@@ -782,7 +770,6 @@ public class MapPanel extends JPanel {
                 int cx = smoothPivot.x, cy = smoothPivot.y;
                 drawScaledRect(g, cx, cy, animation.getFactor(), 2 - animation.getFactor());
             }
-            //System.err.println("smoothScale" + smoothScale);
         }
 
         if (smoothPosition == null) {
@@ -800,7 +787,7 @@ public class MapPanel extends JPanel {
          **/
         if (centerPosition.equals(mapPosition) && legitMapSize()) {
         	setCenterPosition(centerPosition); 
-        	paintInternal(g); /* calls itself, DANGEROUS. Could end up in eternal loop. */
+        	paintInternal(g); /* calls itself, DANGEROUS. Could end up in eternal loop if setCenterPosition is buggy. */
         }
     }
     
@@ -824,6 +811,10 @@ public class MapPanel extends JPanel {
 
    //-------------------------------------------------------------------------
     // utils
+    // TODO: The way of using static zoom and mapPosition-variables was probably a bad idea.
+    // It will do for v1.0, but should get a more object-oriented design, so that one can
+    // instantiate several maps if one wants to. This will however, result in a minor
+    // architecture-design-rebuild.
     public static String format(double d) {
         return String.format("%.5f", d);
     }
@@ -1008,8 +999,6 @@ public class MapPanel extends JPanel {
     private static abstract class Animation implements ActionListener {
 
         private final AnimationType type;
-        /* IF POSSIBLE: Is it neccessary to keep info about the time? No? Then delete it. 
-         * Or is it used for something else? Check that! */
         private final Timer timer; 
         private long t0 = -1L;
         private long dt;
@@ -1127,7 +1116,6 @@ public class MapPanel extends JPanel {
         }
         
         public Image get(TileServer tileServer, int x, int y, int z) {
-            //return map.get(new Tile(x, y, z));
             Image image = map.get(new Tile(tileServer.getURL(), x, y, z));
             return image;
         }

@@ -38,21 +38,7 @@ public class URLCreator {
 		if (urlCreator == null)
 			urlCreator = new URLCreator();
 		return urlCreator;
-	}
-	
-//	public synchronized void invokeLater() {
-//		SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					Thread.sleep(1000); //makes the thread sleep 1 sec before it returns a string
-//				} catch (InterruptedException e) {
-//					
-//				}
-//				
-//			}
-//		});
-//	}
-      
+	}  
 	
 	public URL queryGeocodingURL(String query) {
 		initializeStringBuilder(RequestType.GEOCODING_REQUEST);
@@ -63,7 +49,6 @@ public class URLCreator {
 		this.builder.append(GEOCODING_QUERY);
 		this.builder.append(query);
 		try {
-//			invokeLater();
 			return new URL(this.builder.toString());
 		} catch (MalformedURLException e) {
 			Log.getLogger().log(Level.SEVERE, "Failed to create URL \"" + this.builder.toString() + "\".", e);
@@ -74,12 +59,7 @@ public class URLCreator {
 	public URL queryReverseGeocodingURL(Point.Double coords) {
 		initializeStringBuilder(RequestType.REVERSE_GEOCODING_REQUEST);
 		if (coords == null) {
-			try {
-				return new URL("");
-			} catch (MalformedURLException e) {
-				//if this happens... well, then goodnight, will throw NullPointerExe below
-			}
-			
+			return null;
 		}
 		
 		this.builder.append(this.LONGITUDE_QUERY);
@@ -89,7 +69,6 @@ public class URLCreator {
 		this.builder.append(coords.y);
 		
 		try {
-//			invokeLater();
 			return new URL(this.builder.toString());
 		} catch (MalformedURLException e) {
 			Log.getLogger().log(Level.SEVERE, "Failed to create URL \"" + this.builder.toString() + "\".", e);
@@ -101,7 +80,8 @@ public class URLCreator {
 		try {
 			return URLEncoder.encode(string, "UTF-8");
 		} catch(UnsupportedEncodingException e) {
-			return string; //TODO: log it?
+			Log.getLogger().log(Level.WARNING, "Could not encode \"" + string + "\" with UTF-8.");
+			return string; 
 		}
 	}
 

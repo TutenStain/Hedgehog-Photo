@@ -19,7 +19,7 @@ public class DayController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Day")){
-			this.f.setPictureList(model.getPictures(day));
+			this.f.setPictureList(model.getPictures(day)); //TODO: We can't be sure model is instantiated, since this is, obviously, made from outside.
 		}
 	}
 

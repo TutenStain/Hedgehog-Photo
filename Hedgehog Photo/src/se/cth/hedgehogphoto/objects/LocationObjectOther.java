@@ -167,13 +167,6 @@ public class LocationObjectOther {
 		return (indexOne != -1) && (indexTwo != -1) && (indexOne <= indexTwo);
 	}
 	
-	@Deprecated
-	public boolean equals(LocationObjectOther otherLocation) { //TODO: Make a proper equals-method! Not reliable at the moment.
-		super.equals(otherLocation);
-		String secondLocation = otherLocation.toString();
-		return location.equalsIgnoreCase(secondLocation);
-	}
-	
 	public String toString() {
 		return location + "\nlong: " + longitude + "\tlatitude: " + latitude;
 	}

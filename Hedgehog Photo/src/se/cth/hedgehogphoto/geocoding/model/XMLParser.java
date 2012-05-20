@@ -1,6 +1,7 @@
 package se.cth.hedgehogphoto.geocoding.model;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -72,6 +73,9 @@ public class XMLParser implements Runnable {
 	 * search.
 	 */
 	public synchronized List<LocationObjectOther> processGeocoding(URL xmlFileUrl, RequestType type) {
+		if (xmlFileUrl == null || type == null)
+			return new ArrayList<LocationObjectOther>();
+		
 		try {
 			final String tagName = (type == RequestType.GEOCODING_REQUEST) ? "place" : "result";
 			

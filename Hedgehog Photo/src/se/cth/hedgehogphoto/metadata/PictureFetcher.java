@@ -19,8 +19,7 @@ public class PictureFetcher {
 	//	private  static List<File> files;
 	//private static Map<String, ArrayList<File>> files = new HashMap<String, ArrayList<File>>();
 	private static List<ImageObject> imageObjects = new ArrayList<ImageObject>(); 
-	private static Metadata metadata = new Metadata();
-	private static String [] validFileExtensions = {"png", "jpg", "gif"};
+	private static String [] validFileExtensions = {"png", "jpg", "jpeg", "gif"};
 
 	public PictureFetcher() { 
 		chooser.setDialogTitle("Choose pictures");

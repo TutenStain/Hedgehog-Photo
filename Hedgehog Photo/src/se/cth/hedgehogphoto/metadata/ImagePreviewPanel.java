@@ -46,14 +46,16 @@ public class ImagePreviewPanel extends JPanel
              * Make reasonably sure we have an image format that AWT can
              * handle so we don't try to draw something silly.
              */
-            if ((name != null) &&
-                    name.toLowerCase().endsWith(".jpg") ||
-                    name.toLowerCase().endsWith(".jpeg") ||
-                    name.toLowerCase().endsWith(".gif")) {
-                icon = new ImageIcon(name);
-                image = icon.getImage();
-                scaleImage();
-                repaint();
+            if (name != null) {
+            	String nameLower = name.toLowerCase();
+            	if (nameLower.endsWith(".jpg") ||
+            			nameLower.endsWith(".jpeg") ||
+            			nameLower.endsWith(".gif")) { //TODO: Put this in a separate method, and the types in a list. Make it easily extendable. See pictureFetcher.isValidFileExtendsion
+            		icon = new ImageIcon(name);
+            		image = icon.getImage();
+            		scaleImage();
+            		repaint();
+            	}
             }
         }
     }
