@@ -40,19 +40,19 @@ public class NoteView extends JPanel implements Observer{
 		this.add(drawArea, BorderLayout.CENTER);
 		this.add(bottomPanel, BorderLayout.SOUTH);
 		
-		drawArea.setBackground(Color.white);
-		bottomPanel.setBackground(Color.white);
-		bottomPanel.setLayout(new GridLayout(1, 4));
-		bottomPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		this.drawArea.setBackground(Color.white);
+		this.bottomPanel.setBackground(Color.white);
+		this.bottomPanel.setLayout(new GridLayout(1, 4));
+		this.bottomPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		slider.setBackground(Color.white);
+		this.slider.setBackground(Color.white);
 		
-		bottomPanel.add(eraseButton);
-		bottomPanel.add(preview);
-		bottomPanel.add(colorChooser);
-		bottomPanel.add(slider);
+		this.bottomPanel.add(eraseButton);
+		this.bottomPanel.add(preview);
+		this.bottomPanel.add(colorChooser);
+		this.bottomPanel.add(slider);
 		
-		bottomPanel.setPreferredSize(new Dimension(300, 50));
+		this.bottomPanel.setPreferredSize(new Dimension(300, 50));
 		
 		this.model = model;
 		model.addObserver(this);
