@@ -1,11 +1,11 @@
-package se.cth.hedgehogphoto.map.geocoding;
+package se.cth.hedgehogphoto.geocoding;
 
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import se.cth.hedgehogphoto.map.geocoding.controller.GeocodingController;
-import se.cth.hedgehogphoto.map.geocoding.view.GeoSearchPanel;
+import se.cth.hedgehogphoto.geocoding.controller.GeocodingController;
+import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
 
 /**
  * Initiates the geocoding-subsystem.

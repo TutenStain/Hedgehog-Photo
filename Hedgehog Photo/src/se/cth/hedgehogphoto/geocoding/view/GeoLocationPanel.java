@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.map.geocoding.view;
+package se.cth.hedgehogphoto.geocoding.view;
 
 import java.awt.Color;
 import java.awt.GridLayout;

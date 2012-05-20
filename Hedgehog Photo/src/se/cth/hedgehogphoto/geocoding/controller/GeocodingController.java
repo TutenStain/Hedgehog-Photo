@@ -1,10 +1,10 @@
-package se.cth.hedgehogphoto.map.geocoding.controller;
+package se.cth.hedgehogphoto.geocoding.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import se.cth.hedgehogphoto.map.geocoding.view.GeoLocationPanel;
-import se.cth.hedgehogphoto.map.geocoding.view.GeoSearchPanel;
+import se.cth.hedgehogphoto.geocoding.view.GeoLocationPanel;
+import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
 
 /**
  * Controller-class for the geocoding-system.

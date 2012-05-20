@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.map.geocoding.model;
+package se.cth.hedgehogphoto.geocoding.model;
 
 
 /**

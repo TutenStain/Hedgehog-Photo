@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.map.geocoding.view;
+package se.cth.hedgehogphoto.geocoding.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,8 +24,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import se.cth.hedgehogphoto.log.Log;
-import se.cth.hedgehogphoto.map.geocoding.model.URLCreator;
-import se.cth.hedgehogphoto.map.geocoding.model.XMLParser;
+import se.cth.hedgehogphoto.geocoding.model.URLCreator;
+import se.cth.hedgehogphoto.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
 /**

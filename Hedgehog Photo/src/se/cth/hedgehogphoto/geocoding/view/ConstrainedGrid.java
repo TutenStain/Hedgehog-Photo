@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.map.geocoding.view;
+package se.cth.hedgehogphoto.geocoding.view;
 
 /* Source code derivative work from:
  * http://stackoverflow.com/questions/7949363/java-layout-for-displaying-panels-dynamically-with-scroll-bar 

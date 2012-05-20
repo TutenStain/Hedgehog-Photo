@@ -10,8 +10,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.cth.hedgehogphoto.map.geocoding.model.URLCreator;
-import se.cth.hedgehogphoto.map.geocoding.model.XMLParser;
+import se.cth.hedgehogphoto.geocoding.model.URLCreator;
+import se.cth.hedgehogphoto.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
