@@ -22,12 +22,14 @@ import se.cth.hedgehogphoto.log.Log;
 public class MapModel extends Observable implements Observer, PropertyChangeListener {
 	private List<AbstractMarkerModel> markerModels;
 	private MapPanel map;
+	private Files files;
 //	TODO: Make it listen to leftPanel/window-resize
 	private int width; 
 	private int height;
 
-	public MapModel() {
-		Files.getInstance().addObserver(this);
+	public MapModel(Files files) {
+		this.files = files;
+		this.files.addObserver(this);
 		initialize();
 	}
 	
@@ -40,7 +42,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 	 */
 	protected void initialize() {
 		this.markerModels = new LinkedList<AbstractMarkerModel>();
-		List<PictureObject> pictures = Files.getInstance().getPictureList(); //fetch pictures
+		List<PictureObject> pictures = this.files.getPictureList(); //fetch pictures
 		List<LocationObject> locations = new LinkedList<LocationObject>();
 		int nbrOfPictures = pictures.size();
 		Log.getLogger().log(Level.INFO, nbrOfPictures + " pictures were found in the Files-class.");

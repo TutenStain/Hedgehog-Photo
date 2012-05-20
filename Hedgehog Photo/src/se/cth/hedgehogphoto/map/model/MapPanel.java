@@ -284,6 +284,8 @@ public class MapPanel extends JPanel {
 	
 	/** Internal method for updating the centerLocation-variable. */
 	private void updateCenterLocation() {
+		//TODO FLORAN, somehow remove the dependency on Location, 
+		//use LocationI or LocatioObject instead.
 		Location location = new Location();
 		location.setLongitude(averageLongitude());
 		location.setLatitude(averageLatitude());

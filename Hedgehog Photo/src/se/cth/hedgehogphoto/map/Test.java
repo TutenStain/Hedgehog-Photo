@@ -33,7 +33,7 @@ public class Test {
         frame.pack();
         frame.setVisible(true);
         
-        MapModel model = new MapModel();
+        MapModel model = new MapModel(Files.getInstance());
         se.cth.hedgehogphoto.map.view.MapView map = new se.cth.hedgehogphoto.map.view.MapView(model);
         new MapController(map);
 
