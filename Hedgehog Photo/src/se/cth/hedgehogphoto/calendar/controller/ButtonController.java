@@ -3,7 +3,7 @@ package se.cth.hedgehogphoto.calendar.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import se.cth.hedgehogphoto.calender.model.CalendarModel;
+import se.cth.hedgehogphoto.calendar.model.CalendarModel;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 
 

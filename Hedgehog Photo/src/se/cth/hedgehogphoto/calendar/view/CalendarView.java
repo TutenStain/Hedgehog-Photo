@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.calendar.controller.ButtonController;
-import se.cth.hedgehogphoto.calender.model.CalendarModel;
+import se.cth.hedgehogphoto.calendar.model.CalendarModel;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.Files;
 

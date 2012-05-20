@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.calender.model;
+package se.cth.hedgehogphoto.calendar.model;
 
 import java.sql.Date;
 import java.util.ArrayList;

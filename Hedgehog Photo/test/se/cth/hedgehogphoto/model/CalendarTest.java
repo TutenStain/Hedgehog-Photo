@@ -9,7 +9,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.cth.hedgehogphoto.calender.model.CalendarModel;
+import se.cth.hedgehogphoto.calendar.model.CalendarModel;
 import se.cth.hedgehogphoto.database.Picture;
 public class CalendarTest {
 	private CalendarModel cm;
