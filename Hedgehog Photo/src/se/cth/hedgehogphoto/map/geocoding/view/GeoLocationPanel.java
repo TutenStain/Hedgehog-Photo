@@ -77,6 +77,10 @@ public class GeoLocationPanel extends JPanel {
 		this.isSelected = false;
 	}
 	
+	public LocationObjectOther getLocationObjectOther() {
+		return this.location;
+	}
+	
 	public static void resetColorScale() {
 		color = new Color(255,240,95); 
 		colorScale = 1;
@@ -118,8 +122,6 @@ public class GeoLocationPanel extends JPanel {
 	public boolean isSelected() {
 		return this.isSelected;
 	}
-	
-	
 	
 	public void mouseEntered() {
 		this.brighter();

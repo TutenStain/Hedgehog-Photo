@@ -3,8 +3,6 @@ package se.cth.hedgehogphoto.map.geocoding.model;
 import static org.junit.Assert.assertTrue;
 
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLEncoder;
 
 import org.junit.Before;
@@ -34,7 +32,7 @@ public class URLCreatorTest {
 
 	@Test
 	public void testQueryGeocodingURL() {
-		String path = "http://nominatim.openstreetmap.org/search?format=xml&addressdetails=0&q=";
+		String path = "http://nominatim.openstreetmap.org/search?format=xml&addressdetails=0&email=hedgehogphoto.chalmers@gmail.com&q=";
 		
 		String query = null; //handle null-query
 		assertTrue(path.equals(instance.queryGeocodingURL(query).toString()));
@@ -72,16 +70,6 @@ public class URLCreatorTest {
 			System.out.println(queryPath + "\nvs\n" + instance.queryGeocodingURL("göteborg").toString());
 			assertTrue(queryPath.equals(instance.queryGeocodingURL("göteborg").toString())); //has to use old query-string
 		}
-	}
-	
-	private URL createURL(String path) { //TODO: Remove method?
-		URL url = null;
-		try {
-			return new URL(path);
-		} catch (MalformedURLException e) {
-			return null;
-//			fail("Could not create URL");
-		} 
 	}
 
 }
