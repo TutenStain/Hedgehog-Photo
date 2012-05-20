@@ -12,6 +12,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import se.cth.hedgehogphoto.metadata.PictureInserter;
 import se.cth.hedgehogphoto.view.ImageUtils;
 import se.cth.hedgehogphoto.view.MainView;
 
@@ -26,6 +27,13 @@ public class DefaultController {
 	public DefaultController(MainView v){
 		view = v;
 
+		view.setUploadPictureButtonListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new PictureInserter();
+			}
+			
+		});
 		view.setPhotoNameButtonListener(new ActionListener(){
 
 			@Override

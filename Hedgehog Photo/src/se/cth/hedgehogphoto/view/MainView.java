@@ -43,6 +43,7 @@ public class MainView implements Observer {
 	private	 JPanel leftPanelView;
 	private LoadingLayer[] layers = new LoadingLayer[3];
 	private JPanel topPanel;
+	private JButton uploadPictures = new JButton("Upload Pictures");
 	final private JButton btnShowHideName = new JButton("Show/Hide name");
 	final private JButton btnShowHideTags = new JButton("Show/Hide tags");
 	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
@@ -97,7 +98,8 @@ public class MainView implements Observer {
 		topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
 		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
-
+		topPanel.add(uploadPictures, BorderLayout.WEST);
+		
 		leftPanelView = new JPanel();
 		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
 		leftPanelView.setPreferredSize(d);
@@ -123,9 +125,12 @@ public class MainView implements Observer {
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 
 	}
-	
 	public void setCommentsButtonListener(ActionListener l){
 		this.btnshowHideComments.addActionListener(l);
+	}
+	
+	public void setUploadPictureButtonListener(ActionListener l){
+		this.uploadPictures.addActionListener(l);
 	}
 	
 	public void setTagsButtonListener(ActionListener l){
