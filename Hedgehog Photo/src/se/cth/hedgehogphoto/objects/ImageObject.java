@@ -188,7 +188,7 @@ public class ImageObject implements FileObject {
 		}
 
 		for (Integer ii: i) {
-			String aChar = new Character((char)(int)ii).toString();
+			String aChar = Character.valueOf((char)(int)ii).toString();
 			aChar = aChar.trim();
 			builder.append(aChar);
 		}

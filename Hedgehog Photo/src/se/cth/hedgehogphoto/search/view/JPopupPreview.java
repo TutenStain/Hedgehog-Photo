@@ -22,14 +22,14 @@ import se.cth.hedgehogphoto.search.model.SearchModel;
 @SuppressWarnings("serial")
 public class JPopupPreview extends JPopupMenu implements PreviewI {
 	/** Better to add everything to a JPanel first
-	 *  instead of adding directly to Showa JPopup to prevent some rendering issues. */
+	 *  instead of adding directly to a JPopup to prevent some rendering issues. */
 	private JPanel panel;
 	private JTextField textField;
 	private SearchModel model;
 	
 	private final NotificationListItem messageItem = new NotificationListItem();
 	private final JPopupListItem [] listItems;
-	private final int MAX_LIST_ITEMS = 5;
+	private static final int MAX_LIST_ITEMS = 5;
 
 	public JPopupPreview(){
 		this.listItems = new JPopupListItem[this.MAX_LIST_ITEMS];

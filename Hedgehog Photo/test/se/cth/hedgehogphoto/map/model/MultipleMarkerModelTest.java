@@ -14,7 +14,6 @@ import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
 
 public class MultipleMarkerModelTest {
-	private MultipleMarkerModel model;
 	private MarkerModel submodelOne;
 	private MarkerModel submodelTwo;
 	private Picture pictureOne;

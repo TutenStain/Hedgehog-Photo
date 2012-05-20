@@ -12,7 +12,7 @@ public class MultipleThreadsCallingTest {
 	private List<Thread> threads;
 	private FakeXMLParserMock instance;
 	private List<Long> timesInMs = new ArrayList<Long>();
-	private final int nbrOfThreads = 10;
+	private static final int nbrOfThreads = 10;
 	
 	
 	

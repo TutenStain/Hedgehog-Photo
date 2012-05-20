@@ -17,19 +17,19 @@ import se.cth.hedgehogphoto.log.Log;
 public class URLCreator {
 	private static URLCreator urlCreator;
 	private StringBuilder builder;
-	private final String NAMEFINDER_URL = "http://nominatim.openstreetmap.org/";
-	private final String XML_FORMAT = "format=xml";
-	private final String ADDRESS_DETAILS = "addressdetails=0";
-	private final String EMAIL = "email=hedgehogphoto.chalmers@gmail.com";
-	private final char AMPERSAND = '&';
+	private static final String NAMEFINDER_URL = "http://nominatim.openstreetmap.org/";
+	private static final String XML_FORMAT = "format=xml";
+	private static final String ADDRESS_DETAILS = "addressdetails=0";
+	private static final String EMAIL = "email=hedgehogphoto.chalmers@gmail.com";
+	private static final char AMPERSAND = '&';
 	
-	private final String GEOCODING_REQUEST = "search?";
-	private final String GEOCODING_QUERY = "q=";
+	private static final String GEOCODING_REQUEST = "search?";
+	private static final String GEOCODING_QUERY = "q=";
 	
-	private final String REVERSE_GEOCODING_REQUEST = "reverse?";
-	private final String LONGITUDE_QUERY = "lon=";
-	private final String LATITUDE_QUERY = "lat=";
-	private final String ZOOM = "zoom=12";
+	private static final String REVERSE_GEOCODING_REQUEST = "reverse?";
+	private static final String LONGITUDE_QUERY = "lon=";
+	private static final String LATITUDE_QUERY = "lat=";
+	private static final String ZOOM = "zoom=12";
 	
 	private URLCreator() {
 	}

@@ -54,10 +54,9 @@ public class MapView extends JPanel implements Observer {
 	
 	/** Adds the map to the pane. */
 	private void addMap() {
-		if (this.mainPane == null) {
-			addRootJLayeredPane(); //unneccessary check? goto: line 38
-		}
-		this.mainPane.add(model.getMapPanel(), JLayeredPane.FRAME_CONTENT_LAYER, new Integer(2));
+		if (this.mainPane == null) 
+			addRootJLayeredPane(); 
+		this.mainPane.add(model.getMapPanel(), JLayeredPane.FRAME_CONTENT_LAYER, Integer.valueOf(2));
 	}
 	
 	private void createMarkerGUIs(List<AbstractMarkerModel> markerModels) {

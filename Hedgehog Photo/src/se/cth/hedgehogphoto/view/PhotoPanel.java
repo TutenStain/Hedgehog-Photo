@@ -166,12 +166,12 @@ public class PhotoPanel extends JPanel {
 
 	}
 	
-	public void setTags(List<? extends TagObject> taggs){
-		String output = "";
-		for(TagObject t : taggs){
-			output += t.getTag() + ";";
+	public void setTags(List<? extends TagObject> tags){
+		StringBuilder builder = new StringBuilder("");
+		for(TagObject t : tags) {
+			builder.append(t.getTag() + ";");
 		}
-		tagsTextField.setText(output);
+		tagsTextField.setText(builder.toString());
 	}
 
 	public void setLocation(String location){

@@ -24,7 +24,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	private JpaTagDao tagDao;
 	private JpaPictureDao pictureDao;
 
-	private EntityManager em;// = Entity.entityManager;
+	private EntityManager em;
 	private static DatabaseHandler db = null;
 
 	public DatabaseHandler () {}
