@@ -13,18 +13,18 @@ import se.cth.hedgehogphoto.view.PluginArea;
 
 @Plugin(name="Note", version="1.0", 
 author="David Grankvist", description="N/A")
-public class Main {
+public class NoteInitiator {
 	private NoteView view;
 	
 	@InitializePlugin
 	public void start() {
 		NoteModel model = new NoteModel();
-		view = new NoteView(model);
+		this.view = new NoteView(model);
 		new NoteController(model, view);
 	}
 
 	@Panel(placement=PluginArea.LEFT_MIDDLE)
 	public JPanel get(){
-		return view;	
+		return this.view;	
 	}
 }
