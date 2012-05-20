@@ -1,5 +1,3 @@
-package se.cth.hedgehogphoto.map.controller;
-
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,11 +8,6 @@ import java.util.List;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
-import se.cth.hedgehogphoto.map.model.Global;
-import se.cth.hedgehogphoto.map.view.AbstractJOverlayMarker;
-import se.cth.hedgehogphoto.map.view.AbstractJOverlayPanel;
-import se.cth.hedgehogphoto.map.view.MapView;
-
 /**
  * MapController - handles mouseevents on the markers and
  * calls the appropriate methods.

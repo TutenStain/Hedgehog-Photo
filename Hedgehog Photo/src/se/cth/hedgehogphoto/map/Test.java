@@ -34,7 +34,7 @@ public class Test {
         
         MapModel model = new MapModel(Files.getInstance());
         se.cth.hedgehogphoto.map.view.MapView map = new se.cth.hedgehogphoto.map.view.MapView(model);
-        new MapController(map);
+        new MapController(map, Files.getInstance());
 
         mainPane.remove(loading);
         mainPane.add(map, BorderLayout.CENTER);

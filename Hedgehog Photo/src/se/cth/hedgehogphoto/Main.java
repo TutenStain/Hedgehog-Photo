@@ -8,18 +8,13 @@ import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.controller.DefaultController;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
-import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.log.Log;
-import se.cth.hedgehogphoto.map.controller.MapController;
-import se.cth.hedgehogphoto.map.model.MapModel;
-import se.cth.hedgehogphoto.map.view.MapView;
 import se.cth.hedgehogphoto.metadata.Metadata;
 import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 import se.cth.hedgehogphoto.plugin.PluginLoader;
 import se.cth.hedgehogphoto.view.MainView;
-import se.cth.hedgehogphoto.view.PluginArea;
 import se.cth.hedgehogphoto.view.StartUpView;
 
 
@@ -57,12 +52,6 @@ public class Main {
 		//p.loadAllPlugins();
 		//File tagCloudDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin/TagCloud");
 		//p.loadPluginFromDirectory(tagCloudDir);
-				
-		//map
-		MapModel mapModel = new MapModel(Files.getInstance());
-		MapView map = new MapView(mapModel);
-		new MapController(map);
-		view.addPlugin(map, PluginArea.LEFT_TOP);
 		
 		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(view);
 

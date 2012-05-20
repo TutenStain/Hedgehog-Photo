@@ -2,6 +2,7 @@ package se.cth.hedgehogphoto.metadata;
 
 import java.util.List;
 
+import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.objects.ImageObject;
 
 /**
@@ -24,11 +25,8 @@ public class PictureInserter {
 	
 	public synchronized  void insertImageObject(){	
 		for(ImageObject io: imageObjects){
-			io.setComment("BAJS");
-			System.out.print(io.getFileName());
-		//	DatabaseHandler.insertPicture(io);
+			//DatabaseHandler.getInstance().insertPicture(io);
 		}
-		
 	}
 	
 }

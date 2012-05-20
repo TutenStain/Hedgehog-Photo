@@ -1,11 +1,6 @@
-package se.cth.hedgehogphoto.map;
-
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.database.Files;
-import se.cth.hedgehogphoto.map.controller.MapController;
-import se.cth.hedgehogphoto.map.model.MapModel;
-import se.cth.hedgehogphoto.map.view.MapView;
 import se.cth.hedgehogphoto.plugin.GetVisibleFiles;
 import se.cth.hedgehogphoto.plugin.InitializePlugin;
 import se.cth.hedgehogphoto.plugin.Panel;
@@ -40,3 +35,4 @@ public class MapInitiator {
 		this.files = files;
 	}
 }
+
