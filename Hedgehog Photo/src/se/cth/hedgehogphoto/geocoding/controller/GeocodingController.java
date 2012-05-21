@@ -84,7 +84,7 @@ public class GeocodingController {
 				LocationObjectOther location = GeoLocationPanel.selectedPanel.getLocationObjectOther();
 				
 				pictureDao.setLocation(location, picture);
-				
+				searchPanel.setVisible(false);
 			}
 		}
 	}
