@@ -32,7 +32,6 @@ public class Main {
 	public void start() {
 		TagCloudModel model = new TagCloudModel(db);
 		this.view = new TagCloudView();
-		model.addObserver(this.view);
 		new TagComponentController(model, this.view);
 		List<String> l = new ArrayList<String>();
 		for(PictureObject po : db.getAllPictures()){
