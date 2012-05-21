@@ -44,8 +44,10 @@ import se.cth.hedgehogphoto.model.MainModel;
 public class MainView implements Observer {
 
 	private JFrame frame;
+	private JPanel cardPanel;
+	private JPanel singlePhotoPanel;
 	private JPanel photoViewPanel;
-	private	 JPanel leftPanelView;
+	private	JPanel leftPanelView;
 	private LoadingLayer[] layers = new LoadingLayer[3];
 	private JPanel topPanel;
 	private JButton uploadPictures = new JButton("Upload Pictures");
