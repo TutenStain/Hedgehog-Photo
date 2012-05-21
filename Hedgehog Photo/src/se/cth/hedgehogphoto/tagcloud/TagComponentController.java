@@ -19,6 +19,7 @@ public class TagComponentController implements MouseListener{
 	public TagComponentController(TagCloudModel model, TagCloudView view){
 		this.model = model;
 		this.view = view;
+		this.view.addMouseListener(this);
 	}
 	
 	@Override

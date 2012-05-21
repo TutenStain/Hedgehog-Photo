@@ -24,16 +24,16 @@ import se.cth.hedgehogphoto.view.PluginArea;
 @Plugin(name="TagCloud", version="1.0", 
 author="Barnabas Sapan", description="N/A")
 public class Main {
-	private TagCloudView tgv;
+	private TagCloudView view;
 	private DatabaseAccess db;
 	private Files files;
  
 	@InitializePlugin
 	public void start() {
-		TagCloudModel tgm = new TagCloudModel(db);
-		tgv = new TagCloudView();
-		tgm.addObserver(tgv);
-		
+		TagCloudModel model = new TagCloudModel(db);
+		this.view = new TagCloudView();
+		model.addObserver(this.view);
+		new TagComponentController(model, this.view);
 		List<String> l = new ArrayList<String>();
 		for(PictureObject po : db.getAllPictures()){
 			for(TagObject to : po.getTags()){
@@ -41,13 +41,13 @@ public class Main {
 			}
 		}
 		
-		tgm.setTags(l);
-		files.addObserver(tgm);
+		model.setTags(l);
+		files.addObserver(model);
 	}
 
 	@Panel(placement=PluginArea.LEFT_BOTTOM)
 	public JPanel get(){
-		return tgv;	
+		return this.view;	
 	}
 
 	@GetDatabase

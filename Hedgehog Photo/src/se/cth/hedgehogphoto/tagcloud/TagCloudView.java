@@ -3,11 +3,13 @@ package se.cth.hedgehogphoto.tagcloud;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.view.WrapLayout;
@@ -26,6 +28,8 @@ public class TagCloudView extends JPanel implements Observer {
 	//getFontSize() helpers
 	private int removeFromMax = 0;
 	private int addToMin = 0;
+	
+	private MouseListener tagComponentMouseListener;
 	
 	public TagCloudView(){
 		setLayout(new WrapLayout(FlowLayout.LEFT));	
@@ -54,6 +58,10 @@ public class TagCloudView extends JPanel implements Observer {
 		return size;
 	}
 	
+	public void setMouseListener(MouseListener listener) {
+		this.tagComponentMouseListener = listener;
+	}
+	
 	/**
 	 * Resets the fontsizes to the defaults so that the next update
 	 * will get correct sizes.
@@ -76,7 +84,7 @@ public class TagCloudView extends JPanel implements Observer {
 			
 			for(Map.Entry<String, Integer> entry : this.map.entrySet()){
 				TagComponent tag = new TagComponent(entry.getKey());
-				tag.addMouseListener(new TagComponentController(model, this));
+				tag.addMouseListener(this.tagComponentMouseListener); //might be null, but in practice it should not be that. Ok to send in null?
 				//TODO move this our to initiator.
 				tag.setFont(this.baseFont.deriveFont(getFontSize(entry.getValue())));
 				add(tag);
