@@ -29,9 +29,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ChangeListener;
 
 import se.cth.hedgehogphoto.Constants;
-import se.cth.hedgehogphoto.controller.PhotoPanelActionListener;
-import se.cth.hedgehogphoto.controller.PhotoPanelFocusListener;
-import se.cth.hedgehogphoto.controller.PhotoPanelMouseListener;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.log.Log;
