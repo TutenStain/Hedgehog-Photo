@@ -14,13 +14,18 @@ import se.cth.hedgehogphoto.view.PhotoPanel;
 public class PhotoPanelFocusListener implements FocusListener {
 	private static DaoFactory daoFactory = DaoFactory.getInstance();
 	private JpaPictureDao pictureDao = daoFactory.getJpaPictureDao();
+	private String oldString;
 
 	public PhotoPanelFocusListener(){
 
 	}
 
 	@Override
-	public void focusGained(FocusEvent arg0) {		
+	public void focusGained(FocusEvent e) {	
+		if (e.getSource() instanceof JTextField) {
+			JTextField cell = (JTextField) e.getSource();
+			this.oldString = cell.getText();
+		}
 	}
 
 	@Override
@@ -28,7 +33,9 @@ public class PhotoPanelFocusListener implements FocusListener {
 		if (e.getSource() instanceof JTextField) {
 			JTextField cell = (JTextField) e.getSource();
 
-			if(cell.getName().equals(PhotoPanelConstantsI.COMMENT)){
+			if (this.oldString.equals(cell.getText())) {
+				//string did not change, do not update
+			} else if(cell.getName().equals(PhotoPanelConstantsI.COMMENT)){
 				if (cell.getParent() instanceof PhotoPanel) {
 					String path = ((PhotoPanel)cell.getParent()).getPath();			
 					pictureDao.addComment(cell.getText(), path);

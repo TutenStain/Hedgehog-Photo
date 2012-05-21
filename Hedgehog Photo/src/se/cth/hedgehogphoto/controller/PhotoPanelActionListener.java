@@ -9,6 +9,7 @@ import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.JpaCommentDao;
 import se.cth.hedgehogphoto.database.JpaLocationDao;
 import se.cth.hedgehogphoto.database.JpaPictureDao;
+import se.cth.hedgehogphoto.geocoding.GeocodingInitiator;
 import se.cth.hedgehogphoto.model.PhotoPanelConstantsI;
 import se.cth.hedgehogphoto.view.PhotoPanel;
 
@@ -32,8 +33,8 @@ public class PhotoPanelActionListener implements ActionListener {
 				}
 			} else if(cell.getName().equals(PhotoPanelConstantsI.LOCATION)){
 				if (cell.getParent() instanceof PhotoPanel) {
-					String path = ((PhotoPanel)cell.getParent()).getPath();
-					pictureDao.addLocation(cell.getText(), path);
+					String path = ((PhotoPanel)cell.getParent()).getPath();	
+					new GeocodingInitiator(cell.getText(), path);
 					System.out.println("JTF" +cell.getText());
 					System.out.print(new JpaLocationDao().getAll());
 				}
