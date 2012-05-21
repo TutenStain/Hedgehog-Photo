@@ -50,7 +50,9 @@ public class MainViewInitiator {
 				JPanel cardPanel = view.getCardPanel();
 				CardLayout cl = (CardLayout) cardPanel.getLayout();
 				cl.show(cardPanel, "One");
-				view.getSinglePhotoPanel().add(photoPanel);
+				JPanel singlePhotoPanel = view.getSinglePhotoPanel();
+				singlePhotoPanel.removeAll();
+				singlePhotoPanel.add(photoPanel);
 				view.resetSlider();
 			}
 		}
