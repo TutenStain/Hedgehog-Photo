@@ -44,12 +44,13 @@ import se.cth.hedgehogphoto.model.MainModel;
 public class MainView implements Observer {
 
 	private JFrame frame;
-	private JPanel cardPanel;
-	private JPanel singlePhotoPanel;
-	private JPanel photoViewPanel;
-	private	JPanel leftPanelView;
+	private JPanel cardPanel = new JPanel();;
+	private JPanel singlePhotoPanel = new JPanel();
+	private JPanel photoViewPanel = new JPanel();
+	private	JPanel leftPanelView = new JPanel();
+	private JPanel bottomPanel = new JPanel();
 	private LoadingLayer[] layers = new LoadingLayer[3];
-	private JPanel topPanel;
+	private JPanel topPanel = new JPanel();
 	private JButton uploadPictures = new JButton("Upload Pictures");
 	final private JButton btnShowHideName = new JButton("Show/Hide name");
 	final private JButton btnShowHideTags = new JButton("Show/Hide tags");
@@ -73,7 +74,6 @@ public class MainView implements Observer {
 		this.photoPanels = new ArrayList<PhotoPanel>();
 		//TODO Minimum size?
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		JPanel bottomPanel = new JPanel();
 		frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 
 		GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);
@@ -107,12 +107,10 @@ public class MainView implements Observer {
 				);
 		bottomPanel.setLayout(gl_bottomPanel);
 
-		topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
 		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
 		topPanel.add(uploadPictures, BorderLayout.WEST);
-		
-		leftPanelView = new JPanel();
+	
 		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
 		leftPanelView.setPreferredSize(d);
 		leftPanelView.setMinimumSize(d);
