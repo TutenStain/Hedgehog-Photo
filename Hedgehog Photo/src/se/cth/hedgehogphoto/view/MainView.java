@@ -44,11 +44,13 @@ import se.cth.hedgehogphoto.model.MainModel;
 public class MainView implements Observer {
 
 	private JFrame frame;
-	private JPanel cardPanel = new JPanel();;
+	private JPanel cardPanel = new JPanel();
 	private JPanel singlePhotoPanel = new JPanel();
 	private JPanel photoViewPanel = new JPanel();
 	private	JPanel leftPanelView = new JPanel();
 	private JPanel bottomPanel = new JPanel();
+	private JScrollPane photoView = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
+			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private LoadingLayer[] layers = new LoadingLayer[3];
 	private JPanel topPanel = new JPanel();
 	private JButton uploadPictures = new JButton("Upload Pictures");
@@ -60,7 +62,7 @@ public class MainView implements Observer {
 	//TODO can we keep these?
 	private List<Dimension> newDimensions;
 	private List<PhotoPanel> photoPanels;
-	
+
 	private ActionListener actionListener;
 	private FocusListener focusListener;
 	private MouseAdapter mouseListener;
@@ -110,7 +112,7 @@ public class MainView implements Observer {
 		topPanel.setLayout(new BorderLayout());
 		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
 		topPanel.add(uploadPictures, BorderLayout.WEST);
-	
+
 		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
 		leftPanelView.setPreferredSize(d);
 		leftPanelView.setMinimumSize(d);
@@ -126,8 +128,6 @@ public class MainView implements Observer {
 			leftPanelView.add(layers[i].getDecoratedPanel());	
 			layers[i].start();
 		}
-
-		JScrollPane photoView = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		frame.getContentPane().add(photoView, BorderLayout.CENTER);
 
 		photoViewPanel = new JPanel();
@@ -138,31 +138,31 @@ public class MainView implements Observer {
 	public void setCommentsButtonListener(ActionListener l){
 		this.btnshowHideComments.addActionListener(l);
 	}
-	
+
 	public void setUploadPictureButtonListener(ActionListener l){
 		this.uploadPictures.addActionListener(l);
 	}
-	
+
 	public void setTagsButtonListener(ActionListener l){
 		this.btnShowHideTags.addActionListener(l);
 	}
-	
+
 	public void setLocationButtonListener(ActionListener l){
 		this.btnShowHideLocation.addActionListener(l);
 	}
-	
+
 	public void setPhotoNameButtonListener(ActionListener l){
 		this.btnShowHideName.addActionListener(l);
 	}
-	
+
 	public void setSliderListener(ChangeListener l){
 		this.slider.addChangeListener(l);
 	}
-	
+
 	public List<PhotoPanel> getPhotoPanels(){
 		return this.photoPanels;
 	}
-	
+
 	public List<Dimension> getNewDimensions(){
 		return this.newDimensions;
 	}
@@ -194,28 +194,28 @@ public class MainView implements Observer {
 			Log.getLogger().log(Level.SEVERE, "Could not add plugin panel to the view, panel is null");
 		}
 	}
-	
+
 	public void addPhotoPanelActionListeners(ActionListener listener) {
 		this.actionListener = listener;
 		for (PhotoPanel panel : photoPanels) {
 			panel.setTextFieldActionListeners(listener);
 		}
 	}
-	
+
 	public void addPhotoPanelMouseListener(MouseAdapter listener) {
 		this.mouseListener = listener;
 		for (PhotoPanel panel : photoPanels) {
 			panel.addMouseListener(listener);
 		}
 	}
-	
+
 	public void addPhotoPanelFocusListener(FocusListener listener) {
 		this.focusListener = listener;
 		for (PhotoPanel panel : photoPanels) {
 			panel.setTextFieldFocusListeners(listener);
 		}
 	}
-	
+
 	private void addListenersToAll() {
 		addPhotoPanelActionListeners(actionListener);
 		addPhotoPanelFocusListener(focusListener);
@@ -239,17 +239,17 @@ public class MainView implements Observer {
 				try{
 					pp.setComment(images.get(i).getComment().getComment());
 				}catch(Exception f){
-		
+
 				}
 				try{
 					pp.setTags(images.get(i).getTags());
 				}catch(Exception f){
-		
+
 				}
 				try{
 					pp.setLocation(images.get(i).getLocation().getLocation());
 				}catch(Exception f){
-		
+
 				}
 				photoPanels.add(i, pp);
 				photoViewPanel.add(pp);
@@ -264,20 +264,20 @@ public class MainView implements Observer {
 				try{
 					pp.setComment(images.get(i).getComment().getComment());
 				}catch(Exception f){
-					
+
 				}
-					try{
-						pp.setTags(images.get(i).getTags());
-					}catch(Exception f){
-			
-					}
-					try{
-						pp.setLocation(images.get(i).getLocation().getLocation());
-					}catch(Exception f){
-			
-					}
-					photoPanels.add(i, pp);
-					photoViewPanel.add(pp);
+				try{
+					pp.setTags(images.get(i).getTags());
+				}catch(Exception f){
+
+				}
+				try{
+					pp.setLocation(images.get(i).getLocation().getLocation());
+				}catch(Exception f){
+
+				}
+				photoPanels.add(i, pp);
+				photoViewPanel.add(pp);
 			}
 			addListenersToAll();
 		}
@@ -292,11 +292,11 @@ public class MainView implements Observer {
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanels.get(i).setIcon(icon2);
 				newDimensions.add(new Dimension(Math.round(image.getWidth(null)*scale), 
-												Math.round(image.getHeight(null)*scale)));
-				
+						Math.round(image.getHeight(null)*scale)));
+
 			}
 		}
-		
+
 		frame.revalidate();
 	}
 }
