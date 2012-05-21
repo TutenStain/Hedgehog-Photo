@@ -76,7 +76,8 @@ public class TagCloudView extends JPanel implements Observer {
 			
 			for(Map.Entry<String, Integer> entry : map.entrySet()){
 				TagComponent tag = new TagComponent(entry.getKey());
-				tag.addMouseListener(new TagComponentController(model, this, tag));
+				tag.addMouseListener(new TagComponentController(model, this));
+				//TODO move this our to initiator.
 				tag.setFont(baseFont.deriveFont(getFontSize(entry.getValue())));
 				add(tag);
 			}
