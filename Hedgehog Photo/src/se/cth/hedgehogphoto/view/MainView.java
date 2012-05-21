@@ -69,26 +69,26 @@ public class MainView implements Observer {
 	}
 
 	private void initialize(JFrame startView) {
-		frame = startView;
+		this.frame = startView;
 		this.photoPanels = new ArrayList<PhotoPanel>();
 		//TODO Minimum size?
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+		this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 
 		GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);
 		gl_bottomPanel.setHorizontalGroup(
 				gl_bottomPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_bottomPanel.createSequentialGroup()
 						.addGap(300)
-						.addComponent(btnShowHideTags)
+						.addComponent(this.btnShowHideTags)
 						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(btnShowHideLocation)
+						.addComponent(this.btnShowHideLocation)
 						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(btnshowHideComments)
+						.addComponent(this.btnshowHideComments)
 						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(btnShowHideName)
+						.addComponent(this.btnShowHideName)
 						.addGap(150)
-						.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(this.slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(59, Short.MAX_VALUE))
 				);
 		gl_bottomPanel.setVerticalGroup(
@@ -98,41 +98,43 @@ public class MainView implements Observer {
 						.addGroup(gl_bottomPanel.createParallelGroup(Alignment.LEADING)
 								.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_bottomPanel.createParallelGroup(Alignment.BASELINE)
-										.addComponent(btnShowHideLocation)
-										.addComponent(btnShowHideTags)
-										.addComponent(btnshowHideComments)
-										.addComponent(btnShowHideName)))
+										.addComponent(this.btnShowHideLocation)
+										.addComponent(this.btnShowHideTags)
+										.addComponent(this.btnshowHideComments)
+										.addComponent(this.btnShowHideName)))
 										.addContainerGap())
 				);
-		bottomPanel.setLayout(gl_bottomPanel);
+		this.bottomPanel.setLayout(gl_bottomPanel);
 
-		topPanel.setLayout(new BorderLayout());
-		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
-		topPanel.add(uploadPictures, BorderLayout.WEST);
+		this.topPanel.setLayout(new BorderLayout());
+		this.frame.getContentPane().add(topPanel, BorderLayout.NORTH);
+		this.topPanel.add(this.uploadPictures, BorderLayout.WEST);
 
 		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
-		leftPanelView.setPreferredSize(d);
-		leftPanelView.setMinimumSize(d);
-		leftPanelView.setSize(d);
-		frame.getContentPane().add(leftPanelView, BorderLayout.WEST);
-		leftPanelView.setLayout(new GridLayout(3, 0, 0, 0));
+		this.leftPanelView.setPreferredSize(d);
+		this.leftPanelView.setMinimumSize(d);
+		this.leftPanelView.setSize(d);
+		this.frame.getContentPane().add(this.leftPanelView, BorderLayout.WEST);
+		this.leftPanelView.setLayout(new GridLayout(3, 0, 0, 0));
 
-		//Lays out the placeholder widgets
+		//Lays out the placeholder widgets and start the loading animation
 		for(int i = 0; i < 3; i++) {
 			JPanel p = new JPanel();
 			p.add(new JLabel("Loading plugin..."));
-			layers[i] = new LoadingLayer(p);
-			leftPanelView.add(layers[i].getDecoratedPanel());	
-			layers[i].start();
+			this.layers[i] = new LoadingLayer(p);
+			this.leftPanelView.add(layers[i].getDecoratedPanel());	
+			this.layers[i].start();
 		}
-		frame.getContentPane().add(photoView, BorderLayout.CENTER);
-		photoView.setViewportView(cardPanel);
-		cardPanel.setLayout(new CardLayout());
-		cardPanel.add(photoViewPanel, "All");
-		cardPanel.add(singlePhotoPanel, "One");
-		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
-		singlePhotoPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
+		
+		this.frame.getContentPane().add(this.photoView, BorderLayout.CENTER);
+		this.photoView.setViewportView(this.cardPanel);
+		this.cardPanel.setLayout(new CardLayout());
+		this.cardPanel.add(this.photoViewPanel, "All");
+		this.cardPanel.add(this.singlePhotoPanel, "One");
+		this.photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
+		this.singlePhotoPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 	}
+	
 	public void setCommentsButtonListener(ActionListener l){
 		this.btnshowHideComments.addActionListener(l);
 	}
@@ -177,24 +179,24 @@ public class MainView implements Observer {
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
 			if(placement == PluginArea.SEARCH){
-				topPanel.add(panel, BorderLayout.EAST);
+				this.topPanel.add(panel, BorderLayout.EAST);
 			} else {	
 				if(placement == PluginArea.LEFT_TOP){
-					layers[0].stopAndRemove();
-					leftPanelView.remove(0);
-					leftPanelView.add(panel, 0);
+					this.layers[0].stopAndRemove();
+					this.leftPanelView.remove(0);
+					this.leftPanelView.add(panel, 0);
 				}
 
 				if(placement == PluginArea.LEFT_MIDDLE){
-					layers[1].stopAndRemove();
-					leftPanelView.remove(1);
-					leftPanelView.add(panel, 1);
+					this.layers[1].stopAndRemove();
+					this.leftPanelView.remove(1);
+					this.leftPanelView.add(panel, 1);
 				}
 
 				if(placement == PluginArea.LEFT_BOTTOM){
-					layers[2].stopAndRemove();
-					leftPanelView.remove(2);
-					leftPanelView.add(panel, 2);
+					this.layers[2].stopAndRemove();
+					this.leftPanelView.remove(2);
+					this.leftPanelView.add(panel, 2);
 				}
 			}
 		} else {
@@ -204,42 +206,42 @@ public class MainView implements Observer {
 
 	public void addPhotoPanelActionListeners(ActionListener listener) {
 		this.actionListener = listener;
-		for (PhotoPanel panel : photoPanels) {
+		for (PhotoPanel panel : this.photoPanels) {
 			panel.setTextFieldActionListeners(listener);
 		}
 	}
 
 	public void addPhotoPanelMouseListener(MouseAdapter listener) {
 		this.mouseListener = listener;
-		for (PhotoPanel panel : photoPanels) {
+		for (PhotoPanel panel : this.photoPanels) {
 			panel.addMouseListener(listener);
 		}
 	}
 
 	public void addPhotoPanelFocusListener(FocusListener listener) {
 		this.focusListener = listener;
-		for (PhotoPanel panel : photoPanels) {
+		for (PhotoPanel panel : this.photoPanels) {
 			panel.setTextFieldFocusListeners(listener);
 		}
 	}
 
 	private void addListenersToAll() {
-		addPhotoPanelActionListeners(actionListener);
-		addPhotoPanelFocusListener(focusListener);
-		addPhotoPanelMouseListener(mouseListener);
+		addPhotoPanelActionListeners(this.actionListener);
+		addPhotoPanelFocusListener(this.focusListener);
+		addPhotoPanelMouseListener(this.mouseListener);
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		photoPanels = new ArrayList<PhotoPanel>();
+		this.photoPanels = new ArrayList<PhotoPanel>();
 		List<? extends PictureObject> images;
-		if(cardPanel.getLayout() instanceof CardLayout){
-			CardLayout cl = (CardLayout) cardPanel.getLayout();
-			cl.show(cardPanel, "All");
+		if(this.cardPanel.getLayout() instanceof CardLayout){
+			CardLayout cl = (CardLayout) this.cardPanel.getLayout();
+			cl.show(this.cardPanel, "All");
 		}
 		//TODO Maybe refresh in another way than removing the PhotoPanels?
-		photoViewPanel.removeAll();
-		photoViewPanel.repaint();
+		this.photoViewPanel.removeAll();
+		this.photoViewPanel.repaint();
 
 		if(arg1 instanceof MainModel) {
 			MainModel model = (MainModel)arg1;
@@ -262,8 +264,9 @@ public class MainView implements Observer {
 				}catch(Exception f){
 
 				}
-				photoPanels.add(i, pp);
-				photoViewPanel.add(pp);
+				
+				this.photoPanels.add(i, pp);
+				this.photoViewPanel.add(pp);
 			}
 			addListenersToAll();
 		}
@@ -287,25 +290,25 @@ public class MainView implements Observer {
 				}catch(Exception f){
 
 				}
-				photoPanels.add(i, pp);
-				photoViewPanel.add(pp);
+				this.photoPanels.add(i, pp);
+				this.photoViewPanel.add(pp);
 			}
 			addListenersToAll();
 		}
 		//TODO just a test
 		if(!photoPanels.isEmpty()){
-			for(int i=0;i<photoPanels.size();i++){
-				Image image = photoPanels.get(i).getIcon().getImage();
+			for(int i = 0; i < this.photoPanels.size(); i++){
+				Image image = this.photoPanels.get(i).getIcon().getImage();
 				float scale = Constants.PREFERRED_PICTURE_HEIGHT/image.getHeight(null);
 				BufferedImage bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
 						Math.round(Constants.PREFERRED_PICTURE_HEIGHT));
 				ImageIcon icon2 = new ImageIcon(bi);
-				photoPanels.get(i).setIcon(icon2);
-				photoPanels.get(i).setScaleDimension(new Dimension(Math.round(image.getWidth(null)*scale), 
+				this.photoPanels.get(i).setIcon(icon2);
+				this.photoPanels.get(i).setScaleDimension(new Dimension(Math.round(image.getWidth(null)*scale), 
 						Math.round(image.getHeight(null)*scale)));
 
 			}
 		}
-		frame.revalidate();
+		this.frame.revalidate();
 	}
 }
