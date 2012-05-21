@@ -36,6 +36,8 @@ import se.cth.hedgehogphoto.objects.LocationObjectOther;
 @SuppressWarnings("serial")
 public final class GeoSearchPanel extends JPanel {
 
+	private static GeoSearchPanel instance;
+	private static JFrame frame;
 	private ConstrainedGrid resultPanel = new ConstrainedGrid();
 	private JComboBox<Object> searchBox = new JComboBox<Object>();
 	
@@ -48,17 +50,14 @@ public final class GeoSearchPanel extends JPanel {
 	private String oldSearch = "";
 	private boolean searching;
 	
-	public static void main(String [] args) {
-		JFrame frame = new JFrame();
-		frame.setPreferredSize(new Dimension(400,600));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(new GeoSearchPanel());
-		frame.pack();
-		frame.getContentPane().setVisible(true);
+	public static GeoSearchPanel getInstance() {
+		if (instance == null)
+			instance = new GeoSearchPanel();
 		frame.setVisible(true);
+		return instance;
 	}
 
-	public GeoSearchPanel() {
+	private GeoSearchPanel() {
 		super(new BorderLayout(8, 8));
 		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 		setBackground(Color.white);
@@ -67,10 +66,6 @@ public final class GeoSearchPanel extends JPanel {
 		topPanel.add(new JLabel("Find:"), BorderLayout.WEST);
 		topPanel.add(searchBox, BorderLayout.CENTER);
 		add(topPanel, BorderLayout.NORTH);
-//		JScrollPane scrollPane = new JScrollPane(new JPanel());
-//		scrollPane.setViewportBorder(BorderFactory.createEmptyBorder());
-//		scrollPane.setBorder(BorderFactory.createEmptyBorder());
-//		scrollPane.getViewport().setBackground(Color.WHITE);
 		add(resultPanel, BorderLayout.CENTER);
 		searchBox.setEditable(true);
 		Component editorComponent = searchBox.getEditor().getEditorComponent();
@@ -92,12 +87,43 @@ public final class GeoSearchPanel extends JPanel {
 		
 		this.okButton = new JButton("Ok");
 		this.cancelButton = new JButton("Cancel");
+		this.okButton.setEnabled(false);
 		
-		this.cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
+		JPanel buttonWrapper = new JPanel();
+		buttonWrapper.add(this.okButton);
+		buttonWrapper.add(this.cancelButton);
+		
+		add(buttonWrapper, BorderLayout.SOUTH);
+		createFrame();
+	}
+	
+	public void createFrame() {
+		frame = new JFrame();
+		frame.setPreferredSize(new Dimension(400,600));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().add(this);
+		frame.pack();
+		frame.getContentPane().setVisible(true);
+		frame.setVisible(true);
+	}
+	
+	@Override
+	public void setVisible(boolean state) {
+		super.setVisible(state);
+		if (frame != null)
+			frame.setVisible(state);
+	}
+	
+	public void addOkButtonListener(ActionListener listener) {
+		this.okButton.addActionListener(listener); 
+	}
+	
+	public void addCancelButtonListener(ActionListener listener) {
+		this.cancelButton.addActionListener(listener);
+	}
+	
+	public void enableOkButton(boolean state) {
+		this.okButton.setEnabled(state);
 	}
 
 	public void doSearch(Object selectedItem) {

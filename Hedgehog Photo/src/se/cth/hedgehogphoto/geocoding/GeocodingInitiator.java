@@ -1,9 +1,5 @@
 package se.cth.hedgehogphoto.geocoding;
 
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-
 import se.cth.hedgehogphoto.geocoding.controller.GeocodingController;
 import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
 
@@ -14,25 +10,18 @@ import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
 public class GeocodingInitiator {
 	
 	public static void main(String [] args) {
-		new GeocodingInitiator("paris");
+		new GeocodingInitiator("paris", "test.jpg");
 	}
 	
 	public GeocodingInitiator() {
-		this(null);
+		this(null, null);
 	}
 	
-	public GeocodingInitiator(String initialSearch) {
-		GeoSearchPanel view = new GeoSearchPanel();
-		new GeocodingController(view);
+	public GeocodingInitiator(String initialSearch, String imagePath) {
+		GeoSearchPanel view = GeoSearchPanel.getInstance();
+		GeocodingController controller = GeocodingController.getInstance(view);
 		view.setInitialSearchBoxText(initialSearch);
-		
-		JFrame frame = new JFrame();
-		frame.setPreferredSize(new Dimension(400,600));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(view);
-		frame.pack();
-		frame.getContentPane().setVisible(true);
-		frame.setVisible(true);
+		controller.setImagePath(imagePath);
 		
 	}
 }

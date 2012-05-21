@@ -1,5 +1,7 @@
 package se.cth.hedgehogphoto.geocoding.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -11,14 +13,28 @@ import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
  * @author Florian Minges
  */
 public class GeocodingController {
+	private static GeocodingController instance;
 	private GeoSearchPanel searchPanel;
+	private String imagePath;
+	
+	public static GeocodingController getInstance(GeoSearchPanel searchPanel) {
+		if (instance == null)
+			instance = new GeocodingController(searchPanel);
+		return instance;
+	}
 	
 	public GeocodingController(GeoSearchPanel searchPanel) {
 		this.searchPanel = searchPanel;
 		this.searchPanel.addResultPanelMouseListener(new ResultPanelListener());
+		this.searchPanel.addOkButtonListener(new OkButtonListener());
+		this.searchPanel.addCancelButtonListener(new CancelButtonListener());
 	}
 	
-	public static class ResultPanelListener extends MouseAdapter {
+	public void setImagePath(String path) {
+		this.imagePath = path;
+	}
+	
+	public class ResultPanelListener extends MouseAdapter {
 		@Override
 		public void mouseReleased(MouseEvent arg0) {}
 		
@@ -28,6 +44,8 @@ public class GeocodingController {
 				GeoLocationPanel resultPanel = (GeoLocationPanel) arg0.getSource();
 				resultPanel.toggleSelection();
 				resultPanel.mouseEntered();
+				
+				searchPanel.enableOkButton(GeoLocationPanel.selectedPanel != null);
 			}
 		}
 		@Override
@@ -49,6 +67,24 @@ public class GeocodingController {
 				resultPanel.mouseExited();
 			}
 		}
+	}
+	
+	public class OkButtonListener implements ActionListener {
 		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (GeoLocationPanel.selectedPanel != null && imagePath != null) {
+				//TODO perform the database insertion?
+				
+			}
+		}
+	}
+	
+	public class CancelButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			searchPanel.setVisible(false);
+		}
 	}
 }

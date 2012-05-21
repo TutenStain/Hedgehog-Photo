@@ -27,6 +27,8 @@ public class GeoLocationPanel extends JPanel {
 	private static Color selectedPanelColor = new Color(255,150,95);
 	private static int colorScale;
 	
+	public static GeoLocationPanel selectedPanel;
+	
 	public GeoLocationPanel(LocationObjectOther location) {
 		//set instance variables
 		this.location = location;
@@ -116,6 +118,14 @@ public class GeoLocationPanel extends JPanel {
 	
 	public void setSelected(boolean selected) {
 		this.isSelected = selected;
+		if (GeoLocationPanel.selectedPanel != this && isSelected()) {
+			if (GeoLocationPanel.selectedPanel != null)
+				GeoLocationPanel.selectedPanel.toggleSelection();
+			
+			GeoLocationPanel.selectedPanel = this;
+		} else if (GeoLocationPanel.selectedPanel == this && !isSelected()) 
+			GeoLocationPanel.selectedPanel = null;
+
 		defaultColor();
 	}
 	
