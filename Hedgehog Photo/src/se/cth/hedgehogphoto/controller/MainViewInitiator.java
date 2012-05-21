@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto.controller;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -52,7 +53,7 @@ public class MainViewInitiator {
 				cl.show(cardPanel, "One");
 				JPanel singlePhotoPanel = view.getSinglePhotoPanel();
 				singlePhotoPanel.removeAll();
-				singlePhotoPanel.add(photoPanel);
+				singlePhotoPanel.add(photoPanel, BorderLayout.WEST);
 				view.resetSlider();
 				JScrollPane pane = view.getPhotoView();
 				pane.getVerticalScrollBar().setValue(0);

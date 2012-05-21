@@ -52,7 +52,10 @@ public class MainView implements Observer {
 			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private LoadingLayer[] layers = new LoadingLayer[3];
 	private JPanel topPanel = new JPanel();
+	private JPanel topBtnArea = new JPanel();
 	private JButton uploadPictures = new JButton("Upload Pictures");
+	private JButton btnNextPP = new JButton("Next");
+	private JButton btnPrevPP = new JButton("Previous");
 	final private JButton btnShowHideName = new JButton("Show/Hide name");
 	final private JButton btnShowHideTags = new JButton("Show/Hide tags");
 	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
@@ -134,6 +137,10 @@ public class MainView implements Observer {
 		this.cardPanel.add(this.singlePhotoPanel, "One");
 		this.photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 		this.singlePhotoPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
+		this.topPanel.add(this.topBtnArea, BorderLayout.CENTER);
+		this.topBtnArea.add(btnPrevPP);
+		this.topBtnArea.add(btnNextPP);
+		
 	}
 	
 	public void setCommentsButtonListener(ActionListener l){
