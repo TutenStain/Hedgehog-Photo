@@ -134,7 +134,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 
 
 	@Override
-	public List<? extends PictureObject> searchPicturesfromTags(String search){
+	public List<? extends PictureI> searchPicturesfromTags(String search){
 		return this.pictureDao.searchfromTags(search);
 	}
 

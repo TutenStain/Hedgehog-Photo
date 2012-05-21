@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import se.cth.hedgehogphoto.controller.PhotoPanelFocusListener;
 import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.TagObject;
 import se.cth.hedgehogphoto.model.PhotoPanelConstantsI;
@@ -34,9 +33,9 @@ public class PhotoPanel extends JPanel {
 	private JLabel photoNameLabel = new JLabel("Name");
 	private JLabel iconLabel = new JLabel("");
 	private ImageIcon icon;
-	private boolean isClicked;
 	private String path;
 	private Dimension scaleDimension;
+	private JPanel cardPanel;
 
 	public PhotoPanel(FileObject f) {
 		this(f.getFilePath());
@@ -145,6 +144,12 @@ public class PhotoPanel extends JPanel {
 
 		gBig.setConstraints(tagsTextField,tag);
 		add(tagsTextField);
+	}
+	public void setCardPanel(JPanel p){
+		this.cardPanel = p;
+	}
+	public JPanel getCardPanel(){
+		return this.cardPanel;
 	}
 	public void setScaleDimension(Dimension d){
 		this.scaleDimension = d;

@@ -288,6 +288,7 @@ public class MainView implements Observer {
 				photoPanels.get(i).setIcon(icon2);
 				photoPanels.get(i).setScaleDimension(new Dimension(Math.round(image.getWidth(null)*scale), 
 						Math.round(image.getHeight(null)*scale)));
+				photoPanels.get(i).setCardPanel(this.cardPanel);
 
 			}
 		}
