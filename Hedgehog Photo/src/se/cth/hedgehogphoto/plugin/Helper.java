@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.log.Log;
+import sun.java2d.Surface;
 
 /**
  * A helper class for plugin-related classes
@@ -80,24 +81,27 @@ public final class Helper {
 	/**
 	 * Creates the plugin folder
 	 * @param createDir the folder path to create
-	 * @return returns true upon sucesfully folder creation, otherwise false
+	 * @return returns true upon successfull folder creation, otherwise false
 	 */
 	public static boolean createPluginFolder(final File createDir){
 		//Creates a plugin directory in home/plugin
 		//If the folder already exist nothing will be created.
+		boolean success;
 		if(createDir.exists() == false){
 			Log.getLogger().log(Level.INFO, "Plugin directory not found, creating new directory...");
 			if(createDir.mkdirs() == false){
 				Log.getLogger().log(Level.SEVERE, "Creating plugin directory failed, fatal error");
-				return false;
+				success = false;
 			} else {
 				Log.getLogger().log(Level.INFO, "Plugin directory succesfully created!");
-				return true;
+				success = true;
 			}
 		} else {
 			Log.getLogger().log(Level.INFO, "Plugin dir exists, skipping creation...");
-			return true;
+			success = true;
 		}
+		
+		return success;
 	}
 	
 	/**
@@ -167,24 +171,5 @@ public final class Helper {
 		} else {
 			return false;
 		}
-	}
-	
-	@Deprecated /*Does not work */
-	public static List<File> removeDuplicateClasses(List<File> files){
-		List<File> ret = new ArrayList<File>();
-		for(File f : files){
-			for(File ff : files){
-				if(stripDotAndSlashFromString(f.getAbsolutePath()).equals(stripDotAndSlashFromString(ff.getAbsolutePath())) == false){
-					if(f.getName().endsWith(".class")){
-						System.out.println("name: " + f.getName());
-						ret.add(f);
-					} 
-					
-				}
-			}
-		}
-		
-		Log.getLogger().log(Level.SEVERE, ret.toString());
-		return null;
 	}
 }

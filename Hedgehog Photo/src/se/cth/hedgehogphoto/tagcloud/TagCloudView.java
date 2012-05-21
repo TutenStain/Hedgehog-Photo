@@ -14,7 +14,7 @@ import se.cth.hedgehogphoto.view.WrapLayout;
 
 /**
  * The view representation of the tagcloud.
- * !setPreferredSize should always be set!
+ * setPreferredSize should always be set!
  * @author Barnabas Sapan
  */
 @SuppressWarnings("serial")
