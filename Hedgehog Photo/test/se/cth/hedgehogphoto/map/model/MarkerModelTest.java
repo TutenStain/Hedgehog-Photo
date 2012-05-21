@@ -135,10 +135,11 @@ public class MarkerModelTest {
 	@Test
 	public void testSetNumberOfPictures() {
 		model.setNumberOfLocations(9);
-		assertTrue(model.getNumberOfLocations() == 9);
+		assertTrue(model.getNumberOfLocations() != 9);
 		model.setNumberOfLocations(-2);
-		assertTrue(model.getNumberOfLocations() == -2); //TODO: Don't allow negative values!
-		//TODO: Override method and only allow value 1 for this component? throw otherwise
+		assertTrue(model.getNumberOfLocations() != -2); 
+		model.setNumberOfLocations(1);
+		assertTrue(model.getNumberOfLocations() == 1);
 	}
 
 	@Test

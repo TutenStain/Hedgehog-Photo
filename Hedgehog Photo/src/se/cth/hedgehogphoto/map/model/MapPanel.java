@@ -389,7 +389,6 @@ public class MapPanel extends JPanel {
                             SwingUtilities.getWindowAncestor(MapPanel.this),
                             error, "TileServer not reachable.", JOptionPane.ERROR_MESSAGE);
                     Log.getLogger().log(Level.SEVERE, error);
-                    //TODO: Instead of loading markers, display error-screen?
                 }
             });
         }

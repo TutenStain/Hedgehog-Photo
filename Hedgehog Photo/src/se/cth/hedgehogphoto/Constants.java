@@ -8,5 +8,4 @@ public interface Constants {
 	public static final int PREFERRED_MODULE_WIDTH = 300; //Width of the left panel-modules
 	public static final int PREFERRED_MODULE_HEIGHT = 300; //Height of the left panel-modules
 	public static final float PREFERRED_PICTURE_HEIGHT = 200;
-	/* TODO: Add global accessible variables here. */
 }

@@ -63,10 +63,10 @@ public class SearchThread extends Thread {
 		list.addAll(h);
 	}
 
-	//TODO: Find a way to break the delayThread and continue with the normal procedure
-	//ie, when you write something, and delay is 1000 ms. After 300ms user clicks enter.
-	//then the delayThread should stop and the pictures be sent to the searchmodel AND
-	//THEN to the Files-class.
+	//Enhancement possibility: Find a way to break the delayThread and continue with the 
+	//normal procedure ie, when you write something, and delay is 1000 ms. After 300ms user
+	//clicks enter then the delayThread should stop and the pictures be sent to the searchmodel
+	//AND to the Files-class.
 	@Override
 	public void run(){
 		try {

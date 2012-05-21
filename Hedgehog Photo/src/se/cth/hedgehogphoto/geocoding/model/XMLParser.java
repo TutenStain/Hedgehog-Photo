@@ -2,8 +2,10 @@ package se.cth.hedgehogphoto.geocoding.model;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -35,6 +37,7 @@ import se.cth.hedgehogphoto.objects.LocationObjectOther;
 public class XMLParser implements Runnable {
 	private static XMLParser xmlParser;
 	private DocumentBuilder docBuilder;
+	private Map<String, List<LocationObjectOther>> cachedSearchResults = new HashMap<String, List<LocationObjectOther>>();
 
 	public static synchronized XMLParser getInstance() {
 		if (xmlParser == null) 
@@ -64,8 +67,9 @@ public class XMLParser implements Runnable {
 	/**
 	 * Processes an XML-file requested from the nominatim-server,
 	 * either from the geocoding, or the reverse-geocoding-service.
-	 * TODO: Should cache searchResults (see nominatim usage policy
-	 * for more about that).
+	 * Caches the searchresults to minimize the request to the 
+	 * nominatim server. This is in line with the nominatim usage
+	 * policy.
 	 * @param xmlFileUrl the URL to the searchResult from the nominatim
 	 * server.
 	 * @param type the kind of request; Geocoding or Reverse-Geocoding.
@@ -75,6 +79,10 @@ public class XMLParser implements Runnable {
 	public synchronized List<LocationObjectOther> processGeocoding(URL xmlFileUrl, RequestType type) {
 		if (xmlFileUrl == null || type == null)
 			return new ArrayList<LocationObjectOther>();
+		
+		/* Check for cached search results first. */
+		if (this.cachedSearchResults.containsKey(xmlFileUrl.toString())) 
+			return this.cachedSearchResults.get(xmlFileUrl.toString());
 		
 		try {
 			final String tagName = (type == RequestType.GEOCODING_REQUEST) ? "place" : "result";
@@ -109,7 +117,7 @@ public class XMLParser implements Runnable {
 					}
 				}
 			}
-
+			this.cachedSearchResults.put(xmlFileUrl.toString(), locations); //cache results
 			return locations;
 
 		} catch (SAXParseException error) {

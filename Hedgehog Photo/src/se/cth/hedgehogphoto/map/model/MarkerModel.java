@@ -61,5 +61,15 @@ public class MarkerModel extends AbstractMarkerModel {
 	protected Point.Double getLonglat() {
 		return new Point.Double(getLongitude(), getLatitude());
 	}
+	
+	/**
+	 * Sets the number of locations (the counter).
+	 * Only allows value 1, doesn't set the counter otherwise.
+	 */
+	@Override
+	public void setNumberOfLocations(int numberOfLocations) {
+		if (numberOfLocations == 1)
+			super.setNumberOfLocations(numberOfLocations);
+	}
 
 }

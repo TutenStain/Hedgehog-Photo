@@ -100,15 +100,13 @@ public class SearchController {
 	}
 	
 	//------------------------------SEARCHBOX-LISTENERS------------------------------
-	
-	//TODO: Use instanceof checks, and typecast before doing that stuff!
 
 	/** Enter is pressed from the textfield, do and display search! */
 	public class SearchBoxEnterListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(!view.getSearchBoxText().equals(view.getPlaceholderText())){
-				List<PictureObject> pictures = model.getPictures(); //TODO: Interrupt searchThread, if it is running, so we don't search 2 times
+				List<PictureObject> pictures = model.getPictures(); //Performance enhancement: Interrupt searchThread, if it is running, so we don't search 2 times
 				files.setPictureList(pictures);
 			}
 		}	

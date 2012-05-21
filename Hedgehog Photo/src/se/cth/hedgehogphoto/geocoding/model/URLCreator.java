@@ -62,10 +62,10 @@ public class URLCreator {
 			return null;
 		}
 		
-		this.builder.append(this.LONGITUDE_QUERY);
+		this.builder.append(URLCreator.LONGITUDE_QUERY);
 		this.builder.append(coords.x);
-		this.builder.append(this.AMPERSAND);
-		this.builder.append(this.LATITUDE_QUERY);
+		this.builder.append(URLCreator.AMPERSAND);
+		this.builder.append(URLCreator.LATITUDE_QUERY);
 		this.builder.append(coords.y);
 		
 		try {
@@ -92,14 +92,14 @@ public class URLCreator {
 	 * itself. 
 	 */
 	private void initializeStringBuilder(RequestType requestType) {
-		this.builder = new StringBuilder(this.NAMEFINDER_URL);
+		this.builder = new StringBuilder(URLCreator.NAMEFINDER_URL);
 		
 		switch (requestType) {
 		case GEOCODING_REQUEST: 
-			this.builder.append(this.GEOCODING_REQUEST);
+			this.builder.append(URLCreator.GEOCODING_REQUEST);
 			prepareBuilder(); break;
 		case REVERSE_GEOCODING_REQUEST: 
-			this.builder.append(this.REVERSE_GEOCODING_REQUEST);
+			this.builder.append(URLCreator.REVERSE_GEOCODING_REQUEST);
 			prepareBuilderForReverseGeocoding(); break;
 		default: break;
 		}
@@ -109,17 +109,17 @@ public class URLCreator {
 	
 	private void prepareBuilderForReverseGeocoding() {
 		prepareBuilder();
-		this.builder.append(this.ZOOM);
-		this.builder.append(this.AMPERSAND);
+		this.builder.append(URLCreator.ZOOM);
+		this.builder.append(URLCreator.AMPERSAND);
 	}
 	
 	private void prepareBuilder() {
-		this.builder.append(this.XML_FORMAT);
-		this.builder.append(this.AMPERSAND);
-		this.builder.append(this.ADDRESS_DETAILS);
-		this.builder.append(this.AMPERSAND);
-		this.builder.append(this.EMAIL);
-		this.builder.append(this.AMPERSAND);
+		this.builder.append(URLCreator.XML_FORMAT);
+		this.builder.append(URLCreator.AMPERSAND);
+		this.builder.append(URLCreator.ADDRESS_DETAILS);
+		this.builder.append(URLCreator.AMPERSAND);
+		this.builder.append(URLCreator.EMAIL);
+		this.builder.append(URLCreator.AMPERSAND);
 	}
 	
 	

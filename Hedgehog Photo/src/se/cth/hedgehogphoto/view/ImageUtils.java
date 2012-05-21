@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 
 public class ImageUtils {
 	public static BufferedImage resize(Image image, int width, int height) {
-		//TODO added to skip the picture with an illegal name
 		if(width <= 0 || height <= 0){
 			return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 		}

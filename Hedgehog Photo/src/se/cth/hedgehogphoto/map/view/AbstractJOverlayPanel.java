@@ -54,7 +54,7 @@ public abstract class AbstractJOverlayPanel extends JPanel
 	protected void initialize() {
 		this.setBorder(BorderFactory.createEmptyBorder());
 		setProperBounds();
-		forceProperSize(); //dunno if this is necessary
+		forceProperSize(); 
 		setProperVisibility();
 		setOpaque(false);
 	}

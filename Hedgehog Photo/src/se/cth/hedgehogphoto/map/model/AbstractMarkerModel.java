@@ -29,8 +29,14 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 		return this.numberOfLocations;
 	}
 	
+	/**
+	 * Sets the counter of locations to the given integer.
+	 * Non-positive numbers are not allowed, but 0 is ok.
+	 * @param numberOfLocations
+	 */
 	public void setNumberOfLocations(int numberOfLocations) {
-		this.numberOfLocations = numberOfLocations;
+		if (numberOfLocations >= 0)
+			this.numberOfLocations = numberOfLocations;
 	}
 	
 	public String getIconPath() {
@@ -42,7 +48,7 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 		setProperComponentSize();
 		setChanged();
 		notifyObservers(Global.ICON_UPDATE);
-		/* IF POSSIBLE: Setting the proper component size is essential 
+		/* Setting the proper component size is essential 
 		 * for calculations, but with only the string it is hard to check.
 		 * One might need to hard-code the size of certain icons. */
 	}
