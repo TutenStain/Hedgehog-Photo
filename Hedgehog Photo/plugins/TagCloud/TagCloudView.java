@@ -1,16 +1,17 @@
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JPanel;
 
+import javax.swing.JPanel;
 
 /**
  * The view representation of the tagcloud.
- * !setPreferredSize should always be set!
+ * setPreferredSize should always be set!
  * @author Barnabas Sapan
  */
 @SuppressWarnings("serial")
@@ -22,6 +23,8 @@ public class TagCloudView extends JPanel implements Observer {
 	//getFontSize() helpers
 	private int removeFromMax = 0;
 	private int addToMin = 0;
+	
+	private MouseListener tagComponentMouseListener;
 	
 	public TagCloudView(){
 		setLayout(new WrapLayout(FlowLayout.LEFT));	
@@ -35,19 +38,23 @@ public class TagCloudView extends JPanel implements Observer {
 	 */
 	//TODO Maybe a better implementation fontSize based on max/min size.
 	private float getFontSize(int tagOccurrence){
-		float size = map.size() * tagOccurrence;
+		float size = this.map.size() * tagOccurrence;
 		
-		if(size > fontMax){
-			size = fontMax - removeFromMax;
-			removeFromMax += 2;
+		if(size > this.fontMax){
+			size = this.fontMax - this.removeFromMax;
+			this.removeFromMax += 2;
 		}
 		
-		if(size < fontMin){
-			size = fontMin + addToMin;
-			addToMin += 2;
+		if(size < this.fontMin){
+			size = this.fontMin + this.addToMin;
+			this.addToMin += 2;
 		}
 		
 		return size;
+	}
+	
+	public void setMouseListener(MouseListener listener) {
+		this.tagComponentMouseListener = listener;
 	}
 	
 	/**
@@ -55,25 +62,25 @@ public class TagCloudView extends JPanel implements Observer {
 	 * will get correct sizes.
 	 */
 	private void reset(){
-		baseFont = new Font("Serif", Font.PLAIN, 11);
-		fontMax = 20f;
-		fontMin = baseFont.getSize();
-		addToMin = 0;
-		removeFromMax = 0;
+		this.baseFont = new Font("Serif", Font.PLAIN, 11);
+		this.fontMax = 20f;
+		this.fontMin = this.baseFont.getSize();
+		this.addToMin = 0;
+		this.removeFromMax = 0;
 	}
 		
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg != null){
+		if(arg != null && arg instanceof TagCloudModel){
 			TagCloudModel model = (TagCloudModel)arg;
-			map = model.getTagsOccurrence();
+			this.map = model.getTagsOccurrence();
 			
 			removeAll();
 			
-			for(Map.Entry<String, Integer> entry : map.entrySet()){
+			for(Map.Entry<String, Integer> entry : this.map.entrySet()){
 				TagComponent tag = new TagComponent(entry.getKey());
-				tag.addMouseListener(new TagComponentController(model, this, tag));
-				tag.setFont(baseFont.deriveFont(getFontSize(entry.getValue())));
+				tag.addMouseListener(this.tagComponentMouseListener); 
+				tag.setFont(this.baseFont.deriveFont(getFontSize(entry.getValue())));
 				add(tag);
 			}
 			

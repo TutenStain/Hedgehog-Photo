@@ -11,4 +11,3 @@ public class TagComponent extends JLabel {
 		super(txt);
 	}
 }
-

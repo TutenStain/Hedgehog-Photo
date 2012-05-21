@@ -84,8 +84,7 @@ public class TagCloudView extends JPanel implements Observer {
 			
 			for(Map.Entry<String, Integer> entry : this.map.entrySet()){
 				TagComponent tag = new TagComponent(entry.getKey());
-				tag.addMouseListener(this.tagComponentMouseListener); //might be null, but in practice it should not be that. Ok to send in null?
-				//TODO move this our to initiator.
+				tag.addMouseListener(this.tagComponentMouseListener);
 				tag.setFont(this.baseFont.deriveFont(getFontSize(entry.getValue())));
 				add(tag);
 			}

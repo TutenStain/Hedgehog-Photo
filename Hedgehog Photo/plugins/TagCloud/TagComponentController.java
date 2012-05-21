@@ -9,16 +9,16 @@ import java.awt.event.MouseListener;
 public class TagComponentController implements MouseListener{
 	private TagCloudModel model;
 	private TagCloudView view;
-	private TagComponent tag;
 	private Font oldFont;
 	private Cursor oldCursor;
 
 	public TagComponentController(){}
 	
-	public TagComponentController(TagCloudModel model, TagCloudView view, TagComponent tag){
+	public TagComponentController(TagCloudModel model, TagCloudView view){
 		this.model = model;
 		this.view = view;
-		this.tag = tag;
+		this.view.setMouseListener(this);
+		this.model.addObserver(this.view);
 	}
 	
 	@Override
@@ -31,21 +31,29 @@ public class TagComponentController implements MouseListener{
 	
 	@Override
 	public void mouseExited(MouseEvent e) {
-		tag.setFont(oldFont);		
-		view.setCursor(oldCursor);
+		if(e.getSource() instanceof TagComponent){
+			TagComponent tag = (TagComponent)e.getSource();
+			tag.setFont(this.oldFont);		
+			this.view.setCursor(this.oldCursor);
+		}
 	}
 	
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		oldCursor = view.getCursor();
-		oldFont = tag.getFont();
-		tag.setFont(tag.getFont().deriveFont(Font.BOLD));	
-		view.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		if(e.getSource() instanceof TagComponent){
+			TagComponent tag = (TagComponent)e.getSource();
+			this.oldCursor = this.view.getCursor();
+			this.oldFont = tag.getFont();
+			tag.setFont(tag.getFont().deriveFont(Font.BOLD));	
+			this.view.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		}
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Clicked on: " + tag.getText());
-		model.updateSearchPicturesfromTags(tag.getText());
+		if(e.getSource() instanceof TagComponent){
+			TagComponent tag = (TagComponent)e.getSource();
+			this.model.updateSearchPicturesfromTags(tag.getText());	
+		}
 	}
 }
