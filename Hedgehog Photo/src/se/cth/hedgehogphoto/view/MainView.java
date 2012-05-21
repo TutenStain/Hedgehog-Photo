@@ -2,6 +2,7 @@ package se.cth.hedgehogphoto.view;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -174,6 +175,13 @@ public class MainView implements Observer {
 	}
 	public JScrollPane getPhotoView(){
 		return this.photoView;
+	}
+	public void setOverallBackground(Color c){
+		this.bottomPanel.setBackground(c);
+		this.topPanel.setBackground(c);
+		this.photoViewPanel.setBackground(c);
+		this.singlePhotoPanel.setBackground(c);
+		this.leftPanelView.setBackground(c);
 	}
 
 	public void addPlugin(JPanel panel, PluginArea placement){
