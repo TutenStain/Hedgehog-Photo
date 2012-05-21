@@ -16,6 +16,7 @@ import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,9 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.geocoding.model.URLCreator;
 import se.cth.hedgehogphoto.geocoding.model.XMLParser;
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
 /**
@@ -37,6 +38,9 @@ public final class GeoSearchPanel extends JPanel {
 
 	private ConstrainedGrid resultPanel = new ConstrainedGrid();
 	private JComboBox<Object> searchBox = new JComboBox<Object>();
+	
+	private JButton okButton;
+	private JButton cancelButton;
 	
 	private URLCreator urlCreator = URLCreator.getInstance();
 	private XMLParser xmlParser = XMLParser.getInstance();
@@ -85,6 +89,9 @@ public final class GeoSearchPanel extends JPanel {
 				}
 			});
 		}
+		
+		this.okButton = new JButton("Ok");
+		this.cancelButton = new JButton("Cancel");
 	}
 
 	public void doSearch(Object selectedItem) {
@@ -134,6 +141,21 @@ public final class GeoSearchPanel extends JPanel {
 			}
 		};
 		SwingUtilities.invokeLater(r);
+	}
+	
+	public void setInitialSearchBoxText(final String text) {
+		if (text == null)
+			return;
+		
+		Object object = new Object() {
+			public String toString() { 
+				return text; 
+			}
+		};
+		this.searchBox.addItem(object);
+		this.searchBox.setSelectedItem(object);
+		
+		doSearch(searchBox.getSelectedItem());
 	}
 	
 	private void setPreferredWidth() {

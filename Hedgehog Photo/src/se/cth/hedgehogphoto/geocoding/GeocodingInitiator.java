@@ -14,12 +14,17 @@ import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
 public class GeocodingInitiator {
 	
 	public static void main(String [] args) {
-		new GeocodingInitiator();
+		new GeocodingInitiator("paris");
 	}
 	
 	public GeocodingInitiator() {
+		this(null);
+	}
+	
+	public GeocodingInitiator(String initialSearch) {
 		GeoSearchPanel view = new GeoSearchPanel();
 		new GeocodingController(view);
+		view.setInitialSearchBoxText(initialSearch);
 		
 		JFrame frame = new JFrame();
 		frame.setPreferredSize(new Dimension(400,600));
