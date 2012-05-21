@@ -691,6 +691,14 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	public void setLocation(LocationObjectOther lo ,Picture picture){
 		if(picture != null){
 			if(!lo.getLocation().equals("")){
+				String place = "";
+				try{
+					place = lo.getLocation().toLowerCase();
+						String s = lo.getLocation().charAt(0) + "";
+						place = s.toUpperCase() + place.substring(1);
+						}catch(Exception u){
+							
+						}
 				try{
 					Location location = locationDao.findById(lo.getLocation());
 					if(location.getLocation().equals(lo.getLocation())){
@@ -704,10 +712,11 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				}catch(Exception j){
 					beginTransaction();
 					Location location = new Location();
-
+				
+							
 					location.setLatitude((lo.getLatitude()));
 					location.setLongitude(lo.getLongitude());
-					location.setLocation(lo.getLocation());
+					location.setLocation(place);
 					List<Picture> pics = new ArrayList<Picture>();
 					pics.add(picture);
 					location.setPictures(pics);
