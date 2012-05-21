@@ -66,9 +66,22 @@ public abstract class JpaDao<E,K> implements Dao<E,K>,Entity {
 		return  (List<E>)q.getResultList();
 	}
 	
+	
 	public List<E> findByLike(String quality,String search) {
-		Query q = entityManager.createQuery("select t from " + entityClass.getSimpleName()  + " t where t." + quality.toLowerCase() +  " like '%" + search.toLowerCase() + "%'");
-		return  (List<E>)q.getResultList();	
+		try{
+		search = search.toLowerCase();
+		String s = search.charAt(0)+"";
+		search = s.toUpperCase() + search.substring(1);
+		}catch(Exception i){
+			
+		}
+		System.out.print("select t from " + entityClass.getSimpleName()  + " t where t." + quality +  " like '%" + search + "%'");
+		//System.out.println(quality + search);
+		Query q = entityManager.createQuery("select t from " + entityClass.getSimpleName()  + " t where t." + quality +  " like '%" + search + "%'");
+		List<E> query = (List<E>)q.getResultList();
+		q = entityManager.createQuery("select t from " + entityClass.getSimpleName()  + " t where t." + quality.toLowerCase() +  " like '%" + search.toLowerCase() + "%'");
+		query.addAll((List<E>)q.getResultList());
+		return  query;
 	}
 	
 	public List<E> getAll(){

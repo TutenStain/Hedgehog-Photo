@@ -589,8 +589,8 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		if(picture != null){
 			try{
 				if(!(f.getComment().equals(""))){
-					Comment comment = commentDao.findById(f.getComment().toLowerCase());
-					if(comment.getComment().equals(f.getComment().toLowerCase())){
+					Comment comment = commentDao.findById(f.getComment());
+					if(comment.getComment().equals(f.getComment())){
 						beginTransaction();
 						List<Picture> pics = comment.getPictures();
 						pics.add(picture);
@@ -606,8 +606,16 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	
 				if(commentDao.findById(f.getComment())==null){
 					beginTransaction();
-					Comment comment = new Comment();		
-					comment.setComment(f.getComment().toLowerCase());		
+					Comment comment = new Comment();
+					String comm ="";
+					try{
+						 comm = f.getComment().toLowerCase();
+							String s = f.getComment().charAt(0) + "";
+							comm  = s.toUpperCase() + comm.substring(1);
+							}catch(Exception u){
+								
+							}
+					comment.setComment(comm);		
 					List<Picture> pics = new ArrayList<Picture>();
 					pics.add(picture);
 					comment.setPicture(pics);
@@ -624,7 +632,15 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			if(f.getTags() != null){
 				List<String> tags = new ArrayList<String>();
 				for(String tagg: f.getTags()){
-					tags.add(tagg);
+					String tgg ="";
+					try{
+						 tgg = tagg.toLowerCase();
+							String s = f.getDate().charAt(0) + "";
+							tgg = s.toUpperCase() + tagg.substring(1);
+							}catch(Exception u){
+								
+							}
+					tags.add(tgg);
 				}
 				List<String> pictags = new ArrayList<String>();
 				for(TagObject tagg: picture.getTags()){
