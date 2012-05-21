@@ -54,8 +54,8 @@ public class MainView implements Observer {
 	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
 	final private JButton btnshowHideComments = new JButton("Show/Hide comments");
 	final private JSlider slider = new JSlider(50, 200);
+	//TODO can we keep these?
 	private List<Dimension> newDimensions;
-	//TODO this list probably needs to be removed, not enough MVC
 	private List<PhotoPanel> photoPanels;
 	
 	private ActionListener actionListener;
