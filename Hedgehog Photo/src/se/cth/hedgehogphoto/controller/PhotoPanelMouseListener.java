@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.view.ImageUtils;
 import se.cth.hedgehogphoto.view.PhotoPanel;
@@ -17,11 +18,13 @@ public class PhotoPanelMouseListener extends MouseAdapter {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() instanceof PhotoPanel) {
 			PhotoPanel photoPanel = (PhotoPanel) e.getSource();
-			CardLayout cl = (CardLayout)(photoPanel.getCardPanel().getLayout());
 			Image image = photoPanel.getIcon().getImage();
 			BufferedImage bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
 			ImageIcon icon2 = new ImageIcon(bi);
 			photoPanel.setIcon(icon2);
+			CardLayout cl = (CardLayout)(photoPanel.getCardPanel().getLayout());
+			JPanel cardPanel = photoPanel.getCardPanel();
+			cl.show(cardPanel, "One");
 		}
 	}
 }

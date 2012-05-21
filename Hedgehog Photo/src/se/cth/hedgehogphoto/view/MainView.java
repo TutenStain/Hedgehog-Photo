@@ -131,8 +131,8 @@ public class MainView implements Observer {
 		frame.getContentPane().add(photoView, BorderLayout.CENTER);
 		photoView.setViewportView(cardPanel);
 		cardPanel.setLayout(new CardLayout());
-		cardPanel.add(photoViewPanel);
-		cardPanel.add(singlePhotoPanel);
+		cardPanel.add(photoViewPanel, "All");
+		cardPanel.add(singlePhotoPanel, "One");
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 	}
 	public void setCommentsButtonListener(ActionListener l){
