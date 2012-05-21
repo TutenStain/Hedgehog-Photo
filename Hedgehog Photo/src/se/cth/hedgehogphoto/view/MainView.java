@@ -133,8 +133,8 @@ public class MainView implements Observer {
 		photoView.setViewportView(cardPanel);
 		cardPanel.setLayout(new CardLayout());
 		cardPanel.add(photoViewPanel);
+		cardPanel.add(singlePhotoPanel);
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
-
 	}
 	public void setCommentsButtonListener(ActionListener l){
 		this.btnshowHideComments.addActionListener(l);
@@ -297,7 +297,6 @@ public class MainView implements Observer {
 
 			}
 		}
-
 		frame.revalidate();
 	}
 }
