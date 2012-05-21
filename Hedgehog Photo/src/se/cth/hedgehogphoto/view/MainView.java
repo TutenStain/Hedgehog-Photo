@@ -60,8 +60,7 @@ public class MainView implements Observer {
 	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
 	final private JButton btnshowHideComments = new JButton("Show/Hide comments");
 	final private JSlider slider = new JSlider(50, 200);
-	//TODO can we keep these?
-	private List<Dimension> newDimensions;
+	//TODO Can we keep this? Enough MVC?
 	private List<PhotoPanel> photoPanels;
 
 	private ActionListener actionListener;
@@ -162,10 +161,6 @@ public class MainView implements Observer {
 
 	public List<PhotoPanel> getPhotoPanels(){
 		return this.photoPanels;
-	}
-
-	public List<Dimension> getNewDimensions(){
-		return this.newDimensions;
 	}
 
 	public void addPlugin(JPanel panel, PluginArea placement){
@@ -282,7 +277,6 @@ public class MainView implements Observer {
 			}
 			addListenersToAll();
 		}
-		newDimensions = new ArrayList<Dimension>();
 		//TODO just a test
 		if(!photoPanels.isEmpty()){
 			for(int i=0;i<photoPanels.size();i++){
@@ -292,7 +286,7 @@ public class MainView implements Observer {
 						Math.round(Constants.PREFERRED_PICTURE_HEIGHT));
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanels.get(i).setIcon(icon2);
-				newDimensions.add(new Dimension(Math.round(image.getWidth(null)*scale), 
+				photoPanels.get(i).setScaleDimension(new Dimension(Math.round(image.getWidth(null)*scale), 
 						Math.round(image.getHeight(null)*scale)));
 
 			}

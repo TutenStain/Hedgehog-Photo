@@ -36,6 +36,7 @@ public class PhotoPanel extends JPanel {
 	private ImageIcon icon;
 	private boolean isClicked;
 	private String path;
+	private Dimension scaleDimension;
 
 	public PhotoPanel(FileObject f) {
 		this(f.getFilePath());
@@ -145,7 +146,12 @@ public class PhotoPanel extends JPanel {
 		gBig.setConstraints(tagsTextField,tag);
 		add(tagsTextField);
 	}
-	
+	public void setScaleDimension(Dimension d){
+		this.scaleDimension = d;
+	}
+	public Dimension getScaleDimension(){
+		return this.scaleDimension;
+	}
 	public String getPath() {
 		return this.path;
 	}

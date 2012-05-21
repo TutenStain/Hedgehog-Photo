@@ -15,6 +15,7 @@ import javax.swing.event.ChangeListener;
 import se.cth.hedgehogphoto.metadata.PictureInserter;
 import se.cth.hedgehogphoto.view.ImageUtils;
 import se.cth.hedgehogphoto.view.MainView;
+import se.cth.hedgehogphoto.view.PhotoPanel;
 
 /**
  * 
@@ -81,11 +82,12 @@ public class DefaultController {
 				if(arg0.getSource() instanceof JSlider){
 					JSlider slider = (JSlider)arg0.getSource();
 					float scale = (float)slider.getValue()/100;
-					for(int i=0;i<view.getPhotoPanels().size();i++){
-						Image image = view.getPhotoPanels().get(i).getIcon().getImage();
-						List<Dimension> dims = view.getNewDimensions();
-						BufferedImage bi = ImageUtils.resize(image, Math.round(dims.get(i).width*scale),
-								Math.round(dims.get(i).height*scale));
+					List<PhotoPanel> ppList = view.getPhotoPanels();
+					for(int i=0;i<ppList.size();i++){
+						Image image = ppList.get(i).getIcon().getImage();
+						Dimension d = ppList.get(i).getScaleDimension();
+						BufferedImage bi = ImageUtils.resize(image, Math.round(d.width*scale),
+								Math.round(d.height*scale));
 						ImageIcon icon2 = new ImageIcon(bi);
 						view.getPhotoPanels().get(i).setIcon(icon2);
 					}
