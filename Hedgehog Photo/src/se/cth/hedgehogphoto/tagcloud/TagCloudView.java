@@ -39,16 +39,16 @@ public class TagCloudView extends JPanel implements Observer {
 	 */
 	//TODO Maybe a better implementation fontSize based on max/min size.
 	private float getFontSize(int tagOccurrence){
-		float size = map.size() * tagOccurrence;
+		float size = this.map.size() * tagOccurrence;
 		
-		if(size > fontMax){
-			size = fontMax - removeFromMax;
-			removeFromMax += 2;
+		if(size > this.fontMax){
+			size = this.fontMax - this.removeFromMax;
+			this.removeFromMax += 2;
 		}
 		
-		if(size < fontMin){
-			size = fontMin + addToMin;
-			addToMin += 2;
+		if(size < this.fontMin){
+			size = this.fontMin + this.addToMin;
+			this.addToMin += 2;
 		}
 		
 		return size;
@@ -59,26 +59,26 @@ public class TagCloudView extends JPanel implements Observer {
 	 * will get correct sizes.
 	 */
 	private void reset(){
-		baseFont = new Font("Serif", Font.PLAIN, 11);
-		fontMax = 20f;
-		fontMin = baseFont.getSize();
-		addToMin = 0;
-		removeFromMax = 0;
+		this.baseFont = new Font("Serif", Font.PLAIN, 11);
+		this.fontMax = 20f;
+		this.fontMin = this.baseFont.getSize();
+		this.addToMin = 0;
+		this.removeFromMax = 0;
 	}
 		
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg != null){
+		if(arg != null && arg instanceof TagCloudModel){
 			TagCloudModel model = (TagCloudModel)arg;
-			map = model.getTagsOccurrence();
+			this.map = model.getTagsOccurrence();
 			
 			removeAll();
 			
-			for(Map.Entry<String, Integer> entry : map.entrySet()){
+			for(Map.Entry<String, Integer> entry : this.map.entrySet()){
 				TagComponent tag = new TagComponent(entry.getKey());
 				tag.addMouseListener(new TagComponentController(model, this));
 				//TODO move this our to initiator.
-				tag.setFont(baseFont.deriveFont(getFontSize(entry.getValue())));
+				tag.setFont(this.baseFont.deriveFont(getFontSize(entry.getValue())));
 				add(tag);
 			}
 			

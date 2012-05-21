@@ -34,16 +34,16 @@ public class TagCloudModel extends Observable implements Observer {
 	 */
 	public void setTags(List<String> _tags){
 		if(_tags.size() != 0){
-			tags.clear();
-			tags = _tags;
+			this.tags.clear();
+			this.tags = _tags;
 			
-			Iterator<String> itr = tags.iterator();
+			Iterator<String> itr = this.tags.iterator();
 			
-			map.clear();
+			this.map.clear();
 			while(itr.hasNext()){
 				String o = itr.next();
 				int occurrences = Collections.frequency(tags, o);
-				map.put(o, occurrences);
+				this.map.put(o, occurrences);
 			}
 			
 			setChanged();
@@ -56,7 +56,7 @@ public class TagCloudModel extends Observable implements Observer {
 	 * @param tag The tag to filter and show images on.
 	 */
 	public void updateSearchPicturesfromTags(String tag){
-		db.updateSearchPicturesfromTags(tag);
+		this.db.updateSearchPicturesfromTags(tag);
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class TagCloudModel extends Observable implements Observer {
 	 * it appears.
 	 */
 	public Map<String, Integer> getTagsOccurrence (){
-		return map;
+		return this.map;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class TagCloudModel extends Observable implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		List<String> l = new ArrayList<String>();
-		for(PictureObject po : db.getAllPictures()){
+		for(PictureObject po : this.db.getAllPictures()){
 			for(TagObject to : po.getTags()){
 				l.add(to.getTag());
 			}

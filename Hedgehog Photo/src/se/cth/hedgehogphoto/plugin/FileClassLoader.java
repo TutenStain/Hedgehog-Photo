@@ -34,7 +34,7 @@ public class FileClassLoader extends URLClassLoader {
 	public FileClassLoader(URL[] urls) {
 		super(urls);
 		if(urls.length == 1){
-			pluginRootDirectory = new File(urls[0].getPath());
+			this.pluginRootDirectory = new File(urls[0].getPath());
 			addSubfolders();
 		} else {
 			Log.getLogger().log(Level.SEVERE, "Error, only one file path supported at a time");
@@ -46,7 +46,7 @@ public class FileClassLoader extends URLClassLoader {
 	 * to the list of URLs to search for classes and resources.
 	 */
 	private void addSubfolders(){
-		for(File dir : pluginRootDirectory.listFiles()){
+		for(File dir : this.pluginRootDirectory.listFiles()){
 			if(dir.isDirectory()){
 				try {
 					File subfolder = new File(dir.toURI());
@@ -72,8 +72,8 @@ public class FileClassLoader extends URLClassLoader {
 		//Replace packages to a proper folderstructure
 		final String fileStub = file.replace( '.', '/' );
 
-		final String javaFilenamePath = pluginRootDirectory.getAbsolutePath() + fileStub + ".java";
-		final String classFilenamePath = pluginRootDirectory.getAbsolutePath() + fileStub + ".class";
+		final String javaFilenamePath = this.pluginRootDirectory.getAbsolutePath() + fileStub + ".java";
+		final String classFilenamePath = this.pluginRootDirectory.getAbsolutePath() + fileStub + ".class";
 		
 		File javaFile = new File(javaFilenamePath);
 		File classFile = new File(classFilenamePath);
@@ -105,7 +105,7 @@ public class FileClassLoader extends URLClassLoader {
 		//Try to...Find it via loadclass
 		try {
 			c = super.loadClass(file, true);
-			loadedClasses.put(file, c);
+			this.loadedClasses.put(file, c);
 		} catch (ClassNotFoundException e) {
 			Log.getLogger().log(Level.SEVERE, "ClassNotFoundException: " + file + " not loaded!", e);
 		}
@@ -140,7 +140,7 @@ public class FileClassLoader extends URLClassLoader {
 		if(compiler != null){
 			StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 			Iterable<? extends JavaFileObject> compUnits =  fileManager.getJavaFileObjects(fileToCompile);
-			String classpath = pluginRootDirectory.getAbsolutePath() + System.getProperty("file.separator") + "API.jar:" + fileRootFolder.getAbsolutePath();
+			String classpath = this.pluginRootDirectory.getAbsolutePath() + System.getProperty("file.separator") + "API.jar:" + fileRootFolder.getAbsolutePath();
 			final Iterable<String> options = Arrays.asList(new String[] { "-cp", classpath});
 			compilationResult = compiler.getTask(null, fileManager, null, options, null, compUnits).call();        
 		} else {

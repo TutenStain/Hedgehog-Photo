@@ -33,8 +33,8 @@ public class TagComponentController implements MouseListener{
 	public void mouseExited(MouseEvent e) {
 		if(e.getSource() instanceof TagComponent){
 			TagComponent tag = (TagComponent)e.getSource();
-			tag.setFont(oldFont);		
-			view.setCursor(oldCursor);
+			tag.setFont(this.oldFont);		
+			this.view.setCursor(this.oldCursor);
 		}
 	}
 	
@@ -42,10 +42,10 @@ public class TagComponentController implements MouseListener{
 	public void mouseEntered(MouseEvent e) {
 		if(e.getSource() instanceof TagComponent){
 			TagComponent tag = (TagComponent)e.getSource();
-			oldCursor = view.getCursor();
-			oldFont = tag.getFont();
+			this.oldCursor = this.view.getCursor();
+			this.oldFont = tag.getFont();
 			tag.setFont(tag.getFont().deriveFont(Font.BOLD));	
-			view.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			this.view.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 	}
 	
@@ -54,7 +54,7 @@ public class TagComponentController implements MouseListener{
 		if(e.getSource() instanceof TagComponent){
 			TagComponent tag = (TagComponent)e.getSource();
 			System.out.println("Clicked on: " + tag.getText());
-			model.updateSearchPicturesfromTags(tag.getText());	
+			this.model.updateSearchPicturesfromTags(tag.getText());	
 		}
 	}
 }
