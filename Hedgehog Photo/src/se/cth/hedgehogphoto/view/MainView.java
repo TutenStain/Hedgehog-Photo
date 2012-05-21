@@ -1,6 +1,7 @@
 package se.cth.hedgehogphoto.view;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -129,9 +130,9 @@ public class MainView implements Observer {
 			layers[i].start();
 		}
 		frame.getContentPane().add(photoView, BorderLayout.CENTER);
-
-		photoViewPanel = new JPanel();
-		photoView.setViewportView(photoViewPanel);
+		photoView.setViewportView(cardPanel);
+		cardPanel.setLayout(new CardLayout());
+		cardPanel.add(photoViewPanel);
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 
 	}
