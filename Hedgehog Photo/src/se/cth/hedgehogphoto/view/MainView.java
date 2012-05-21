@@ -56,7 +56,7 @@ public class MainView implements Observer {
 	final private JButton btnShowHideTags = new JButton("Show/Hide tags");
 	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
 	final private JButton btnshowHideComments = new JButton("Show/Hide comments");
-	final private JSlider slider = new JSlider(50, 200);
+	final private JSlider slider = new JSlider(50, 200, 100);
 	//TODO Can we keep this? Enough MVC?
 	private List<PhotoPanel> photoPanels;
 
@@ -166,6 +166,9 @@ public class MainView implements Observer {
 	}
 	public JPanel getSinglePhotoPanel(){
 		return this.singlePhotoPanel;
+	}
+	public void resetSlider(){
+		this.slider.setValue(100);
 	}
 
 	public void addPlugin(JPanel panel, PluginArea placement){

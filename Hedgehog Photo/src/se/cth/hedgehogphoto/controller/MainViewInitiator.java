@@ -51,6 +51,7 @@ public class MainViewInitiator {
 				CardLayout cl = (CardLayout) cardPanel.getLayout();
 				cl.show(cardPanel, "One");
 				view.getSinglePhotoPanel().add(photoPanel);
+				view.resetSlider();
 			}
 		}
 	}
