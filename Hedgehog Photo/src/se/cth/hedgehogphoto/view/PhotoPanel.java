@@ -163,14 +163,6 @@ public class PhotoPanel extends JPanel {
 		this.locationTextField.addFocusListener(listener);
 		this.nameTextField.addFocusListener(listener);
 	}
-	
-	public boolean isClicked(){
-		return this.isClicked;
-	}
-	
-	public void setClicked(Boolean b){
-		this.isClicked = b;
-	}
 	public void setMouseListener(MouseListener l){
 		this.iconLabel.addMouseListener(l);
 	}
