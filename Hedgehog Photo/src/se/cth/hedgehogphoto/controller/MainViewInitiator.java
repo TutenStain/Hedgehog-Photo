@@ -47,7 +47,6 @@ public class MainViewInitiator {
 				BufferedImage bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanel.setIcon(icon2);
-				//TODO cleanup
 				JPanel cardPanel = view.getCardPanel();
 				CardLayout cl = (CardLayout) cardPanel.getLayout();
 				cl.show(cardPanel, "One");

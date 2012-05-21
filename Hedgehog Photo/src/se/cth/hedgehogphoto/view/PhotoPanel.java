@@ -60,12 +60,8 @@ public class PhotoPanel extends JPanel {
 		this.tagsLabel.setPreferredSize(new Dimension(100,10));
 		this.nameTextField.setPreferredSize(new Dimension(100,20));
 		this.photoNameLabel.setPreferredSize(new Dimension(50,10));
-
-		setLayout(new BorderLayout(0, 0));
+		
 		setVisible(true);
-
-		JPanel commentsPanel = new JPanel();
-		commentsPanel.setLayout(new BorderLayout(0, 0));
 
 		GridBagLayout gBig = new GridBagLayout();
 		setLayout(gBig);
