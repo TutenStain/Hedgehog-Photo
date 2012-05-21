@@ -53,7 +53,7 @@ public class MainView implements Observer {
 	private LoadingLayer[] layers = new LoadingLayer[3];
 	private JPanel topPanel = new JPanel();
 	private JPanel topBtnArea = new JPanel();
-	private JButton uploadPictures = new JButton("Upload Pictures");
+	private JButton uploadPictures = new JButton("Import pictures");
 	private JButton btnNextPP = new JButton("Next");
 	private JButton btnPrevPP = new JButton("Previous");
 	final private JButton btnShowHideName = new JButton("Show/Hide name");
