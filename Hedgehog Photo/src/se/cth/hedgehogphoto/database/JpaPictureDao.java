@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.cth.hedgehogphoto.geocoding.GeocodingInitiator;
 import se.cth.hedgehogphoto.geocoding.model.URLCreator;
 import se.cth.hedgehogphoto.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.objects.FileObject;
@@ -699,8 +700,9 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 						}catch(Exception u){
 							
 						}
-				try{
+			
 					Location location = locationDao.findById(lo.getLocation());
+					if(location != null){
 					if(location.getLocation().equals(lo.getLocation())){
 						beginTransaction();
 						location.setLatitude((lo.getLatitude()));
@@ -709,14 +711,16 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 						commitTransaction();
 					}
 
-				}catch(Exception j){
+				}else{
 					beginTransaction();
-					Location location = new Location();
+					location = new Location();
 				
-							
+					//sökning	
+					new GeocodingInitiator(place);
+					location.setLocation(place);
 					location.setLatitude((lo.getLatitude()));
 					location.setLongitude(lo.getLongitude());
-					location.setLocation(place);
+				
 					List<Picture> pics = new ArrayList<Picture>();
 					pics.add(picture);
 					location.setPictures(pics);
