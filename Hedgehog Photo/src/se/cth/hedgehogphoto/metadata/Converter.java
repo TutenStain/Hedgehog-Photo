@@ -26,7 +26,11 @@ public class Converter {
 		p.setLocation(lo.getLongitude(),lo.getLatitude());
 		URL url =URLCreator.getInstance().queryReverseGeocodingURL(p);
 		LocationObjectOther newlocationObject = XMLParser.getInstance().processReverseGeocodingSearch(url);
+		try{
 		lo.setLocation(newlocationObject.getLocation());
+		}catch(Exception i){
+			
+		}
 		return lo;
 	}
 	
