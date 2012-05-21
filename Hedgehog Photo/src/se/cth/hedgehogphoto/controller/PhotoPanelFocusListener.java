@@ -45,8 +45,8 @@ public class PhotoPanelFocusListener implements FocusListener {
 
 			} else if(cell.getName().equals(PhotoPanelConstantsI.LOCATION)){
 				if (cell.getParent() instanceof PhotoPanel) {
-					String path = ((PhotoPanel)cell.getParent()).getPath();	
-					new GeocodingInitiator(cell.getText(), path);
+					PhotoPanel panel = (PhotoPanel) cell.getParent();	
+					new GeocodingInitiator(cell.getText(), panel);
 				}
 			} else if(cell.getName().equals(PhotoPanelConstantsI.NAME)){
 				if (cell.getParent() instanceof PhotoPanel) {

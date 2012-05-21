@@ -2,6 +2,7 @@ package se.cth.hedgehogphoto.geocoding;
 
 import se.cth.hedgehogphoto.geocoding.controller.GeocodingController;
 import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
+import se.cth.hedgehogphoto.view.PhotoPanel;
 
 /**
  * Initiates the geocoding-subsystem.
@@ -10,18 +11,18 @@ import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
 public class GeocodingInitiator {
 	
 	public static void main(String [] args) {
-		new GeocodingInitiator("paris", "test.jpg");
+		new GeocodingInitiator("paris", null);
 	}
 	
 	public GeocodingInitiator() {
 		this(null, null);
 	}
 	
-	public GeocodingInitiator(String initialSearch, String imagePath) {
+	public GeocodingInitiator(String initialSearch, PhotoPanel panel) {
 		GeoSearchPanel view = GeoSearchPanel.getInstance();
 		GeocodingController controller = GeocodingController.getInstance(view);
 		view.setInitialSearchBoxText(initialSearch);
-		controller.setImagePath(imagePath);
+		controller.setPhotoPanel(panel);
 		
 	}
 }

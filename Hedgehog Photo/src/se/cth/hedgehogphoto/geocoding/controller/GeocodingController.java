@@ -11,6 +11,7 @@ import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.geocoding.view.GeoLocationPanel;
 import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
+import se.cth.hedgehogphoto.view.PhotoPanel;
 
 /**
  * Controller-class for the geocoding-system.
@@ -19,7 +20,7 @@ import se.cth.hedgehogphoto.objects.LocationObjectOther;
 public class GeocodingController {
 	private static GeocodingController instance;
 	private GeoSearchPanel searchPanel;
-	private String imagePath;
+	private PhotoPanel photoPanel;
 	
 	public static GeocodingController getInstance(GeoSearchPanel searchPanel) {
 		if (instance == null)
@@ -34,8 +35,8 @@ public class GeocodingController {
 		this.searchPanel.addCancelButtonListener(new CancelButtonListener());
 	}
 	
-	public void setImagePath(String path) {
-		this.imagePath = path;
+	public void setPhotoPanel(PhotoPanel panel) {
+		this.photoPanel = panel;
 	}
 	
 	public class ResultPanelListener extends MouseAdapter {
@@ -77,13 +78,14 @@ public class GeocodingController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (GeoLocationPanel.selectedPanel != null && imagePath != null) {
+			if (GeoLocationPanel.selectedPanel != null && photoPanel != null) {
 				
 				JpaPictureDao pictureDao = DaoFactory.getInstance().getJpaPictureDao();
-				Picture picture = pictureDao.findById(imagePath);
+				Picture picture = pictureDao.findById(photoPanel.getPath());
 				LocationObjectOther location = GeoLocationPanel.selectedPanel.getLocationObjectOther();
 				
 				pictureDao.setLocation(location, picture);
+				photoPanel.setLocation(location.getLocation());
 				searchPanel.setVisible(false);
 			}
 		}
