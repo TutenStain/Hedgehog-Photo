@@ -23,7 +23,7 @@ import se.cth.hedgehogphoto.view.PluginArea;
 
 @Plugin(name="TagCloud", version="1.0", 
 author="Barnabas Sapan", description="N/A")
-public class Main {
+public class TagCloudInitiator {
 	private TagCloudView view;
 	private DatabaseAccess db;
 	private Files files;
