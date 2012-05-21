@@ -220,7 +220,10 @@ public class MainView implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		photoPanels = new ArrayList<PhotoPanel>();
 		List<? extends PictureObject> images;
-
+		if(cardPanel.getLayout() instanceof CardLayout){
+			CardLayout cl = (CardLayout) cardPanel.getLayout();
+			cl.show(cardPanel, "All");
+		}
 		//TODO Maybe refresh in another way than removing the PhotoPanels?
 		photoViewPanel.removeAll();
 		photoViewPanel.repaint();
