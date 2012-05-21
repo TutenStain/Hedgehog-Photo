@@ -5,9 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import se.cth.hedgehogphoto.database.DaoFactory;
+import se.cth.hedgehogphoto.database.JpaPictureDao;
+import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.geocoding.view.GeoLocationPanel;
 import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
-import se.cth.hedgehogphoto.view.PhotoPanel;
+import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
 /**
  * Controller-class for the geocoding-system.
@@ -75,7 +78,13 @@ public class GeocodingController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (GeoLocationPanel.selectedPanel != null && imagePath != null) {
-//				pictureDao.addLocation(cell.getText(), path);
+				JpaPictureDao pictureDao = DaoFactory.getInstance().getJpaPictureDao();
+				LocationObjectOther loc = new LocationObjectOther();
+				Picture picture = pictureDao.findById(imagePath);
+//				picture.getLocation()
+				Location location = new Location();
+				
+				pictureDao.setLocation(picture.getLocation(), imagePath);
 				
 			}
 		}

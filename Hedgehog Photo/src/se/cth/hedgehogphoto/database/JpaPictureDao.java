@@ -581,7 +581,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			}	
 			setTags(f, picture);
 			setComment(f, picture);
-			setLocation(f, picture);
+			setLocation(f.getLocationObject(), picture);
 		}
 	}
 
@@ -688,15 +688,15 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		}
 	}
 
-	public void setLocation(FileObject f,Picture picture){
+	public void setLocation(LocationObjectOther lo ,Picture picture){
 		if(picture != null){
-			if(!(f.getLocation().equals(""))){
+			if(!lo.getLocation().equals("")){
 				try{
-					Location location = locationDao.findById(f.getLocation());
-					if(location.getLocation().equals(f.getLocation())){
+					Location location = locationDao.findById(lo.getLocation());
+					if(location.getLocation().equals(lo.getLocation())){
 						beginTransaction();
-						location.setLatitude((f.getLocationObject().getLatitude()));
-						location.setLongitude(f.getLocationObject().getLongitude());
+						location.setLatitude((lo.getLatitude()));
+						location.setLongitude(lo.getLongitude());
 						picture.setLocation(location);
 						commitTransaction();
 					}
@@ -705,9 +705,9 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					beginTransaction();
 					Location location = new Location();
 
-					location.setLatitude((f.getLocationObject().getLatitude()));
-					location.setLongitude(f.getLocationObject().getLongitude());
-					location.setLocation(f.getLocation());
+					location.setLatitude((lo.getLatitude()));
+					location.setLongitude(lo.getLongitude());
+					location.setLocation(lo.getLocation());
 					List<Picture> pics = new ArrayList<Picture>();
 					pics.add(picture);
 					location.setPictures(pics);
@@ -716,17 +716,17 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					commitTransaction();
 
 				}
-			}else if(f.getLocationObject().getLatitude()!=100 && f.getLocationObject().getLongitude() != 200 ){
+			}else if(lo.getLatitude()!=100 && lo.getLongitude() != 200 ){
 				//queryReverseGeocodingURL(Point.Double coords) URL creator
 				Point.Double p= new Point.Double();
-				p.setLocation(f.getLocationObject().getLatitude(), f.getLocationObject().getLongitude());
+				p.setLocation(lo.getLatitude(), lo.getLongitude());
 				URL url =URLCreator.getInstance().queryReverseGeocodingURL(p);
-				LocationObjectOther lo = XMLParser.getInstance().processReverseGeocodingSearch(url);
+				LocationObjectOther loo = XMLParser.getInstance().processReverseGeocodingSearch(url);
 				beginTransaction();
 				Location location = new Location();
-				location.setLatitude((f.getLocationObject().getLatitude()));
-				location.setLongitude(f.getLocationObject().getLongitude());
-				location.setLocation(lo.getLocation());
+				location.setLatitude((loo.getLatitude()));
+				location.setLongitude(loo.getLongitude());
+				location.setLocation(loo.getLocation());
 				List<Picture> pics = new ArrayList<Picture>();
 				pics.add(picture);
 				location.setPictures(pics);
