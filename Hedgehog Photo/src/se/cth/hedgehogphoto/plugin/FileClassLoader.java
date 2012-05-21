@@ -27,7 +27,7 @@ import se.cth.hedgehogphoto.log.Log;
  */
 
 public class FileClassLoader extends URLClassLoader {
-	File pluginRootDirectory;
+	private File pluginRootDirectory;
 	
 	private Map<String, Class<?>> loadedClasses = new HashMap<String, Class<?>>();
 
@@ -35,9 +35,10 @@ public class FileClassLoader extends URLClassLoader {
 		super(urls);
 		if(urls.length == 1){
 			this.pluginRootDirectory = new File(urls[0].getPath());
-			addSubfolders();
+			this.addSubfolders();
 		} else {
-			Log.getLogger().log(Level.SEVERE, "Error, only one file path supported at a time");
+			throw new MultipleURLException("Subbfolders will be added automatically,"
+												  + " only supply the root foolder.");
 		}
 	}
 	
@@ -96,7 +97,8 @@ public class FileClassLoader extends URLClassLoader {
 			}
 		}
 
-		//Try to...Return it if we already have loaded it.
+		//Try to...Return it if we already have loaded it
+		//faster then trying to load it again.
 		c = (Class<?>)loadedClasses.get(file);
 		if (c != null) {
 			return c;
