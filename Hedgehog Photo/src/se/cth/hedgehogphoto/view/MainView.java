@@ -223,6 +223,7 @@ public class MainView implements Observer {
 
 		//TODO Maybe refresh in another way than removing the PhotoPanels?
 		photoViewPanel.removeAll();
+		photoViewPanel.repaint();
 
 		if(arg1 instanceof MainModel) {
 			MainModel model = (MainModel)arg1;

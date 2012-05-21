@@ -92,6 +92,12 @@ public final class GeoSearchPanel extends JPanel {
 		
 		this.okButton = new JButton("Ok");
 		this.cancelButton = new JButton("Cancel");
+		
+		this.cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 
 	public void doSearch(Object selectedItem) {
