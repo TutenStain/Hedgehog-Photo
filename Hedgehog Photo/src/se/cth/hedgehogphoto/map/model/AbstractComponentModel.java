@@ -126,8 +126,10 @@ public abstract class AbstractComponentModel extends Observable
 	}
 
 	public void setComponentWidth(int componentWidth) {
-		this.componentWidth = componentWidth;
-		waitForSecondChangeBeforeNotification();
+		if (componentWidth > 0) {
+			this.componentWidth = componentWidth;
+			waitForSecondChangeBeforeNotification();
+		}
 	}
 
 	public int getComponentHeight() {
@@ -135,8 +137,10 @@ public abstract class AbstractComponentModel extends Observable
 	}
 
 	public void setComponentHeight(int componentHeight) {
-		this.componentHeight = componentHeight;
-		waitForSecondChangeBeforeNotification();
+		if (componentHeight > 0) {
+			this.componentHeight = componentHeight;
+			waitForSecondChangeBeforeNotification();
+		}
 	}
 	
 	/** As one don't want to notify Observer two times when the component

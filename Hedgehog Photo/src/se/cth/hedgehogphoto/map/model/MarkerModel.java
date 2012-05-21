@@ -14,7 +14,7 @@ public class MarkerModel extends AbstractMarkerModel {
 	
 	public MarkerModel(PictureObject picture) {
 		this.picture = picture;
-		setIconPath(Global.MARKER_ICON_PATH); //26x26
+		setIconPath(Global.MARKER_ICON_PATH); //17x22
 		initialize();
 		handleVisibility();
 	}

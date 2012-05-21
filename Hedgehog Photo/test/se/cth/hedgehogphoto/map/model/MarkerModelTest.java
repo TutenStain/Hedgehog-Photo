@@ -3,6 +3,7 @@ package se.cth.hedgehogphoto.map.model;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureObject;
 
 public class MarkerModelTest {
 	private MarkerModel model;
@@ -37,7 +39,7 @@ public class MarkerModelTest {
 	@Test
 	public void testGetXOffset() {
 		int x = model.getXOffset();
-		assertTrue(x == 13); //26x26-icon
+		assertTrue(x == 8); //17x22-icon
 		
 		model.setIconPath("Pictures/markers/marker.png"); //change icon to one sized 19x19
 		x = model.getXOffset();
@@ -47,7 +49,7 @@ public class MarkerModelTest {
 	@Test
 	public void testGetYOffset() {
 		int y = model.getYOffset();
-		assertTrue(y == 26); //26x26-icon
+		assertTrue(y == 22); //17x22-icon
 		
 		model.setIconPath("Pictures/markers/marker.png"); //change icon to one sized 19x19
 		y = model.getYOffset();
@@ -56,11 +58,10 @@ public class MarkerModelTest {
 
 	@Test
 	public void testGetPictures() {
-		List<Picture> pictures = new LinkedList<Picture>();
+		List<PictureObject> pictures = new LinkedList<PictureObject>();
 		assertTrue(pictures.size() == 0);
-		//TODO Jag kommenterade bort det fixa.
-		//assertTrue(model.getPictures(pictures).size() == 1);
-		assertTrue(pictures.size() == 1); //method getPictures should modify the list, don't need to return it?
+		assertTrue(model.getPictures(pictures).size() == 1);
+		assertTrue(pictures.size() == 1);
 		assertTrue(pictures.get(0) == picture);
 	}
 
@@ -114,17 +115,18 @@ public class MarkerModelTest {
 
 	@Test
 	public void testInitialize() {
-		fail("Not yet implemented");
+		this.model.initialize();
+		assertTrue(this.model.getPosition().equals(new Point(0,0)));
 	}
 
 	@Test
 	public void testGetProperComponentWidth() {
-		assertTrue(model.getProperComponentWidth() == 26); //bad test
+		assertTrue(model.getProperComponentWidth() == 17); //bad test
 	}
 
 	@Test
 	public void testGetProperComponentHeight() {
-		assertTrue(model.getProperComponentHeight() == 26); //bad test
+		assertTrue(model.getProperComponentHeight() == 22); //bad test
 	}
 
 	@Test
@@ -242,33 +244,42 @@ public class MarkerModelTest {
 	}
 
 	@Test
-	public void testHandleZoomDouble() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testPropertyChange() {
 		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetComponentWidth() {
-		fail("Not yet implemented");
+		assertTrue(this.model.getComponentWidth() == 17); //bad test
 	}
 
 	@Test
 	public void testSetComponentWidth() {
-		fail("Not yet implemented");
+		this.model.setComponentWidth(13);
+		assertTrue(this.model.getComponentWidth() == 13); //do we really want this?
+		
+		this.model.setComponentWidth(0);
+		assertTrue(this.model.getComponentWidth() != 0);
+		
+		this.model.setComponentWidth(-5);
+		assertTrue(this.model.getComponentWidth() != -5);
 	}
 
 	@Test
 	public void testGetComponentHeight() {
-		fail("Not yet implemented");
+		assertTrue(this.model.getComponentHeight() == 22); //bad test
 	}
 
 	@Test
 	public void testSetComponentHeight() {
-		fail("Not yet implemented");
+		this.model.setComponentHeight(13);
+		assertTrue(this.model.getComponentHeight() == 13); //do we really want this?
+		
+		this.model.setComponentHeight(0);
+		assertTrue(this.model.getComponentHeight() != 0);
+		
+		this.model.setComponentHeight(-5);
+		assertTrue(this.model.getComponentHeight() != -5);
 	}
 
 	@Test
@@ -298,12 +309,20 @@ public class MarkerModelTest {
 
 	@Test
 	public void testGetSize() {
-		fail("Not yet implemented");
+		Dimension size = new Dimension(this.model.getComponentWidth(), this.model.getComponentHeight());
+		assertTrue(this.model.getSize().equals(size));
+		
+		
 	}
 
 	@Test
 	public void testGetLayer() {
-		fail("Not yet implemented");
+		int layer = this.model.getYPointerPosition();
+		assertTrue(layer == this.model.getLayer());
+		
+		this.model.setPointerPosition(33, 92);
+		layer = this.model.getYPointerPosition();
+		assertTrue(layer == this.model.getLayer());
 	}
 
 }
