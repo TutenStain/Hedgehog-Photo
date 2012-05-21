@@ -170,6 +170,9 @@ public class MainView implements Observer {
 	public void resetSlider(){
 		this.slider.setValue(100);
 	}
+	public JScrollPane getPhotoView(){
+		return this.photoView;
+	}
 
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){

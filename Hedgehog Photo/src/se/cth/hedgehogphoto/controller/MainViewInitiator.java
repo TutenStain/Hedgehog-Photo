@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.view.ImageUtils;
@@ -54,6 +55,8 @@ public class MainViewInitiator {
 				singlePhotoPanel.removeAll();
 				singlePhotoPanel.add(photoPanel);
 				view.resetSlider();
+				JScrollPane pane = view.getPhotoView();
+				pane.getVerticalScrollBar().setValue(0);
 			}
 		}
 	}
