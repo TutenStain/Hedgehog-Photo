@@ -3,6 +3,7 @@ package se.cth.hedgehogphoto.calendar.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.GregorianCalendar;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,25 +13,26 @@ import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.calendar.controller.ButtonController;
 import se.cth.hedgehogphoto.calendar.model.CalendarModel;
+import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.Files;
 
-@SuppressWarnings("serial")
+
+
 public class CalendarView extends JPanel implements Observer{
 	private static CalendarView cv;
 	private JLabel monthText;
 	private CalendarModel calendarModel;
-	
 	private CalendarView(){
 	}
 
-	private CalendarView(DatabaseAccess da, Files f){
+	private CalendarView(DatabaseAccess da, Files files){
 		setLayout(new BorderLayout());
 		setSize(new Dimension(200,200));
-		this.calendarModel = CalendarModel.getInstance(da);
+		calendarModel = CalendarModel.getInstance(da);
 		ButtonController bc = new ButtonController(da);
 		JPanel jp = new JPanel();
-		this.calendarModel.addObserver(this);
+		calendarModel.addObserver(this);
 		jp.setLayout(new GridLayout(1,3));
 		jp.setSize(30, 30);
 		JButton back = new JButton("Back");
@@ -40,28 +42,27 @@ public class CalendarView extends JPanel implements Observer{
 		jp.add(back);
 		JPanel month = new JPanel();
 		month.setLayout(new BorderLayout());
-		this.monthText = new JLabel(); 
+		monthText = new JLabel(); 
 		changeMonthText();
-		month.add(this.monthText, BorderLayout.SOUTH);
+		month.add(monthText,BorderLayout.SOUTH);
 		jp.add(month, BorderLayout.SOUTH);
 		jp.add(forward);
 		back.addActionListener(bc);
 		back.setActionCommand("Back");
 		forward.addActionListener(bc);
 		forward.setActionCommand("Forward");
+		GregorianCalendar g = calendarModel.getCalendar();
 		add(jp,BorderLayout.NORTH);
-		add(DatesView.getInstance(da, f),BorderLayout.CENTER);
+		add(DatesView.getInstance(da,files),BorderLayout.CENTER);
 		setVisible(true);
 		addObserverto(calendarModel);
 	}
-	
-	public static CalendarView getInstance(DatabaseAccess db, Files f){
+	public static CalendarView getInstance(DatabaseAccess da, Files files){
 		if(cv == null){
-			cv = new CalendarView(db, f);
+			cv = new CalendarView(da, files);
 		}
 		return cv;
 	}
-	
 	public void addObserverto(Observable o){
 		o.addObserver(this);
 	}
@@ -69,9 +70,9 @@ public class CalendarView extends JPanel implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		changeMonthText();
+		System.out.print("UPPDATE MAIN");
 	}
-	
-	private void changeMonthText(){
+	public void changeMonthText(){
 		monthText.setText(calendarModel.getMonthasString());
 	}
 }

@@ -12,49 +12,50 @@ import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.calendar.controller.DayController;
 import se.cth.hedgehogphoto.calendar.model.CalendarModel;
+import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.Files;
 
-@SuppressWarnings("serial")
+
 public class DatesView extends JPanel implements Observer{
 	private static DatesView dw;
-	private CalendarModel model;
+	private CalendarModel m;
 	private JPanel jp;
-	private Files f;
-	
-	private DatesView(DatabaseAccess db, Files f) { 
-		this.f = f;
+	private DatabaseAccess da;
+	private Files files;
+	private DatesView(DatabaseAccess da, Files files) {
+		files = files;
 		this.setPreferredSize(new Dimension(150,75));
 		this.setLayout(new BorderLayout());
-		this.model = CalendarModel.getInstance(db);
-		this.model.addObserver(this);
-		this.jp = new JPanel();
-		this.jp.setLayout(new GridLayout(5,7));
-		setVisible(true);
+		m = CalendarModel.getInstance(da);
+		m.addObserver(this);
+		jp = new JPanel();
+		jp.setLayout(new GridLayout(5,7));
+		this.setVisible(true);
 		addDays();
 	}
-	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		addDays();
+		System.out.print("UPDATE MAINVIEW");
 	}
 
-	public static DatesView getInstance(DatabaseAccess db, Files f){
+	public static DatesView getInstance(DatabaseAccess da,Files files){
 		if(dw==null){
-			dw = new DatesView(db, f);
+			dw = new DatesView(da,files);
 		}
 		return dw;
 	}
-	
-	private void addDays(){
+	public void addDays(){
 		this.removeAll();
-		this.jp.removeAll();
-		for(int i=1 ; i<=model.getMaxDays(); i++){
-			Button j = new Button(i + "");
-			for(Integer integer : model.getList()){
+		jp.removeAll();
+		for(int i=1;i<=m.getMaxDays();i++){
+			Button j = new Button(i+"");
+			for(Integer integer:m.getList()){
 				if(integer.equals(i)){
+					j.setEnabled(true);
 					j.setBackground(Color.BLACK);
-					j.addActionListener(new DayController(i, f));
+					j.addActionListener(new DayController(da, m.getPictures(i), files));
 					j.setActionCommand("Day");
 
 				}else{
@@ -62,9 +63,10 @@ public class DatesView extends JPanel implements Observer{
 				}
 			}
 			j.setVisible(true);
-			this.jp.add(j);
-			add(this.jp, BorderLayout.CENTER);
-			revalidate();
+			jp.add(j);
+			this.add(jp, BorderLayout.CENTER);
+			this.revalidate();
+
 		}
 	}
 }

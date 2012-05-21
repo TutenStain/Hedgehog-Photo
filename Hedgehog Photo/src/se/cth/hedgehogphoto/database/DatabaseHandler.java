@@ -390,9 +390,8 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		this.albumDao.deleteTags(albumName);
 	}
 	@Override
-	public DaoFactory getFactory() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<? extends PictureObject> findByDate(String search){
+		return pictureDao.findbyDate("date", search);
 	}
 }
 

@@ -10,5 +10,6 @@ public interface DatabaseAccess {
 	public List<? extends PictureObject> searchPicturesfromComments(String c);
 	public List<? extends PictureObject> searchPicturefromsLocations(String l);
 	public List<? extends PictureObject> getAllPictures();
-	public DaoFactory getFactory();
+
+	public List<? extends PictureObject> findByDate(String search);
 }

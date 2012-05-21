@@ -2,8 +2,7 @@ package se.cth.hedgehogphoto.database;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import java.util.logging.Level;
-import se.cth.hedgehogphoto.log.*;
+
 import javax.persistence.Query;
 
 
@@ -14,8 +13,24 @@ public abstract class JpaDao<E,K> implements Dao<E,K>,Entity {
 	public JpaDao() {
 		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 		this.entityClass = (Class<?>) genericSuperclass.getActualTypeArguments()[0];
+
+		/*Album album = new Album();
+			beginTransaction();
+			album.setAlbumName("Lallanarnsstggdfgadrxsfsllgkaafsglsdgggssra");
+			album.setDate("d");
+			/*Comment com = new Comment();
+			com.setComment("majsalsfssrlsgsssrnsdataaalra");
+			List<Album> albums = new ArrayList<Album>();
+			albums.add(album);
+			com.setAlbums(albums);
+			album.setComment(com);
+			 entityManager.persist(com);*/
+		/* entityManager.persist(album);
+			 commitTransaction();
+		 */
+
+
 	}
-	
 	public void beginTransaction() { entityManager.getTransaction().begin(); }
 
 	public void commitTransaction() { entityManager.getTransaction().commit(); }
@@ -30,14 +45,13 @@ public abstract class JpaDao<E,K> implements Dao<E,K>,Entity {
 
 	public List<E> findByEntity(Object entity,String ent) { 
 		String c = entity.getClass().getSimpleName().toLowerCase();
-		String s = "select t from " + entityClass.getSimpleName() + " t where t." + c + "=:" + c;
+		String s = "select t from " +entityClass.getSimpleName() + " t where t." + c + "=:" + c;
 		Object something = entity;
 		String theType = ent;
 		Class<?> theClass = null;
 		try {
 			theClass = Class.forName(theType);
 		} catch (ClassNotFoundException e) {
-			Log.getLogger().log(Level.SEVERE, "ClassNotFoundException", e);
 			e.printStackTrace();
 		}
 		Object obj = theClass.cast(something);
@@ -45,29 +59,39 @@ public abstract class JpaDao<E,K> implements Dao<E,K>,Entity {
 		q.setParameter(c,obj);
 		return  (List<E>)q.getResultList();
 	}
-
+	
 	public List<E> findByString(String quality,String search) {
 		Query q = entityManager.createQuery("select t from " + entityClass.getSimpleName()  + " t where t." + quality.toLowerCase() + "=:" + quality.toLowerCase());
 		q.setParameter(quality.toLowerCase(),search.toLowerCase());
 		return  (List<E>)q.getResultList();
 	}
-
-
+	
 	public List<E> findByLike(String quality,String search) {
 		try{
-			search = search.toLowerCase();
-			String s = search.charAt(0)+"";
-			search = s.toUpperCase() + search.substring(1);
-		}catch(Exception i){			
+		search = search.toLowerCase();
+		String s = search.charAt(0)+"";
+		search = s.toUpperCase() + search.substring(1);
+		}catch(Exception i){
+			
 		}
-
+		System.out.print("select t from " + entityClass.getSimpleName()  + " t where t." + quality +  " like '%" + search + "%'");
+		//System.out.println(quality + search);
 		Query q = entityManager.createQuery("select t from " + entityClass.getSimpleName()  + " t where t." + quality +  " like '%" + search + "%'");
 		List<E> query = (List<E>)q.getResultList();
 		q = entityManager.createQuery("select t from " + entityClass.getSimpleName()  + " t where t." + quality.toLowerCase() +  " like '%" + search.toLowerCase() + "%'");
 		query.addAll((List<E>)q.getResultList());
-		return query;
+		return  query;
 	}
-
+		public List<E> findbyDate(String quality,String search){
+		//String[] dates = search.split(".");
+		
+		System.out.println("select t from " + entityClass.getSimpleName()  + " t where t." + quality +  " like '%" + search);
+			System.out.println(quality + search);
+	Query q = entityManager.createQuery("select t from " + entityClass.getSimpleName()  + " t where t." + quality +  " like '%" + search + "'");
+			List<E> query = (List<E>)q.getResultList();
+			return query;
+	}
+	
 	public List<E> getAll(){
 		Query q = entityManager.createQuery("select t from " + entityClass.getSimpleName() + " t");
 		return (List<E>)q.getResultList();
