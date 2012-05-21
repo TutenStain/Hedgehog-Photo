@@ -1,5 +1,12 @@
 package se.cth.hedgehogphoto.objects;
 
+import java.awt.Point;
+import java.net.URL;
+
+import se.cth.hedgehogphoto.metadata.URLCreator;
+import se.cth.hedgehogphoto.metadata.XMLParser;
+
+
 public class LocationObjectOther {
 	private String location;
 	private double longitude = 200;
@@ -181,5 +188,11 @@ public class LocationObjectOther {
 	public String getLocation() {
 		return location;
 	}
-	
+	/*public void findLocationPlace(){
+		Point.Double p= new Point.Double();
+		p.setLocation(this.getLatitude(), this.getLongitude());
+		URL url =URLCreator.getInstance().queryReverseGeocodingURL(p);
+		LocationObjectOther newlocationObject = XMLParser.getInstance().processReverseGeocodingSearch(url);
+		this.setLocation( newlocationObject.getLocation());
+	}*/	
 }

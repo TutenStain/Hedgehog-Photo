@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.cth.hedgehogphoto.geocoding.GeocodingInitiator;
-import se.cth.hedgehogphoto.geocoding.model.URLCreator;
-import se.cth.hedgehogphoto.geocoding.model.XMLParser;
+import se.cth.hedgehogphoto.metadata.URLCreator;
+import se.cth.hedgehogphoto.metadata.XMLParser;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
@@ -265,8 +265,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				beginTransaction();
 				loc= new Location();
 				loc.setLocation(location);
-				URL url = URLCreator.getInstance().queryGeocodingURL(location);
-				List<LocationObjectOther> lo = XMLParser.getInstance().processGeocodingSearch(url);
+			
 				List<Picture> pictures = new ArrayList<Picture>();
 				pictures.add(picture);
 				loc.setPictures(pictures);
@@ -589,14 +588,32 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	public void setComment(FileObject f,Picture picture){
 		if(picture != null){
 			try{
-				if(!(f.getComment().equals(""))){
+				if(!(f.getComment().equals("")) && f.getComment() != null){
 					Comment comment = commentDao.findById(f.getComment());
-					if(comment.getComment().equals(f.getComment())){
+					if(comment != null){
 						beginTransaction();
 						List<Picture> pics = comment.getPictures();
 						pics.add(picture);
 						comment.setPicture(pics);
 						picture.setComment(comment);							
+						commitTransaction();
+					}else{
+						beginTransaction();
+						comment = new Comment();
+						String comm ="";
+						try{
+							 comm = f.getComment().toLowerCase();
+								String s = f.getComment().charAt(0) + "";
+								comm  = s.toUpperCase() + comm.substring(1);
+								}catch(Exception u){
+									
+								}
+						comment.setComment(comm);		
+						List<Picture> pics = new ArrayList<Picture>();
+						pics.add(picture);
+						comment.setPicture(pics);
+						picture.setComment(comment);
+						entityManager.persist(comment);
 						commitTransaction();
 					}
 
@@ -605,25 +622,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 
 			catch(Exception k){
 	
-				if(commentDao.findById(f.getComment())==null){
-					beginTransaction();
-					Comment comment = new Comment();
-					String comm ="";
-					try{
-						 comm = f.getComment().toLowerCase();
-							String s = f.getComment().charAt(0) + "";
-							comm  = s.toUpperCase() + comm.substring(1);
-							}catch(Exception u){
-								
-							}
-					comment.setComment(comm);		
-					List<Picture> pics = new ArrayList<Picture>();
-					pics.add(picture);
-					comment.setPicture(pics);
-					picture.setComment(comment);
-					entityManager.persist(comment);
-					commitTransaction();
-				}
+			
 			}
 		}
 	}
@@ -691,7 +690,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 
 	public void setLocation(LocationObjectOther lo ,Picture picture){
 		if(picture != null){
-			if(!lo.getLocation().equals("")){
+			if(!(lo.getLocation().equals("")) || lo.getLocation() != null){
 				String place = "";
 				try{
 					place = lo.getLocation().toLowerCase();
@@ -716,7 +715,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					location = new Location();
 				
 					//sökning	
-					new GeocodingInitiator(place);
+					
 					location.setLocation(place);
 					location.setLatitude((lo.getLatitude()));
 					location.setLongitude(lo.getLongitude());
@@ -729,9 +728,9 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					commitTransaction();
 
 				}
-			}else if(lo.getLatitude()!=100 && lo.getLongitude() != 200 ){
+		/*	}else if(lo.getLatitude()!=100 && lo.getLongitude() != 200 ){
 				//queryReverseGeocodingURL(Point.Double coords) URL creator
-				Point.Double p= new Point.Double();
+			/*	Point.Double p= new Point.Double();
 				p.setLocation(lo.getLatitude(), lo.getLongitude());
 				URL url =URLCreator.getInstance().queryReverseGeocodingURL(p);
 				LocationObjectOther loo = XMLParser.getInstance().processReverseGeocodingSearch(url);
@@ -746,7 +745,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				picture.setLocation(location);
 				entityManager.persist(location);
 				commitTransaction();
-			}
+			*/}
 		}
 	}
 

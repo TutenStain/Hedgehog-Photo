@@ -1,10 +1,14 @@
 package se.cth.hedgehogphoto.objects;
 
+import java.awt.Point;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.log.Log;
+import se.cth.hedgehogphoto.metadata.URLCreator;
+import se.cth.hedgehogphoto.metadata.XMLParser;
 
 
 
@@ -152,57 +156,14 @@ public class ImageObject implements FileObject {
 	}
 
 
-	public void convertComment() {
-		try {
-			this.comment = convertDecimalNumbersToString(this.comment);
-		}
-		catch (NumberFormatException e) {
-			Log.getLogger().log(Level.SEVERE, "Failed to convert \"" + this.comment + "\" to a comment.", e);
-		}
-	}
 	
-	public void convertTags() {
-		try {
-			this.tag = convertDecimalNumbersToString(this.tag);
-		}
-		catch (NumberFormatException e) {
-			Log.getLogger().log(Level.SEVERE, "Failed to convert \"" + this.tag + "\" to a tag.", e);
-		}
-	}
-	
-	/**
-	 * Converts a string that is on decimal format into a
-	 * "normal" string. The string may look something like 
-	 * "67, 101, 33, 33"
-	 * @param decimalString
-	 * @return
-	 * @throws NumberFormatException
-	 */
-	public String convertDecimalNumbersToString(String decimalString) throws NumberFormatException {
-		StringBuilder builder = new StringBuilder("");
-		List<Integer> i = new ArrayList<Integer>();
-		
-		String string = decimalString.substring(1);
-		for (String s: string.split(", ")) {
-			i.add(Integer.parseInt(s));
-		}
 
-		for (Integer ii: i) {
-			String aChar = Character.valueOf((char)(int)ii).toString();
-			aChar = aChar.trim();
-			builder.append(aChar);
-		}
-		
-		return builder.toString();
-	}
-
-
-	@Override
+/*	@Override
 	public void setLocation(String location) {
 		this.location=location;
 		locationObject = new LocationObjectOther(location);
 
-	}
+	}*/
 
 	@Override
 	public void setCoverPath(String coverPath) {
@@ -214,6 +175,19 @@ public class ImageObject implements FileObject {
 	public String getCoverPath(){
 		return coverPath;
 	}
-
+/*	public void findLocationPlace(){
+		Point.Double p= new Point.Double();
+		p.setLocation( locationObject.getLongitude(),locationObject.getLatitude());
+		URL url =URLCreator.getInstance().queryReverseGeocodingURL(p);
+		LocationObjectOther newlocationObject = XMLParser.getInstance().processReverseGeocodingSearch(url);
+		try{
+			locationObject.setLocation( newlocationObject.getLocation());
+		}catch(Exception o){
+			System.out.println("NULL");
+		}
+		System.out.println(locationObject.getLocation());
+	}
+	*/
+	
 
 }

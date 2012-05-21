@@ -25,7 +25,11 @@ public class PictureInserter {
 	
 	public synchronized  void insertImageObject(){	
 		for(ImageObject io: imageObjects){
-			//DatabaseHandler.getInstance().insertPicture(io);
+			System.out.print(io.getLocationObject());
+			io.setComment(Converter.getInstance().convertComment(io.getComment()));
+			io.setTags(Converter.getInstance().convertTags(io.getTag()));
+			io.setLocationObject(Converter.getInstance().findLocationPlace(io.getLocationObject()));
+		DatabaseHandler.getInstance().insertPicture(io);
 		}
 	}
 	

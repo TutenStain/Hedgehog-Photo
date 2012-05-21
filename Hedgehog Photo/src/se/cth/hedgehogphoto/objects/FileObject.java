@@ -1,6 +1,7 @@
 package se.cth.hedgehogphoto.objects;
 
 import java.util.List;
+
 /**
  * @author Julia
  */
@@ -13,7 +14,8 @@ public interface FileObject {
 	public void setCoverPath(String path);
 	public void setLocationObject(LocationObjectOther locationObject);
 	public void setAlbumName(String albumName);
-	public void setLocation(String location);
+
+	//public void setLocation(String location);
 	public List<String> getTags();
 	public String getDate();
 	public String getComment();
