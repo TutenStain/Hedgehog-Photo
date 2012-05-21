@@ -14,7 +14,7 @@ import se.cth.hedgehogphoto.view.PluginArea;
 
 @Plugin(name="Calendar", version="1.0", 
 author="Julia Gustafsson", description="N/A")
-public class CalendarMain {
+public class CalendarInitiator {
 	private DatabaseAccess db;
 	private Files f;
 	private CalendarView cw;

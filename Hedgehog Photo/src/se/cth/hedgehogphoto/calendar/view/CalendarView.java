@@ -13,26 +13,27 @@ import javax.swing.JPanel;
 
 import se.cth.hedgehogphoto.calendar.controller.ButtonController;
 import se.cth.hedgehogphoto.calendar.model.CalendarModel;
-import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.Files;
 
 
 
+@SuppressWarnings("serial")
 public class CalendarView extends JPanel implements Observer{
-	private static CalendarView cv;
+	private static CalendarView view;
 	private JLabel monthText;
 	private CalendarModel calendarModel;
+	
 	private CalendarView(){
 	}
 
 	private CalendarView(DatabaseAccess da, Files files){
 		setLayout(new BorderLayout());
 		setSize(new Dimension(200,200));
-		calendarModel = CalendarModel.getInstance(da);
+		this.calendarModel = CalendarModel.getInstance(da);
 		ButtonController bc = new ButtonController(da);
 		JPanel jp = new JPanel();
-		calendarModel.addObserver(this);
+		this.calendarModel.addObserver(this);
 		jp.setLayout(new GridLayout(1,3));
 		jp.setSize(30, 30);
 		JButton back = new JButton("Back");
@@ -42,7 +43,7 @@ public class CalendarView extends JPanel implements Observer{
 		jp.add(back);
 		JPanel month = new JPanel();
 		month.setLayout(new BorderLayout());
-		monthText = new JLabel(); 
+		this.monthText = new JLabel(); 
 		changeMonthText();
 		month.add(monthText,BorderLayout.SOUTH);
 		jp.add(month, BorderLayout.SOUTH);
@@ -58,11 +59,12 @@ public class CalendarView extends JPanel implements Observer{
 		addObserverto(calendarModel);
 	}
 	public static CalendarView getInstance(DatabaseAccess da, Files files){
-		if(cv == null){
-			cv = new CalendarView(da, files);
+		if(view == null){
+			view = new CalendarView(da, files);
 		}
-		return cv;
+		return view;
 	}
+	
 	public void addObserverto(Observable o){
 		o.addObserver(this);
 	}
@@ -70,9 +72,9 @@ public class CalendarView extends JPanel implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		changeMonthText();
-		System.out.print("UPPDATE MAIN");
 	}
+	
 	public void changeMonthText(){
-		monthText.setText(calendarModel.getMonthasString());
+		this.monthText.setText(this.calendarModel.getMonthasString());
 	}
 }
