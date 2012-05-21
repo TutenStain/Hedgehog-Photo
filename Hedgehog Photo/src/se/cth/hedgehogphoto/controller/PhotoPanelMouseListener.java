@@ -25,6 +25,7 @@ public class PhotoPanelMouseListener extends MouseAdapter {
 			CardLayout cl = (CardLayout)(photoPanel.getCardPanel().getLayout());
 			JPanel cardPanel = photoPanel.getCardPanel();
 			cl.show(cardPanel, "One");
+			photoPanel.getSinglePhotoPanel().add(photoPanel);
 		}
 	}
 }

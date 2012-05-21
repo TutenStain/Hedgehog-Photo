@@ -134,6 +134,7 @@ public class MainView implements Observer {
 		cardPanel.add(photoViewPanel, "All");
 		cardPanel.add(singlePhotoPanel, "One");
 		photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
+		singlePhotoPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 	}
 	public void setCommentsButtonListener(ActionListener l){
 		this.btnshowHideComments.addActionListener(l);
@@ -288,7 +289,7 @@ public class MainView implements Observer {
 				photoPanels.get(i).setIcon(icon2);
 				photoPanels.get(i).setScaleDimension(new Dimension(Math.round(image.getWidth(null)*scale), 
 						Math.round(image.getHeight(null)*scale)));
-				photoPanels.get(i).setCardPanel(this.cardPanel);
+				photoPanels.get(i).prepareCardLayout(this.cardPanel, this.singlePhotoPanel);
 
 			}
 		}

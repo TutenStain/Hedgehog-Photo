@@ -36,6 +36,7 @@ public class PhotoPanel extends JPanel {
 	private String path;
 	private Dimension scaleDimension;
 	private JPanel cardPanel;
+	private JPanel singlePhotoPanel;
 
 	public PhotoPanel(FileObject f) {
 		this(f.getFilePath());
@@ -145,8 +146,12 @@ public class PhotoPanel extends JPanel {
 		gBig.setConstraints(tagsTextField,tag);
 		add(tagsTextField);
 	}
-	public void setCardPanel(JPanel p){
+	public void prepareCardLayout(JPanel p, JPanel p2){
 		this.cardPanel = p;
+		this.singlePhotoPanel = p2;
+	}
+	public JPanel getSinglePhotoPanel(){
+		return this.singlePhotoPanel;
 	}
 	public JPanel getCardPanel(){
 		return this.cardPanel;
