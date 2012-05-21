@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 
 import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.JpaPictureDao;
+import se.cth.hedgehogphoto.geocoding.GeocodingInitiator;
 import se.cth.hedgehogphoto.model.PhotoPanelConstantsI;
 import se.cth.hedgehogphoto.view.PhotoPanel;
 
@@ -38,9 +39,7 @@ public class PhotoPanelFocusListener implements FocusListener {
 			} else if(cell.getName().equals(PhotoPanelConstantsI.LOCATION)){
 				if (cell.getParent() instanceof PhotoPanel) {
 					String path = ((PhotoPanel)cell.getParent()).getPath();	
-					pictureDao.addLocation(cell.getText(), path);
-					System.out.println("JTF" +cell.getText());
-					System.out.println(pictureDao.findById(path));
+					new GeocodingInitiator(cell.getText(), path);
 				}
 			} else if(cell.getName().equals(PhotoPanelConstantsI.NAME)){
 				if (cell.getParent() instanceof PhotoPanel) {

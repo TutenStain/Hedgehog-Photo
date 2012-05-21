@@ -53,7 +53,7 @@ public final class GeoSearchPanel extends JPanel {
 	public static GeoSearchPanel getInstance() {
 		if (instance == null)
 			instance = new GeoSearchPanel();
-		frame.setVisible(true);
+		instance.setVisible(true);
 		return instance;
 	}
 
@@ -100,7 +100,7 @@ public final class GeoSearchPanel extends JPanel {
 	public void createFrame() {
 		frame = new JFrame();
 		frame.setPreferredSize(new Dimension(400,600));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.pack();
 		frame.getContentPane().setVisible(true);
