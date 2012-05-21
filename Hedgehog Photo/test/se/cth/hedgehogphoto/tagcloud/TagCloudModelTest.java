@@ -10,7 +10,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TagCloudModeTest {
+public class TagCloudModelTest {
 	private TagCloudModel model;
 	
 	@Before

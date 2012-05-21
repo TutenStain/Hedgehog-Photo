@@ -6,34 +6,41 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class LocationObjectOtherTest {
-
+	private LocationObjectOther locationObject;
+	
 	@Before
 	public void setUp() throws Exception {
+		this.locationObject = new LocationObjectOther("Sweden");
 	}
 
 	@Test
 	public void testLocationObjectOtherString() {
-		fail("Not yet implemented");
+		this.locationObject = new LocationObjectOther("Tokyo");
+		assertTrue(this.locationObject.getLocation().equals("Tokyo"));
 	}
 
 	@Test
 	public void testLocationObjectOtherDoubleDouble() {
-		fail("Not yet implemented");
+		this.locationObject = new LocationObjectOther(111, 122);
+		assertTrue(this.locationObject.getLongitude() == 111 && this.locationObject.getLatitude() == 122);
 	}
 
 	@Test
 	public void testSetLocationString() {
-		fail("Not yet implemented");
+		this.locationObject.setLocation("Japan");
+		assertTrue(this.locationObject.getLocation().equals("Japan"));
 	}
 
 	@Test
 	public void testSetLocationDoubleDouble() {
-		fail("Not yet implemented");
+		this.locationObject.setLocation(111, 122);
+		assertTrue(this.locationObject.getLongitude() == 111 && this.locationObject.getLatitude() == 122);
 	}
 
 	@Test
 	public void testSetLatitudeDouble() {
-		fail("Not yet implemented");
+		this.locationObject.setLatitude(52);
+		assertTrue(this.locationObject.getLatitude() == 52);
 	}
 
 	@Test
@@ -43,7 +50,8 @@ public class LocationObjectOtherTest {
 
 	@Test
 	public void testSetLongitudeDouble() {
-		fail("Not yet implemented");
+		this.locationObject.setLongitude(11);
+		assertTrue(this.locationObject.getLongitude() == 11);
 	}
 
 	@Test
@@ -58,17 +66,20 @@ public class LocationObjectOtherTest {
 
 	@Test
 	public void testGetLatitude() {
-		fail("Not yet implemented");
+		this.locationObject = new LocationObjectOther(110, 190);
+		assertTrue(this.locationObject.getLatitude() == 190);
 	}
 
 	@Test
 	public void testGetLongitude() {
-		fail("Not yet implemented");
+		this.locationObject = new LocationObjectOther(110, 190);
+		assertTrue(this.locationObject.getLongitude() == 110);
 	}
 
 	@Test
 	public void testGetLocation() {
-		fail("Not yet implemented");
+		this.locationObject = new LocationObjectOther("Sweden");
+		assertTrue(locationObject.getLocation().equals("Sweden"));
 	}
 
 }
