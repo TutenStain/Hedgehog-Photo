@@ -39,7 +39,7 @@ public abstract class AbstractJOverlayPanel extends JPanel
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		initialize(); //TODO: Check WHAT updates, and then update that ONLY, not everything. What does this even listen to?
+		initialize(); 
 	}
 	
 	protected void update(String updateType) {

@@ -132,6 +132,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 	@Override
 	public void update(Observable o, Object arg) {
 		getMapPanel().removePropertyChangeListener(this); //remove listener during calibration
+		removeMarkerModelListeners();
 		initialize();
 		setChanged();
 		notifyObservers(Global.FILES_UPDATE);
@@ -157,6 +158,12 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 			} while (hasChanged());
 			setChanged();
 			notifyObservers(Global.MARKERS_UPDATE); 
+		}
+	}
+	
+	public void removeMarkerModelListeners() {
+		for (AbstractMarkerModel marker: markerModels) {
+			marker.deleteObservers();
 		}
 	}
 }

@@ -56,17 +56,14 @@ public class MapView extends JPanel implements Observer {
 	private void addMap() {
 		if (this.mainPane == null) 
 			addRootJLayeredPane(); 
-		this.mainPane.add(model.getMapPanel(), JLayeredPane.FRAME_CONTENT_LAYER, Integer.valueOf(2));
+		this.mainPane.add(model.getMapPanel(), JLayeredPane.FRAME_CONTENT_LAYER, new Integer(2));
 	}
 	
 	private void createMarkerGUIs(List<AbstractMarkerModel> markerModels) {
 		int nbrOfModels = markerModels.size();
 		for (int index = 0; index < nbrOfModels; index++) {
 			AbstractMarkerModel abstractModel = markerModels.get(index);
-			if (abstractModel.countObservers() > 0) {
-				//goto next step in loop, marker already has graphical representation
-				continue; 
-			} else if (abstractModel instanceof MultipleMarkerModel) {
+			if (abstractModel instanceof MultipleMarkerModel) {
 				MultipleMarkerModel model = (MultipleMarkerModel) abstractModel;
 				JMultipleMarker marker = new JMultipleMarker(model);
 				this.locationMarkers.add(marker);
@@ -84,7 +81,9 @@ public class MapView extends JPanel implements Observer {
 			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
 		createMarkerGUIs(model.getMarkerModels());
 		for (AbstractJOverlayMarker marker : this.locationMarkers) {
-			this.mainPane.add(marker, JLayeredPane.DRAG_LAYER, 0); //can handle the addition of the same component multiple times
+			this.mainPane.add(marker, JLayeredPane.DRAG_LAYER, new Integer(0)); //can handle the addition of the same component multiple times
+			marker.setVisible(marker.getModel().isVisible());
+			marker.forceProperSize();
 		}
 		this.validate(); //have to validate to see changes
 	}
@@ -107,10 +106,14 @@ public class MapView extends JPanel implements Observer {
 			int newValue = this.locationMarkers.size();
 			firePropertyChange(Global.MARKERS_UPDATE, oldValue, newValue);
 		} else if (arg1.toString().equals(Global.FILES_UPDATE)) {
-			this.mainPane.removeAll();
-			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
-			addMap();
-			addLocationMarkers();
+//			this.mainPane.removeAll();
+//			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
+//			addMap();
+//			addLocationMarkers();
+			this.removeAll();
+			setLayout(new BorderLayout());
+			initialize();
+			System.out.println("Nu finns det \n\n" + this.locationMarkers.size() + "\n\nmarkers. :(");
 		}
 		
 		

@@ -187,6 +187,6 @@ public abstract class AbstractComponentModel extends Observable
 	}
 	
 	public Integer getLayer() {
-		return Integer.valueOf(position.y + getComponentHeight()); 
+		return new Integer(position.y + getComponentHeight()); 
 	}
 }
