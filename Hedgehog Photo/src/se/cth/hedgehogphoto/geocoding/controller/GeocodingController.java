@@ -78,13 +78,12 @@ public class GeocodingController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (GeoLocationPanel.selectedPanel != null && imagePath != null) {
-				JpaPictureDao pictureDao = DaoFactory.getInstance().getJpaPictureDao();
-				LocationObjectOther loc = new LocationObjectOther();
-				Picture picture = pictureDao.findById(imagePath);
-//				picture.getLocation()
-				Location location = new Location();
 				
-				pictureDao.setLocation(picture.getLocation(), imagePath);
+				JpaPictureDao pictureDao = DaoFactory.getInstance().getJpaPictureDao();
+				Picture picture = pictureDao.findById(imagePath);
+				LocationObjectOther location = GeoLocationPanel.selectedPanel.getLocationObjectOther();
+				
+				pictureDao.setLocation(location, picture);
 				
 			}
 		}
