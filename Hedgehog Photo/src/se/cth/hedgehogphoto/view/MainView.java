@@ -160,6 +160,13 @@ public class MainView implements Observer {
 	public List<PhotoPanel> getPhotoPanels(){
 		return this.photoPanels;
 	}
+	
+	public JPanel getCardPanel(){
+		return this.cardPanel;
+	}
+	public JPanel getSinglePhotoPanel(){
+		return this.singlePhotoPanel;
+	}
 
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
@@ -290,7 +297,6 @@ public class MainView implements Observer {
 				photoPanels.get(i).setIcon(icon2);
 				photoPanels.get(i).setScaleDimension(new Dimension(Math.round(image.getWidth(null)*scale), 
 						Math.round(image.getHeight(null)*scale)));
-				photoPanels.get(i).prepareCardLayout(this.cardPanel, this.singlePhotoPanel);
 
 			}
 		}

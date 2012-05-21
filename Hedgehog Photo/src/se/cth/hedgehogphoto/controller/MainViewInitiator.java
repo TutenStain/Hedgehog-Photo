@@ -37,7 +37,7 @@ public class MainViewInitiator {
 		return this.model;
 	}
 	
-	public static class PhotoPanelMouseListener extends MouseAdapter {
+	public class PhotoPanelMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getSource() instanceof PhotoPanel) {
@@ -46,10 +46,11 @@ public class MainViewInitiator {
 				BufferedImage bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanel.setIcon(icon2);
-				CardLayout cl = (CardLayout)(photoPanel.getCardPanel().getLayout());
-				JPanel cardPanel = photoPanel.getCardPanel();
+				//TODO cleanup
+				JPanel cardPanel = view.getCardPanel();
+				CardLayout cl = (CardLayout) cardPanel.getLayout();
 				cl.show(cardPanel, "One");
-				photoPanel.getSinglePhotoPanel().add(photoPanel);
+				view.getSinglePhotoPanel().add(photoPanel);
 			}
 		}
 	}
