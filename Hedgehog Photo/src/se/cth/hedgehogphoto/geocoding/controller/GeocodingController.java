@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import se.cth.hedgehogphoto.geocoding.view.GeoLocationPanel;
 import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
+import se.cth.hedgehogphoto.view.PhotoPanel;
 
 /**
  * Controller-class for the geocoding-system.
@@ -74,7 +75,7 @@ public class GeocodingController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (GeoLocationPanel.selectedPanel != null && imagePath != null) {
-				//TODO perform the database insertion?
+//				pictureDao.addLocation(cell.getText(), path);
 				
 			}
 		}
