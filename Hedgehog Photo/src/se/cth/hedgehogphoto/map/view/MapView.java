@@ -1,6 +1,7 @@
 package se.cth.hedgehogphoto.map.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class MapView extends JPanel implements Observer {
 	private JLayeredPane mainPane;
 	private List<AbstractJOverlayMarker> locationMarkers;
 	private MapModel model;
+	private MouseAdapter mouseListener;
 
 	public MapView(MapModel model) {
 		setModel(model);
@@ -49,6 +51,7 @@ public class MapView extends JPanel implements Observer {
 	private void addRootJLayeredPane() {
 		this.mainPane = new JLayeredPane();
 		this.mainPane.setPreferredSize(model.getSize());
+		this.mainPane.setLayout(null);
 		add(this.mainPane, BorderLayout.CENTER);
 	}
 	
@@ -56,7 +59,7 @@ public class MapView extends JPanel implements Observer {
 	private void addMap() {
 		if (this.mainPane == null) 
 			addRootJLayeredPane(); 
-		this.mainPane.add(model.getMapPanel(), JLayeredPane.FRAME_CONTENT_LAYER, new Integer(2));
+		this.mainPane.add(model.getMapPanel(), JLayeredPane.FRAME_CONTENT_LAYER, new Integer(-1));
 	}
 	
 	private void createMarkerGUIs(List<AbstractMarkerModel> markerModels) {
@@ -81,11 +84,11 @@ public class MapView extends JPanel implements Observer {
 			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
 		createMarkerGUIs(model.getMarkerModels());
 		for (AbstractJOverlayMarker marker : this.locationMarkers) {
-			this.mainPane.add(marker, JLayeredPane.DRAG_LAYER, new Integer(0)); //can handle the addition of the same component multiple times
+			marker.initialize();
 			marker.setVisible(marker.getModel().isVisible());
-			marker.forceProperSize();
+			
+			this.mainPane.add(marker, JLayeredPane.DRAG_LAYER, new Integer(0)); //can handle the addition of the same component multiple times
 		}
-		this.validate(); //have to validate to see changes
 	}
 	
 	public void addListener(MouseAdapter mouseAdapter) {
@@ -97,23 +100,35 @@ public class MapView extends JPanel implements Observer {
 			}
 		}
 	}
+	
+	public void addListeners() {
+		if (this.mouseListener != null)
+			addListener(this.mouseListener);
+	}
+	
+	public void setMouseAdapter(MouseAdapter listener) {
+		this.mouseListener = listener;
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (arg1.toString().equals(Global.MARKERS_UPDATE)) {
 			int oldValue = this.locationMarkers.size();
-			addLocationMarkers(); 
+			addLocationMarkers();
 			int newValue = this.locationMarkers.size();
 			firePropertyChange(Global.MARKERS_UPDATE, oldValue, newValue);
 		} else if (arg1.toString().equals(Global.FILES_UPDATE)) {
-//			this.mainPane.removeAll();
-//			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
-//			addMap();
-//			addLocationMarkers();
 			this.removeAll();
+			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
 			setLayout(new BorderLayout());
+			
 			initialize();
-			System.out.println("Nu finns det \n\n" + this.locationMarkers.size() + "\n\nmarkers. :(");
+			addListeners();
+			
+			/* DO NOT REMOVE THIS */
+			this.mainPane.validate();
+			this.validate();
+			this.getParent().validate();
 		}
 		
 		

@@ -27,7 +27,8 @@ public class MapController implements PropertyChangeListener {
 	public MapController(MapView mapView, Files files) {
 		this.mapView = mapView;
 		MapController.files = files;
-		mapView.addListener(new MarkerListener());
+		mapView.setMouseAdapter(new MarkerListener());
+		mapView.addListeners();
 		mapView.addPropertyChangeListener(this);
 	}
 	

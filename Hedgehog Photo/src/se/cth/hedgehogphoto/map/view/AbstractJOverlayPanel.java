@@ -70,6 +70,9 @@ public abstract class AbstractJOverlayPanel extends JPanel
 	protected void forceProperSize() {
 		Dimension dimension = this.getPreferredSize();
 		setSize(dimension);
+		setPreferredSize(dimension);
+		setMinimumSize(dimension);
+		setMaximumSize(dimension);
 	}
 	
 	public int getLayer() {
