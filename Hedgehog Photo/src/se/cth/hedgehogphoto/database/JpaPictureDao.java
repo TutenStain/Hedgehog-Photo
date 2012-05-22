@@ -635,8 +635,8 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					String tgg ="";
 					try{
 						 tgg = tagg.toLowerCase();
-							String s = f.getDate().charAt(0) + "";
-							tgg = s.toUpperCase() + tagg.substring(1);
+							String s = tagg.charAt(0) + "";
+							tgg = s.toUpperCase() + tgg.substring(1);
 							}catch(Exception u){
 								
 							}

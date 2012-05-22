@@ -117,10 +117,31 @@ public class CalendarModel extends Observable {
 	public void getDates(){
 		this.pictureDays = new HashMap<Integer, List<PictureObject>>();
 		this.dayswithPicture = new ArrayList<Integer>();
+		pics = new ArrayList<PictureObject>();
 		
 		for(int i = 1; i <= this.maxDays; i++){
-			this.pics = (List<PictureObject>) this.da.findByDate(year + ".0" + month + "." + i);
-			if(!(this.pics.isEmpty())){
+			try{
+			this.pics.addAll((List<PictureObject>) this.da.findByDate(year + ".0" + month + "." + i));
+			}catch(Exception e){
+			}try{
+			pics.addAll((List<PictureObject>) this.da.findByDate(year + ":0" + month + ":" + i));
+			}catch(Exception e){	
+			}
+			try{
+			pics.addAll((List<PictureObject>) this.da.findByDate(year + "-0" + month + "-" + i));
+			}catch(Exception e){
+			pics.addAll((List<PictureObject>) this.da.findByDate(year + ":" + month + ":" + i));
+			}try{
+			pics.addAll((List<PictureObject>) this.da.findByDate(year + "-" + month + "-" + i));
+			}catch(Exception e){
+			}
+			try{
+			pics.addAll( (List<PictureObject>) this.da.findByDate(year + "." + month + "." + i));
+			}catch(Exception e){
+				
+			}
+				if(!(this.pics.isEmpty())){
+			
 				this.pictureDays.put(i, this.pics); 
 				this.dayswithPicture.add(i);
 			}
