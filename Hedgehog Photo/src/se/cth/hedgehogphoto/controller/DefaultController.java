@@ -108,8 +108,12 @@ public class DefaultController {
 					List<PhotoPanel> ppList = view.getPhotoPanels();
 					if(ppList.contains(pp)){
 						panel.removeAll();
-						if(btn.getText().equals("Previous") && (ppList.indexOf(pp) - 1) >= 0){
-							pp = ppList.get(ppList.indexOf(pp) - 1);
+						if(btn.getText().equals("Previous")){
+							if((ppList.indexOf(pp) - 1) < 0){
+								pp = ppList.get(ppList.size() - 1);
+							}else{
+								pp = ppList.get(ppList.indexOf(pp) - 1);
+							}
 						}
 						if(btn.getText().equals("Next") && (ppList.indexOf(pp) + 1) < ppList.size()){
 							pp = ppList.get(ppList.indexOf(pp) + 1);
