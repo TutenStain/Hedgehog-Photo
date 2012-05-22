@@ -115,8 +115,13 @@ public class DefaultController {
 								pp = ppList.get(ppList.indexOf(pp) - 1);
 							}
 						}
-						if(btn.getText().equals("Next") && (ppList.indexOf(pp) + 1) < ppList.size()){
-							pp = ppList.get(ppList.indexOf(pp) + 1);
+						if(btn.getText().equals("Next")){
+							if((ppList.indexOf(pp) + 1) >= ppList.size()){
+								pp = ppList.get(0);
+							}else{
+								pp = ppList.get(ppList.indexOf(pp) + 1);
+							}
+							
 						}
 						Image image = pp.getIcon().getImage();
 						BufferedImage bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
