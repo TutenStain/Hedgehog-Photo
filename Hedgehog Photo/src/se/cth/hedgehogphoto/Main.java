@@ -44,7 +44,9 @@ public class Main {
 //		insertFileObjectsIntoDatabase();
 
 		MainViewInitiator mainView = new MainViewInitiator(start);
-		
+		mainView.getMainModel().testNotify();
+		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(mainView.getMainView());
+
 		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
 		PluginLoader p = new PluginLoader(mainView.getMainView(), pluginRooDir, true);
 		Thread pluginLoaderT = new Thread(p);
@@ -55,9 +57,8 @@ public class Main {
         new MapController(map, Files.getInstance());
         mainView.getMainView().addPlugin(map, PluginArea.LEFT_TOP);
 		
-		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(mainView.getMainView());
-
-		mainView.getMainModel().testNotify();
+		
+	
 	}
 	
 	private static void insertFileObjectsIntoDatabase() {
