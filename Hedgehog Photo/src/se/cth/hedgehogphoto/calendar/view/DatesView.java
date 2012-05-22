@@ -20,24 +20,25 @@ import se.cth.hedgehogphoto.database.Files;
 public class DatesView extends JPanel implements Observer{
 	private static DatesView datesView;
 	private CalendarModel model;
-	private JPanel jp;
+	private JPanel panel;
 	private DatabaseAccess da;
 	private Files files;
+	
 	private DatesView(DatabaseAccess da, Files files) {
 		this.files = files;
 		this.setPreferredSize(new Dimension(150,75));
 		this.setLayout(new BorderLayout());
 		this.model = CalendarModel.getInstance(da);
 		this.model.addObserver(this);
-		this.jp = new JPanel();
-		this.jp.setLayout(new GridLayout(5,7));
+		this.panel = new JPanel();
+		this.panel.setLayout(new GridLayout(5,7));
 		this.setVisible(true);
 		addDays();
 	}
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		addDays();
+		this.addDays();
 	}
 
 	public static DatesView getInstance(DatabaseAccess da,Files files){
@@ -49,25 +50,24 @@ public class DatesView extends JPanel implements Observer{
 	
 	public void addDays(){
 		this.removeAll();
-		this.jp.removeAll();
+		this.panel.removeAll();
 		
-		for(int i= 1; i <= model.getMaxDays(); i++){
-			Button j = new Button(i + "");
-			for(Integer integer : model.getList()){
+		for(int i = 1; i <= this.model.getMaxDays(); i++){
+			Button button = new Button(i + "");
+			for(Integer integer : this.model.getList()){
 				if(integer.equals(i)){
-					j.setEnabled(true);
-					j.setBackground(Color.BLACK);
-					j.addActionListener(new DayController(da, model.getPictures(i), files));
-					j.setActionCommand("Day");
-
+					button.setEnabled(true);
+					button.setBackground(Color.BLACK);
+					button.addActionListener(new DayController(this.da, this.model.getPictures(i), this.files));
+					button.setActionCommand("Day");
 				}else{
-					j.setEnabled(false);
+					button.setEnabled(false);
 				}
 			}
-			j.setVisible(true);
-			this.jp.add(j);
-			this.add(jp, BorderLayout.CENTER);
-			this.revalidate();
+			button.setVisible(true);
+			this.panel.add(button);
+			this.add(this.panel, BorderLayout.CENTER);
+			revalidate();
 		}
 	}
 }

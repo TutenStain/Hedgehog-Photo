@@ -16,17 +16,17 @@ import se.cth.hedgehogphoto.view.PluginArea;
 author="Julia Gustafsson", description="N/A")
 public class CalendarInitiator {
 	private DatabaseAccess db;
-	private Files f;
-	private CalendarView cw;
+	private Files files;
+	private CalendarView view;
 
 	@InitializePlugin
 	public void start(){
-		this.cw = CalendarView.getInstance(this.db, this.f); 
+		this.view = CalendarView.getInstance(this.db, this.files); 
 	}
 
 	@Panel(placement=PluginArea.LEFT_BOTTOM)
 	public JPanel get(){
-		return this.cw;	
+		return this.view;	
 	}
 
 	@GetDatabase
@@ -35,7 +35,7 @@ public class CalendarInitiator {
 	}
 	
 	@GetVisibleFiles
-	public void setFiles(Files f){
-		this.f = f;
+	public void setFiles(Files files){
+		this.files = files;
 	}
 }

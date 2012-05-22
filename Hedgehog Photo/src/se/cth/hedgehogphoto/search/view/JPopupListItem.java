@@ -102,7 +102,7 @@ public class JPopupListItem extends JPanel implements JPopupItemI {
 		if (this.picture == null){
 			return;	
 		}
-		
+
 		BufferedImage bi = ImageUtils.resize(new ImageIcon(getPicture().getPath()).getImage(), this.IMAGE_SIZE);
 		this.image.setIcon(new ImageIcon(bi));
 		this.comment.setText(getPicture().getComment().getComment());

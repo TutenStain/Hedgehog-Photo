@@ -29,39 +29,48 @@ public class CalendarView extends JPanel implements Observer{
 	}
 
 	private CalendarView(DatabaseAccess da, Files files){
+		this.calendarModel = CalendarModel.getInstance(da);
+		this.calendarModel.addObserver(this);
+		ButtonController buttonController = new ButtonController(da);
+		
 		setLayout(new BorderLayout());
 		setSize(new Dimension(200,200));
-		this.calendarModel = CalendarModel.getInstance(da);
-		ButtonController bc = new ButtonController(da);
-		JPanel jp = new JPanel();
-		this.calendarModel.addObserver(this);
-		jp.setLayout(new GridLayout(1,3));
-		jp.setSize(30, 30);
+	
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(1,3));
+		panel.setSize(30, 30);
+		
 		JButton back = new JButton("Back");
 		back.setMaximumSize(new Dimension(5,5));
+		panel.add(back);
+		back.addActionListener(buttonController);
+		back.setActionCommand("Back");
+		
 		JButton forward = new JButton("Forward");
 		forward.setSize(10,10);
-		jp.add(back);
+		panel.add(forward);
+		forward.addActionListener(buttonController);
+		forward.setActionCommand("Forward");
+		
+		
 		JPanel month = new JPanel();
 		month.setLayout(new BorderLayout());
 		this.monthText = new JLabel(); 
-		changeMonthText();
-		month.add(monthText,BorderLayout.SOUTH);
+		this.changeMonthText();
+		month.add(this.monthText,BorderLayout.SOUTH);
+		panel.add(month, BorderLayout.SOUTH);
+		
 		JLabel yearText = new JLabel();
-		changeYearText();
+		this.changeYearText();
 		month.add(yearText,BorderLayout.EAST);
-		jp.add(month, BorderLayout.SOUTH);
-		jp.add(forward);
-		back.addActionListener(bc);
-		back.setActionCommand("Back");
-		forward.addActionListener(bc);
-		forward.setActionCommand("Forward");
-		GregorianCalendar g = calendarModel.getCalendar();
-		add(jp,BorderLayout.NORTH);
+	
+		add(panel,BorderLayout.NORTH);
 		add(DatesView.getInstance(da,files),BorderLayout.CENTER);
+		
 		setVisible(true);
-		addObserverto(calendarModel);
+		addObserverTo(this.calendarModel);
 	}
+	
 	public static CalendarView getInstance(DatabaseAccess da, Files files){
 		if(view == null){
 			view = new CalendarView(da, files);
@@ -69,20 +78,21 @@ public class CalendarView extends JPanel implements Observer{
 		return view;
 	}
 	
-	public void addObserverto(Observable o){
+	public void addObserverTo(Observable o){
 		o.addObserver(this);
+	}
+	
+	public void changeMonthText(){
+		this.monthText.setText(this.calendarModel.getMonthasString());
+	}
+	
+	public void changeYearText(){
+		this.yearText.setText(this.calendarModel.getYear()+ "");
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		changeMonthText();
 		changeYearText();
-	}
-	
-	public void changeMonthText(){
-		this.monthText.setText(this.calendarModel.getMonthasString());
-	}
-	public void changeYearText(){
-		this.yearText.setText(this.calendarModel.getYear()+"");
 	}
 }

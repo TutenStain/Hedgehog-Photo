@@ -23,20 +23,20 @@ public class CalendarModel extends Observable {
 	private Map<Integer, List<PictureObject>> pictureDays;
 	private List<Integer> dayswithPicture = new ArrayList<Integer>();
 	private GregorianCalendar gregorianCalendar = new GregorianCalendar();
-	
+
 	private  CalendarModel(DatabaseAccess da){
 		this.da = da;
-		this.month = gregorianCalendar.get(gregorianCalendar.MONTH)+1;
+		this.month = gregorianCalendar.get(gregorianCalendar.MONTH) + 1;
 		this.year = gregorianCalendar.get(gregorianCalendar.YEAR);
 		this.maxDays = gregorianCalendar.getActualMaximum(gregorianCalendar.DAY_OF_MONTH);
 		this.getDates();
 	}
-	
+
 	public synchronized static CalendarModel getInstance(DatabaseAccess da2){
 		if(model==null){
 			model = new CalendarModel(da2);
 		}
-		
+
 		return model;
 	}
 
@@ -89,83 +89,90 @@ public class CalendarModel extends Observable {
 			this.month = 12;
 			this.year = this.year -1;
 		}
-		
-		Date date = new Date(this.year, this.month-1,1);
+
+		@SuppressWarnings("deprecation")
+		Date date = new Date(this.year, this.month - 1, 1);
 		this.gregorianCalendar.setTime(date);
 		this.maxDays = this.gregorianCalendar.getActualMaximum(this.gregorianCalendar.DAY_OF_MONTH);
 		this.getDates();
+
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	public void forwards(){
 		if(((this.month) % 12) != 0){
-			this.month = this.month +1;
+			this.month = this.month + 1;
 
 		}else{
 			this.month = 1;
 			this.year = this.year + 1;
 		}
 		@SuppressWarnings("deprecation")
-		Date date = new Date(this.year, this.month-1,1);
+		Date date = new Date(this.year, this.month - 1,1);
 		this.gregorianCalendar.setTime(date);
-		
+
 		this.maxDays = this.gregorianCalendar.getActualMaximum(this.gregorianCalendar.DAY_OF_MONTH);
 		this.getDates();
+
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	public void getDates(){
 		this.pictureDays = new HashMap<Integer, List<PictureObject>>();
 		this.dayswithPicture = new ArrayList<Integer>();
-		pics = new ArrayList<PictureObject>();
-		
+		CalendarModel.pics = new ArrayList<PictureObject>();
+
 		for(int i = 1; i <= this.maxDays; i++){
 			try{
-			this.pics.addAll((List<PictureObject>) this.da.findByDate(year + ".0" + month + "." + i));
+				pics.addAll((List<PictureObject>) this.da.findByDate(year + ".0" + month + "." + i));
 			}catch(Exception e){
 				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + ".0" + month + "." + i);
-			}try{
-			pics.addAll((List<PictureObject>) this.da.findByDate(year + ":0" + month + ":" + i));
+			}
+			
+			try{
+				pics.addAll((List<PictureObject>) this.da.findByDate(year + ":0" + month + ":" + i));
 			}catch(Exception e){	
 				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + ":0" + month + ":" + i);
 			}
+			
 			try{
-			pics.addAll((List<PictureObject>) this.da.findByDate(year + "-0" + month + "-" + i));
+				pics.addAll((List<PictureObject>) this.da.findByDate(year + "-0" + month + "-" + i));
 			}catch(Exception e){
 				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + "-0" + month + "-" + i);
 			}	
 			pics.addAll((List<PictureObject>) this.da.findByDate(year + ":" + month + ":" + i));
 			try{
-			pics.addAll((List<PictureObject>) this.da.findByDate(year + "-" + month + "-" + i));
+				pics.addAll((List<PictureObject>) this.da.findByDate(year + "-" + month + "-" + i));
 			}catch(Exception e){
 				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + "-" + month + "-" + i);
 			}
+			
 			try{
-			pics.addAll( (List<PictureObject>) this.da.findByDate(year + "." + month + "." + i));
+				pics.addAll( (List<PictureObject>) this.da.findByDate(year + "." + month + "." + i));
 			}catch(Exception e){
 				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" +year + "." + month + "." + i);
 			}
-				if(!(this.pics.isEmpty())){
 			
-				this.pictureDays.put(i, this.pics); 
+			if(!(CalendarModel.pics.isEmpty())){
+				this.pictureDays.put(i, CalendarModel.pics); 
 				this.dayswithPicture.add(i);
 			}
 		}
 	}
-	
+
 	public List<PictureObject> getPictures(Integer key){
 		if(!(this.pictureDays.isEmpty())){
 			return this.pictureDays.get(key);
 		}
 		return null;
 	}
-	
+
 	public List<Integer> getList(){
 		return this.dayswithPicture;
 	}
-	
+
 	public Map<Integer, List<PictureObject>> getMap(){
 		return this.pictureDays;
 	}
@@ -173,7 +180,7 @@ public class CalendarModel extends Observable {
 	public GregorianCalendar getCalendar() {
 		return this.gregorianCalendar;
 	}
-	
+
 	public String getMonthasString(){
 		switch (this.month){
 		case 1:
