@@ -14,10 +14,10 @@ To add a new plugin:
 
 If using Linux or Mac OS X, skip step 1.
 
-	1. Compile your package
+	1. Compile your plugin.
 	2. Go to %home%/plugin/
 	3. Delete all directorys.
 	4. Go to %hedgehog rootfolder%/plugins/
 	5. Delete the plugin you no longer want.
 	6. Add your plugin-package. If running windows, all files must be compiled.
-	7. Run program
+	7. Run program.
