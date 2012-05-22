@@ -17,7 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import se.cth.hedgehogphoto.objects.LocationObjectOther;
+import se.cth.hedgehogphoto.objects.LocationGPSObject;
 
 /** This lays out components in a column that is constrained to the
  * top of an area, like the entries in a list or table.  It uses a GridLayout
@@ -50,14 +50,14 @@ public class ConstrainedGrid extends JPanel {
 		this.validate();
 	}
 
-	public void addLocations(List<LocationObjectOther> locations) {
+	public void addLocations(List<LocationGPSObject> locations) {
 		if (locations == null) {
 			return;
 		}
 
 		this.componentPanel.removeAll();
 		GeoLocationPanel.resetColorScale();
-		for (LocationObjectOther location : locations) {
+		for (LocationGPSObject location : locations) {
 			GeoLocationPanel panel = new GeoLocationPanel(location);
 			if (this.mouseListener != null) 
 				panel.addMouseListener(this.mouseListener);

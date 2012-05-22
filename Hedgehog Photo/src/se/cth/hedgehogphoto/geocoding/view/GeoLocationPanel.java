@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import se.cth.hedgehogphoto.objects.LocationObjectOther;
+import se.cth.hedgehogphoto.objects.LocationGPSObject;
 
 /**
  * GUI-component used in the geocoding-system,
@@ -20,7 +20,7 @@ import se.cth.hedgehogphoto.objects.LocationObjectOther;
 public class GeoLocationPanel extends JPanel {
 	private JLabel nameLabel;
 	private JLabel longitudeLabel, latitudeLabel;
-	private LocationObjectOther location;
+	private LocationGPSObject location;
 	private Color defaultColor;
 	private boolean isSelected;
 	private static Color color;
@@ -29,7 +29,7 @@ public class GeoLocationPanel extends JPanel {
 	
 	public static GeoLocationPanel selectedPanel;
 	
-	public GeoLocationPanel(LocationObjectOther location) {
+	public GeoLocationPanel(LocationGPSObject location) {
 		//set instance variables
 		this.location = location;
 		this.nameLabel = new JLabel(location.getLocation());
@@ -79,7 +79,7 @@ public class GeoLocationPanel extends JPanel {
 		this.isSelected = false;
 	}
 	
-	public LocationObjectOther getLocationObjectOther() {
+	public LocationGPSObject getLocationObjectOther() {
 		return this.location;
 	}
 	

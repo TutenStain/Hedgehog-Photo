@@ -11,7 +11,7 @@ import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.FileObject;
-import se.cth.hedgehogphoto.objects.LocationObjectOther;
+import se.cth.hedgehogphoto.objects.LocationGPSObject;
 
 public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao {
 	private static JpaAlbumDao albumDao = new JpaAlbumDao();
@@ -639,7 +639,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		}
 	}
 
-	public void setLocation(LocationObjectOther lo ,Picture picture){
+	public void setLocation(LocationGPSObject lo ,Picture picture){
 		if(picture != null){
 			if(!(lo.getLocation().equals("")) || lo.getLocation() != null){
 				String place = "";

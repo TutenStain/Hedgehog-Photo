@@ -9,16 +9,16 @@ import java.util.logging.Level;
 import se.cth.hedgehogphoto.geocoding.model.URLCreator;
 import se.cth.hedgehogphoto.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.log.Log;
-import se.cth.hedgehogphoto.objects.LocationObjectOther;
+import se.cth.hedgehogphoto.objects.LocationGPSObject;
 
 public class Converter {
 	
 
-	public static LocationObjectOther findLocationPlace(LocationObjectOther locationObj){
+	public static LocationGPSObject findLocationPlace(LocationGPSObject locationObj){
 		Point.Double point = new Point.Double();
 		point.setLocation(locationObj.getLongitude(),locationObj.getLatitude());
 		URL url = URLCreator.getInstance().queryReverseGeocodingURL(point);
-		LocationObjectOther newlocationObject = XMLParser.getInstance().processReverseGeocodingSearch(url);
+		LocationGPSObject newlocationObject = XMLParser.getInstance().processReverseGeocodingSearch(url);
 
 		try{
 			locationObj.setLocation(newlocationObject.getLocation());

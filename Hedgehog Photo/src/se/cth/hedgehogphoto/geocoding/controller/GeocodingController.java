@@ -10,7 +10,7 @@ import se.cth.hedgehogphoto.database.JpaPictureDao;
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.geocoding.view.GeoLocationPanel;
 import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
-import se.cth.hedgehogphoto.objects.LocationObjectOther;
+import se.cth.hedgehogphoto.objects.LocationGPSObject;
 import se.cth.hedgehogphoto.view.PhotoPanel;
 
 /**
@@ -82,7 +82,7 @@ public class GeocodingController {
 			if (GeoLocationPanel.selectedPanel != null && photoPanel != null) {
 				JpaPictureDao pictureDao = DaoFactory.getInstance().getJpaPictureDao();
 				Picture picture = pictureDao.findById(photoPanel.getPath());
-				LocationObjectOther location = GeoLocationPanel.selectedPanel.getLocationObjectOther();
+				LocationGPSObject location = GeoLocationPanel.selectedPanel.getLocationObjectOther();
 				
 				pictureDao.setLocation(location, picture);
 				photoPanel.setLocation(location.getLocation());

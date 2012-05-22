@@ -15,7 +15,7 @@ import se.cth.hedgehogphoto.map.model.MapModel;
 import se.cth.hedgehogphoto.map.view.MapView;
 import se.cth.hedgehogphoto.metadata.Metadata;
 import se.cth.hedgehogphoto.objects.FileObject;
-import se.cth.hedgehogphoto.objects.LocationObjectOther;
+import se.cth.hedgehogphoto.objects.LocationGPSObject;
 import se.cth.hedgehogphoto.plugin.PluginLoader;
 import se.cth.hedgehogphoto.view.PluginArea;
 import se.cth.hedgehogphoto.view.StartUpView;
@@ -48,14 +48,14 @@ public class Main {
 		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(mainView.getMainView());
 
 		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
-		PluginLoader p = new PluginLoader(mainView.getMainView(), pluginRooDir, true);
-		Thread pluginLoaderT = new Thread(p);
+		PluginLoader pluginLoader = new PluginLoader(mainView.getMainView(), pluginRooDir, true);
+		Thread pluginLoaderT = new Thread(pluginLoader);
 		pluginLoaderT.start();
 
-		MapModel mapModel = new MapModel(Files.getInstance());
+		/*MapModel mapModel = new MapModel(Files.getInstance());
 		MapView map = new MapView(mapModel);
         new MapController(map, Files.getInstance());
-        mainView.getMainView().addPlugin(map, PluginArea.LEFT_TOP);
+        mainView.getMainView().addPlugin(map, PluginArea.LEFT_TOP);*/
 		
 		
 	
@@ -69,7 +69,7 @@ public class Main {
 		int i = 0;
 		for(File file : files) {
 			FileObject f = Metadata.getImageObject(file);
-			f.setLocationObject(new LocationObjectOther("Japan"));
+			f.setLocationObject(new LocationGPSObject("Japan"));
 			f.setComment("Gutes bild");
 			f.setFileName(file.getName());
 			f.setDate("2012.05.19");

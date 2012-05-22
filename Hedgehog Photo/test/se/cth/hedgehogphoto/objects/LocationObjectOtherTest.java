@@ -7,22 +7,22 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class LocationObjectOtherTest {
-	private LocationObjectOther locationObject;
+	private LocationGPSObject locationObject;
 	
 	@Before
 	public void setUp() throws Exception {
-		this.locationObject = new LocationObjectOther("Sweden");
+		this.locationObject = new LocationGPSObject("Sweden");
 	}
 
 	@Test
 	public void testLocationObjectOtherString() {
-		this.locationObject = new LocationObjectOther("Tokyo");
+		this.locationObject = new LocationGPSObject("Tokyo");
 		assertTrue(this.locationObject.getLocation().equals("Tokyo"));
 	}
 
 	@Test
 	public void testLocationObjectOtherDoubleDouble() {
-		this.locationObject = new LocationObjectOther(111, 122);
+		this.locationObject = new LocationGPSObject(111, 122);
 		assertTrue(this.locationObject.getLongitude() == 111 && this.locationObject.getLatitude() == 122);
 	}
 
@@ -67,19 +67,19 @@ public class LocationObjectOtherTest {
 
 	@Test
 	public void testGetLatitude() {
-		this.locationObject = new LocationObjectOther(110, 190);
+		this.locationObject = new LocationGPSObject(110, 190);
 		assertTrue(this.locationObject.getLatitude() == 190);
 	}
 
 	@Test
 	public void testGetLongitude() {
-		this.locationObject = new LocationObjectOther(110, 190);
+		this.locationObject = new LocationGPSObject(110, 190);
 		assertTrue(this.locationObject.getLongitude() == 110);
 	}
 
 	@Test
 	public void testGetLocation() {
-		this.locationObject = new LocationObjectOther("Sweden");
+		this.locationObject = new LocationGPSObject("Sweden");
 		assertTrue(locationObject.getLocation().equals("Sweden"));
 	}
 

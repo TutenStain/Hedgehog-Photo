@@ -20,7 +20,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import se.cth.hedgehogphoto.log.Log;
-import se.cth.hedgehogphoto.objects.LocationObjectOther;
+import se.cth.hedgehogphoto.objects.LocationGPSObject;
 
 /**
  * Parses XML-documents from the nominatim-server
@@ -37,7 +37,7 @@ import se.cth.hedgehogphoto.objects.LocationObjectOther;
 public class XMLParser implements Runnable {
 	private static XMLParser xmlParser;
 	private DocumentBuilder docBuilder;
-	private Map<String, List<LocationObjectOther>> cachedSearchResults = new HashMap<String, List<LocationObjectOther>>();
+	private Map<String, List<LocationGPSObject>> cachedSearchResults = new HashMap<String, List<LocationGPSObject>>();
 
 	public static synchronized XMLParser getInstance() {
 		if (xmlParser == null) {
@@ -57,13 +57,13 @@ public class XMLParser implements Runnable {
 		}
 	}
 
-	public List<LocationObjectOther> processGeocodingSearch(URL xmlFileUrl) {
-		List<LocationObjectOther> locations = processGeocoding(xmlFileUrl, RequestType.GEOCODING_REQUEST);
+	public List<LocationGPSObject> processGeocodingSearch(URL xmlFileUrl) {
+		List<LocationGPSObject> locations = processGeocoding(xmlFileUrl, RequestType.GEOCODING_REQUEST);
 		return locations;
 	}
 
-	public LocationObjectOther processReverseGeocodingSearch(URL xmlFileUrl) {
-		List<LocationObjectOther> list = processGeocoding(xmlFileUrl, RequestType.REVERSE_GEOCODING_REQUEST);
+	public LocationGPSObject processReverseGeocodingSearch(URL xmlFileUrl) {
+		List<LocationGPSObject> list = processGeocoding(xmlFileUrl, RequestType.REVERSE_GEOCODING_REQUEST);
 		return (list == null || list.size() == 0) ? null : list.get(0); 
 	}
 
@@ -79,9 +79,9 @@ public class XMLParser implements Runnable {
 	 * @return a List of LocationObjects containing the result of the
 	 * search.
 	 */
-	public synchronized List<LocationObjectOther> processGeocoding(URL xmlFileUrl, RequestType type) {
+	public synchronized List<LocationGPSObject> processGeocoding(URL xmlFileUrl, RequestType type) {
 		if (xmlFileUrl == null || type == null) {
-			return new ArrayList<LocationObjectOther>();
+			return new ArrayList<LocationGPSObject>();
 		}
 
 		/* Check for cached search results first. */
@@ -99,7 +99,7 @@ public class XMLParser implements Runnable {
 
 			NodeList listOfPlaces = doc.getElementsByTagName(tagName);
 			int nbrOfPlaces = listOfPlaces.getLength();
-			List<LocationObjectOther> locations = new LinkedList<LocationObjectOther>();
+			List<LocationGPSObject> locations = new LinkedList<LocationGPSObject>();
 
 			for (int index = 0; index < nbrOfPlaces; index++) {
 
@@ -113,7 +113,7 @@ public class XMLParser implements Runnable {
 							placeElement.getAttribute("display_name") : 
 								placeElement.getTextContent();
 
-							LocationObjectOther location = new LocationObjectOther(place);
+							LocationGPSObject location = new LocationGPSObject(place);
 							try {
 								location.setLongitude(Double.parseDouble(lon));
 								location.setLatitude(Double.parseDouble(lat));

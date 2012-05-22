@@ -93,7 +93,7 @@ public class JPopupPreview extends JPopupMenu implements PreviewI {
 		/**-50 to count for the offset of the textbox*/
 		show(this.textField, -50, this.textField.getHeight());
 		List<PictureObject> pictures = this.model.getPictures();
-		setListItems(pictures);
+		this.setListItems(pictures);
 		
 		this.panel.removeAll();
 

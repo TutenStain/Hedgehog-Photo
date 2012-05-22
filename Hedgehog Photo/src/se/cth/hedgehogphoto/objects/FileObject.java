@@ -12,7 +12,7 @@ public interface FileObject {
 	public void setFileName(String name);
 	public void setFilePath(String path);
 	public void setCoverPath(String path);
-	public void setLocationObject(LocationObjectOther locationObject);
+	public void setLocationObject(LocationGPSObject locationObject);
 	public void setAlbumName(String albumName);
 
 	//public void setLocation(String location);
@@ -20,7 +20,7 @@ public interface FileObject {
 	public String getDate();
 	public String getComment();
 	public String getLocation();
-	public LocationObjectOther getLocationObject();
+	public LocationGPSObject getLocationObject();
 	public String getFileName();
 	public String getFilePath();
 	public String getCoverPath();

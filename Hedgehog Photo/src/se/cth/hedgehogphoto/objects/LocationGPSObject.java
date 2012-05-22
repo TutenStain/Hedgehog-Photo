@@ -2,17 +2,16 @@ package se.cth.hedgehogphoto.objects;
 
 
 
-public class LocationObjectOther {
+public class LocationGPSObject {
 	private String location;
 	private double longitude = 200;
 	private double latitude = 100;
 	
-	public LocationObjectOther(String location) {
+	public LocationGPSObject(String location) {
 		setLocation(location);
-		
 	}
 	
-	public LocationObjectOther(double longitude, double latitude) {
+	public LocationGPSObject(double longitude, double latitude) {
 		setLocation(longitude, latitude);
 	}
 	
