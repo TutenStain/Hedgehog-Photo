@@ -30,20 +30,17 @@ public class Converter {
 	public static String convertDate(String rawDate){
 		String date ="";
 		try{
-			System.out.print(rawDate);
 			String x = rawDate.charAt(6) +"";
 			rawDate = rawDate.substring(0, 12);
-			System.out.println(x);
 			String[] args = rawDate.split(x);
 			 date = args[0];
 			for(int i = 1; i < args.length;i++)
 			date = date + "-" + args[i];
-			//date = date.substring(0,9);
 		}catch(Exception e){
-			
+			Log.getLogger().log(Level.INFO, "Failed to convert date " + rawDate);
 		}
 		
-		
+	
 		return date;
 	}
 
