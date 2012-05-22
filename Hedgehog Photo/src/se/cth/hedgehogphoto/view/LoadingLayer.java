@@ -68,39 +68,39 @@ class LoadingLayer extends LayerUI<JPanel> implements ActionListener {
 	 * @param panel the panel to decorate with a loading spinner.
 	 */
 	public LoadingLayer(JPanel panel){
-		decoratedPanel = new JLayer<JPanel>(panel, this);
+		this.decoratedPanel = new JLayer<JPanel>(panel, this);
 	}
 
 	/**
 	 * @return returns the decorated animated layer ready to be added to a container.
 	 */
 	public JLayer<JPanel> getDecoratedPanel(){
-		return decoratedPanel;
+		return this.decoratedPanel;
 	}
 
 	/**
 	 * Starts the animations, runs until stop is called.
 	 */
 	public void start() {
-		if (mIsRunning) {
+		if (this.mIsRunning) {
 			return;
 		}
 
 		// Run a thread for animation.
-		mIsRunning = true;
-		mIsFadingOut = false;
-		mFadeCount = 0;
+		this.mIsRunning = true;
+		this.mIsFadingOut = false;
+		this.mFadeCount = 0;
 		int fps = 30;
 		int tick = 1000 / fps;
-		mTimer = new Timer(tick, this);
-		mTimer.start();
+		this.mTimer = new Timer(tick, this);
+		this.mTimer.start();
 	}
 
 	/**
 	 * Stops the current animation while keeping the panel intact.
 	 */
 	public void stop() {
-		mIsFadingOut = true;
+		this.mIsFadingOut = true;
 	}
 	
 	/**
@@ -109,7 +109,7 @@ class LoadingLayer extends LayerUI<JPanel> implements ActionListener {
 	public void stopAndRemove(){
 		this.stop();
 		//Remove ourself
-		decoratedPanel.removeAll();
+		this.decoratedPanel.removeAll();
 	}
 
 	@Override
@@ -120,13 +120,13 @@ class LoadingLayer extends LayerUI<JPanel> implements ActionListener {
 		// Paint the view.
 		super.paint (g, c);
 
-		if (!mIsRunning) {
+		if (!this.mIsRunning) {
 			return;
 		}
 
 		Graphics2D g2 = (Graphics2D)g.create();
 
-		float fade = (float)mFadeCount / (float)mFadeLimit;
+		float fade = (float)this.mFadeCount / (float)this.mFadeLimit;
 		// Gray it out.
 		Composite urComposite = g2.getComposite();
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .25f * fade));
@@ -141,7 +141,7 @@ class LoadingLayer extends LayerUI<JPanel> implements ActionListener {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setStroke(new BasicStroke(s / 4, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		g2.setPaint(Color.WHITE);
-		g2.rotate(Math.PI * mAngle / 180, cx, cy);
+		g2.rotate(Math.PI * this.mAngle / 180, cx, cy);
 		for (int i = 0; i < 12; i++) {
 			float scale = (12.0f - (float)i) / 12.0f;
 			g2.drawLine(cx + s, cy, cx + s * 2, cy);
@@ -154,20 +154,20 @@ class LoadingLayer extends LayerUI<JPanel> implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (mIsRunning) {
+		if (this.mIsRunning) {
 			firePropertyChange("tick", 0, 1);
-			mAngle += 3;
-			if (mAngle >= 360) {
-				mAngle = 0;
+			this.mAngle += 3;
+			if (this.mAngle >= 360) {
+				this.mAngle = 0;
 			}
-			if (mIsFadingOut) {
-				if (--mFadeCount == 0) {
-					mIsRunning = false;
-					mTimer.stop();
+			if (this.mIsFadingOut) {
+				if (--this.mFadeCount == 0) {
+					this.mIsRunning = false;
+					this.mTimer.stop();
 				}
 			}
-			else if (mFadeCount < mFadeLimit) {
-				mFadeCount++;
+			else if (this.mFadeCount < this.mFadeLimit) {
+				this.mFadeCount++;
 			}
 		}
 	}
