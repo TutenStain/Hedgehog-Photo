@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -94,5 +96,32 @@ public class DefaultController {
 				}
 			}
 		});
+		view.setPrevNextBtnListeners(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(arg0.getSource() instanceof JButton){
+					JButton btn = (JButton) arg0.getSource();
+					JPanel panel = view.getSinglePhotoPanel();
+					PhotoPanel pp = view.getCurrentPhotoPanel();
+					List<PhotoPanel> ppList = view.getPhotoPanels();
+					if(ppList.contains(pp)){
+						panel.removeAll();
+						if(btn.getText().equals("Previous") && (ppList.indexOf(pp) - 1) >= 0){
+							pp = ppList.get(ppList.indexOf(pp) - 1);
+						}
+						if(btn.getText().equals("Next") && (ppList.indexOf(pp) + 1) < ppList.size()){
+							pp = ppList.get(ppList.indexOf(pp) + 1);
+						}
+						panel.add(pp);
+						panel.repaint();
+						panel.revalidate();
+						view.resetSlider();
+					}
+				}
+			}
+			
+		});
 	}
+	
 }
