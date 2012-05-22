@@ -49,6 +49,7 @@ public class MapView extends JPanel implements Observer {
 	}
 	
 	private void addRootJLayeredPane() {
+		this.removeAll();
 		this.mainPane = new JLayeredPane();
 		this.mainPane.setPreferredSize(model.getSize());
 		this.mainPane.setLayout(null);
@@ -89,6 +90,8 @@ public class MapView extends JPanel implements Observer {
 			
 			this.mainPane.add(marker, JLayeredPane.DRAG_LAYER, new Integer(0)); //can handle the addition of the same component multiple times
 		}
+		
+		this.mainPane.validate();
 	}
 	
 	public void addListener(MouseAdapter mouseAdapter) {
@@ -118,7 +121,7 @@ public class MapView extends JPanel implements Observer {
 			int newValue = this.locationMarkers.size();
 			firePropertyChange(Global.MARKERS_UPDATE, oldValue, newValue);
 		} else if (arg1.toString().equals(Global.FILES_UPDATE)) {
-			this.removeAll();
+			this.mainPane.removeAll();
 			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
 			setLayout(new BorderLayout());
 			
