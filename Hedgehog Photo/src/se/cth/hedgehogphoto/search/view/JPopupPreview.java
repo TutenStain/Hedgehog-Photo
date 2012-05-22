@@ -57,18 +57,20 @@ public class JPopupPreview extends JPopupMenu implements PreviewI {
 	}
 
 	@Override
-	public void setTextField(JTextField t){
-		this.textField = t;
+	public void setTextField(JTextField textField){
+		this.textField = textField;
 	}
 	
 	public void setListItems(List<PictureObject> pictures) {
 		this.messageItem.setPictures(pictures);
 		
-		for (int index = 0; index < this.MAX_LIST_ITEMS; index++) {
-			if (pictures.size() > index)
+		for (int index = 0; index < JPopupPreview.MAX_LIST_ITEMS; index++) {
+			if (pictures.size() > index){
 				this.listItems[index].setPicture(pictures.get(index));
-			else
+			}
+			else{
 				this.listItems[index].setPicture(null);
+			}
 		}
 	}
 	

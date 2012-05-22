@@ -28,12 +28,12 @@ public class SearchInitiator {
 		SearchModel model = new SearchModel();
 		PreviewI previewView = new JPopupPreview();
 		this.view = new JSearchBox(model, previewView);
-		new SearchController(model, this.view, previewView, files, db);
+		new SearchController(model, this.view, previewView, this.files, this.db);
 	}
 	
 	@Panel(placement=PluginArea.SEARCH)
 	public JPanel getView(){
-		return view;	
+		return this.view;	
 	}
 
 	@GetDatabase
