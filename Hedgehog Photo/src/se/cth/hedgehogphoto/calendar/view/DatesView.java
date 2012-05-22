@@ -36,11 +36,6 @@ public class DatesView extends JPanel implements Observer{
 		addDays();
 	}
 	
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		this.addDays();
-	}
-
 	public static DatesView getInstance(DatabaseAccess da,Files files){
 		if(datesView==null){
 			datesView = new DatesView(da,files);
@@ -69,5 +64,10 @@ public class DatesView extends JPanel implements Observer{
 			this.add(this.panel, BorderLayout.CENTER);
 			revalidate();
 		}
+	}
+	
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		this.addDays();
 	}
 }
