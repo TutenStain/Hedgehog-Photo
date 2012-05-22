@@ -23,10 +23,12 @@ public class SearchModel extends Observable {
 	}
 	
 	public void setPictures(List<PictureObject> pictures) {
-		if (pictures != null)
+		if (pictures != null) {
 			this.pictures = pictures;
-		else
+		}
+		else {
 			this.pictures = new ArrayList<PictureObject>();
+		}
 		
 		setChanged();
 		notifyObservers(this);

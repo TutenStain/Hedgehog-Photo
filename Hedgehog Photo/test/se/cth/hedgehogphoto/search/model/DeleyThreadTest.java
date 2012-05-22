@@ -2,11 +2,6 @@ package se.cth.hedgehogphoto.search.model;
 
 import static org.junit.Assert.assertTrue;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,6 +26,7 @@ public class DeleyThreadTest {
 		long timeAfter = System.currentTimeMillis();
 		
 		long delta = timeAfter - timeBefore;
+		/*Allow some error margin*/
 		if(delta >= 500 && delta <= 510){
 			assertTrue(true);
 		} else {
