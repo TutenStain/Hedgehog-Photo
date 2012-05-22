@@ -130,31 +130,37 @@ public class CalendarModel extends Observable {
 			}catch(Exception e){
 				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + ".0" + month + "." + i);
 			}
-			
+
 			try{
 				pics.addAll((List<PictureObject>) this.da.findByDate(year + ":0" + month + ":" + i));
 			}catch(Exception e){	
 				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + ":0" + month + ":" + i);
 			}
-			
+
 			try{
 				pics.addAll((List<PictureObject>) this.da.findByDate(year + "-0" + month + "-" + i));
 			}catch(Exception e){
 				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + "-0" + month + "-" + i);
 			}	
-			pics.addAll((List<PictureObject>) this.da.findByDate(year + ":" + month + ":" + i));
+
+			try{
+				pics.addAll((List<PictureObject>) this.da.findByDate(year + ":" + month + ":" + i));
+			} catch(Exception e){
+				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + ":" + month + ":" + i);
+			}
+
 			try{
 				pics.addAll((List<PictureObject>) this.da.findByDate(year + "-" + month + "-" + i));
 			}catch(Exception e){
 				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + "-" + month + "-" + i);
 			}
-			
+
 			try{
 				pics.addAll( (List<PictureObject>) this.da.findByDate(year + "." + month + "." + i));
 			}catch(Exception e){
 				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" +year + "." + month + "." + i);
 			}
-			
+
 			if(!(CalendarModel.pics.isEmpty())){
 				this.pictureDays.put(i, CalendarModel.pics); 
 				this.dayswithPicture.add(i);

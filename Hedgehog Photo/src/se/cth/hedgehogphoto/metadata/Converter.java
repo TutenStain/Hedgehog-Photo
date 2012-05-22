@@ -30,22 +30,21 @@ public class Converter {
 
 	public static String convertComment(String comment) {
 		try{
-
 			if(!(comment.equals(""))){
 				try {
 					comment = convertDecimalNumbersToString(comment);
 				}
 				catch (NumberFormatException e) {
 					Log.getLogger().log(Level.SEVERE, "Failed to convert \"" + comment +
-																	"\" to a comment.", e);
+							"\" to a comment.", e);
 				}
 			}
 		}
 		catch (Exception e) {
 			Log.getLogger().log(Level.SEVERE, "Failed to convert \"" + comment + 
-															"\" to a comment.", e);
+					"\" to a comment.", e);
 		}
-		
+
 		return comment;
 	}
 
@@ -64,8 +63,8 @@ public class Converter {
 							tags.add(args[k]);
 						}
 					}catch(NullPointerException e){
+						Log.getLogger().log(Level.SEVERE, "NullPointerException", e);
 					}
-
 				}
 				catch (NumberFormatException e) {
 					Log.getLogger().log(Level.SEVERE, "Failed to convert \"" + tag + "\" to a tag.", e);
@@ -74,7 +73,7 @@ public class Converter {
 		}catch (Exception e) {
 			Log.getLogger().log(Level.SEVERE, "Failed to convert \"" +tag + "\" to a tag.", e);
 		}
-		
+
 		return tags;
 	}
 

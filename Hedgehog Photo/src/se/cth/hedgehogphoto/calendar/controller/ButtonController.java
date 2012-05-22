@@ -10,7 +10,7 @@ public class ButtonController implements ActionListener{
 	private CalendarModel model;
 
 	public ButtonController(DatabaseAccess da){
-		 model = CalendarModel.getInstance(da);	
+		 this.model = CalendarModel.getInstance(da);	
 	}
 	
 	@Override
