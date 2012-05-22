@@ -49,7 +49,6 @@ public class PhotoPanel extends JPanel {
 		this.nameTextField.setName(PhotoPanelConstantsI.NAME);
 		this.tagsTextField.setName(PhotoPanelConstantsI.TAGS);
 		this.nameTextField.setActionCommand("name");
-		///this.commentArea.setActionCommand("comment");
 		this.tagsTextField.setActionCommand("tags");
 		this.locationTextField.setActionCommand("location");
 		this.commentArea.setPreferredSize(new Dimension(100,100));
@@ -67,21 +66,21 @@ public class PhotoPanel extends JPanel {
 		GridBagLayout gBig = new GridBagLayout();
 		setLayout(gBig);
 		GridBagConstraints nameBag = new GridBagConstraints();
-		nameBag.gridx =1;
-		nameBag .gridy =1;
-		nameBag.gridheight =1;
+		nameBag.gridx = 1;
+		nameBag.gridy = 1;
+		nameBag.gridheight = 1;
 		nameBag.gridwidth = 1;
-		gBig.setConstraints(photoNameLabel , nameBag);
-		add(photoNameLabel);
+		gBig.setConstraints(this.photoNameLabel , nameBag);
+		add(this.photoNameLabel);
 		
 		GridBagConstraints photoNameBag = new GridBagConstraints();
-		photoNameBag.gridx =2;
-		photoNameBag .gridy =1;
-		photoNameBag.gridheight =1;
+		photoNameBag.gridx = 2;
+		photoNameBag.gridy = 1;
+		photoNameBag.gridheight = 1;
 		photoNameBag.gridwidth = 1;
-		gBig.setConstraints(nameTextField , photoNameBag);
-		add(nameTextField);
-		nameTextField.setVisible(true);
+		gBig.setConstraints(this.nameTextField , photoNameBag);
+		add(this.nameTextField);
+		this.nameTextField.setVisible(true);
 
 		GridBagConstraints con = new GridBagConstraints();
 		con.gridx = 1;
@@ -89,70 +88,72 @@ public class PhotoPanel extends JPanel {
 		con.gridheight = 3;
 		con.gridwidth = 2;
 
-		gBig.setConstraints(iconLabel, con);
-		add(iconLabel);
+		gBig.setConstraints(this.iconLabel, con);
+		add(this.iconLabel);
 
-		locationTextField.setBackground(Color.LIGHT_GRAY);
+		this.locationTextField.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints loc = new GridBagConstraints();
-		loc.gridx =2;
-		loc.gridy =6;
-		loc.gridheight =1;
+		loc.gridx = 2;
+		loc.gridy = 6;
+		loc.gridheight = 1;
 		loc.gridwidth = 1;
-		gBig.setConstraints(locationTextField, loc);
-		add(locationTextField);
+		gBig.setConstraints(this.locationTextField, loc);
+		add(this.locationTextField);
 		GridBagConstraints locLabel = new GridBagConstraints();
-		locLabel.gridx =1;
-		locLabel.gridy =6;
-		locLabel.gridheight =1;
+		locLabel.gridx = 1;
+		locLabel.gridy = 6;
+		locLabel.gridheight = 1;
 		locLabel.gridwidth = 1;
-		gBig.setConstraints(locationLabel, locLabel);
-		add(locationLabel);
+		gBig.setConstraints(this.locationLabel, locLabel);
+		add(this.locationLabel);
 
 		GridBagConstraints comLabel = new GridBagConstraints();
-		comLabel.gridx =3;
-		comLabel.gridy =3;
-		gBig.setConstraints(commentLabel, comLabel);
-		add(commentLabel);
-		commentArea.setBackground(Color.LIGHT_GRAY);
+		comLabel.gridx = 3;
+		comLabel.gridy = 3;
+		gBig.setConstraints(this.commentLabel, comLabel);
+		add(this.commentLabel);
+		this.commentArea.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints com = new GridBagConstraints();
 		com.gridx = 3;
 		com.gridy = 4;
 
-		gBig.setConstraints(commentArea, com);
-		add(commentArea);
+		gBig.setConstraints(this.commentArea, com);
+		add(this.commentArea);
 
 		GridBagConstraints tagLabel = new GridBagConstraints();
-		tagLabel.gridx =1;
-		tagLabel.gridy =5;
-		tagLabel.gridheight =1;
+		tagLabel.gridx = 1;
+		tagLabel.gridy = 5;
+		tagLabel.gridheight = 1;
 		tagLabel.gridwidth = 1;
-		gBig.setConstraints(tagsLabel,  tagLabel);
-		add(tagsLabel);
+		gBig.setConstraints(this.tagsLabel,  tagLabel);
+		add(this.tagsLabel);
 
 		int x= 0;
-		tagsTextField.setBackground(Color.LIGHT_GRAY);
+		this.tagsTextField.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints tag = new GridBagConstraints();
 		tag.gridx = x + 2;
 		tag.gridy = 5;
-		tag.gridheight =1;
+		tag.gridheight = 1;
 		tag.gridwidth = 1;
 
-		gBig.setConstraints(tagsTextField,tag);
-		add(tagsTextField);
+		gBig.setConstraints(this.tagsTextField,tag);
+		add(this.tagsTextField);
 		this.setBackground(Constants.GUI_BACKGROUND);
 	}
-	public void setScaleDimension(Dimension d){
-		this.scaleDimension = d;
+	
+	public void setScaleDimension(Dimension dimension){
+		this.scaleDimension = dimension;
 	}
+	
 	public Dimension getScaleDimension(){
 		return this.scaleDimension;
 	}
+	
 	public String getPath() {
 		return this.path;
 	}
 	
 	public void setTextFieldActionListeners(ActionListener al) {
-	//	this.commentArea.addActionListener(al);
 		this.tagsTextField.addActionListener(al);
 		this.locationTextField.addActionListener(al);
 		this.nameTextField.addActionListener(al);
@@ -164,6 +165,7 @@ public class PhotoPanel extends JPanel {
 		this.locationTextField.addFocusListener(listener);
 		this.nameTextField.addFocusListener(listener);
 	}
+	
 	//TODO this method is not working
 	public void setMouseListener(MouseListener l){
 		this.iconLabel.addMouseListener(l);
@@ -171,7 +173,6 @@ public class PhotoPanel extends JPanel {
 	
 	public void setName(String name){
 		this.nameTextField.setText(name);
-
 	}
 	
 	public void setTags(List<? extends TagObject> tags){
@@ -179,7 +180,7 @@ public class PhotoPanel extends JPanel {
 		for(TagObject t : tags) {
 			builder.append(t.getTag() + ";");
 		}
-		tagsTextField.setText(builder.toString());
+		this.tagsTextField.setText(builder.toString());
 	}
 
 	public void setLocation(String location){
