@@ -7,7 +7,9 @@ package se.cth.hedgehogphoto.database;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
@@ -108,27 +110,28 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	@SuppressWarnings("unchecked")
 	public void addTag(String tag, String filePath){
 		Picture picture = findById(filePath);
-		List<TagI> tags = new ArrayList<TagI>();
-		try{
-			tags = (List<TagI>) picture.getTags();
-		}catch(Exception y){
+		if(picture != null){
+			List<TagI> tags = new ArrayList<TagI>();
+			try{
+				tags = (List<TagI>) picture.getTags();
+			}catch(Exception y){
+				Log.getLogger().log(Level.INFO, "Couldn't get any tags from Pictur " +  picture);	
+				tags = new ArrayList<TagI>();
+			}
 
-		}
-		if( picture != null ){
 			Tag tagg = tagDao.findById(tag);
 			if(tagg != null){
 				List<PictureI> pics = new ArrayList<PictureI>();
 				try{
 					pics = (List<PictureI>) tagg.getPictures();
 				}catch(Exception i){
+					Log.getLogger().log(Level.INFO, "Couldn't get any pictures from Tag " + tagg);
 
 				}
 				if(!(pics.contains(picture))){
 					beginTransaction();
 					pics.add(picture);
 					tagg.setPictures(pics);
-					if(tags == null)
-						tags = new ArrayList<TagI>();
 					tags.add(tagg);
 					picture.setTags(tags);
 					tagDao.persist(tagg);
@@ -145,10 +148,8 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				try{
 					taggs = (List<TagI>) picture.getTags();
 				}catch(Exception u){
-
-				}
-				if(taggs == null)
-					taggs = new ArrayList<TagI>();
+					Log.getLogger().log(Level.INFO, "Couldn't get any tags from Picture " + picture);
+				}			
 				taggs.add(newTag);
 				picture.setTags(tags);
 				persist(picture);
@@ -173,6 +174,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				try{
 					pics = comm.getPictures();
 				}catch(Exception j){
+					Log.getLogger().log(Level.INFO, "Couldn't get any pictures from Comment" + comm);
 					pics =new ArrayList<Picture>();
 				}
 				System.out.print("3");	
@@ -220,7 +222,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				beginTransaction();
 				loc= new Location();
 				loc.setLocation(location);
-			
+
 				List<Picture> pictures = new ArrayList<Picture>();
 				pictures.add(picture);
 				loc.setPictures(pictures);
@@ -282,13 +284,14 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 							tagDao.persist((Tag)tag);
 						this.persist((Picture) picture);
 					}catch(Exception y){
-						System.out.print("Exception");
+						Log.getLogger().log(Level.SEVERE, "Failed to remove TagI " + tag);
 					}
 
 
 				}
 
 			}catch(Exception y){	
+				Log.getLogger().log(Level.INFO, "Couldn't get list of TagIs from Picture " + picture);
 			}
 			commitTransaction();
 
@@ -307,6 +310,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				pictures = com.getPictures();
 				pictures.remove(picture);
 			}catch(Exception e){
+				Log.getLogger().log(Level.INFO, "Couldn't get CommentI from Picture " + picture);
 			}
 			if(pictures.isEmpty() && com!=null){
 				entityManager.remove(com);
@@ -330,6 +334,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				}else
 					location.setPictures(picts);
 			}catch(Exception e){
+				Log.getLogger().log(Level.INFO, "Couldn't get CommentI from Picture " + picture);
 			}
 			commitTransaction();	
 
@@ -384,13 +389,19 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			try{
 				beginTransaction();
 				LocationI location = picture.getLocation();
+				try{
 				List<? extends PictureI>  picts = location.getPictures();
 				picts.remove(picture);
 				if(picts.isEmpty()){
 					entityManager.remove(location);
 				}else
 					location.setPictures(picts);
+				}catch(Exception e){
+					Log.getLogger().log(Level.INFO, "Couldn't get pictures from Location" + location );
+				}
+			
 			}catch(Exception e){
+				Log.getLogger().log(Level.INFO, "Couldn't get location from Picture " + picture);
 			}
 			commitTransaction();
 
@@ -401,6 +412,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				pictures = com.getPictures();
 				pictures.remove(picture);
 			}catch(Exception e){
+				Log.getLogger().log(Level.INFO, "Couldn't get pictures from Comment " + com );
 			}
 			if(pictures.isEmpty() && com!=null){
 				entityManager.remove(com);
@@ -420,22 +432,23 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			if(f.getFilePath() != null || (!(f.getFilePath().equals("")))){
 				String albumName ="";
 				try{
-				albumName= f.getAlbumName().toLowerCase();
-				String s =f.getAlbumName().charAt(0) + "";
-				albumName  = s.toUpperCase() + albumName.substring(1);
+					albumName= f.getAlbumName().toLowerCase();
+					String s =f.getAlbumName().charAt(0) + "";
+					albumName  = s.toUpperCase() + albumName.substring(1);
 				}catch(Exception u){
-					
+					Log.getLogger().log(Level.SEVERE, "Unexpected problems with the String " + f.getAlbumName());
 				}
 				if(!(albumName.equals(""))){
-					
-						album = albumDao.findById(albumName);
-						if(album != null){
+
+					album = albumDao.findById(albumName);
+					if(album != null){
 						beginTransaction();
 						try{
-							
 							if(album.getCoverPath().equals("")|| album.getCoverPath()==null)
 								album.setCoverPath(f.getFilePath());
-						}catch(Exception o){		
+						}catch(Exception o){	
+							Log.getLogger().log(Level.INFO, "Couldn't get coverpath from Album " + album );
+							album.setCoverPath(f.getFilePath());
 						}
 						commitTransaction();
 					}else{
@@ -452,22 +465,22 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			String date  = "";
 			String fileName = "";
 			try{
-		 date = f.getDate().toLowerCase();
-			String s = f.getDate().charAt(0) + "";
-			date  = s.toUpperCase() + date.substring(1);
+				date = f.getDate().toLowerCase();
+				String s = f.getDate().charAt(0) + "";
+				date  = s.toUpperCase() + date.substring(1);
 			}catch(Exception u){
-				
+
 			}
 			try{
-			 fileName = f.getFileName().toLowerCase();
-			String s = f.getFileName().charAt(0) + "";
-			fileName = s.toUpperCase() + fileName.substring(1);
-	}catch(Exception u){
-				
+				fileName = f.getFileName().toLowerCase();
+				String s = f.getFileName().charAt(0) + "";
+				fileName = s.toUpperCase() + fileName.substring(1);
+			}catch(Exception u){
+				Log.getLogger().log(Level.SEVERE, "Unexpected problems with the String " + f.getFileName());
 			}
-				
-				picture = findById(f.getFilePath());
-				if(picture != null){
+
+			picture = findById(f.getFilePath());
+			if(picture != null){
 				beginTransaction();
 				if(!(f.getDate().equals("")))
 					picture.setDate(date);
@@ -493,7 +506,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					try{
 						thePictures.addAll(album.getPictures());
 					}catch(Exception p){
-
+						Log.getLogger().log(Level.INFO, "Couldn't get list of PictureIs from Album " + album );
 					}
 					thePictures.add(picture);
 
@@ -527,12 +540,12 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 						comment = new Comment();
 						String comm ="";
 						try{
-							 comm = f.getComment().toLowerCase();
-								String s = f.getComment().charAt(0) + "";
-								comm  = s.toUpperCase() + comm.substring(1);
-								}catch(Exception u){
-									
-								}
+							comm = f.getComment().toLowerCase();
+							String s = f.getComment().charAt(0) + "";
+							comm  = s.toUpperCase() + comm.substring(1);
+						}catch(Exception u){
+							Log.getLogger().log(Level.SEVERE, "Unexpected problems with the String " + f.getComment());
+						}
 						comment.setComment(comm);		
 						List<Picture> pics = new ArrayList<Picture>();
 						pics.add(picture);
@@ -546,8 +559,8 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 			}
 
 			catch(Exception k){
-	
-			
+
+
 			}
 		}
 	}
@@ -559,11 +572,12 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				for(String tagg: f.getTags()){
 					String tgg ="";
 					try{
-						 tgg = tagg.toLowerCase();
-							String s = tagg.charAt(0) + "";
-							tgg = s.toUpperCase() + tgg.substring(1);
-							}catch(Exception u){
-							}
+						tgg = tagg.toLowerCase();
+						String s = tagg.charAt(0) + "";
+						tgg = s.toUpperCase() + tgg.substring(1);
+					}catch(Exception u){
+						Log.getLogger().log(Level.SEVERE, "Unexpected problems with the String " + tagg);
+					}
 					tags.add(tgg);
 				}
 				List<String> pictags = new ArrayList<String>();
@@ -574,30 +588,43 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				for(int i = 0; i <tags.size();i++){	
 					if(!(pictags.contains(tags.get(i)) && tags.get(i).equals(""))){
 						TagI tag= tagDao.findById(tags.get(i));
-						try{
-							if((tag!=null)){
-								beginTransaction();
-								List<PictureI> ptag= (List<PictureI>) tag.getPictures();				
-								if(!(ptag.contains(picture))){
-									ptag.add(picture);
-									tag.setPictures(ptag);	
-									List<TagI> pTags = (List<TagI>) picture.getTags();
-									if(!(pTags.contains(tag))){
-										pTags.add(tag);
 
-										picture.setTags(pTags);
-									}
-								}
+						if((tag!=null)){
+							beginTransaction();
+							List<PictureI> ptag =new ArrayList<PictureI>();
+							try{
+								ptag= (List<PictureI>) tag.getPictures();
+							}catch(Exception e){
+								ptag = new ArrayList<PictureI>();
 							}
-							commitTransaction();
-						}catch(Exception e){
+							if(!(ptag.contains(picture)))
+								ptag.add(picture);
+							tag.setPictures(ptag);
+							List<TagI> pTags = new ArrayList<TagI>();
+							try{
+								pTags = (List<TagI>) picture.getTags();
+							}catch(Exception e){
+								pTags = new ArrayList<TagI>();
+							}
+							if(!(pTags.contains(tag))){
+								pTags.add(tag);
+
+								picture.setTags(pTags);
+								commitTransaction();
+							}
+						}else{
 							beginTransaction();
 							tag = new Tag();
 							tag.setTag(tags.get(i));			
 							List<Picture> peg = new ArrayList<Picture>();
 							peg.add(picture);
 							tag.setPictures(peg);
-							List<TagI> pTags = (List<TagI>) picture.getTags();
+							List<TagI> pTags;
+							try{
+							 pTags = (List<TagI>) picture.getTags();
+							}catch(Exception e){
+								 pTags = new ArrayList<TagI>();
+							}
 							if(pTags==null)
 								pTags = new ArrayList<TagI>();
 							pTags.add(tag);		
@@ -618,30 +645,25 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				String place = "";
 				try{
 					place = lo.getLocation().toLowerCase();
-						String s = lo.getLocation().charAt(0) + "";
-						place = s.toUpperCase() + place.substring(1);
-						}catch(Exception u){
-							
-						}
-			
-					Location location = locationDao.findById(place);
-					if(location != null){
-						beginTransaction();
-						location.setLatitude((lo.getLatitude()));
-						location.setLongitude(lo.getLongitude());
-						picture.setLocation(location);
-						commitTransaction();
+					String s = lo.getLocation().charAt(0) + "";
+					place = s.toUpperCase() + place.substring(1);
+				}catch(Exception u){
+					Log.getLogger().log(Level.SEVERE, "Unexpected problems with the String " + lo.getLocation());
+				}
+				Location location = locationDao.findById(place);
+				if(location != null){
+					beginTransaction();
+					location.setLatitude((lo.getLatitude()));
+					location.setLongitude(lo.getLongitude());
+					picture.setLocation(location);
+					commitTransaction();
 
 				}else{
 					beginTransaction();
 					location = new Location();
-				
-					//s�kning	
-					System.out.println("NOT FIN");
 					location.setLocation(place);
 					location.setLatitude((lo.getLatitude()));
-					location.setLongitude(lo.getLongitude());
-				
+					location.setLongitude(lo.getLongitude());	
 					List<Picture> pics = new ArrayList<Picture>();
 					pics.add(picture);
 					location.setPictures(pics);
@@ -650,30 +672,13 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					commitTransaction();
 
 				}
-		/*	}else if(lo.getLatitude()!=100 && lo.getLongitude() != 200 ){
-				//queryReverseGeocodingURL(Point.Double coords) URL creator
-			/*	Point.Double p= new Point.Double();
-				p.setLocation(lo.getLatitude(), lo.getLongitude());
-				URL url =URLCreator.getInstance().queryReverseGeocodingURL(p);
-				LocationObjectOther loo = XMLParser.getInstance().processReverseGeocodingSearch(url);
-				beginTransaction();
-				Location location = new Location();
-				location.setLatitude((loo.getLatitude()));
-				location.setLongitude(loo.getLongitude());
-				location.setLocation(loo.getLocation());
-				List<Picture> pics = new ArrayList<Picture>();
-				pics.add(picture);
-				location.setPictures(pics);
-				picture.setLocation(location);
-				entityManager.persist(location);
-				commitTransaction();
-			*/}
+			}
 		}
 	}
 
 	public void setName(String name, String path){
 		Picture p = findById(path);
-		if(p != null){
+		if(p != null && !(name.equals(""))){
 			beginTransaction();
 			p.setName(name);
 			commitTransaction();

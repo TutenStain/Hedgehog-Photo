@@ -7,9 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.PictureObject;
+import se.cth.hedgehogphoto.log.Log;
 
 public class CalendarModel extends Observable {
 	private DatabaseAccess da;
@@ -123,22 +125,27 @@ public class CalendarModel extends Observable {
 			try{
 			this.pics.addAll((List<PictureObject>) this.da.findByDate(year + ".0" + month + "." + i));
 			}catch(Exception e){
+				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + ".0" + month + "." + i);
 			}try{
 			pics.addAll((List<PictureObject>) this.da.findByDate(year + ":0" + month + ":" + i));
 			}catch(Exception e){	
+				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + ":0" + month + ":" + i);
 			}
 			try{
 			pics.addAll((List<PictureObject>) this.da.findByDate(year + "-0" + month + "-" + i));
 			}catch(Exception e){
+				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + "-0" + month + "-" + i);
+			}	
 			pics.addAll((List<PictureObject>) this.da.findByDate(year + ":" + month + ":" + i));
-			}try{
+			try{
 			pics.addAll((List<PictureObject>) this.da.findByDate(year + "-" + month + "-" + i));
 			}catch(Exception e){
+				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + "-" + month + "-" + i);
 			}
 			try{
 			pics.addAll( (List<PictureObject>) this.da.findByDate(year + "." + month + "." + i));
 			}catch(Exception e){
-				
+				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" +year + "." + month + "." + i);
 			}
 				if(!(this.pics.isEmpty())){
 			
