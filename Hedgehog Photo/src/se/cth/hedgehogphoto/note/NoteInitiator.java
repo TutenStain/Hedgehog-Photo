@@ -2,6 +2,9 @@ package se.cth.hedgehogphoto.note;
 
 import javax.swing.JPanel;
 
+import se.cth.hedgehogphoto.note.controller.NoteController;
+import se.cth.hedgehogphoto.note.model.NoteModel;
+import se.cth.hedgehogphoto.note.view.NoteView;
 import se.cth.hedgehogphoto.plugin.InitializePlugin;
 import se.cth.hedgehogphoto.plugin.Panel;
 import se.cth.hedgehogphoto.plugin.Plugin;

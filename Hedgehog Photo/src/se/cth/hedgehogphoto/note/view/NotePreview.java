@@ -1,8 +1,10 @@
-package se.cth.hedgehogphoto.note;
+package se.cth.hedgehogphoto.note.view;
 
 import java.awt.Color;
 
 import javax.swing.JPanel;
+
+import se.cth.hedgehogphoto.note.PaintUtils;
 
 /**
  * 

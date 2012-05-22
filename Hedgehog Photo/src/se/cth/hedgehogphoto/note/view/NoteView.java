@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.note;
+package se.cth.hedgehogphoto.note.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,6 +17,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 
 import se.cth.hedgehogphoto.global.Constants;
+import se.cth.hedgehogphoto.note.model.NoteModel;
 
 /**
  * 

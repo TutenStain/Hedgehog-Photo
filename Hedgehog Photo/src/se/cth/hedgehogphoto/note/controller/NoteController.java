@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.note;
+package se.cth.hedgehogphoto.note.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import se.cth.hedgehogphoto.note.PaintUtils;
+import se.cth.hedgehogphoto.note.model.NoteModel;
+import se.cth.hedgehogphoto.note.view.NoteView;
 
 /**
  * 

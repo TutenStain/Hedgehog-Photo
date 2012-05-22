@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto.note;
+package se.cth.hedgehogphoto.note.view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
