@@ -54,10 +54,12 @@ public class MainView implements Observer {
 	private LoadingLayer[] layers = new LoadingLayer[3];
 	private JPanel topPanel = new JPanel();
 	private JPanel topBtnArea = new JPanel();
+	private JPanel topImportHomeArea = new JPanel();
 	private JButton uploadPictures = new JButton("Import pictures");
 	private JButton btnNextPP = new JButton("Next");
 	private JButton btnPrevPP = new JButton("Previous");
 	private JButton btnBack = new JButton("Back");
+	private JButton btnHome = new JButton("Home");
 	final private JButton btnShowHideName = new JButton("Show/Hide name");
 	final private JButton btnShowHideTags = new JButton("Show/Hide tags");
 	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
@@ -112,8 +114,10 @@ public class MainView implements Observer {
 
 		this.topPanel.setLayout(new BorderLayout());
 		this.frame.getContentPane().add(this.topPanel, BorderLayout.NORTH);
-		this.topPanel.add(this.uploadPictures, BorderLayout.WEST);
-
+		this.topPanel.add(this.topImportHomeArea, BorderLayout.WEST);
+		this.topImportHomeArea.add(this.uploadPictures);
+		this.topImportHomeArea.add(this.btnHome);
+		
 		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
 		this.leftPanelView.setPreferredSize(d);
 		this.leftPanelView.setMinimumSize(d);
