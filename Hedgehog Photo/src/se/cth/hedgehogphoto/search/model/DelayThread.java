@@ -13,7 +13,7 @@ public class DelayThread extends Thread {
 		try {
 			sleep(delay);
 		} catch (InterruptedException ie) {
-			
+
 		}
 	}
 }
