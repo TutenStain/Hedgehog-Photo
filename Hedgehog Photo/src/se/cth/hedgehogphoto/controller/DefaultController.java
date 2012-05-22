@@ -1,5 +1,6 @@
 package se.cth.hedgehogphoto.controller;
 
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -119,6 +120,17 @@ public class DefaultController {
 						view.resetSlider();
 					}
 				}
+			}
+			
+		});
+		view.setBackBtnListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					JPanel cardPanel = view.getCardPanel();
+					CardLayout cl = (CardLayout) cardPanel.getLayout();
+					cl.show(cardPanel, "All");
+					view.setTopButtonsVisibility(false);
 			}
 			
 		});

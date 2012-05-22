@@ -57,6 +57,7 @@ public class MainView implements Observer {
 	private JButton uploadPictures = new JButton("Import pictures");
 	private JButton btnNextPP = new JButton("Next");
 	private JButton btnPrevPP = new JButton("Previous");
+	private JButton btnBack = new JButton("Back");
 	final private JButton btnShowHideName = new JButton("Show/Hide name");
 	final private JButton btnShowHideTags = new JButton("Show/Hide tags");
 	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
@@ -139,6 +140,7 @@ public class MainView implements Observer {
 		this.photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 		this.singlePhotoPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 		this.topPanel.add(this.topBtnArea, BorderLayout.CENTER);
+		this.topBtnArea.add(btnBack);
 		this.topBtnArea.add(btnPrevPP);
 		this.topBtnArea.add(btnNextPP);
 	}
@@ -199,7 +201,8 @@ public class MainView implements Observer {
 		this.singlePhotoPanel.setBackground(c);
 		this.leftPanelView.setBackground(c);
 	}
-	public void setPrevNextBtnVisibility(Boolean b){
+	public void setTopButtonsVisibility(Boolean b){
+		this.btnBack.setVisible(b);
 		this.btnPrevPP.setVisible(b);
 		this.btnNextPP.setVisible(b);
 	}
@@ -255,6 +258,12 @@ public class MainView implements Observer {
 		this.btnPrevPP.addActionListener(l);
 		this.btnNextPP.addActionListener(l);
 	}
+	public void setBackBtnListener(ActionListener l){
+		this.btnBack.addActionListener(l);
+	}
+	public JPanel getPhotoViewPanel(){
+		return this.photoViewPanel;
+	}
 	private void addListenersToAll() {
 		addPhotoPanelActionListeners(this.actionListener);
 		addPhotoPanelFocusListener(this.focusListener);
@@ -263,7 +272,7 @@ public class MainView implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		this.setPrevNextBtnVisibility(false);
+		this.setTopButtonsVisibility(false);
 		this.resetSlider();
 		this.photoPanels = new ArrayList<PhotoPanel>();
 		List<? extends PictureObject> images;
@@ -338,7 +347,6 @@ public class MainView implements Observer {
 				this.photoPanels.get(i).setIcon(icon2);
 				this.photoPanels.get(i).setScaleDimension(new Dimension(Math.round(image.getWidth(null)*scale), 
 						Math.round(image.getHeight(null)*scale)));
-
 			}
 		}
 		this.frame.revalidate();
