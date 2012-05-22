@@ -3,6 +3,7 @@ package se.cth.hedgehogphoto.controller;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import se.cth.hedgehogphoto.database.DaoFactory;
@@ -35,7 +36,7 @@ public class PhotoPanelFocusListener implements FocusListener {
 
 			if (this.oldString.equals(cell.getText())) {
 				//string did not change, do not update
-			} else if(cell.getName().equals(PhotoPanelConstantsI.COMMENT)){
+			}/* else if(cell.getName().equals(PhotoPanelConstantsI.COMMENT)){
 				if (cell.getParent() instanceof PhotoPanel) {
 					String path = ((PhotoPanel)cell.getParent()).getPath();			
 					pictureDao.addComment(cell.getText(), path);
@@ -43,7 +44,7 @@ public class PhotoPanelFocusListener implements FocusListener {
 					System.out.println(pictureDao.findById(path));
 				}
 
-			} else if(cell.getName().equals(PhotoPanelConstantsI.LOCATION)){
+			}*/ else if(cell.getName().equals(PhotoPanelConstantsI.LOCATION)){
 				if (cell.getParent() instanceof PhotoPanel) {
 					PhotoPanel panel = (PhotoPanel) cell.getParent();	
 					new GeocodingInitiator(cell.getText(), panel);
@@ -69,5 +70,17 @@ public class PhotoPanelFocusListener implements FocusListener {
 				}
 			}
 		}
+		if (e.getSource() instanceof JTextArea) {
+			JTextArea cell = (JTextArea) e.getSource();
+
+		if(cell.getName().equals(PhotoPanelConstantsI.COMMENT)){
+			if (cell.getParent() instanceof PhotoPanel) {
+				String path = ((PhotoPanel)cell.getParent()).getPath();			
+				pictureDao.addComment(cell.getText(), path);
+				System.out.println("JTF" +cell.getText());
+				System.out.println(pictureDao.findById(path));
+			}
+		}
 	}
+}
 }

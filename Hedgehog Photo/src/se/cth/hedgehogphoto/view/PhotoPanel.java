@@ -24,7 +24,7 @@ import se.cth.hedgehogphoto.objects.FileObject;
 public class PhotoPanel extends JPanel {
 
 	private JTextField nameTextField = new JTextField();
-	private JTextField commentTextField = new JTextField();
+	private javax.swing.JTextArea commentArea = new javax.swing.JTextArea();
 	private JTextField tagsTextField = new JTextField();
 	private JTextField locationTextField = new JTextField();
 	private JLabel commentLabel = new JLabel("Comments");
@@ -44,21 +44,21 @@ public class PhotoPanel extends JPanel {
 		this.path = path;
 		this.nameTextField.setBackground(Color.LIGHT_GRAY);
 		this.setName(DaoFactory.getInstance().getJpaPictureDao().findById(path).getName());
-		this.commentTextField.setName(PhotoPanelConstantsI.COMMENT);
+		this.commentArea.setName(PhotoPanelConstantsI.COMMENT);
 		this.locationTextField.setName(PhotoPanelConstantsI.LOCATION);
 		this.nameTextField.setName(PhotoPanelConstantsI.NAME);
 		this.tagsTextField.setName(PhotoPanelConstantsI.TAGS);
 		this.nameTextField.setActionCommand("name");
-		this.commentTextField.setActionCommand("comment");
+		///this.commentArea.setActionCommand("comment");
 		this.tagsTextField.setActionCommand("tags");
 		this.locationTextField.setActionCommand("location");
-		this.commentTextField.setPreferredSize(new Dimension(100,20));
+		this.commentArea.setPreferredSize(new Dimension(100,100));
 		this.commentLabel.setPreferredSize(new Dimension(100,10));
-		this.locationTextField.setPreferredSize(new Dimension(100,20));
+		this.locationTextField.setPreferredSize(new Dimension(200,20));
 		this.locationLabel.setPreferredSize(new Dimension(100,10));
-		this.tagsTextField.setPreferredSize(new Dimension(100,20));
+		this.tagsTextField.setPreferredSize(new Dimension(200,20));
 		this.tagsLabel.setPreferredSize(new Dimension(100,10));
-		this.nameTextField.setPreferredSize(new Dimension(100,20));
+		this.nameTextField.setPreferredSize(new Dimension(00,20));
 		this.photoNameLabel.setPreferredSize(new Dimension(50,10));
 		this.icon = new ImageIcon(path);
 		this.iconLabel.setIcon(icon);
@@ -112,13 +112,13 @@ public class PhotoPanel extends JPanel {
 		comLabel.gridy =3;
 		gBig.setConstraints(commentLabel, comLabel);
 		add(commentLabel);
-		commentTextField.setBackground(Color.LIGHT_GRAY);
+		commentArea.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints com = new GridBagConstraints();
 		com.gridx = 3;
 		com.gridy = 4;
 
-		gBig.setConstraints(commentTextField, com);
-		add(commentTextField);
+		gBig.setConstraints(commentArea, com);
+		add(commentArea);
 
 		GridBagConstraints tagLabel = new GridBagConstraints();
 		tagLabel.gridx =1;
@@ -151,14 +151,14 @@ public class PhotoPanel extends JPanel {
 	}
 	
 	public void setTextFieldActionListeners(ActionListener al) {
-		this.commentTextField.addActionListener(al);
+	//	this.commentArea.addActionListener(al);
 		this.tagsTextField.addActionListener(al);
 		this.locationTextField.addActionListener(al);
 		this.nameTextField.addActionListener(al);
 	}
 	
 	public void setTextFieldFocusListeners(FocusListener listener) {
-		this.commentTextField.addFocusListener(listener);
+		this.commentArea.addFocusListener(listener);
 		this.tagsTextField.addFocusListener(listener);
 		this.locationTextField.addFocusListener(listener);
 		this.nameTextField.addFocusListener(listener);
@@ -186,7 +186,7 @@ public class PhotoPanel extends JPanel {
 	}
 
 	public void setComment(String comment){
-		this.commentTextField.setText(comment);
+		this.commentArea.setText(comment);
 	}
 
 	public ImageIcon getIcon(){
@@ -198,12 +198,12 @@ public class PhotoPanel extends JPanel {
 	}
 
 	public void displayComments(boolean b){
-		this.commentTextField.setVisible(b);
+		this.commentArea.setVisible(b);
 		this.commentLabel.setVisible(b);
 	}
 
 	public boolean isVisibleComments(){
-		return this.commentTextField.isVisible();
+		return this.commentArea.isVisible();
 	}
 
 	public void displayTags(boolean b){
