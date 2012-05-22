@@ -5,14 +5,9 @@ package se.cth.hedgehogphoto.database;
 
 
 
-import java.awt.Point;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.cth.hedgehogphoto.geocoding.GeocodingInitiator;
-import se.cth.hedgehogphoto.metadata.URLCreator;
-import se.cth.hedgehogphoto.metadata.XMLParser;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 

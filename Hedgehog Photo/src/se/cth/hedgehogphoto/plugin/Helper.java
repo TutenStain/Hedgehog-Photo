@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.logging.Level;
 
 import se.cth.hedgehogphoto.log.Log;
-import sun.java2d.Surface;
 
 /**
  * A helper class for plugin-related classes

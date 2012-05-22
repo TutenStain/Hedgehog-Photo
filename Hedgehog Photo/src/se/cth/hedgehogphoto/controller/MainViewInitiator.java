@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import se.cth.hedgehogphoto.Constants;
+import se.cth.hedgehogphoto.global.Constants;
 import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.view.ImageUtils;
 import se.cth.hedgehogphoto.view.MainView;

@@ -30,9 +30,9 @@ import javax.swing.JSlider;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ChangeListener;
 
-import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
+import se.cth.hedgehogphoto.global.Constants;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.model.MainModel;
 

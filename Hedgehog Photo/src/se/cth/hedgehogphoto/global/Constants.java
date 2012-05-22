@@ -1,4 +1,4 @@
-package se.cth.hedgehogphoto;
+package se.cth.hedgehogphoto.global;
 
 import java.awt.Color;
 import java.awt.Toolkit;

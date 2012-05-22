@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import se.cth.hedgehogphoto.geocoding.model.URLCreator;
+import se.cth.hedgehogphoto.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 

@@ -1,7 +1,6 @@
 package se.cth.hedgehogphoto.map.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.util.LinkedList;
 import java.util.List;

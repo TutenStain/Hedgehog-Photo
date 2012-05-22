@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 
-import se.cth.hedgehogphoto.Constants;
+import se.cth.hedgehogphoto.global.Constants;
 
 /**
  * 

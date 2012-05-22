@@ -9,11 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.Location;
 import se.cth.hedgehogphoto.database.Picture;
 import se.cth.hedgehogphoto.database.PictureObject;
+import se.cth.hedgehogphoto.global.Constants;
 import se.cth.hedgehogphoto.map.controller.MapController;
 import se.cth.hedgehogphoto.map.model.MapModel;
 

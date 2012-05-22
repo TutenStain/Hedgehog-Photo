@@ -15,8 +15,8 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
+import se.cth.hedgehogphoto.global.Constants;
 import se.cth.hedgehogphoto.metadata.PictureInserter;
 import se.cth.hedgehogphoto.view.ImageUtils;
 import se.cth.hedgehogphoto.view.MainView;

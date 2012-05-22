@@ -1,10 +1,5 @@
 package se.cth.hedgehogphoto.objects;
 
-import java.awt.Point;
-import java.net.URL;
-
-import se.cth.hedgehogphoto.metadata.URLCreator;
-import se.cth.hedgehogphoto.metadata.XMLParser;
 
 
 public class LocationObjectOther {

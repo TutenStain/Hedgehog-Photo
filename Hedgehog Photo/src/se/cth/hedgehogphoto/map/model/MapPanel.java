@@ -58,8 +58,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.LocationObject;
+import se.cth.hedgehogphoto.global.Constants;
 import se.cth.hedgehogphoto.log.Log;
 
 
@@ -144,8 +144,8 @@ public class MapPanel extends JPanel {
 
     private static final String NAMEFINDER_URL = "http://gazetteer.openstreetmap.org/namefinder/search.xml";
     /* The Preferred width and height of the panel. Doesn't change the actual map size, but is important for calculations. */
-    private static final int PREFERRED_WIDTH = se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_WIDTH;
-    private static final int PREFERRED_HEIGHT = se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_HEIGHT;
+    private static final int PREFERRED_WIDTH = se.cth.hedgehogphoto.global.Constants.PREFERRED_MODULE_WIDTH;
+    private static final int PREFERRED_HEIGHT = se.cth.hedgehogphoto.global.Constants.PREFERRED_MODULE_HEIGHT;
 
     private static final int ANIMATION_FPS = 15, ANIMATION_DURARTION_MS = 500;
     

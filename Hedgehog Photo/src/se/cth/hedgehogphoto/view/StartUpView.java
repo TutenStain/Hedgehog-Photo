@@ -9,8 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
+import se.cth.hedgehogphoto.global.Constants;
 import se.cth.hedgehogphoto.log.Log;
 
 /**

@@ -1,14 +1,6 @@
 package se.cth.hedgehogphoto.objects;
 
-import java.awt.Point;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-
-import se.cth.hedgehogphoto.log.Log;
-import se.cth.hedgehogphoto.metadata.URLCreator;
-import se.cth.hedgehogphoto.metadata.XMLParser;
 
 
 
