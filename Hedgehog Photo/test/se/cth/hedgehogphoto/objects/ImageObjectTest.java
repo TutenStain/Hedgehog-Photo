@@ -78,35 +78,11 @@ public class ImageObjectTest {
 		fail("Not yet implemented");
 	}
 
-
-	@Test
-	public void testConvertComment() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testConvertTags() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testConvertDecimalNumbersToString() {
-		fail("Not yet implemented");
-	}
-
 	@Test
 	public void testSetLocation() {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testSetCoverPath() {
-		fail("Not yet implemented");
-	}
 
-	@Test
-	public void testGetCoverPath() {
-		fail("Not yet implemented");
-	}
 
 }

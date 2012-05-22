@@ -51,24 +51,5 @@ public class CalendarTest {
 		assertTrue(cm.getMaxDays() == 30 && cm.getMonth() == 11 && cm.getYear() == 2011);
 		
 	}
-	/*@Test
-	public void testSetDayswithPicture(){
-		List<Integer> dayswithPicture = new ArrayList<Integer>();
-		dayswithPicture.add(11);
-		cm.setDayswithPicture(dayswithPicture);
-		assertTrue(cm.getDayswithPicture().get(1) == 11);
-		
-	}*/
-//	@Test
-	/*000public void testSetpictureDays(){
-		 Map<Integer, List<Picture>> pictureDays = new HashMap<Integer, List<Picture>>();
-		 Integer i = 1;
-		 List<Picture> pics = new ArrayList<Picture>();
-		 Picture p = new Picture();
-		 p.setPath("path");
-		 pics.add(p);
-		 pictureDays.put(i,pics);
-		 assertTrue(cm.getPictureDays().containsKey(i) == true && cm.getPictureDays().get(i).equals(pics));
-		 
-	}*/
+
 }
