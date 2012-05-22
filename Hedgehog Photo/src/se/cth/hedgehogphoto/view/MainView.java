@@ -61,6 +61,7 @@ public class MainView implements Observer {
 	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
 	final private JButton btnshowHideComments = new JButton("Show/Hide comments");
 	final private JSlider slider = new JSlider(50, 200, 100);
+	private PhotoPanel currentSinglePP;
 	//TODO Can we keep this? Enough MVC?
 	private List<PhotoPanel> photoPanels;
 
@@ -140,7 +141,6 @@ public class MainView implements Observer {
 		this.topPanel.add(this.topBtnArea, BorderLayout.CENTER);
 		this.topBtnArea.add(btnPrevPP);
 		this.topBtnArea.add(btnNextPP);
-		
 	}
 	
 	public void setCommentsButtonListener(ActionListener l){
@@ -193,6 +193,14 @@ public class MainView implements Observer {
 	public void setPrevNextBtnVisibility(Boolean b){
 		this.btnPrevPP.setVisible(b);
 		this.btnNextPP.setVisible(b);
+	}
+	
+	public void setCurrentSinglePP(PhotoPanel pp){
+		this.currentSinglePP = pp;
+		this.singlePhotoPanel.add(pp);
+	}
+	public PhotoPanel getCurrentSinglePP(){
+		return this.currentSinglePP;
 	}
 
 	public void addPlugin(JPanel panel, PluginArea placement){

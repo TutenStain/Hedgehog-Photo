@@ -3,11 +3,14 @@ package se.cth.hedgehogphoto.controller;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -53,12 +56,22 @@ public class MainViewInitiator {
 				cl.show(cardPanel, "One");
 				JPanel singlePhotoPanel = view.getSinglePhotoPanel();
 				singlePhotoPanel.removeAll();
-				singlePhotoPanel.add(photoPanel, BorderLayout.WEST);
+				view.setCurrentSinglePP(photoPanel);
 				view.resetSlider();
 				view.setPrevNextBtnVisibility(true);
 				JScrollPane pane = view.getPhotoView();
 				pane.getVerticalScrollBar().setValue(0);
 			}
 		}
+	}
+	public class PrevNextBtnListeners implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if(arg0.getSource() instanceof JButton){
+				JButton button = (JButton) arg0.getSource();
+			}
+		}
+		
 	}
 }
