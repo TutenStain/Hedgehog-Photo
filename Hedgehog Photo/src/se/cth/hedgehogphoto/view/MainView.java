@@ -47,7 +47,7 @@ public class MainView implements Observer {
 	private JPanel cardPanel = new JPanel();
 	private JPanel singlePhotoPanel = new JPanel();
 	private JPanel photoViewPanel = new JPanel();
-	private	JPanel leftPanelView = new JPanel();
+	private	 JPanel leftPanelView = new JPanel();
 	private JPanel bottomPanel = new JPanel();
 	private JScrollPane photoView = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
 			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -63,25 +63,23 @@ public class MainView implements Observer {
 	final private JButton btnShowHideLocation = new JButton("Show/Hide location");
 	final private JButton btnshowHideComments = new JButton("Show/Hide comments");
 	final private JSlider slider = new JSlider(50, 200, 100);
-	//TODO Can we keep this? Enough MVC?
 	private List<PhotoPanel> photoPanels;
-
 	private ActionListener actionListener;
 	private FocusListener focusListener;
 	private MouseAdapter mouseListener;
 
 	public MainView(JFrame startView) {
-		initialize(startView);
+		this.initialize(startView);
 	}
 
 	private void initialize(JFrame startView) {
 		this.frame = startView;
 		this.photoPanels = new ArrayList<PhotoPanel>();
-		//TODO Minimum size?
+		
 		this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+		this.frame.getContentPane().add(this.bottomPanel, BorderLayout.SOUTH);
 
-		GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);
+		GroupLayout gl_bottomPanel = new GroupLayout(this.bottomPanel);
 		gl_bottomPanel.setHorizontalGroup(
 				gl_bottomPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_bottomPanel.createSequentialGroup()
@@ -102,7 +100,7 @@ public class MainView implements Observer {
 				.addGroup(gl_bottomPanel.createSequentialGroup()
 						.addGap(5)
 						.addGroup(gl_bottomPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(this.slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_bottomPanel.createParallelGroup(Alignment.BASELINE)
 										.addComponent(this.btnShowHideLocation)
 										.addComponent(this.btnShowHideTags)
@@ -113,7 +111,7 @@ public class MainView implements Observer {
 		this.bottomPanel.setLayout(gl_bottomPanel);
 
 		this.topPanel.setLayout(new BorderLayout());
-		this.frame.getContentPane().add(topPanel, BorderLayout.NORTH);
+		this.frame.getContentPane().add(this.topPanel, BorderLayout.NORTH);
 		this.topPanel.add(this.uploadPictures, BorderLayout.WEST);
 
 		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
@@ -128,10 +126,10 @@ public class MainView implements Observer {
 			JPanel p = new JPanel();
 			p.add(new JLabel("Loading plugin..."));
 			this.layers[i] = new LoadingLayer(p);
-			this.leftPanelView.add(layers[i].getDecoratedPanel());	
+			this.leftPanelView.add(this.layers[i].getDecoratedPanel());	
 			this.layers[i].start();
 		}
-		
+
 		this.frame.getContentPane().add(this.photoView, BorderLayout.CENTER);
 		this.photoView.setViewportView(this.cardPanel);
 		this.cardPanel.setLayout(new CardLayout());
@@ -140,22 +138,22 @@ public class MainView implements Observer {
 		this.photoViewPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 		this.singlePhotoPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 		this.topPanel.add(this.topBtnArea, BorderLayout.CENTER);
-		this.topBtnArea.add(btnBack);
-		this.topBtnArea.add(btnPrevPP);
-		this.topBtnArea.add(btnNextPP);
+		this.topBtnArea.add(this.btnBack);
+		this.topBtnArea.add(this.btnPrevPP);
+		this.topBtnArea.add(this.btnNextPP);
 		this.setTopButtonsVisibility(false);
 		this.setOverallBackground(Constants.GUI_BACKGROUND);
 	}
 	public PhotoPanel getCurrentPhotoPanel(){
 		Component[] comps = this.singlePhotoPanel.getComponents();
-		for(int i=0;i<comps.length;i++){
+		for(int i=0 ;i < comps.length; i++){
 			if(comps[i] instanceof PhotoPanel){
 				return (PhotoPanel) comps[i];
 			}
 		}
 		return null;
 	}
-	
+
 	public void setCommentsButtonListener(ActionListener l){
 		this.btnshowHideComments.addActionListener(l);
 	}
@@ -183,19 +181,23 @@ public class MainView implements Observer {
 	public List<PhotoPanel> getPhotoPanels(){
 		return this.photoPanels;
 	}
-	
+
 	public JPanel getCardPanel(){
 		return this.cardPanel;
 	}
+	
 	public JPanel getSinglePhotoPanel(){
 		return this.singlePhotoPanel;
 	}
+	
 	public void resetSlider(){
 		this.slider.setValue(100);
 	}
+	
 	public JScrollPane getPhotoView(){
 		return this.photoView;
 	}
+	
 	public void setOverallBackground(Color c){
 		this.bottomPanel.setBackground(c);
 		this.topPanel.setBackground(c);
@@ -205,11 +207,13 @@ public class MainView implements Observer {
 		this.leftPanelView.setBackground(c);
 		this.slider.setBackground(c);
 	}
+	
 	public void setTopButtonsVisibility(Boolean b){
 		this.btnBack.setVisible(b);
 		this.btnPrevPP.setVisible(b);
 		this.btnNextPP.setVisible(b);
 	}
+	
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
 			panel.setBackground(Constants.GUI_BACKGROUND);
@@ -259,16 +263,20 @@ public class MainView implements Observer {
 			panel.setTextFieldFocusListeners(listener);
 		}
 	}
+	
 	public void setPrevNextBtnListeners(ActionListener l){
 		this.btnPrevPP.addActionListener(l);
 		this.btnNextPP.addActionListener(l);
 	}
+	
 	public void setBackBtnListener(ActionListener l){
 		this.btnBack.addActionListener(l);
 	}
+	
 	public JPanel getPhotoViewPanel(){
 		return this.photoViewPanel;
 	}
+	
 	private void addListenersToAll() {
 		addPhotoPanelActionListeners(this.actionListener);
 		addPhotoPanelFocusListener(this.focusListener);
@@ -281,11 +289,12 @@ public class MainView implements Observer {
 		this.resetSlider();
 		this.photoPanels = new ArrayList<PhotoPanel>();
 		List<? extends PictureObject> images;
+		
 		if(this.cardPanel.getLayout() instanceof CardLayout){
 			CardLayout cl = (CardLayout) this.cardPanel.getLayout();
 			cl.show(this.cardPanel, "All");
 		}
-		//TODO Maybe refresh in another way than removing the PhotoPanels?
+	
 		this.photoViewPanel.removeAll();
 		this.photoViewPanel.repaint();
 
@@ -316,7 +325,7 @@ public class MainView implements Observer {
 
 				}
 				System.out.println(images.get(i).getName());
-				
+
 				this.photoPanels.add(i, pp);
 				this.photoViewPanel.add(pp);
 			}
@@ -347,14 +356,13 @@ public class MainView implements Observer {
 				}catch(Exception f){
 
 				}
-				System.out.println(images.get(i).getName());
 				this.photoPanels.add(i, pp);
 				this.photoViewPanel.add(pp);
 			}
 			addListenersToAll();
 		}
-		//TODO just a test
-		if(!photoPanels.isEmpty()){
+	
+		if(!this.photoPanels.isEmpty()){
 			for(int i = 0; i < this.photoPanels.size(); i++){
 				Image image = this.photoPanels.get(i).getIcon().getImage();
 				float scale = Constants.PREFERRED_PICTURE_HEIGHT/image.getHeight(null);
@@ -366,6 +374,7 @@ public class MainView implements Observer {
 						Math.round(image.getHeight(null)*scale)));
 			}
 		}
+		
 		this.frame.revalidate();
 	}
 }
