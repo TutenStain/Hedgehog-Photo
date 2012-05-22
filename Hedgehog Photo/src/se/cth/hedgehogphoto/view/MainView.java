@@ -244,7 +244,7 @@ public class MainView implements Observer {
 	public void addPhotoPanelMouseListener(MouseAdapter listener) {
 		this.mouseListener = listener;
 		for (PhotoPanel panel : this.photoPanels) {
-			panel.setMouseListener(listener);
+			panel.addMouseListener(listener);
 		}
 	}
 

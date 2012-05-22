@@ -131,7 +131,7 @@ public class MapView extends JPanel implements Observer {
 			/* DO NOT REMOVE THIS */
 			this.mainPane.validate();
 			this.validate();
-			this.getParent().validate();
+//			this.getParent().validate();
 		}
 		
 		
