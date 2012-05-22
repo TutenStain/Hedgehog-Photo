@@ -143,6 +143,7 @@ public class MainView implements Observer {
 		this.topBtnArea.add(btnBack);
 		this.topBtnArea.add(btnPrevPP);
 		this.topBtnArea.add(btnNextPP);
+		this.setTopButtonsVisibility(false);
 	}
 	public PhotoPanel getCurrentPhotoPanel(){
 		Component[] comps = this.singlePhotoPanel.getComponents();

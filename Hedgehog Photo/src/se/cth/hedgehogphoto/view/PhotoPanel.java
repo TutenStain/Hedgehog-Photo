@@ -162,6 +162,7 @@ public class PhotoPanel extends JPanel {
 		this.locationTextField.addFocusListener(listener);
 		this.nameTextField.addFocusListener(listener);
 	}
+	//TODO this method is not working
 	public void setMouseListener(MouseListener l){
 		this.iconLabel.addMouseListener(l);
 	}
