@@ -11,26 +11,20 @@ import se.cth.hedgehogphoto.objects.ImageObject;
  *
  */
 public class PictureInserter {
-	private /*static*/ PictureFetcher pictureFetcher = new PictureFetcher();;
-	//private /*static*/ Metadata metadata;
-	private  List<ImageObject> imageObjects  =  pictureFetcher.getImageObjects(); 
-	 
-	public PictureInserter(){
+	private PictureFetcher pictureFetcher = new PictureFetcher();;
+	private  List<ImageObject> imageObjects  =  this.pictureFetcher.getImageObjects(); 
 
-	//	metadata = new Metadata();
-	
+	public PictureInserter(){
 		insertImageObject();
-		//DatabaseHandler.searchPictureNames("IMG_0175");
 	}
-	
-	public synchronized  void insertImageObject(){	
-		for(ImageObject io: imageObjects){
-			System.out.print(io.getLocationObject());
+
+	public synchronized void insertImageObject(){	
+		for(ImageObject io : this.imageObjects){
 			io.setComment(Converter.getInstance().convertComment(io.getComment()));
 			io.setTags(Converter.getInstance().convertTags(io.getTag()));
 			io.setLocationObject(Converter.getInstance().findLocationPlace(io.getLocationObject()));
-		DatabaseHandler.getInstance().insertPicture(io);
+			DatabaseHandler.getInstance().insertPicture(io);
 		}
 	}
-	
+
 }

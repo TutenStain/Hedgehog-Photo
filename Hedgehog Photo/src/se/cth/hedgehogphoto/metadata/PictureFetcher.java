@@ -15,69 +15,60 @@ import se.cth.hedgehogphoto.objects.ImageObject;
  *
  */
 public class PictureFetcher {
-	private  static JFileChooser chooser =  new JFileChooser();;
-	//	private  static List<File> files;
-	//private static Map<String, ArrayList<File>> files = new HashMap<String, ArrayList<File>>();
-	private static List<ImageObject> imageObjects = new ArrayList<ImageObject>(); 
-	private static String [] validFileExtensions = {"png", "jpg", "jpeg", "gif"};
+	private JFileChooser chooser =  new JFileChooser();;
+	private List<ImageObject> imageObjects = new ArrayList<ImageObject>(); 
+	private String [] validFileExtensions = {"png", "jpg", "jpeg", "gif"};
 
 	public PictureFetcher() { 
-		chooser.setDialogTitle("Choose pictures");
-
-		chooser.setCurrentDirectory(new java.io.File( System.getProperty("user.home") + "/Pictures"));
-		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		chooser.setAcceptAllFileFilterUsed(false);
-		chooser.setMultiSelectionEnabled(true);
+		this.chooser.setDialogTitle("Choose pictures");
+		this.chooser.setCurrentDirectory(new File( System.getProperty("user.home") + "/Pictures"));
+		this.chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		this.chooser.setAcceptAllFileFilterUsed(false);
+		this.chooser.setMultiSelectionEnabled(true);
 		ImagePreviewPanel preview = new ImagePreviewPanel();
-		chooser.setAccessory(preview);
-		chooser.addPropertyChangeListener(preview);
-
+		this.chooser.setAccessory(preview);
+		this.chooser.addPropertyChangeListener(preview);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images & PNG", "jpg", "gif","png");
-		chooser.setFileFilter(filter);
-		fetchFiles();
-
+		this.chooser.setFileFilter(filter);
+		this.fetchFiles();
 	}
 
-	public static void fetchFiles() {
-		int returnVal = chooser.showOpenDialog(null);
+	public void fetchFiles() {
+		int returnVal = this.chooser.showOpenDialog(null);
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
-			File[] directorys = chooser.getSelectedFiles();
+			File[] directorys = this.chooser.getSelectedFiles();
 			for(int i = 0; i < directorys.length;i++){
 				if(directorys[i].isDirectory()){
 					String album = directorys[i].getName();
-				//if(chooser.getSelectedFile().isDirectory()){
-					//ArrayList<File> synonymer = files.get(chooser.getSelectedFile().getName());
-
-					File[] dirFiles = chooser.getSelectedFile().listFiles();
+					File[] dirFiles = this.chooser.getSelectedFile().listFiles();
 					for(int j = 0; j < dirFiles.length; j++ ){
 						if(dirFiles[j].isDirectory()==false){
-							int pos = dirFiles[j].getName().lastIndexOf(".");              //find the pos of the . in the filename
-							String end =	dirFiles[j].getName().substring(pos + 1);      // get extension name and place into string ext
+							/*find the pos of the . in the filename*/
+							int pos = dirFiles[j].getName().lastIndexOf("."); 
+							/*get extension name and place into string ext*/
+							String end = dirFiles[j].getName().substring(pos + 1);
 							if (isValidFileExtension(end) && dirFiles[j].isFile()){ 
 								ImageObject imageObject;
-								if(dirFiles[j].isDirectory()==false){
+								if(dirFiles[j].isDirectory() == false){
 									imageObject = Metadata.getImageObject(dirFiles[j]);
 									imageObject.setAlbumName(album);
 									imageObject.setFileName(dirFiles[j].getName());
 									imageObject.setFilePath(dirFiles[j].getAbsolutePath());
-									imageObjects.add(imageObject);
+									this.imageObjects.add(imageObject);
 								} 
 							}
 						}
 					}
-
 				}
 
 				else{
-
-					for(int k = 0; k < chooser.getSelectedFiles().length;k++){
-						ImageObject  imageObject = Metadata.getImageObject(chooser.getSelectedFiles()[k]); 
-						imageObject.setAlbumName(chooser.getSelectedFiles()[k].getParentFile().getName());
+					for(int k = 0; k < this.chooser.getSelectedFiles().length; k++){
+						ImageObject  imageObject = Metadata.getImageObject(this.chooser.getSelectedFiles()[k]); 
+						imageObject.setAlbumName(this.chooser.getSelectedFiles()[k].getParentFile().getName());
 						imageObject.setFileName(chooser.getSelectedFiles()[k].getName());
-						
-						imageObject.setFilePath(chooser.getSelectedFiles()[k].getAbsolutePath());
-						imageObjects.add(imageObject);
 
+						imageObject.setFilePath(this.chooser.getSelectedFiles()[k].getAbsolutePath());
+						this.imageObjects.add(imageObject);
 					}
 				}
 			}
@@ -85,14 +76,15 @@ public class PictureFetcher {
 	}
 
 	public  List<ImageObject> getImageObjects(){
-		return imageObjects;
+		return this.imageObjects;
 	}
-	
-	private static boolean isValidFileExtension(String fileExtension) {
+
+	private boolean isValidFileExtension(String fileExtension) {
 		boolean isValid = false;
-		int nbrOfFileExtensions = validFileExtensions.length;
+		int nbrOfFileExtensions = this.validFileExtensions.length;
+		
 		for (int i = 0; i < nbrOfFileExtensions; i++) {
-			if (fileExtension.equalsIgnoreCase(validFileExtensions[i])) {
+			if (fileExtension.equalsIgnoreCase(this.validFileExtensions[i])) {
 				isValid = true;
 				break;
 			}

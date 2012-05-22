@@ -19,19 +19,21 @@ import se.cth.hedgehogphoto.objects.ImageObject;
  * @author Florian
  */
 public class Metadata {
-	
+
 	private static final String[] metadataTypes = 
-			{"Modify Date", "Artist", "XPComment", "XPAuthor", 
-					"XPKeywords", "Date Time Original", "Interop Index", 
-					"Interop Version", "Unknown Tag (0x3)", "Unknown Tag (0x4)"};
-	
+		{"Modify Date", "Artist", "XPComment", "XPAuthor", 
+		"XPKeywords", "Date Time Original", "Interop Index", 
+		"Interop Version", "Unknown Tag (0x3)", "Unknown Tag (0x4)"};
+
 	public static ImageObject getImageObject(File file) {
 		IImageMetadata metadata = extractMetadata(file);
+
 		return getImageObject(metadata); 
 	}
-	
+
 	public static IImageMetadata extractMetadata(File file) {
 		IImageMetadata metadata = null;
+
 		try {
 			metadata = Sanselan.getMetadata(file);
 		} catch (ImageReadException e) {
@@ -40,15 +42,16 @@ public class Metadata {
 		catch (IOException e) {
 			Log.getLogger().log(Level.WARNING, "Failed to read metadata from file " + file, e);
 		}
-		
+
 		return metadata;
 	}
-	
+
 	public static ImageObject getImageObject(IImageMetadata imageMetadata) {
 		ImageObject imageObject = new ImageObject();
-		if (imageMetadata == null) 
+		if (imageMetadata == null) {
 			return imageObject;
-		
+		}
+			
 		String metadata = imageMetadata.toString(); 
 
 		/* New Feature in java 1.7 - closes stream automatically */
@@ -59,13 +62,13 @@ public class Metadata {
 					setPropertyFromString(imageObject, line);
 				}
 			}
-		} catch (IOException io) {
-
+		} catch (IOException e) {
+			Log.getLogger().log(Level.SEVERE, "IOException", e);
 		} 
-		
+
 		return imageObject;
 	}
-	
+
 	private static boolean containsTargetMetadata(String line) {
 		int nbrOfTypes = metadataTypes.length;
 		for(int i = 0; i < nbrOfTypes; i++) {
@@ -75,23 +78,21 @@ public class Metadata {
 		}
 		return false;
 	}
-	
+
 	private static void setPropertyFromString(ImageObject imageObject, String line) {
 		line = line.trim();
 		String property = getProperty(line);
 		String value = getPropertyValue(line);
 		imageObject.setProperty(property, value);
 	}
-	
+
 	private static String getProperty(String line) {
 		int indexOfPropertyEnds = line.indexOf(":");
 		return line.substring(0,indexOfPropertyEnds);
 	}
-	
+
 	private static String getPropertyValue(String line) {
 		int indexOfValueStarts = line.indexOf(":") + 1;
 		return line.substring(indexOfValueStarts);
 	}
-	
-	
 }

@@ -15,8 +15,7 @@ import javax.swing.JPanel;
   */
 
 @SuppressWarnings("serial")
-public class ImagePreviewPanel extends JPanel
-        implements PropertyChangeListener {
+public class ImagePreviewPanel extends JPanel implements PropertyChangeListener {
     
     private int width, height;
     private ImageIcon icon;
