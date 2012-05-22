@@ -699,22 +699,20 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 							
 						}
 			
-					Location location = locationDao.findById(lo.getLocation());
+					Location location = locationDao.findById(place);
 					if(location != null){
-					if(location.getLocation().equals(lo.getLocation())){
 						beginTransaction();
 						location.setLatitude((lo.getLatitude()));
 						location.setLongitude(lo.getLongitude());
 						picture.setLocation(location);
 						commitTransaction();
-					}
 
 				}else{
 					beginTransaction();
 					location = new Location();
 				
-					//sökning	
-					
+					//sï¿½kning	
+					System.out.println("NOT FIN");
 					location.setLocation(place);
 					location.setLatitude((lo.getLatitude()));
 					location.setLongitude(lo.getLongitude());
