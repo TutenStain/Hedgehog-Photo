@@ -23,6 +23,7 @@ public class CalendarView extends JPanel implements Observer{
 	private static CalendarView view;
 	private JLabel monthText;
 	private CalendarModel calendarModel;
+	private JLabel yearText;
 	
 	private CalendarView(){
 	}
@@ -46,6 +47,9 @@ public class CalendarView extends JPanel implements Observer{
 		this.monthText = new JLabel(); 
 		changeMonthText();
 		month.add(monthText,BorderLayout.SOUTH);
+		JLabel yearText = new JLabel();
+		changeYearText();
+		month.add(yearText,BorderLayout.EAST);
 		jp.add(month, BorderLayout.SOUTH);
 		jp.add(forward);
 		back.addActionListener(bc);
@@ -72,9 +76,13 @@ public class CalendarView extends JPanel implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		changeMonthText();
+		changeYearText();
 	}
 	
 	public void changeMonthText(){
 		this.monthText.setText(this.calendarModel.getMonthasString());
+	}
+	public void changeYearText(){
+		this.yearText.setText(this.calendarModel.getYear()+"");
 	}
 }
