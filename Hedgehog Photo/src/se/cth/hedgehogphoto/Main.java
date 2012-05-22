@@ -50,15 +50,7 @@ public class Main {
 		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
 		PluginLoader pluginLoader = new PluginLoader(mainView.getMainView(), pluginRooDir, true);
 		Thread pluginLoaderT = new Thread(pluginLoader);
-		pluginLoaderT.start();
-
-		/*MapModel mapModel = new MapModel(Files.getInstance());
-		MapView map = new MapView(mapModel);
-        new MapController(map, Files.getInstance());
-        mainView.getMainView().addPlugin(map, PluginArea.LEFT_TOP);*/
-		
-		
-	
+		pluginLoaderT.start();	
 	}
 	
 	private static void insertFileObjectsIntoDatabase() {
