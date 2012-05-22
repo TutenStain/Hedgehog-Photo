@@ -2,98 +2,70 @@ package se.cth.hedgehogphoto.objects;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class ImageObjectTest {
-
+	private ImageObject imageObject;
+	
 	@Before
 	public void setUp() throws Exception {
+		this.imageObject = new ImageObject();
 	}
 
 	@Test
 	public void testImageObject() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetProperty() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetAlbumName() {
-		fail("Not yet implemented");
+		assertTrue(this.imageObject instanceof FileObject);
 	}
 
 	@Test
 	public void testSetAlbumName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTag() {
-		fail("Not yet implemented");
+		this.imageObject.setAlbumName("Album");
+		assertTrue(this.imageObject.getAlbumName().equals("Album"));
 	}
 
 	@Test
 	public void testSetTag() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTags() {
-		fail("Not yet implemented");
+		this.imageObject.setProperty("XPKeywords", "Tagg");
+		assertTrue(this.imageObject.getTag().equals("Tagg"));
 	}
 
 	@Test
 	public void testSetTags() {
-		fail("Not yet implemented");
+		List<String> list = new ArrayList<String>();
+		list.add("a");
+		list.add("b");
+		this.imageObject.setTags(list);
+		assertTrue(this.imageObject.getTags().equals(list));
 	}
 
-	@Test
-	public void testGetDate() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testSetDate() {
-		fail("Not yet implemented");
+		this.imageObject.setProperty("Modify Date", "2012-01-01");
+		assertTrue(this.imageObject.getDate().equals("2012-01-01"));
 	}
 
-	@Test
-	public void testGetArtist() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetComment() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testSetComment() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFilePath() {
-		fail("Not yet implemented");
+		this.imageObject.setProperty("XPComment", "Comment");
+		assertTrue(this.imageObject.getComment().equals("Comment"));
 	}
 
 	@Test
 	public void testSetFilePath() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFileName() {
-		fail("Not yet implemented");
+		this.imageObject.setProperty("File Path", "usr/test.java");
+		assertTrue(this.imageObject.getFilePath().equals("usr/test.java"));
 	}
 
 	@Test
 	public void testSetFileName() {
-		fail("Not yet implemented");
+		this.imageObject.setProperty("File Name", "Name");
+		assertTrue(this.imageObject.getFileName().equals("Name"));
 	}
 
 	@Test
@@ -102,19 +74,10 @@ public class ImageObjectTest {
 	}
 
 	@Test
-	public void testGetLocation() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testSetLocationObject() {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testConvertComment() {
