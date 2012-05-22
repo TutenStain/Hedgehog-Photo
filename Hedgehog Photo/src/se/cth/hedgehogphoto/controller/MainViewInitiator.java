@@ -55,6 +55,7 @@ public class MainViewInitiator {
 				singlePhotoPanel.removeAll();
 				singlePhotoPanel.add(photoPanel, BorderLayout.WEST);
 				view.resetSlider();
+				view.setPrevNextBtnVisibility(true);
 				JScrollPane pane = view.getPhotoView();
 				pane.getVerticalScrollBar().setValue(0);
 			}

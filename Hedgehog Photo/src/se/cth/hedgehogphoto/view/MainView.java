@@ -190,6 +190,10 @@ public class MainView implements Observer {
 		this.singlePhotoPanel.setBackground(c);
 		this.leftPanelView.setBackground(c);
 	}
+	public void setPrevNextBtnVisibility(Boolean b){
+		this.btnPrevPP.setVisible(b);
+		this.btnNextPP.setVisible(b);
+	}
 
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
@@ -248,6 +252,8 @@ public class MainView implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		this.setPrevNextBtnVisibility(false);
+		this.resetSlider();
 		this.photoPanels = new ArrayList<PhotoPanel>();
 		List<? extends PictureObject> images;
 		if(this.cardPanel.getLayout() instanceof CardLayout){
