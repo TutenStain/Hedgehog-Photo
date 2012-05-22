@@ -27,6 +27,25 @@ public class Converter {
 
 		return locationObj;
 	}
+	public static String convertDate(String rawDate){
+		String date ="";
+		try{
+			System.out.print(rawDate);
+			String x = rawDate.charAt(6) +"";
+			rawDate = rawDate.substring(0, 12);
+			System.out.println(x);
+			String[] args = rawDate.split(x);
+			 date = args[0];
+			for(int i = 1; i < args.length;i++)
+			date = date + "-" + args[i];
+			//date = date.substring(0,9);
+		}catch(Exception e){
+			
+		}
+		
+		
+		return date;
+	}
 
 	public static String convertComment(String comment) {
 		try{

@@ -20,6 +20,8 @@ public class PictureInserter {
 
 	public synchronized void insertImageObject(){	
 		for(ImageObject io : this.imageObjects){
+			io.setDate(Converter.convertDate(io.getDate()));
+			System.out.println("Date" + io.getDate());
 			io.setComment(Converter.convertComment(io.getComment()));
 			io.setTags(Converter.convertTags(io.getTag()));
 			io.setLocationObject(Converter.findLocationPlace(io.getLocationObject()));

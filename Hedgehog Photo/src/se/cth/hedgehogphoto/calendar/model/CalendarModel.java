@@ -125,42 +125,27 @@ public class CalendarModel extends Observable {
 		CalendarModel.pics = new ArrayList<PictureObject>();
 
 		for(int i = 1; i <= this.maxDays; i++){
-			try{
-				pics.addAll((List<PictureObject>) this.da.findByDate(year + ".0" + month + "." + i));
-			}catch(Exception e){
-				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + ".0" + month + "." + i);
+			String beforeMonth;
+			if(month < 10){
+				 beforeMonth = "-0";
+			}else{
+				 beforeMonth = "-";
+			}
+			String beforeday;
+			if(i < 10){
+				beforeday = "-0";
+			}else{
+				 beforeday = "-";
+
 			}
 
 			try{
-				pics.addAll((List<PictureObject>) this.da.findByDate(year + ":0" + month + ":" + i));
+				pics.addAll((List<PictureObject>) this.da.findByDate(year + beforeMonth + month + beforeday + i));
 			}catch(Exception e){	
-				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + ":0" + month + ":" + i);
+				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + beforeMonth + month + beforeday + i);
+
+		
 			}
-
-			try{
-				pics.addAll((List<PictureObject>) this.da.findByDate(year + "-0" + month + "-" + i));
-			}catch(Exception e){
-				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + "-0" + month + "-" + i);
-			}	
-
-			try{
-				pics.addAll((List<PictureObject>) this.da.findByDate(year + ":" + month + ":" + i));
-			} catch(Exception e){
-				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + ":" + month + ":" + i);
-			}
-
-			try{
-				pics.addAll((List<PictureObject>) this.da.findByDate(year + "-" + month + "-" + i));
-			}catch(Exception e){
-				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" + year + "-" + month + "-" + i);
-			}
-
-			try{
-				pics.addAll( (List<PictureObject>) this.da.findByDate(year + "." + month + "." + i));
-			}catch(Exception e){
-				Log.getLogger().log(Level.INFO, "Couldn't found any dates from" +year + "." + month + "." + i);
-			}
-
 			if(!(CalendarModel.pics.isEmpty())){
 				this.pictureDays.put(i, CalendarModel.pics); 
 				this.dayswithPicture.add(i);
