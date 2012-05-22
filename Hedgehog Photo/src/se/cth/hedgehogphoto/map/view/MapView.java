@@ -87,8 +87,7 @@ public class MapView extends JPanel implements Observer {
 			marker.initialize();
 			marker.setVisible(marker.getModel().isVisible());
 			
-			this.mainPane.add(marker, JLayeredPane.DRAG_LAYER, new Integer(0)); //can handle the addition of the same component multiple times
-			System.out.println("Layer: " + this.mainPane.getLayer(marker));
+			this.mainPane.add(marker, Integer.valueOf(marker.getLayer()), new Integer(0)); //can handle the addition of the same component multiple times
 		}
 	}
 	
