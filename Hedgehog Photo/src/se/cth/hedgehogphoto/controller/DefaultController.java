@@ -114,6 +114,10 @@ public class DefaultController {
 						if(btn.getText().equals("Next") && (ppList.indexOf(pp) + 1) < ppList.size()){
 							pp = ppList.get(ppList.indexOf(pp) + 1);
 						}
+						Image image = pp.getIcon().getImage();
+						BufferedImage bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
+						ImageIcon icon2 = new ImageIcon(bi);
+						pp.setIcon(icon2);
 						panel.add(pp);
 						panel.repaint();
 						panel.revalidate();
