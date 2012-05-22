@@ -127,7 +127,6 @@ public class DefaultController {
 						BufferedImage bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
 						ImageIcon icon2 = new ImageIcon(bi);
 						pp.setIcon(icon2);
-						pp.setScaleDimension(new Dimension(image.getWidth(null), image.getHeight(null)));
 						panel.add(pp);
 						panel.repaint();
 						panel.revalidate();

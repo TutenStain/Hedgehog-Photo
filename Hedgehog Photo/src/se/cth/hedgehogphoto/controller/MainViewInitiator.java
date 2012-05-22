@@ -1,6 +1,7 @@
 package se.cth.hedgehogphoto.controller;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.model.MainModel;
 import se.cth.hedgehogphoto.view.ImageUtils;
 import se.cth.hedgehogphoto.view.MainView;
@@ -44,7 +46,19 @@ public class MainViewInitiator {
 			if (e.getSource() instanceof PhotoPanel) {
 				PhotoPanel photoPanel = (PhotoPanel) e.getSource();
 				Image image = photoPanel.getIcon().getImage();
-				BufferedImage bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
+				float scale;
+				BufferedImage bi;
+				if(image.getWidth(null) > Constants.MAX_PICTURE_WIDTH){
+					scale = Constants.MAX_PICTURE_WIDTH/image.getWidth(null);
+					bi = ImageUtils.resize(image, Math.round(Constants.MAX_PICTURE_WIDTH),
+							Math.round(image.getHeight(null)*scale));
+				}else if(image.getHeight(null) > Constants.MAX_PICTURE_HEIGHT){
+					scale = Constants.MAX_PICTURE_HEIGHT/image.getHeight(null);
+					bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
+							Math.round(Constants.MAX_PICTURE_HEIGHT));
+				}else{
+					bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
+				}
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanel.setIcon(icon2);
 				JPanel cardPanel = view.getCardPanel();
