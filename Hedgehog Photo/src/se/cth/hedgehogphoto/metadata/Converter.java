@@ -12,20 +12,9 @@ import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.LocationObjectOther;
 
 public class Converter {
-	private static Converter converter;
+	
 
-	private Converter(){
-
-	}
-
-	public static Converter getInstance(){
-		if(converter == null)
-			converter = new Converter();
-
-		return converter;
-	}
-
-	public LocationObjectOther findLocationPlace(LocationObjectOther locationObj){
+	public static LocationObjectOther findLocationPlace(LocationObjectOther locationObj){
 		Point.Double point = new Point.Double();
 		point.setLocation(locationObj.getLongitude(),locationObj.getLatitude());
 		URL url = URLCreator.getInstance().queryReverseGeocodingURL(point);
@@ -39,7 +28,7 @@ public class Converter {
 		return locationObj;
 	}
 
-	public String convertComment(String comment) {
+	public static String convertComment(String comment) {
 		try{
 
 			if(!(comment.equals(""))){
@@ -60,7 +49,7 @@ public class Converter {
 		return comment;
 	}
 
-	public List<String> convertTags(String tag) {
+	public static List<String> convertTags(String tag) {
 		List<String> tags= new ArrayList<String>();
 		try{
 			if(!(tag.equals(""))){
@@ -97,7 +86,7 @@ public class Converter {
 	 * @return
 	 * @throws NumberFormatException
 	 */
-	public String convertDecimalNumbersToString(String decimalString) throws NumberFormatException {
+	public static String convertDecimalNumbersToString(String decimalString) throws NumberFormatException {
 		StringBuilder builder = new StringBuilder("");
 		List<Integer> list = new ArrayList<Integer>();
 

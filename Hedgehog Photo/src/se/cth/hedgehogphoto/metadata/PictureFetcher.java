@@ -15,7 +15,7 @@ import se.cth.hedgehogphoto.objects.ImageObject;
  *
  */
 public class PictureFetcher {
-	private JFileChooser chooser =  new JFileChooser();;
+	private JFileChooser chooser =  new JFileChooser();
 	private List<ImageObject> imageObjects = new ArrayList<ImageObject>(); 
 	private String [] validFileExtensions = {"png", "jpg", "jpeg", "gif"};
 

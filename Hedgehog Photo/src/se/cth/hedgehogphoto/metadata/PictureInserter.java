@@ -11,7 +11,7 @@ import se.cth.hedgehogphoto.objects.ImageObject;
  *
  */
 public class PictureInserter {
-	private PictureFetcher pictureFetcher = new PictureFetcher();;
+	private PictureFetcher pictureFetcher = new PictureFetcher();
 	private  List<ImageObject> imageObjects  =  this.pictureFetcher.getImageObjects(); 
 
 	public PictureInserter(){
@@ -20,9 +20,9 @@ public class PictureInserter {
 
 	public synchronized void insertImageObject(){	
 		for(ImageObject io : this.imageObjects){
-			io.setComment(Converter.getInstance().convertComment(io.getComment()));
-			io.setTags(Converter.getInstance().convertTags(io.getTag()));
-			io.setLocationObject(Converter.getInstance().findLocationPlace(io.getLocationObject()));
+			io.setComment(Converter.convertComment(io.getComment()));
+			io.setTags(Converter.convertTags(io.getTag()));
+			io.setLocationObject(Converter.findLocationPlace(io.getLocationObject()));
 			DatabaseHandler.getInstance().insertPicture(io);
 		}
 	}

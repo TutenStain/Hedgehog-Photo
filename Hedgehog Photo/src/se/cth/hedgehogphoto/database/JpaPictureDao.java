@@ -469,7 +469,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				String s = f.getDate().charAt(0) + "";
 				date  = s.toUpperCase() + date.substring(1);
 			}catch(Exception u){
-
+				Log.getLogger().log(Level.SEVERE, "Unexpected problems with the String " +f.getDate());
 			}
 			try{
 				fileName = f.getFileName().toLowerCase();
