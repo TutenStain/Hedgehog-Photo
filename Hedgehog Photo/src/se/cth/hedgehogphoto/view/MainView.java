@@ -144,6 +144,7 @@ public class MainView implements Observer {
 		this.topBtnArea.add(btnPrevPP);
 		this.topBtnArea.add(btnNextPP);
 		this.setTopButtonsVisibility(false);
+		this.setOverallBackground(Constants.GUI_BACKGROUND);
 	}
 	public PhotoPanel getCurrentPhotoPanel(){
 		Component[] comps = this.singlePhotoPanel.getComponents();
@@ -198,9 +199,11 @@ public class MainView implements Observer {
 	public void setOverallBackground(Color c){
 		this.bottomPanel.setBackground(c);
 		this.topPanel.setBackground(c);
+		this.topBtnArea.setBackground(c);
 		this.photoViewPanel.setBackground(c);
 		this.singlePhotoPanel.setBackground(c);
 		this.leftPanelView.setBackground(c);
+		this.slider.setBackground(c);
 	}
 	public void setTopButtonsVisibility(Boolean b){
 		this.btnBack.setVisible(b);

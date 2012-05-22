@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.TagObject;
 import se.cth.hedgehogphoto.model.PhotoPanelConstantsI;
@@ -59,8 +60,9 @@ public class PhotoPanel extends JPanel {
 		this.tagsLabel.setPreferredSize(new Dimension(100,10));
 		this.nameTextField.setPreferredSize(new Dimension(100,20));
 		this.photoNameLabel.setPreferredSize(new Dimension(50,10));
-		
-		setVisible(true);
+		this.icon = new ImageIcon(path);
+		this.iconLabel.setIcon(icon);
+		this.setVisible(true);
 
 		GridBagLayout gBig = new GridBagLayout();
 		setLayout(gBig);
@@ -71,7 +73,7 @@ public class PhotoPanel extends JPanel {
 		nameBag.gridwidth = 1;
 
 		gBig.setConstraints(photoNameLabel , nameBag);
-		add(photoNameLabel );
+		add(photoNameLabel);
 		GridBagConstraints photoNameBag = new GridBagConstraints();
 		photoNameBag.gridx =2;
 		photoNameBag .gridy =1;
@@ -86,8 +88,6 @@ public class PhotoPanel extends JPanel {
 		con.gridheight = 3;
 		con.gridwidth = 2;
 
-		icon = new ImageIcon(path);
-		iconLabel.setIcon(icon);
 		gBig.setConstraints(iconLabel, con);
 		add(iconLabel);
 
@@ -138,6 +138,7 @@ public class PhotoPanel extends JPanel {
 
 		gBig.setConstraints(tagsTextField,tag);
 		add(tagsTextField);
+		this.setBackground(Constants.GUI_BACKGROUND);
 	}
 	public void setScaleDimension(Dimension d){
 		this.scaleDimension = d;
