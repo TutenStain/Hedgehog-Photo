@@ -16,6 +16,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import se.cth.hedgehogphoto.Constants;
+import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.metadata.PictureInserter;
 import se.cth.hedgehogphoto.view.ImageUtils;
 import se.cth.hedgehogphoto.view.MainView;
@@ -36,6 +37,7 @@ public class DefaultController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new PictureInserter();
+				DatabaseHandler.getInstance().updateAllPictures();
 			}
 			
 		});

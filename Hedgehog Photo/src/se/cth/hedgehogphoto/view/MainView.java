@@ -310,6 +310,12 @@ public class MainView implements Observer {
 				}catch(Exception f){
 
 				}
+				try{
+					pp.setName(images.get(i).getName());
+				}catch(Exception f){
+
+				}
+				System.out.println(images.get(i).getName());
 				
 				this.photoPanels.add(i, pp);
 				this.photoViewPanel.add(pp);
@@ -336,6 +342,12 @@ public class MainView implements Observer {
 				}catch(Exception f){
 
 				}
+				try{
+					pp.setName(images.get(i).getName());
+				}catch(Exception f){
+
+				}
+				System.out.println(images.get(i).getName());
 				this.photoPanels.add(i, pp);
 				this.photoViewPanel.add(pp);
 			}

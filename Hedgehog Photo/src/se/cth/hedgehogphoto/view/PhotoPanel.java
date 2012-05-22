@@ -23,7 +23,7 @@ import se.cth.hedgehogphoto.objects.FileObject;
 @SuppressWarnings("serial")
 public class PhotoPanel extends JPanel {
 
-	private JTextField nameTextField = new JTextField();
+	private JTextField nameTextField = new JTextField("Name");
 	private javax.swing.JTextArea commentArea = new javax.swing.JTextArea();
 	private JTextField tagsTextField = new JTextField();
 	private JTextField locationTextField = new JTextField();
@@ -58,7 +58,7 @@ public class PhotoPanel extends JPanel {
 		this.locationLabel.setPreferredSize(new Dimension(100,10));
 		this.tagsTextField.setPreferredSize(new Dimension(200,20));
 		this.tagsLabel.setPreferredSize(new Dimension(100,10));
-		this.nameTextField.setPreferredSize(new Dimension(00,20));
+		this.nameTextField.setPreferredSize(new Dimension(100,20));
 		this.photoNameLabel.setPreferredSize(new Dimension(50,10));
 		this.icon = new ImageIcon(path);
 		this.iconLabel.setIcon(icon);
@@ -71,9 +71,9 @@ public class PhotoPanel extends JPanel {
 		nameBag .gridy =1;
 		nameBag.gridheight =1;
 		nameBag.gridwidth = 1;
-
 		gBig.setConstraints(photoNameLabel , nameBag);
 		add(photoNameLabel);
+		
 		GridBagConstraints photoNameBag = new GridBagConstraints();
 		photoNameBag.gridx =2;
 		photoNameBag .gridy =1;
@@ -81,6 +81,7 @@ public class PhotoPanel extends JPanel {
 		photoNameBag.gridwidth = 1;
 		gBig.setConstraints(nameTextField , photoNameBag);
 		add(nameTextField);
+		nameTextField.setVisible(true);
 
 		GridBagConstraints con = new GridBagConstraints();
 		con.gridx = 1;
@@ -225,6 +226,7 @@ public class PhotoPanel extends JPanel {
 	}
 
 	public void displayPhotoName(boolean b){
+	
 		this.nameTextField.setVisible(b);
 		this.photoNameLabel.setVisible(b);
 	}
