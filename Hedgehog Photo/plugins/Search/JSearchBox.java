@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
 
+
 /**
  * @author Barnabas Sapan
  */
@@ -48,8 +49,10 @@ public class JSearchBox extends JPanel implements Observer{
 	
 	public void addObserverToModel() {
 		this.model.addObserver(this);
-		if (this.preview != null) 
+		
+		if (this.preview != null) {
 			this.model.addObserver(this.preview);
+		}
 	}
 
 	public void setSearchBoxFocusListener(FocusListener fl){
@@ -76,16 +79,16 @@ public class JSearchBox extends JPanel implements Observer{
 		return this.searchBox.getSize();
 	}
 
-	public void setSearchBoxSize(Dimension d){
-		this.searchBox.setPreferredSize(d);
+	public void setSearchBoxSize(Dimension dimension){
+		this.searchBox.setPreferredSize(dimension);
 	}
 
 	public Dimension getSearchButtonSize(){
 		return searchButton.getSize();
 	}
 
-	public void setSearchButtonSize(Dimension d){
-		this.searchButton.setPreferredSize(d);
+	public void setSearchButtonSize(Dimension dimension){
+		this.searchButton.setPreferredSize(dimension);
 	}
 
 	/**
@@ -103,8 +106,9 @@ public class JSearchBox extends JPanel implements Observer{
 	
 	public void setModel(SearchModel model) {
 		this.model = model;
-		if (this.preview != null)
+		if (this.preview != null) {
 			this.preview.setModel(model);
+		}
 	}
 
 	public void setSearchBoxText(String txt){
@@ -122,6 +126,6 @@ public class JSearchBox extends JPanel implements Observer{
 	}
 
 	@Override
-	public void update(Observable o, Object arg) { //TODO: Do we need to listen?				
+	public void update(Observable o, Object arg) {		
 	}
 }

@@ -19,9 +19,9 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 	private List<AbstractMarkerModel> markerModels;
 	private MapPanel map;
 	private Files files;
-//	TODO: Make it listen to leftPanel/window-resize
 	private int width; 
 	private int height;
+	/* Listen to parent container size changes? */
 
 	public MapModel(Files files) {
 		this.files = files;
@@ -41,7 +41,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 		List<PictureObject> pictures = this.files.getPictureList(); //fetch pictures
 		List<LocationObject> locations = new LinkedList<LocationObject>();
 		int nbrOfPictures = pictures.size();
-		//Log.getLogger().log(Level.INFO, nbrOfPictures + " pictures were found in the Files-class.");
+	
 		int index;
 		for (index = 0; index < nbrOfPictures; index++) {
 			PictureObject picture = pictures.get(index);
@@ -50,8 +50,6 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 				if (location.validPosition()) { 
 					this.markerModels.add(new MarkerModel(picture));
 					locations.add(picture.getLocation());
-					//Log.getLogger().info(location.getLocation() + "\n" + location.getLongitude() + ", " + location.getLatitude() + "\n");
-					//Log.getLogger().log(Level.INFO, "en location!");
 				}
 			}
 		}
@@ -72,21 +70,22 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 		notifyObservers(Global.MARKERS_UPDATE);
 	}
 	
-	/* TODO: Add comment on complex flow. */
 	/**
 	 * Goes through all the markers and merges intersecting ones
 	 * into MultipleMarkerModels. 
 	 */
 	public void organizeMarkers() {
-		for (int index = 0; index < this.markerModels.size() - 1; index++) { //TODO: Use this.getMarkerModels() to access models instead?
+		for (int index = 0; index < this.markerModels.size() - 1; index++) { 
 			AbstractMarkerModel marker = this.markerModels.get(index);
 			int nbrOfMarkers = this.markerModels.size();
 			for (int indexToCheckAgainst = index + 1; indexToCheckAgainst < nbrOfMarkers; indexToCheckAgainst++) {
 				AbstractMarkerModel markerTwo = this.markerModels.get(indexToCheckAgainst);
+				
 				if (marker.intersects(markerTwo)) {
 					this.markerModels.add(new MultipleMarkerModel(marker, markerTwo));
 					this.markerModels.remove(markerTwo);
 					this.markerModels.remove(marker);
+					
 					index--;
 					setChanged();
 					break;
@@ -127,6 +126,7 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 	@Override
 	public void update(Observable o, Object arg) {
 		getMapPanel().removePropertyChangeListener(this); //remove listener during calibration
+		removeMarkerModelListeners();
 		initialize();
 		setChanged();
 		notifyObservers(Global.FILES_UPDATE);
@@ -152,6 +152,12 @@ public class MapModel extends Observable implements Observer, PropertyChangeList
 			} while (hasChanged());
 			setChanged();
 			notifyObservers(Global.MARKERS_UPDATE); 
+		}
+	}
+	
+	public void removeMarkerModelListeners() {
+		for (AbstractMarkerModel marker: markerModels) {
+			marker.deleteObservers();
 		}
 	}
 }

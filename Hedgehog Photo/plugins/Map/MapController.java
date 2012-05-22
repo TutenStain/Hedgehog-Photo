@@ -1,3 +1,4 @@
+
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.database.PictureObject;
+
 /**
  * MapController - handles mouseevents on the markers and
  * calls the appropriate methods.
@@ -20,7 +22,8 @@ public class MapController implements PropertyChangeListener {
 	public MapController(MapView mapView, Files files) {
 		this.mapView = mapView;
 		MapController.files = files;
-		mapView.addListener(new MarkerListener());
+		mapView.setMouseAdapter(new MarkerListener());
+		mapView.addListeners();
 		mapView.addPropertyChangeListener(this);
 	}
 	

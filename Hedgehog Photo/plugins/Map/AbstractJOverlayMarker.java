@@ -1,5 +1,9 @@
+import java.awt.Dimension;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+
 /**
  * Abstract graphical representation of a marker
  * which shall be used in a JLayeredPane.
@@ -13,6 +17,12 @@ public class AbstractJOverlayMarker extends AbstractJOverlayPanel {
 		initializeIconContainer();
 		setProperIcon();
 		super.initialize();
+		Dimension d = this.getPreferredSize();
+		this.iconContainer.setSize(d);
+		this.iconContainer.setPreferredSize(d);
+		this.iconContainer.setMinimumSize(d);
+		this.iconContainer.setMaximumSize(d);
+			
 	}
 	
 	private void initializeIconContainer() {
@@ -22,6 +32,7 @@ public class AbstractJOverlayMarker extends AbstractJOverlayPanel {
 			   might not show up in the view. */
 			this.iconContainer.setBounds(0, 0, model.getComponentWidth(), 
 												model.getComponentHeight());
+			
 			add(this.iconContainer);
 		}
 	}
@@ -50,6 +61,11 @@ public class AbstractJOverlayMarker extends AbstractJOverlayPanel {
 	@Override
 	public AbstractMarkerModel getModel() {
 		return (AbstractMarkerModel) model;
+	}
+	
+	public String toString() {
+		String string = super.toString();
+		return string + this.iconContainer.toString();
 	}
 	
 }

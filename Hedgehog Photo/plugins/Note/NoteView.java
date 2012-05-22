@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 
-import se.cth.hedgehogphoto.Constants;
+import se.cth.hedgehogphoto.global.Constants;
 
 /**
  * 
@@ -35,8 +35,8 @@ public class NoteView extends JPanel implements Observer{
 	public NoteView(NoteModel model){
 		this.setPreferredSize(new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT));
 		this.setLayout(new BorderLayout());
-		this.add(drawArea, BorderLayout.CENTER);
-		this.add(bottomPanel, BorderLayout.SOUTH);
+		this.add(this.drawArea, BorderLayout.CENTER);
+		this.add(this.bottomPanel, BorderLayout.SOUTH);
 		
 		this.drawArea.setBackground(Color.white);
 		this.bottomPanel.setBackground(Color.white);
@@ -45,10 +45,10 @@ public class NoteView extends JPanel implements Observer{
 		
 		this.slider.setBackground(Color.white);
 		
-		this.bottomPanel.add(eraseButton);
-		this.bottomPanel.add(preview);
-		this.bottomPanel.add(colorChooser);
-		this.bottomPanel.add(slider);
+		this.bottomPanel.add(this.eraseButton);
+		this.bottomPanel.add(this.preview);
+		this.bottomPanel.add(this.colorChooser);
+		this.bottomPanel.add(this.slider);
 		
 		this.bottomPanel.setPreferredSize(new Dimension(300, 50));
 		
@@ -82,4 +82,3 @@ public class NoteView extends JPanel implements Observer{
 		this.preview.paintPreview(model.getCircleDiam(), model.getColor());
 	}
 }
-

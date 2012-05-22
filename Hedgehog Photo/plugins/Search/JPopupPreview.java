@@ -18,18 +18,18 @@ import se.cth.hedgehogphoto.database.PictureObject;
 @SuppressWarnings("serial")
 public class JPopupPreview extends JPopupMenu implements PreviewI {
 	/** Better to add everything to a JPanel first
-	 *  instead of adding directly to Showa JPopup to prevent some rendering issues. */
+	 *  instead of adding directly to a JPopup to prevent some rendering issues. */
 	private JPanel panel;
 	private JTextField textField;
 	private SearchModel model;
 	
 	private final NotificationListItem messageItem = new NotificationListItem();
 	private final JPopupListItem [] listItems;
-	private final int MAX_LIST_ITEMS = 5;
+	private static final int MAX_LIST_ITEMS = 5;
 
 	public JPopupPreview(){
-		this.listItems = new JPopupListItem[this.MAX_LIST_ITEMS];
-		for (int index = 0; index < this.MAX_LIST_ITEMS; index++) {
+		this.listItems = new JPopupListItem[JPopupPreview.MAX_LIST_ITEMS];
+		for (int index = 0; index < JPopupPreview.MAX_LIST_ITEMS; index++) {
 			this.listItems[index] = new JPopupListItem();
 		}
 		
@@ -53,18 +53,20 @@ public class JPopupPreview extends JPopupMenu implements PreviewI {
 	}
 
 	@Override
-	public void setTextField(JTextField t){
-		this.textField = t;
+	public void setTextField(JTextField textField){
+		this.textField = textField;
 	}
 	
 	public void setListItems(List<PictureObject> pictures) {
 		this.messageItem.setPictures(pictures);
 		
-		for (int index = 0; index < this.MAX_LIST_ITEMS; index++) {
-			if (pictures.size() > index)
+		for (int index = 0; index < JPopupPreview.MAX_LIST_ITEMS; index++) {
+			if (pictures.size() > index){
 				this.listItems[index].setPicture(pictures.get(index));
-			else
+			}
+			else{
 				this.listItems[index].setPicture(null);
+			}
 		}
 	}
 	
@@ -87,7 +89,7 @@ public class JPopupPreview extends JPopupMenu implements PreviewI {
 		/**-50 to count for the offset of the textbox*/
 		show(this.textField, -50, this.textField.getHeight());
 		List<PictureObject> pictures = this.model.getPictures();
-		setListItems(pictures);
+		this.setListItems(pictures);
 		
 		this.panel.removeAll();
 

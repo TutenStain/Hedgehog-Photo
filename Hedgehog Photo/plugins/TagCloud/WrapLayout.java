@@ -15,6 +15,7 @@ import javax.swing.SwingUtilities;
 @SuppressWarnings("serial")
 public class WrapLayout extends FlowLayout
 {
+	@SuppressWarnings("unused")
 	private Dimension preferredLayoutSize;
 
 	/**

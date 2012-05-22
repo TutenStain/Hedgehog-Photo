@@ -1,4 +1,7 @@
-//TODO: Use this class in the geocoding-package
+/**
+ * Just a simple class that is used for delaying events
+ *  in conjunction with the function join().
+ */
 public class DelayThread extends Thread {
 	private long delay;
 	
@@ -9,9 +12,9 @@ public class DelayThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			sleep(delay);
+			sleep(this.delay);
 		} catch (InterruptedException ie) {
-			
+
 		}
 	}
 }

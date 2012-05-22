@@ -12,7 +12,7 @@ public class MarkerModel extends AbstractMarkerModel {
 	
 	public MarkerModel(PictureObject picture) {
 		this.picture = picture;
-		setIconPath(Global.MARKER_ICON_PATH); //26x26
+		setIconPath(Global.MARKER_ICON_PATH); //17x22
 		initialize();
 		handleVisibility();
 	}
@@ -30,12 +30,12 @@ public class MarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	int getXOffset() {
+	protected int getXOffset() {
 		return getComponentWidth() / 2;
 	}
 
 	@Override
-	int getYOffset() {
+	protected int getYOffset() {
 		return getComponentHeight();
 	}
 
@@ -46,7 +46,7 @@ public class MarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	int computeNumberOfLocations() {
+	protected int computeNumberOfLocations() {
 		return 1;
 	}
 
@@ -56,8 +56,18 @@ public class MarkerModel extends AbstractMarkerModel {
 	}
 
 	@Override
-	Point.Double getLonglat() {
+	protected Point.Double getLonglat() {
 		return new Point.Double(getLongitude(), getLatitude());
+	}
+	
+	/**
+	 * Sets the number of locations (the counter).
+	 * Only allows value 1, doesn't set the counter otherwise.
+	 */
+	@Override
+	public void setNumberOfLocations(int numberOfLocations) {
+		if (numberOfLocations == 1)
+			super.setNumberOfLocations(numberOfLocations);
 	}
 
 }

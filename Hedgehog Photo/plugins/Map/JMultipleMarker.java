@@ -1,3 +1,4 @@
+
 /**
  * Graphical representation of a "multiple marker".
  * @author Florian Minges

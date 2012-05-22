@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
+
 /**
  * The view representation of the tagcloud.
  * setPreferredSize should always be set!
@@ -79,7 +80,7 @@ public class TagCloudView extends JPanel implements Observer {
 			
 			for(Map.Entry<String, Integer> entry : this.map.entrySet()){
 				TagComponent tag = new TagComponent(entry.getKey());
-				tag.addMouseListener(this.tagComponentMouseListener); 
+				tag.addMouseListener(this.tagComponentMouseListener);
 				tag.setFont(this.baseFont.deriveFont(getFontSize(entry.getValue())));
 				add(tag);
 			}

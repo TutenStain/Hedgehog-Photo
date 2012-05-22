@@ -1,3 +1,4 @@
+
 /**
  * Constants used within the map-package.
  * @author Florian Minges

@@ -12,7 +12,7 @@ import se.cth.hedgehogphoto.database.PictureObject;
  */
 public abstract class AbstractMarkerModel extends AbstractComponentModel {
 	private String iconPath;
-	int numberOfLocations; 
+	private int numberOfLocations; 
 	
 	@Override
 	public void initialize() {
@@ -27,8 +27,14 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 		return this.numberOfLocations;
 	}
 	
+	/**
+	 * Sets the counter of locations to the given integer.
+	 * Non-positive numbers are not allowed, but 0 is ok.
+	 * @param numberOfLocations
+	 */
 	public void setNumberOfLocations(int numberOfLocations) {
-		this.numberOfLocations = numberOfLocations;
+		if (numberOfLocations >= 0)
+			this.numberOfLocations = numberOfLocations;
 	}
 	
 	public String getIconPath() {
@@ -40,7 +46,7 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 		setProperComponentSize();
 		setChanged();
 		notifyObservers(Global.ICON_UPDATE);
-		/* IF POSSIBLE: Setting the proper component size is essential 
+		/* Setting the proper component size is essential 
 		 * for calculations, but with only the string it is hard to check.
 		 * One might need to hard-code the size of certain icons. */
 	}
@@ -57,14 +63,14 @@ public abstract class AbstractMarkerModel extends AbstractComponentModel {
 	
 	/** Returns the x-difference between the top-left corner and the
 	 *  position this marker points at. */
-	abstract int getXOffset(); 
+	protected abstract int getXOffset(); 
 	
 	/** Returns the y-difference between the top-left corner and the
 	 *  position this marker points at. */
-	abstract int getYOffset(); 
+	protected abstract int getYOffset(); 
 	
-	abstract void handleVisibility();
-	abstract Point.Double getLonglat();
+	protected abstract void handleVisibility();
+	protected abstract Point.Double getLonglat();
 	
 	@Override
 	protected void handleZoom() { 

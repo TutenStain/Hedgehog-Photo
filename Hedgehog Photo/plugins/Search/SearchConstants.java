@@ -1,3 +1,7 @@
+
+/**
+ * Some constants used in the search package
+ */
 public interface SearchConstants {
 	public final String NO_ITEMS = "No matching pictures found.";
 	public final String SEE_MORE = "See more results...";

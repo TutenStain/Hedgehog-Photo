@@ -28,19 +28,18 @@ public class TagCloudInitiator {
  
 	@InitializePlugin
 	public void start() {
-		TagCloudModel model = new TagCloudModel(db);
+		TagCloudModel model = new TagCloudModel(this.db);
 		this.view = new TagCloudView();
 		new TagComponentController(model, this.view);
-		model.addObserver(this.view);
-		List<String> l = new ArrayList<String>();
-		for(PictureObject po : db.getAllPictures()){
+		List<String> list = new ArrayList<String>();
+		for(PictureObject po : this.db.getAllPictures()){
 			for(TagObject to : po.getTags()){
-				l.add(to.getTag());
+				list.add(to.getTag());
 			}
 		}
 		
-		model.setTags(l);
-		files.addObserver(model);
+		model.setTags(list);
+		this.files.addObserver(model);
 	}
 
 	@Panel(placement=PluginArea.LEFT_BOTTOM)

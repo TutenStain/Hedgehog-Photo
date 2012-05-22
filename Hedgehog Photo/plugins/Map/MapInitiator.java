@@ -35,4 +35,3 @@ public class MapInitiator {
 		this.files = files;
 	}
 }
-

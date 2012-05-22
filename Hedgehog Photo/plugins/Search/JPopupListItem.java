@@ -93,12 +93,14 @@ public class JPopupListItem extends JPanel implements JPopupItemI {
 	}
 	
 	public boolean hasPicture() {
-		return (getPicture() != null);
+		return (this.getPicture() != null);
 	}
 	
 	public void updateGUI() {
-		if (this.picture == null)
-			return;
+		if (this.picture == null){
+			return;	
+		}
+
 		BufferedImage bi = ImageUtils.resize(new ImageIcon(getPicture().getPath()).getImage(), this.IMAGE_SIZE);
 		this.image.setIcon(new ImageIcon(bi));
 		this.comment.setText(getPicture().getComment().getComment());
@@ -109,6 +111,7 @@ public class JPopupListItem extends JPanel implements JPopupItemI {
 			sb.append(tag.getTag());
 			sb.append(' ');
 		}
+		
 		this.tags.setText(sb.toString());
 	}
 	

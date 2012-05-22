@@ -19,10 +19,10 @@ public class NoteController {
 	private NoteView view;
 
 	public NoteController(NoteModel m, NoteView v){
-		model = m;
-		view = v;
+		this.model = m;
+		this.view = v;
 
-		view.setSliderListener(new ChangeListener(){
+		this.view.setSliderListener(new ChangeListener(){
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				if(arg0.getSource() instanceof JSlider){
@@ -31,8 +31,8 @@ public class NoteController {
 				}
 			}
 		});
-		view.setColorChooserListener(new ActionListener(){
-
+		
+		this.view.setColorChooserListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(arg0.getSource() instanceof JButton){
@@ -42,7 +42,9 @@ public class NoteController {
 			}
 
 		});
-		view.setDrawAreaListeners(new MouseAdapter(){
+		
+		this.view.setDrawAreaListeners(new MouseAdapter(){
+			@Override
 			public void mousePressed(MouseEvent me) {
 				if(me.getSource() instanceof JPanel){
 					JPanel drawArea = (JPanel)me.getSource();
@@ -50,6 +52,7 @@ public class NoteController {
 				}
 			}
 		}, new MouseAdapter(){
+			@Override
 			public void mouseDragged(MouseEvent me){
 				if(me.getSource() instanceof JPanel){
 					JPanel drawArea = (JPanel)me.getSource();
@@ -57,8 +60,8 @@ public class NoteController {
 				}
 			}
 		});
-		view.setEraseButtonListener(new ActionListener(){
-
+		
+		this.view.setEraseButtonListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PaintUtils.erasePainting(view.getDrawArea());

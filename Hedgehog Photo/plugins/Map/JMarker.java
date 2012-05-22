@@ -1,3 +1,4 @@
+
 /**
  * Graphical representation of a single marker.
  * @author Florian Minges

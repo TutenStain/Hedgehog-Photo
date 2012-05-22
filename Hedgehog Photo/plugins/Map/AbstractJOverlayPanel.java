@@ -34,7 +34,7 @@ public abstract class AbstractJOverlayPanel extends JPanel
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		initialize(); //TODO: Check WHAT updates, and then update that ONLY, not everything. What does this even listen to?
+		initialize(); 
 	}
 	
 	protected void update(String updateType) {
@@ -49,7 +49,7 @@ public abstract class AbstractJOverlayPanel extends JPanel
 	protected void initialize() {
 		this.setBorder(BorderFactory.createEmptyBorder());
 		setProperBounds();
-		forceProperSize(); //dunno if this is necessary
+		forceProperSize(); 
 		setProperVisibility();
 		setOpaque(false);
 	}
@@ -65,6 +65,9 @@ public abstract class AbstractJOverlayPanel extends JPanel
 	protected void forceProperSize() {
 		Dimension dimension = this.getPreferredSize();
 		setSize(dimension);
+		setPreferredSize(dimension);
+		setMinimumSize(dimension);
+		setMaximumSize(dimension);
 	}
 	
 	public int getLayer() {

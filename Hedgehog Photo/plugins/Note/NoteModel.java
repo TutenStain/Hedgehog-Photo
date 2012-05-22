@@ -7,7 +7,6 @@ import java.util.Observable;
  */
 
 public class NoteModel extends Observable{
-	
 	private int circleDiam;
 	private Color color;
 	
@@ -15,7 +14,7 @@ public class NoteModel extends Observable{
 		this.circleDiam = 10;
 		this.color = Color.black;
 	}
-
+	
 	public int getCircleDiam(){
 		return this.circleDiam;
 	}
@@ -23,17 +22,16 @@ public class NoteModel extends Observable{
 	public Color getColor(){
 		return this.color;
 	}
-
-	public void setCircleDiam(int diam){
-		this.circleDiam = diam;
+	
+	public void setCircleDiam(int diameter){
+		this.circleDiam = diameter;
 		this.setChanged();
 		this.notifyObservers();
 	}
 	
-	public void setColor(Color c){
-		this.color = c;
+	public void setColor(Color color){
+		this.color = color;
 		this.setChanged();
 		this.notifyObservers();
 	}
-
 }

@@ -66,8 +66,8 @@ public abstract class AbstractComponentModel extends Observable
 	
 	/** Returns the distance from the stored position to
 	 * the X and Y position that it actually points at. */
-	abstract int getXOffset();
-	abstract int getYOffset();
+	protected abstract int getXOffset();
+	protected abstract int getYOffset();
 	
 	/** Sets the position. */
 	public void setPosition(Point p) {
@@ -124,8 +124,10 @@ public abstract class AbstractComponentModel extends Observable
 	}
 
 	public void setComponentWidth(int componentWidth) {
-		this.componentWidth = componentWidth;
-		waitForSecondChangeBeforeNotification();
+		if (componentWidth > 0) {
+			this.componentWidth = componentWidth;
+			waitForSecondChangeBeforeNotification();
+		}
 	}
 
 	public int getComponentHeight() {
@@ -133,8 +135,10 @@ public abstract class AbstractComponentModel extends Observable
 	}
 
 	public void setComponentHeight(int componentHeight) {
-		this.componentHeight = componentHeight;
-		waitForSecondChangeBeforeNotification();
+		if (componentHeight > 0) {
+			this.componentHeight = componentHeight;
+			waitForSecondChangeBeforeNotification();
+		}
 	}
 	
 	/** As one don't want to notify Observer two times when the component
@@ -181,6 +185,6 @@ public abstract class AbstractComponentModel extends Observable
 	}
 	
 	public Integer getLayer() {
-		return Integer.valueOf(position.y + getComponentHeight()); 
+		return new Integer(position.y + getComponentHeight()); 
 	}
 }

@@ -55,8 +55,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.database.LocationObject;
+import se.cth.hedgehogphoto.global.Constants;
 
 
 /**
@@ -100,6 +100,7 @@ import se.cth.hedgehogphoto.database.LocationObject;
 @SuppressWarnings("serial")
 public class MapPanel extends JPanel {
 
+
     public static final class TileServer {
         private final String url;
         private final int maxZoom;
@@ -138,8 +139,8 @@ public class MapPanel extends JPanel {
 
     private static final String NAMEFINDER_URL = "http://gazetteer.openstreetmap.org/namefinder/search.xml";
     /* The Preferred width and height of the panel. Doesn't change the actual map size, but is important for calculations. */
-    private static final int PREFERRED_WIDTH = se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_WIDTH;
-    private static final int PREFERRED_HEIGHT = se.cth.hedgehogphoto.Constants.PREFERRED_MODULE_HEIGHT;
+    private static final int PREFERRED_WIDTH = se.cth.hedgehogphoto.global.Constants.PREFERRED_MODULE_WIDTH;
+    private static final int PREFERRED_HEIGHT = se.cth.hedgehogphoto.global.Constants.PREFERRED_MODULE_HEIGHT;
 
     private static final int ANIMATION_FPS = 15, ANIMATION_DURARTION_MS = 500;
     
@@ -208,7 +209,6 @@ public class MapPanel extends JPanel {
             useAnimations = !("Windows Vista".equals(System.getProperty("os.name")) && "6.1".equals(System.getProperty("os.version")));
         } catch (Exception e) {
             // be defensive here
-           // log.log(Level.INFO, "failed to check for win7", e);
         }
         
         setLayout(new MapLayout());
@@ -366,7 +366,6 @@ public class MapPanel extends JPanel {
                 URL url = new URL(urlstring);
                 Object content = url.getContent();
             } catch (Exception e) {
-               // log.log(Level.SEVERE, "failed to get content from url " + urlstring);
                 tileServer.setBroken(true);
             }
         }
@@ -382,8 +381,6 @@ public class MapPanel extends JPanel {
                     JOptionPane.showMessageDialog(
                             SwingUtilities.getWindowAncestor(MapPanel.this),
                             error, "TileServer not reachable.", JOptionPane.ERROR_MESSAGE);
-                    //Log.getLogger().log(Level.SEVERE, error);
-                    //TODO: Instead of loading markers, display error-screen?
                 }
             });
         }
@@ -455,11 +452,11 @@ public class MapPanel extends JPanel {
         setMapPosition(mapPosition.x + tx, mapPosition.y + ty);
     }
 
-    public int getZoom() {
+    protected int getZoom() {
         return zoom;
     }
 
-    public void setZoom(int zoom) {
+    protected void setZoom(int zoom) {
         if (zoom == MapPanel.zoom) 
             return;
         MapPanel.zoom = Math.min(getTileServer().getMaxZoom(), zoom);
@@ -720,7 +717,6 @@ public class MapPanel extends JPanel {
                     try {
                         image = Toolkit.getDefaultToolkit().getImage(new URL(url));
                     } catch (Exception e) {
-                        //log.log(Level.SEVERE, "failed to load url \"" + url + "\"", e);
                     }
                     if (image != null)
                         cache.put(tileServer, x, y, zoom, image);

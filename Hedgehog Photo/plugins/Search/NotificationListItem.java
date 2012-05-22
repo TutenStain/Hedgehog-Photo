@@ -23,18 +23,6 @@ public class NotificationListItem extends JPanel implements JPopupItemI {
 		initialize();
 	}
 	
-	@Deprecated
-	public NotificationListItem(List<PictureObject> pictures) {
-		this();
-		this.pictures = pictures;
-	}
-	
-	@Deprecated
-	public NotificationListItem(String message) {
-		this();
-		setMessage(message);
-	}
-	
 	private void initialize() {
 		setLayout(new FlowLayout());
 		this.pictures = new ArrayList<PictureObject>();

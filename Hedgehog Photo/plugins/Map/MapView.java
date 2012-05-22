@@ -8,6 +8,8 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+
+
 /**
  * The topmost GUI-class of the map-subsystem.
  * @author Florian Minges
@@ -17,6 +19,7 @@ public class MapView extends JPanel implements Observer {
 	private JLayeredPane mainPane;
 	private List<AbstractJOverlayMarker> locationMarkers;
 	private MapModel model;
+	private MouseAdapter mouseListener;
 
 	public MapView(MapModel model) {
 		setModel(model);
@@ -38,8 +41,10 @@ public class MapView extends JPanel implements Observer {
 	}
 	
 	private void addRootJLayeredPane() {
+		this.removeAll();
 		this.mainPane = new JLayeredPane();
 		this.mainPane.setPreferredSize(model.getSize());
+		this.mainPane.setLayout(null);
 		add(this.mainPane, BorderLayout.CENTER);
 	}
 	
@@ -47,17 +52,14 @@ public class MapView extends JPanel implements Observer {
 	private void addMap() {
 		if (this.mainPane == null) 
 			addRootJLayeredPane(); 
-		this.mainPane.add(model.getMapPanel(), JLayeredPane.FRAME_CONTENT_LAYER, Integer.valueOf(2));
+		this.mainPane.add(model.getMapPanel(), JLayeredPane.FRAME_CONTENT_LAYER, new Integer(-1));
 	}
 	
 	private void createMarkerGUIs(List<AbstractMarkerModel> markerModels) {
 		int nbrOfModels = markerModels.size();
 		for (int index = 0; index < nbrOfModels; index++) {
 			AbstractMarkerModel abstractModel = markerModels.get(index);
-			if (abstractModel.countObservers() > 0) {
-				//goto next step in loop, marker already has graphical representation
-				continue; 
-			} else if (abstractModel instanceof MultipleMarkerModel) {
+			if (abstractModel instanceof MultipleMarkerModel) {
 				MultipleMarkerModel model = (MultipleMarkerModel) abstractModel;
 				JMultipleMarker marker = new JMultipleMarker(model);
 				this.locationMarkers.add(marker);
@@ -75,9 +77,11 @@ public class MapView extends JPanel implements Observer {
 			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
 		createMarkerGUIs(model.getMarkerModels());
 		for (AbstractJOverlayMarker marker : this.locationMarkers) {
-			this.mainPane.add(marker, JLayeredPane.DRAG_LAYER, 0); //can handle the addition of the same component multiple times
+			marker.initialize();
+			marker.setVisible(marker.getModel().isVisible());
+			
+			this.mainPane.add(marker, Integer.valueOf(marker.getLayer()), new Integer(0)); //can handle the addition of the same component multiple times
 		}
-		this.validate(); //have to validate to see changes
 	}
 	
 	public void addListener(MouseAdapter mouseAdapter) {
@@ -89,19 +93,30 @@ public class MapView extends JPanel implements Observer {
 			}
 		}
 	}
+	
+	public void addListeners() {
+		if (this.mouseListener != null)
+			addListener(this.mouseListener);
+	}
+	
+	public void setMouseAdapter(MouseAdapter listener) {
+		this.mouseListener = listener;
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (arg1.toString().equals(Global.MARKERS_UPDATE)) {
 			int oldValue = this.locationMarkers.size();
-			addLocationMarkers(); 
+			addLocationMarkers();
 			int newValue = this.locationMarkers.size();
 			firePropertyChange(Global.MARKERS_UPDATE, oldValue, newValue);
 		} else if (arg1.toString().equals(Global.FILES_UPDATE)) {
-			this.mainPane.removeAll();
 			this.locationMarkers = new LinkedList<AbstractJOverlayMarker>();
-			addMap();
-			addLocationMarkers();
+			setLayout(new BorderLayout());
+			
+			initialize();
+			addListeners();
+
 		}
 		
 		

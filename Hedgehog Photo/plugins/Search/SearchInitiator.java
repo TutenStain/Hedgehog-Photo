@@ -1,10 +1,10 @@
 import javax.swing.JPanel;
 
-import se.cth.hedgehogphoto.plugin.InitializePlugin;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.Files;
 import se.cth.hedgehogphoto.plugin.GetDatabase;
 import se.cth.hedgehogphoto.plugin.GetVisibleFiles;
+import se.cth.hedgehogphoto.plugin.InitializePlugin;
 import se.cth.hedgehogphoto.plugin.Panel;
 import se.cth.hedgehogphoto.plugin.Plugin;
 import se.cth.hedgehogphoto.view.PluginArea;
@@ -21,12 +21,12 @@ public class SearchInitiator {
 		SearchModel model = new SearchModel();
 		PreviewI previewView = new JPopupPreview();
 		this.view = new JSearchBox(model, previewView);
-		new SearchController(model, this.view, previewView, files, db);
+		new SearchController(model, this.view, previewView, this.files, this.db);
 	}
 	
 	@Panel(placement=PluginArea.SEARCH)
 	public JPanel getView(){
-		return view;	
+		return this.view;	
 	}
 
 	@GetDatabase

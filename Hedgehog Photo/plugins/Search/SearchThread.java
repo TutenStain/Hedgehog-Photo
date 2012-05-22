@@ -6,6 +6,7 @@ import se.cth.hedgehogphoto.database.DatabaseAccess;
 import se.cth.hedgehogphoto.database.PictureObject;
 
 
+
 /**
  * @author Barnabas Sapan
  */
@@ -34,20 +35,20 @@ public class SearchThread extends Thread {
 	public List<PictureObject> search(){
 		List<PictureObject> search = new ArrayList<PictureObject>();
 
-		if(db.searchPicturefromsLocations(searchText) != null){
-			search.addAll(db.searchPicturefromsLocations(searchText));
+		if(this.db.searchPicturefromsLocations(this.searchText) != null){
+			search.addAll(this.db.searchPicturefromsLocations(this.searchText));
 		}
 		
-		if(db.searchPicturesfromTags(searchText) != null){
-			search.addAll(db.searchPicturesfromTags(searchText));
+		if(this.db.searchPicturesfromTags(this.searchText) != null){
+			search.addAll(this.db.searchPicturesfromTags(this.searchText));
 		}
 		
-		if(db.searchPicturesfromComments(searchText) != null){
-			search.addAll(db.searchPicturesfromComments(searchText));
+		if(this.db.searchPicturesfromComments(this.searchText) != null){
+			search.addAll(this.db.searchPicturesfromComments(this.searchText));
 		}
 		
 		removeDuplicates(search);
-				
+		
 		return search;
 	}
 	
@@ -60,17 +61,17 @@ public class SearchThread extends Thread {
 		list.addAll(h);
 	}
 
-	//TODO: Find a way to break the delayThread and continue with the normal procedure
-	//ie, when you write something, and delay is 1000 ms. After 300ms user clicks enter.
-	//then the delayThread should stop and the pictures be sent to the searchmodel AND
-	//THEN to the Files-class.
+	//Enhancement possibility: Find a way to break the delayThread and continue with the 
+	//normal procedure ie, when you write something, and delay is 1000 ms. After 300ms user
+	//clicks enter then the delayThread should stop and the pictures be sent to the searchmodel
+	//AND to the Files-class.
 	@Override
 	public void run(){
 		try {
-			delayThread = new DelayThread(this.delay);
-			delayThread.start();
+			this.delayThread = new DelayThread(this.delay);
+			this.delayThread.start();
 		
-			delayThread.join(); //wait for the delay-time to pass
+			this.delayThread.join(); //wait for the delay-time to pass
 			this.pictures = search();
 			
 			this.model.setPictures(this.pictures);
