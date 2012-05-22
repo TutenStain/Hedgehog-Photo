@@ -42,7 +42,7 @@ public class TagCloudModel extends Observable implements Observer {
 			this.map.clear();
 			while(itr.hasNext()){
 				String o = itr.next();
-				int occurrences = Collections.frequency(tags, o);
+				int occurrences = Collections.frequency(this.tags, o);
 				this.map.put(o, occurrences);
 			}
 			
@@ -73,13 +73,13 @@ public class TagCloudModel extends Observable implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		List<String> l = new ArrayList<String>();
+		List<String> list = new ArrayList<String>();
 		for(PictureObject po : this.db.getAllPictures()){
 			for(TagObject to : po.getTags()){
-				l.add(to.getTag());
+				list.add(to.getTag());
 			}
 		}
 		
-		this.setTags(l);
+		this.setTags(list);
 	}
 }

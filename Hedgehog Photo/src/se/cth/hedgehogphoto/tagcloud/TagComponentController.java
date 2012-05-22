@@ -55,7 +55,6 @@ public class TagComponentController implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource() instanceof TagComponent){
 			TagComponent tag = (TagComponent)e.getSource();
-			System.out.println("Clicked on: " + tag.getText());
 			this.model.updateSearchPicturesfromTags(tag.getText());	
 		}
 	}
