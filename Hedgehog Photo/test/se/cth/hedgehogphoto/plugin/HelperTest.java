@@ -33,11 +33,12 @@ public class HelperTest {
 	@Test
 	public void testFindFolderForFile(){
 		File before = new File("this/is/the/folder/file.java");
-		File after = new File("this/is/the/folder");
-		System.out.println(Helper.findFolderForFile(before));
-		assertTrue(Helper.findFolderForFile(before).toPath().equals(after.toPath()));
+		File after = Helper.findFolderForFile(before);
+		File resultIs = new File("this/is/the/folder");
+		assertTrue(resultIs.getAbsolutePath().equals(after.getAbsolutePath()));
 	}
 	
+	/*Questionably if this actually tests something or not*/
 	@Test
 	public void testCreatePluginFolder(){
 		File file = Mockito.mock(File.class);

@@ -28,8 +28,8 @@ public class TagCloudModelTest {
 		list.add("c");
 		list.add("d");
 		list.add("d");
-		model.setTags(list);
-		Map<String, Integer> map = model.getTagsOccurrence();
+		this.model.setTags(list);
+		Map<String, Integer> map = this.model.getTagsOccurrence();
 		
 		boolean success = true;
 		
