@@ -2,11 +2,15 @@ package se.cth.hedgehogphoto.controller;
 
 import java.awt.CardLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,6 +32,7 @@ public class MainViewInitiator {
 		this.view.addPhotoPanelActionListeners(new PhotoPanelActionListener());
 		this.view.addPhotoPanelFocusListener(new PhotoPanelFocusListener());
 		this.view.addPhotoPanelMouseListener(new PhotoPanelMouseListener());
+		this.view.setPrevNextBtnListeners(new PrevNextBtnListeners());
 	}
 	
 	public MainView getMainView() {
@@ -59,6 +64,32 @@ public class MainViewInitiator {
 				pane.getVerticalScrollBar().setValue(0);
 			}
 		}
+	}
+	public class PrevNextBtnListeners implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if(arg0.getSource() instanceof JButton){
+				JButton btn = (JButton) arg0.getSource();
+				JPanel panel = view.getSinglePhotoPanel();
+				PhotoPanel pp = view.getCurrentPhotoPanel();
+				List<PhotoPanel> ppList = view.getPhotoPanels();
+				if(ppList.contains(pp)){
+					panel.removeAll();
+					if(btn.getText().equals("Previous") && (ppList.indexOf(pp) - 1) >= 0){
+						pp = ppList.get(ppList.indexOf(pp) - 1);
+					}
+					if(btn.getText().equals("Next") && (ppList.indexOf(pp) + 1) < ppList.size()){
+						pp = ppList.get(ppList.indexOf(pp) + 1);
+					}
+					panel.add(pp);
+					panel.repaint();
+					panel.revalidate();
+					view.resetSlider();
+				}
+			}
+		}
+		
 	}
 
 }

@@ -3,6 +3,7 @@ package se.cth.hedgehogphoto.view;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -141,6 +142,15 @@ public class MainView implements Observer {
 		this.topBtnArea.add(btnPrevPP);
 		this.topBtnArea.add(btnNextPP);
 	}
+	public PhotoPanel getCurrentPhotoPanel(){
+		Component[] comps = this.singlePhotoPanel.getComponents();
+		for(int i=0;i<comps.length;i++){
+			if(comps[i] instanceof PhotoPanel){
+				return (PhotoPanel) comps[i];
+			}
+		}
+		return null;
+	}
 	
 	public void setCommentsButtonListener(ActionListener l){
 		this.btnshowHideComments.addActionListener(l);
@@ -241,7 +251,10 @@ public class MainView implements Observer {
 			panel.setTextFieldFocusListeners(listener);
 		}
 	}
-
+	public void setPrevNextBtnListeners(ActionListener l){
+		this.btnPrevPP.addActionListener(l);
+		this.btnNextPP.addActionListener(l);
+	}
 	private void addListenersToAll() {
 		addPhotoPanelActionListeners(this.actionListener);
 		addPhotoPanelFocusListener(this.focusListener);
