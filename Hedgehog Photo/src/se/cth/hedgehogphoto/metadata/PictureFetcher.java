@@ -59,7 +59,7 @@ public class PictureFetcher {
 									imageObject = Metadata.getImageObject(dirFiles[j]);
 									imageObject.setAlbumName(album);
 									imageObject.setFileName(dirFiles[j].getName());
-									imageObject.setFilePath(dirFiles[j].getPath());
+									imageObject.setFilePath(dirFiles[j].getAbsolutePath());
 									imageObjects.add(imageObject);
 								} 
 							}
@@ -75,7 +75,7 @@ public class PictureFetcher {
 						imageObject.setAlbumName(chooser.getSelectedFiles()[k].getParentFile().getName());
 						imageObject.setFileName(chooser.getSelectedFiles()[k].getName());
 						
-						imageObject.setFilePath(chooser.getSelectedFiles()[k].getPath());
+						imageObject.setFilePath(chooser.getSelectedFiles()[k].getAbsolutePath());
 						imageObjects.add(imageObject);
 
 					}

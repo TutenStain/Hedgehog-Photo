@@ -41,21 +41,15 @@ public class Main {
 		
 		//TODO Uncomment these the first run if you need to recreate the database
 //		DatabaseHandler.getInstance().deleteAll();
-	insertFileObjectsIntoDatabase();
-		
-//		MainModel model = new MainModel();
-//		MainView view = new MainView(start);
-//		model.addObserver(view);
-//		new DefaultController(view);
+//		insertFileObjectsIntoDatabase();
+
 		MainViewInitiator mainView = new MainViewInitiator(start);
 		
 		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
 		PluginLoader p = new PluginLoader(mainView.getMainView(), pluginRooDir, true);
 		Thread pluginLoaderT = new Thread(p);
 		pluginLoaderT.start();
-		//p.loadAllPlugins();
-		//File tagCloudDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin/TagCloud");
-		//p.loadPluginFromDirectory(tagCloudDir);
+
 		MapModel mapModel = new MapModel(Files.getInstance());
 		MapView map = new MapView(mapModel);
         new MapController(map, Files.getInstance());
