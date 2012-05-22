@@ -15,15 +15,15 @@ public class InitializePluginParser implements Parsable{
 
 	@Override
 	public Object parseClass(Class<?> c, Object o, MainView view) {
-		Method m[] = c.getMethods();
-		for(int i = 0; i < m.length; i++){
+		Method methods[] = c.getMethods();
+		for(int i = 0; i < methods.length; i++){
 			try{
-				if(m[i].isAnnotationPresent(InitializePlugin.class)){
+				if(methods[i].isAnnotationPresent(InitializePlugin.class)){
 					if(o == null){
 						o = c.newInstance();					
 						Log.getLogger().log(Level.INFO, "Initializing plugin with class: " + o.getClass().getSimpleName());
 					}
-					Method init = c.getMethod(m[i].getName(), null);
+					Method init = c.getMethod(methods[i].getName(), null);
 					init.invoke(o, (Object[])null);
 					break;
 				}
@@ -31,7 +31,7 @@ public class InitializePluginParser implements Parsable{
 				Log.getLogger().log(Level.SEVERE, "Exception", e);
 			}
 		}
-		
+
 		return o;
 	}
 

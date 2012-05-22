@@ -31,31 +31,31 @@ public final class Helper {
 	 * @return all the files that match the filter in the directory and subfolders to it
 	 */
 	public static List<File> getAllFilesInFolder(File dir, final FilenameFilter filter) {
-	    List<File> filesToReturn = new ArrayList<File>();
-	    for (File f : dir.listFiles()) {
-	        if (f.isDirectory()) {
-	            filesToReturn.addAll(getAllFilesInFolder(f, filter));
-	        } else if (filter.accept(dir, f.getName())) {
-	            filesToReturn.add(f);
-	        }
-	    }
-	    return filesToReturn;
+		List<File> filesToReturn = new ArrayList<File>();
+		for (File f : dir.listFiles()) {
+			if (f.isDirectory()) {
+				filesToReturn.addAll(getAllFilesInFolder(f, filter));
+			} else if (filter.accept(dir, f.getName())) {
+				filesToReturn.add(f);
+			}
+		}
+		return filesToReturn;
 	}
-	
+
 	/**
 	 * Strips the dot (.) and forward-slash (/) from the String, resulting in
 	 * just the class name. For example "home//plugin/Main.java" becomes Main
-	 * @param s the string to strip the dot and forward-slash from
+	 * @param string the string to strip the dot and forward-slash from
 	 * @return the stripped String
 	 */
-	public static String stripDotAndSlashFromString(final String s){
-		int dividerIndex = s.lastIndexOf(System.getProperty("file.separator")) + 1;
-		int dotPath = s.lastIndexOf(".");
-		String finalString = s.substring(dividerIndex, dotPath);
-		
+	public static String stripDotAndSlashFromString(final String string){
+		int dividerIndex = string.lastIndexOf(System.getProperty("file.separator")) + 1;
+		int dotPath = string.lastIndexOf(".");
+		String finalString = string.substring(dividerIndex, dotPath);
+
 		return finalString;
 	}
-	
+
 	/**
 	 * Return the default plugin parsers needed to parse plugins
 	 * @return a list of the default plugin parsers needed to parse most plugins
@@ -63,20 +63,22 @@ public final class Helper {
 	 */
 	public static List<Parsable> getDefaultPluginParsers(){
 		List<Parsable> list = new ArrayList<Parsable>();
+
 		Parsable a = new GetDatabaseParser();
 		Parsable b = new GetVisibleFilesParser();
 		Parsable c = new InitializePluginParser();
 		Parsable d = new PanelParser();
 		Parsable e = new PluginParser();
+
 		list.add(a);
 		list.add(b);
 		list.add(c);
 		list.add(d);
 		list.add(e);
-		
+
 		return list;
 	}
-	
+
 	/**
 	 * Creates the plugin folder
 	 * @param createDir the folder path to create
@@ -99,54 +101,54 @@ public final class Helper {
 			Log.getLogger().log(Level.INFO, "Plugin dir exists, skipping creation...");
 			success = true;
 		}
-		
+
 		return success;
 	}
-	
+
 	/**
 	 * This method checks if the file exist and if it does not exist it searches 
 	 * for the file in the subfolders. Appends filestub and suffix to the found file.
-	 * @param f the file to find
+	 * @param file the file to find
 	 * @param filestub the filestub to append at the new file
 	 * @param suffix the suffix to append at the new file
 	 * @param subFolders the subfolders to search the file in
 	 * @return a File object with the absolute path with filestub and suffic appended.
 	 */
-	public static File findFileInSubfolder(File f, final String filestub, String suffix, URL[] subFolders){
-		if(f.exists() == false){
+	public static File findFileInSubfolder(File file, final String filestub, String suffix, URL[] subFolders){
+		if(file.exists() == false){
 			for(URL u : subFolders){
-				f = new File(u.getPath() + filestub + suffix);
-				if(f.exists()){
+				file = new File(u.getPath() + filestub + suffix);
+				if(file.exists()){
 					break;
 				}
 			}
 		}
-		
-		return f;
+
+		return file;
 	}
-	
+
 	/**
 	 * Finds the folder the supplied file is in. 
 	 * This is just a lazy method striping the last forward-slash (/) or backward-slash (\)
 	 * depending on system from the path.
-	 * @param f the file to get folder to
+	 * @param file the file to get folder to
 	 * @return a File object representing the folder the supplied file is in.
 	 */
-	public static File findFolderForFile(final File f){
-		String d = f.getAbsolutePath();
-		return new File(d.substring(0, d.lastIndexOf(System.getProperty("file.separator"))));
+	public static File findFolderForFile(final File file){
+		String dir = file.getAbsolutePath();
+		return new File(dir.substring(0, dir.lastIndexOf(System.getProperty("file.separator"))));
 	}
-	
+
 	/**
 	 * Copies the plugins folder from the executable to the user plugin folder
 	 * specified by the parameter 'folder' for parsing by the plugin-parsers.
-	 * @param folder the folder to copy the plugins to.
+	 * @param file the folder to copy the plugins to.
 	 * @return true if the operation was successful, false if not, 
 	 * logs IOException if and exception occurs. 
 	 */
-	public static boolean copyPluginsToFolder(final File folder){
-		if(folder.isDirectory()){
-			final Path target = Paths.get(folder.getAbsolutePath());
+	public static boolean copyPluginsToFolder(final File file){
+		if(file.isDirectory()){
+			final Path target = Paths.get(file.getAbsolutePath());
 			final Path source =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "plugins");
 			try {
 				Files.walkFileTree(source, new SimpleFileVisitor<Path>() {

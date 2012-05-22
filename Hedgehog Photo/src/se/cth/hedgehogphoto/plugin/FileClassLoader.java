@@ -99,7 +99,7 @@ public class FileClassLoader extends URLClassLoader {
 
 		//Try to...Return it if we already have loaded it
 		//faster then trying to load it again.
-		c = (Class<?>)loadedClasses.get(file);
+		c = (Class<?>)this.loadedClasses.get(file);
 		if (c != null) {
 			return c;
 		}
@@ -126,9 +126,9 @@ public class FileClassLoader extends URLClassLoader {
 		Log.getLogger().log(Level.INFO, "Compiling " + fileToCompile.getAbsolutePath() + "...");
 
 		//Copy our API to plugin dir
-		final Path target = Paths.get(pluginRootDirectory.getAbsolutePath() + System.getProperty("file.separator")  + "API.jar");
+		final Path target = Paths.get(this.pluginRootDirectory.getAbsolutePath() + System.getProperty("file.separator")  + "API.jar");
 		if(Files.exists(target) == false) {
-			Log.getLogger().log(Level.INFO, "Copying API.jar to: " + pluginRootDirectory.getAbsolutePath() + "...");
+			Log.getLogger().log(Level.INFO, "Copying API.jar to: " + this.pluginRootDirectory.getAbsolutePath() + "...");
 			Path source = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "API.jar");
 			Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
 		} else {

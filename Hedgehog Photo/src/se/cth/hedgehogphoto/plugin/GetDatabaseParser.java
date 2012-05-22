@@ -16,29 +16,29 @@ public class GetDatabaseParser implements Parsable {
 
 	@Override
 	public Object parseClass(Class<?> c, Object o, MainView view) {
-		Method m[] = c.getMethods();
-		for(int i = 0; i < m.length; i++){
+		Method methods[] = c.getMethods();
+		for(int i = 0; i < methods.length; i++){
 			try{
-			if(m[i].isAnnotationPresent(GetDatabase.class)){
-				if(o == null){
-					o = c.newInstance();
-					Log.getLogger().log(Level.INFO, "Initializing plugin with class: " + o.getClass().getSimpleName());
+				if(methods[i].isAnnotationPresent(GetDatabase.class)){
+					if(o == null){
+						o = c.newInstance();
+						Log.getLogger().log(Level.INFO, "Initializing plugin with class: " + o.getClass().getSimpleName());
+					}
+					Log.getLogger().log(Level.INFO, "Setting DB...");
+					Method panel = c.getMethod(methods[i].getName(), methods[i].getParameterTypes());
+					if(panel.getReturnType() == void.class){
+						panel.invoke(o, DatabaseHandler.getInstance());
+					} else {
+						Log.getLogger().log(Level.SEVERE, "@GetDatabase invalid return type!");
+					}
+
+					break;
 				}
-				Log.getLogger().log(Level.INFO, "Setting DB...");
-				Method panel = c.getMethod(m[i].getName(), m[i].getParameterTypes());
-				if(panel.getReturnType() == void.class){
-					panel.invoke(o, DatabaseHandler.getInstance());
-				} else {
-					Log.getLogger().log(Level.SEVERE, "@GetDatabase invalid return type!");
-				}
-				
-				break;
-			}
 			}catch (InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e){
 				Log.getLogger().log(Level.SEVERE, "Exception", e);
 			}
 		}
-		
+
 		return o;
 	}
 

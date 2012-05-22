@@ -9,19 +9,19 @@ import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.view.MainView;
 
 public class GetVisibleFilesParser implements Parsable{
-	
+
 	@Override
 	public Object parseClass(Class<?> c, Object o, MainView view) {
-		Method m[] = c.getMethods();
-		for(int i = 0; i < m.length; i++){
+		Method methods[] = c.getMethods();
+		for(int i = 0; i < methods.length; i++){
 			try{
-				if(m[i].isAnnotationPresent(GetVisibleFiles.class)){
+				if(methods[i].isAnnotationPresent(GetVisibleFiles.class)){
 					if(o == null){
 						o = c.newInstance();
 						Log.getLogger().log(Level.INFO, "Initializing plugin with class: " + o.getClass().getSimpleName());
 					}
 					Log.getLogger().log(Level.INFO, "Setting Files...");
-					Method panel = c.getMethod(m[i].getName(), m[i].getParameterTypes());
+					Method panel = c.getMethod(methods[i].getName(), methods[i].getParameterTypes());
 					panel.invoke(o, Files.getInstance());
 					break;
 				}
@@ -29,7 +29,7 @@ public class GetVisibleFilesParser implements Parsable{
 				Log.getLogger().log(Level.SEVERE, "Exception", e);
 			}
 		}
-		
+
 		return o;
 	}
 }

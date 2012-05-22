@@ -28,8 +28,8 @@ public class PluginLoader implements Runnable{
 	
 	@Override
 	public void run(){
-		if(threaded == true){
-			threaded = true;
+		if(this.threaded){
+			this.threaded = true;
 			this.loadAllPlugins();
 			this.parseClasses();
 		} else {
@@ -55,13 +55,13 @@ public class PluginLoader implements Runnable{
 		this.threaded = preLoad;
 		
 		try {		
-			File f = new File(pluginRootDir);
-			URL url = f.toURI().toURL(); 
+			File file = new File(pluginRootDir);
+			URL url = file.toURI().toURL(); 
 			URL[] urls = new URL[]{url};
 			Log.getLogger().log(Level.INFO, "Setting plugin directory: " + urls[0].getPath());
 			Helper.createPluginFolder(new File(urls[0].getPath()));
 			Helper.copyPluginsToFolder(new File(urls[0].getPath()));
-			classLoader = new FileClassLoader(urls);
+			this.classLoader = new FileClassLoader(urls);
 		} catch (MalformedURLException e) {
 			Log.getLogger().log(Level.SEVERE, "MalformedURLException", e);
 		}
@@ -71,7 +71,7 @@ public class PluginLoader implements Runnable{
 	 * Loads all the available plugins in the plugin root folder specified by the constructor
 	 */
 	public void loadAllPlugins(){
-		loadPluginFromDirectory(new File(pluginRootDir));
+		loadPluginFromDirectory(new File(this.pluginRootDir));
 	}
 		
 
@@ -92,18 +92,20 @@ public class PluginLoader implements Runnable{
 		for(File file : files) {
 			String className = Helper.stripDotAndSlashFromString(file.toString());
 			Log.getLogger().log(Level.INFO, "Loading class " + className + "...");
-			Class<?> c = classLoader.loadClass(className);
+			Class<?> c = this.classLoader.loadClass(className);
 			
 			if(c != null){
-				loadedClasses.add(c);
+				this.loadedClasses.add(c);
 			}	
 		}
-		Log.getLogger().log(Level.INFO, "Loaded classes: " + loadedClasses.toString());
+		Log.getLogger().log(Level.INFO, "Loaded classes: " + this.loadedClasses.toString());
 		
-		if(threaded == false){
-			parseClasses(loadedClasses, Helper.getDefaultPluginParsers());
+		/*Only parse classes right away if we do not thread the pluginLoader.
+		 *The run method will call parseClassed if we thread.*/
+		if(this.threaded == false){
+			parseClasses(this.loadedClasses, Helper.getDefaultPluginParsers());
 		} else {
-			threaded = false;
+			this.threaded = false;
 		}
 	}
 	
@@ -113,7 +115,7 @@ public class PluginLoader implements Runnable{
 	 * with the appropriate parameters
 	 */
 	private void parseClasses(){
-		parseClasses(loadedClasses, Helper.getDefaultPluginParsers());
+		parseClasses(this.loadedClasses, Helper.getDefaultPluginParsers());
 	}
 
 	/**
@@ -126,7 +128,7 @@ public class PluginLoader implements Runnable{
 		for(Class<?> c : list) {
 			Object o = null;
 			for(Parsable p : parsableAnnotations){
-				o = p.parseClass(c, o, view);
+				o = p.parseClass(c, o, this.view);
 			}
 		}
 	}

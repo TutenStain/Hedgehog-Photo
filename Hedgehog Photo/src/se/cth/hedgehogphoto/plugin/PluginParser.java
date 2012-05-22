@@ -14,9 +14,9 @@ public class PluginParser implements Parsable {
 	@Override
 	public Object parseClass(Class<?> c, Object o, MainView view) {
 		if(c.isAnnotationPresent(Plugin.class)){
-			Plugin p = c.getAnnotation(Plugin.class);
-			Log.getLogger().log(Level.INFO, "[Plugin: " + p.name() + ", Version: " + p.version() + 
-				", Author: " + p.author() + ", Description: " + p.description() + "]");	
+			Plugin plugin = c.getAnnotation(Plugin.class);
+			Log.getLogger().log(Level.INFO, "[Plugin: " + plugin.name() + ", Version: " + plugin.version() + 
+				", Author: " + plugin.author() + ", Description: " + plugin.description() + "]");	
 		}
 		
 		return o;

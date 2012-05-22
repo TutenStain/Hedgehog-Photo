@@ -18,17 +18,17 @@ public class PanelParser implements Parsable {
 
 	@Override
 	public Object parseClass(Class<?> c, Object o, MainView view){
-		Method m[] = c.getMethods();
-		for(int i = 0; i < m.length; i++){
+		Method methods[] = c.getMethods();
+		for(int i = 0; i < methods.length; i++){
 			try{
-				if(m[i].isAnnotationPresent(Panel.class)){
-					Method panel = c.getMethod(m[i].getName(), null);
-					if(panel.getReturnType() == JPanel.class){
-						PluginArea pa = panel.getAnnotation(Panel.class).placement();
-						Log.getLogger().log(Level.INFO, "Panel placement: " + pa );
+				if(methods[i].isAnnotationPresent(Panel.class)){
+					Method method = c.getMethod(methods[i].getName(), null);
+					if(method.getReturnType() == JPanel.class){
+						PluginArea pluginArea = method.getAnnotation(Panel.class).placement();
+						Log.getLogger().log(Level.INFO, "Panel placement: " + pluginArea );
 						if(o != null){
-							JPanel p = (JPanel) panel.invoke(o, (Object[])null);
-							view.addPlugin(p, pa);
+							JPanel panel = (JPanel) method.invoke(o, (Object[])null);
+							view.addPlugin(panel, pluginArea);
 						} else {
 							Log.getLogger().log(Level.SEVERE, "Class not Initialized, do you have @InitializePlugin annotation?");
 						}
@@ -42,5 +42,5 @@ public class PanelParser implements Parsable {
 		}
 		return o;
 	}
-	
+
 }
