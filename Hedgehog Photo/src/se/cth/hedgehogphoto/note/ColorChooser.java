@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class ColorChooser extends JPanel{
 	
-	private JButton[] grid = new JButton[9];
+	private JButton[] buttonGrid = new JButton[9];
 	
 	public ColorChooser(){
 		this.setLayout(new GridLayout(3, 3));
@@ -23,24 +23,25 @@ public class ColorChooser extends JPanel{
 	}
 	
 	public void arrangeButtons(){
-		for(int i=0;i<grid.length;i++){
-			grid[i] = new JButton();
-			this.add(grid[i]);
+		for(int i=0; i < buttonGrid.length; i++){
+			buttonGrid[i] = new JButton();
+			this.add(buttonGrid[i]);
 		}
-		grid[0].setBackground(Color.white);
-		grid[1].setBackground(Color.black);
-		grid[2].setBackground(Color.gray);
-		grid[3].setBackground(Color.blue);
-		grid[4].setBackground(Color.green);
-		grid[5].setBackground(Color.cyan);
-		grid[6].setBackground(Color.red);
-		grid[7].setBackground(Color.orange);
-		grid[8].setBackground(Color.yellow);
+		
+		this.buttonGrid[0].setBackground(Color.white);
+		this.buttonGrid[1].setBackground(Color.black);
+		this.buttonGrid[2].setBackground(Color.gray);
+		this.buttonGrid[3].setBackground(Color.blue);
+		this.buttonGrid[4].setBackground(Color.green);
+		this.buttonGrid[5].setBackground(Color.cyan);
+		this.buttonGrid[6].setBackground(Color.red);
+		this.buttonGrid[7].setBackground(Color.orange);
+		this.buttonGrid[8].setBackground(Color.yellow);
 	}
 	
-	public void addListener(ActionListener l){
-		for(int i=0;i<grid.length;i++){
-			grid[i].addActionListener(l);
+	public void addListener(ActionListener listener){
+		for(int i=0; i < this.buttonGrid.length; i++){
+			this.buttonGrid[i].addActionListener(listener);
 		}
 	}
 }

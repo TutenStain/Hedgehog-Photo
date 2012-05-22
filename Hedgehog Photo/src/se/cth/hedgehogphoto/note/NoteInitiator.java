@@ -20,7 +20,7 @@ public class NoteInitiator {
 	public void start() {
 		NoteModel model = new NoteModel();
 		this.view = new NoteView(model);
-		new NoteController(model, view);
+		new NoteController(model, this.view);
 	}
 
 	@Panel(placement=PluginArea.LEFT_MIDDLE)

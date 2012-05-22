@@ -12,25 +12,26 @@ import javax.swing.JPanel;
 
 public class PaintUtils {
 	
-	public static void paintOval(Graphics g, int x, int y, int w, int h, Color c){
-		g.setColor(c);
-		g.fillOval(x, y, w, h);
-		g.setColor(c);
-		g.drawOval(x, y, w, h);
+	public static void paintOval(Graphics graphics, int x, int y, int w, int h, Color color){
+		graphics.setColor(color);
+		graphics.fillOval(x, y, w, h);
+		graphics.setColor(color);
+		graphics.drawOval(x, y, w, h);
 	}
 	
-	public static void paintCircle(Graphics g, int x, int y, int diam, Color c){
-		paintOval(g, x, y, diam, diam, c);
+	public static void paintCircle(Graphics graphics, int x, int y, int diameter, Color color){
+		paintOval(graphics, x, y, diameter, diameter, color);
 	}
 	
-	public static void paintRect(Graphics g, int x, int y, int w, int h, Color c){
-		g.setColor(c);
-		g.fillRect(x, y, w, h);
-		g.setColor(c);
-		g.drawRect(x, y, w, h);
+	public static void paintRect(Graphics graphics, int x, int y, int w, int h, Color color){
+		graphics.setColor(color);
+		graphics.fillRect(x, y, w, h);
+		graphics.setColor(color);
+		graphics.drawRect(x, y, w, h);
 	}
 	
 	public static void erasePainting(JPanel panel){
-		paintRect(panel.getGraphics(), 0, 0, panel.getWidth(), panel.getHeight(), panel.getBackground());
+		paintRect(panel.getGraphics(), 0, 0, panel.getWidth(), 
+					panel.getHeight(), panel.getBackground());
 	}
 }

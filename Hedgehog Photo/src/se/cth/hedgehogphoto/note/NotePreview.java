@@ -16,8 +16,9 @@ public class NotePreview extends JPanel{
 		this.setBackground(Color.white);
 	}
 	
-	public void paintPreview(int diam, Color c){
+	public void paintPreview(int diameter, Color color){
         PaintUtils.erasePainting(this);
-		PaintUtils.paintCircle(this.getGraphics(), this.getWidth()/2, this.getHeight()/2, diam, c);
+		PaintUtils.paintCircle(this.getGraphics(), this.getWidth()/2, 
+								this.getHeight()/2, diameter, color);
 	}
 }
