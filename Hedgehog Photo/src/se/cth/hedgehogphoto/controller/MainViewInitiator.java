@@ -21,7 +21,7 @@ import se.cth.hedgehogphoto.view.PhotoPanel;
 public class MainViewInitiator {
 	private MainView view;
 	private MainModel model;
-	
+
 	public MainViewInitiator(JFrame frame) {
 		this.model = new MainModel();
 		this.view = new MainView(frame);
@@ -31,15 +31,15 @@ public class MainViewInitiator {
 		this.view.addPhotoPanelFocusListener(new PhotoPanelFocusListener());
 		this.view.addPhotoPanelMouseListener(new PhotoPanelMouseListener());
 	}
-	
+
 	public MainView getMainView() {
 		return this.view;
 	}
-	
+
 	public MainModel getMainModel() {
 		return this.model;
 	}
-	
+
 	public class PhotoPanelMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -52,10 +52,18 @@ public class MainViewInitiator {
 					scale = Constants.MAX_PICTURE_WIDTH/image.getWidth(null);
 					bi = ImageUtils.resize(image, Math.round(Constants.MAX_PICTURE_WIDTH),
 							Math.round(image.getHeight(null)*scale));
+					if(bi.getHeight() > Constants.MAX_PICTURE_HEIGHT){
+						scale = Constants.MAX_PICTURE_HEIGHT/bi.getHeight();
+						bi = ImageUtils.resize(image, Math.round(bi.getWidth()*scale), Math.round(Constants.MAX_PICTURE_HEIGHT));
+					}
 				}else if(image.getHeight(null) > Constants.MAX_PICTURE_HEIGHT){
 					scale = Constants.MAX_PICTURE_HEIGHT/image.getHeight(null);
 					bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
 							Math.round(Constants.MAX_PICTURE_HEIGHT));
+					if(bi.getWidth() > Constants.MAX_PICTURE_WIDTH){
+						scale = Constants.MAX_PICTURE_WIDTH/bi.getWidth();
+						bi = ImageUtils.resize(image, Math.round(Constants.MAX_PICTURE_WIDTH), Math.round(bi.getHeight()*scale));
+					}
 				}else{
 					bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
 				}
