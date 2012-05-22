@@ -131,6 +131,18 @@ public class DefaultController {
 					CardLayout cl = (CardLayout) cardPanel.getLayout();
 					cl.show(cardPanel, "All");
 					view.setTopButtonsVisibility(false);
+					JPanel panel = view.getPhotoViewPanel();
+					List<PhotoPanel> ppList = view.getPhotoPanels();
+					//TODO not sure why this is needed
+					for(int i=0;i<ppList.size();i++){
+						Image image = ppList.get(i).getIcon().getImage();
+						Dimension d = ppList.get(i).getScaleDimension();
+						BufferedImage bi = ImageUtils.resize(image, Math.round(d.width),
+								Math.round(d.height));
+						ImageIcon icon2 = new ImageIcon(bi);
+						view.getPhotoPanels().get(i).setIcon(icon2);
+						panel.add(view.getPhotoPanels().get(i));
+					}
 			}
 			
 		});
