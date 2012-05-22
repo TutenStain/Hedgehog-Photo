@@ -212,6 +212,7 @@ public class MainView implements Observer {
 	}
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
+			panel.setBackground(Constants.GUI_BACKGROUND);
 			if(placement == PluginArea.SEARCH){
 				this.topPanel.add(panel, BorderLayout.EAST);
 			} else {	
