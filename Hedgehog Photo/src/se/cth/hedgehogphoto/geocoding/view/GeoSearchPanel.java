@@ -40,20 +40,23 @@ public final class GeoSearchPanel extends JPanel {
 	private static JFrame frame;
 	private ConstrainedGrid resultPanel = new ConstrainedGrid();
 	private JComboBox<Object> searchBox = new JComboBox<Object>();
-	
+
 	private JButton okButton;
 	private JButton cancelButton;
-	
+
 	private URLCreator urlCreator = URLCreator.getInstance();
 	private XMLParser xmlParser = XMLParser.getInstance();
 
 	private String oldSearch = "";
 	private boolean searching;
-	
+
 	public static GeoSearchPanel getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new GeoSearchPanel();
+		}
+
 		instance.setVisible(true);
+
 		return instance;
 	}
 
@@ -64,18 +67,18 @@ public final class GeoSearchPanel extends JPanel {
 		JPanel topPanel = new JPanel(new BorderLayout(4, 4));
 		topPanel.setOpaque(false);
 		topPanel.add(new JLabel("Find:"), BorderLayout.WEST);
-		topPanel.add(searchBox, BorderLayout.CENTER);
+		topPanel.add(this.searchBox, BorderLayout.CENTER);
 		add(topPanel, BorderLayout.NORTH);
-		add(resultPanel, BorderLayout.CENTER);
-		searchBox.setEditable(true);
-		Component editorComponent = searchBox.getEditor().getEditorComponent();
-		searchBox.addActionListener(new ActionListener() {
+		add(this.resultPanel, BorderLayout.CENTER);
+		this.searchBox.setEditable(true);
+		Component editorComponent = this.searchBox.getEditor().getEditorComponent();
+		this.searchBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				doSearch(searchBox.getSelectedItem());
 			}
 
 		});
+
 		if (editorComponent instanceof JTextField) {
 			final JTextField textField = (JTextField) editorComponent;
 			textField.addFocusListener(new FocusAdapter() {
@@ -84,85 +87,93 @@ public final class GeoSearchPanel extends JPanel {
 				}
 			});
 		}
-		
+
 		this.okButton = new JButton("Ok");
 		this.cancelButton = new JButton("Cancel");
 		this.okButton.setEnabled(false);
-		
+
 		JPanel buttonWrapper = new JPanel();
 		buttonWrapper.add(this.okButton);
 		buttonWrapper.add(this.cancelButton);
-		
+
 		add(buttonWrapper, BorderLayout.SOUTH);
 		createFrame();
 	}
-	
+
 	public void createFrame() {
-		frame = new JFrame();
-		frame.setPreferredSize(new Dimension(400,600));
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().add(this);
-		frame.pack();
-		frame.getContentPane().setVisible(true);
-		frame.setVisible(true);
+		GeoSearchPanel.frame = new JFrame();
+		GeoSearchPanel.frame.setPreferredSize(new Dimension(400,600));
+		GeoSearchPanel.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		GeoSearchPanel.frame.getContentPane().add(this);
+		GeoSearchPanel.frame.pack();
+		GeoSearchPanel.frame.getContentPane().setVisible(true);
+		GeoSearchPanel.frame.setVisible(true);
 	}
-	
+
 	@Override
 	public void setVisible(boolean state) {
 		super.setVisible(state);
-		if (frame != null)
+		if (frame != null) {
 			frame.setVisible(state);
+		}
 	}
-	
+
 	public void addOkButtonListener(ActionListener listener) {
 		this.okButton.addActionListener(listener); 
 	}
-	
+
 	public void addCancelButtonListener(ActionListener listener) {
 		this.cancelButton.addActionListener(listener);
 	}
-	
+
 	public void enableOkButton(boolean state) {
 		this.okButton.setEnabled(state);
 	}
 
 	public void doSearch(Object selectedItem) {
-		if (searching)
+		if (this.searching) {
 			return;
+		}
+
 		final String newSearch = selectedItem == null ? "" : selectedItem
 				.toString();
-		if (oldSearch.equals(newSearch))
+
+		if (this.oldSearch.equals(newSearch)) {
 			return;
-		oldSearch = newSearch;
-		Runnable r = new Runnable() {
+		}
+
+		this.oldSearch = newSearch;
+
+		Runnable runnable = new Runnable() {
 			public void run() {
 				doSearchInternal(newSearch);
 			}
 		};
-		searching = true;
-		searchBox.setEnabled(false);
-		searchBox.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-		Thread t = new Thread(r, "searcher " + newSearch);
-		t.start();
+		this.searching = true;
+		this.searchBox.setEnabled(false);
+		this.searchBox.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+		Thread thread = new Thread(runnable, "searcher " + newSearch);
+		thread.start();
 	}
 
 	private void doSearchInternal(final String newSearch) {
 		try {
 			// Create a URL for the desired page, and create objects for the searchResults
-			URL url = urlCreator.queryGeocodingURL(newSearch);
+			URL url = this.urlCreator.queryGeocodingURL(newSearch);
 			List<LocationObjectOther> locations = xmlParser.processGeocodingSearch(url);
-			resultPanel.addLocations(locations);
+			this.resultPanel.addLocations(locations);
 			this.setPreferredWidth();
 		} catch (Exception e) {
 			Log.getLogger().log(Level.SEVERE, "failed to search for \"" + newSearch + "\"", e);
 		}
-		
 
-		Runnable r = new Runnable() {
+
+		Runnable runnable = new Runnable() {
 			public void run() {
 				try {
-					DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) searchBox.getModel();
+					DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel)searchBox.getModel();
 					comboBoxModel.removeElement(newSearch);
 					comboBoxModel.addElement(newSearch);
 				} finally {
@@ -172,13 +183,15 @@ public final class GeoSearchPanel extends JPanel {
 				}
 			}
 		};
-		SwingUtilities.invokeLater(r);
+
+		SwingUtilities.invokeLater(runnable);
 	}
-	
+
 	public void setInitialSearchBoxText(final String text) {
-		if (text == null)
+		if (text == null) {
 			return;
-		
+		}
+
 		Object object = new Object() {
 			public String toString() { 
 				return text; 
@@ -186,15 +199,15 @@ public final class GeoSearchPanel extends JPanel {
 		};
 		this.searchBox.addItem(object);
 		this.searchBox.setSelectedItem(object);
-		
-		doSearch(searchBox.getSelectedItem());
+
+		doSearch(this.searchBox.getSelectedItem());
 	}
-	
+
 	private void setPreferredWidth() {
-		Dimension d = this.getPreferredSize();
-		d.width = resultPanel.getPreferredWidth() + 30;
+		Dimension dimension = this.getPreferredSize();
+		dimension.width = this.resultPanel.getPreferredWidth() + 30;
 	}
-	
+
 	public void addResultPanelMouseListener(MouseAdapter adapter) {
 		this.resultPanel.setMouseAdapter(adapter);
 	}

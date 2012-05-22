@@ -30,54 +30,50 @@ public class ConstrainedGrid extends JPanel {
 	private JPanel componentPanel;
 	private MouseAdapter mouseListener;
 
-    public ConstrainedGrid() {
-        this.setLayout(new BorderLayout(5,5));
-        this.setBorder(new EmptyBorder(3,3,3,3));
-        this.setBackground(Color.WHITE);
+	public ConstrainedGrid() {
+		this.setLayout(new BorderLayout(5,5));
+		this.setBorder(new EmptyBorder(3,3,3,3));
+		this.setBackground(Color.WHITE);
 
-        this.componentPanel = new JPanel(new GridLayout(0,1,3,3));
-        
-//        JPanel scrollPanel = new JPanel(new BorderLayout(2,2));
-//        scrollPanel.setBackground(Color.green);
-//        scrollPanel.add(new JLabel("Center"), BorderLayout.CENTER);
-        JScrollPane scrollPane = new JScrollPane(this.componentPanel);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.add(scrollPane, BorderLayout.CENTER);
+		this.componentPanel = new JPanel(new GridLayout(0,1,3,3));
+		JScrollPane scrollPane = new JScrollPane(this.componentPanel);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		this.add(scrollPane, BorderLayout.CENTER);
 
-//        this.componentPanel = new JPanel(new GridLayout(0,1,3,3));
-//        scrollPanel.add(this.componentPanel, BorderLayout.NORTH);
-        Dimension d = this.getPreferredSize();
-        d = new Dimension(d.width, d.height+100);
-        this.setPreferredSize(d);
-    }
-    
-    public void addComponent(JComponent component) {
-    	this.componentPanel.add(component);
-    	this.validate();
-    }
-    
-    public void addLocations(List<LocationObjectOther> locations) {
-    	if (locations == null)
-    		return;
-    	this.componentPanel.removeAll();
-    	GeoLocationPanel.resetColorScale();
-    	for (LocationObjectOther location : locations) {
-    		GeoLocationPanel panel = new GeoLocationPanel(location);
-    		if (this.mouseListener != null) 
-    			panel.addMouseListener(this.mouseListener);
-    		addComponent(panel);
-    	}
-    }
-    
-    /**
-     * Doesn't work
-     * @return
-     */
-    public int getPreferredWidth() {
-    	return this.componentPanel.getPreferredSize().width;
-    }
-    
-    public void setMouseAdapter(MouseAdapter adapter) {
-    	this.mouseListener = adapter;
-    }
+		Dimension dimension = this.getPreferredSize();
+		dimension = new Dimension(dimension.width, dimension.height+100);
+		this.setPreferredSize(dimension);
+	}
+
+	public void addComponent(JComponent component) {
+		this.componentPanel.add(component);
+		this.validate();
+	}
+
+	public void addLocations(List<LocationObjectOther> locations) {
+		if (locations == null) {
+			return;
+		}
+
+		this.componentPanel.removeAll();
+		GeoLocationPanel.resetColorScale();
+		for (LocationObjectOther location : locations) {
+			GeoLocationPanel panel = new GeoLocationPanel(location);
+			if (this.mouseListener != null) 
+				panel.addMouseListener(this.mouseListener);
+			addComponent(panel);
+		}
+	}
+
+	/**
+	 * Doesn't work
+	 * @return
+	 */
+	 public int getPreferredWidth() {
+		return this.componentPanel.getPreferredSize().width;
+	}
+
+	 public void setMouseAdapter(MouseAdapter adapter) {
+		 this.mouseListener = adapter;
+	 }
 }

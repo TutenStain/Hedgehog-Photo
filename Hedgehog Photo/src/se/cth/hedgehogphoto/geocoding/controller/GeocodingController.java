@@ -23,8 +23,10 @@ public class GeocodingController {
 	private PhotoPanel photoPanel;
 	
 	public static GeocodingController getInstance(GeoSearchPanel searchPanel) {
-		if (instance == null)
+		if (instance == null) {
 			instance = new GeocodingController(searchPanel);
+		}
+		
 		return instance;
 	}
 	
@@ -66,7 +68,7 @@ public class GeocodingController {
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			//set default-color again, works for selectedPanels also
+			/*set default-color again, works for selectedPanels also*/
 			if (arg0.getSource() instanceof GeoLocationPanel) {
 				GeoLocationPanel resultPanel = (GeoLocationPanel) arg0.getSource();
 				resultPanel.mouseExited();
@@ -75,11 +77,9 @@ public class GeocodingController {
 	}
 	
 	public class OkButtonListener implements ActionListener {
-		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (GeoLocationPanel.selectedPanel != null && photoPanel != null) {
-				
 				JpaPictureDao pictureDao = DaoFactory.getInstance().getJpaPictureDao();
 				Picture picture = pictureDao.findById(photoPanel.getPath());
 				LocationObjectOther location = GeoLocationPanel.selectedPanel.getLocationObjectOther();
@@ -92,7 +92,6 @@ public class GeocodingController {
 	}
 	
 	public class CancelButtonListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			searchPanel.setVisible(false);

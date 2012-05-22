@@ -40,17 +40,20 @@ public class XMLParser implements Runnable {
 	private Map<String, List<LocationObjectOther>> cachedSearchResults = new HashMap<String, List<LocationObjectOther>>();
 
 	public static synchronized XMLParser getInstance() {
-		if (xmlParser == null) 
+		if (xmlParser == null) {
 			xmlParser = new XMLParser();
+		}
+
 		return xmlParser;
 	}
 
 	private XMLParser() {
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		try {
-			docBuilder = docBuilderFactory.newDocumentBuilder();
+			this.docBuilder = docBuilderFactory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) { 
 			//processSearch can't run if this happens, since docBuilder is null
+			Log.getLogger().log(Level.SEVERE, "ParserConfigurationException", e);
 		}
 	}
 
@@ -58,12 +61,12 @@ public class XMLParser implements Runnable {
 		List<LocationObjectOther> locations = processGeocoding(xmlFileUrl, RequestType.GEOCODING_REQUEST);
 		return locations;
 	}
-	
+
 	public LocationObjectOther processReverseGeocodingSearch(URL xmlFileUrl) {
 		List<LocationObjectOther> list = processGeocoding(xmlFileUrl, RequestType.REVERSE_GEOCODING_REQUEST);
 		return (list == null || list.size() == 0) ? null : list.get(0); 
 	}
-	
+
 	/**
 	 * Processes an XML-file requested from the nominatim-server,
 	 * either from the geocoding, or the reverse-geocoding-service.
@@ -77,17 +80,19 @@ public class XMLParser implements Runnable {
 	 * search.
 	 */
 	public synchronized List<LocationObjectOther> processGeocoding(URL xmlFileUrl, RequestType type) {
-		if (xmlFileUrl == null || type == null)
+		if (xmlFileUrl == null || type == null) {
 			return new ArrayList<LocationObjectOther>();
-		
+		}
+
 		/* Check for cached search results first. */
-		if (this.cachedSearchResults.containsKey(xmlFileUrl.toString())) 
+		if (this.cachedSearchResults.containsKey(xmlFileUrl.toString())) {
 			return this.cachedSearchResults.get(xmlFileUrl.toString());
-		
+		}
+
 		try {
 			final String tagName = (type == RequestType.GEOCODING_REQUEST) ? "place" : "result";
-			
-			Document doc = docBuilder.parse(xmlFileUrl.toString()); 
+
+			Document doc = this.docBuilder.parse(xmlFileUrl.toString()); 
 
 			// normalize text representation
 			doc.getDocumentElement().normalize();
@@ -105,16 +110,16 @@ public class XMLParser implements Runnable {
 					String lat = placeElement.getAttribute("lat");
 					String lon = placeElement.getAttribute("lon");
 					String place = (type == RequestType.GEOCODING_REQUEST) ? 
-									placeElement.getAttribute("display_name") : 
-									placeElement.getTextContent();
-					
-					LocationObjectOther location = new LocationObjectOther(place);
-					try {
-						location.setLongitude(Double.parseDouble(lon));
-						location.setLatitude(Double.parseDouble(lat));
-						locations.add(location);
-					} catch (NumberFormatException nf) { //don't add location
-					}
+							placeElement.getAttribute("display_name") : 
+								placeElement.getTextContent();
+
+							LocationObjectOther location = new LocationObjectOther(place);
+							try {
+								location.setLongitude(Double.parseDouble(lon));
+								location.setLatitude(Double.parseDouble(lat));
+								locations.add(location);
+							} catch (NumberFormatException nf) { //don't add location
+							}
 				}
 			}
 			this.cachedSearchResults.put(xmlFileUrl.toString(), locations); //cache results
@@ -140,8 +145,8 @@ public class XMLParser implements Runnable {
 			Thread t = new Thread(this);
 			t.start();
 			try {
-				t.join(); //wait for sleep to finish before leaving the lock
-				//to this query-method
+				t.join(); /*wait for sleep to finish before leaving the lock
+				 *to this query-method*/
 			} catch (InterruptedException ie) {
 				Log.getLogger().log(Level.SEVERE, "Thread got interrupted.", ie);
 			}
@@ -155,8 +160,8 @@ public class XMLParser implements Runnable {
 	public void run() {
 		try {
 			Thread.sleep(1000);
-		} catch (InterruptedException ie) {
-			//should not happen :(
+		} catch (InterruptedException e) {
+			Log.getLogger().log(Level.SEVERE, "InterruptedException", e);
 		}
 	}
 

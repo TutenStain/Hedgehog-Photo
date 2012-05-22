@@ -22,24 +22,26 @@ public class URLCreator {
 	private static final String ADDRESS_DETAILS = "addressdetails=0";
 	private static final String EMAIL = "email=hedgehogphoto.chalmers@gmail.com";
 	private static final char AMPERSAND = '&';
-	
+
 	private static final String GEOCODING_REQUEST = "search?";
 	private static final String GEOCODING_QUERY = "q=";
-	
+
 	private static final String REVERSE_GEOCODING_REQUEST = "reverse?";
 	private static final String LONGITUDE_QUERY = "lon=";
 	private static final String LATITUDE_QUERY = "lat=";
 	private static final String ZOOM = "zoom=12";
-	
+
 	private URLCreator() {
 	}
-	
+
 	public static synchronized URLCreator getInstance() {
-		if (urlCreator == null)
+		if (urlCreator == null) {
 			urlCreator = new URLCreator();
+		}
+
 		return urlCreator;
 	}  
-	
+
 	public URL queryGeocodingURL(String query) {
 		initializeStringBuilder(RequestType.GEOCODING_REQUEST);
 		if (query == null) {
@@ -55,19 +57,19 @@ public class URLCreator {
 			return null;
 		}
 	}
-	
+
 	public URL queryReverseGeocodingURL(Point.Double coords) {
 		initializeStringBuilder(RequestType.REVERSE_GEOCODING_REQUEST);
 		if (coords == null) {
 			return null;
 		}
-		
+
 		this.builder.append(URLCreator.LONGITUDE_QUERY);
 		this.builder.append(coords.x);
 		this.builder.append(URLCreator.AMPERSAND);
 		this.builder.append(URLCreator.LATITUDE_QUERY);
 		this.builder.append(coords.y);
-		
+
 		try {
 			return new URL(this.builder.toString());
 		} catch (MalformedURLException e) {
@@ -75,7 +77,7 @@ public class URLCreator {
 			return null;
 		}
 	}
-	
+
 	private String encodeString(String string) {
 		try {
 			return URLEncoder.encode(string, "UTF-8");
@@ -85,7 +87,7 @@ public class URLCreator {
 		}
 	}
 
-	
+
 	/**
 	 * Initializes the string builder so that it contains 
 	 * all the necessary info that comes apart from the query
@@ -93,7 +95,7 @@ public class URLCreator {
 	 */
 	private void initializeStringBuilder(RequestType requestType) {
 		this.builder = new StringBuilder(URLCreator.NAMEFINDER_URL);
-		
+
 		switch (requestType) {
 		case GEOCODING_REQUEST: 
 			this.builder.append(URLCreator.GEOCODING_REQUEST);
@@ -103,16 +105,16 @@ public class URLCreator {
 			prepareBuilderForReverseGeocoding(); break;
 		default: break;
 		}
-		
+
 		//DO NOT ENCODE
 	}
-	
+
 	private void prepareBuilderForReverseGeocoding() {
-		prepareBuilder();
+		this.prepareBuilder();
 		this.builder.append(URLCreator.ZOOM);
 		this.builder.append(URLCreator.AMPERSAND);
 	}
-	
+
 	private void prepareBuilder() {
 		this.builder.append(URLCreator.XML_FORMAT);
 		this.builder.append(URLCreator.AMPERSAND);
@@ -121,7 +123,7 @@ public class URLCreator {
 		this.builder.append(URLCreator.EMAIL);
 		this.builder.append(URLCreator.AMPERSAND);
 	}
-	
-	
-	
+
+
+
 }

@@ -3,6 +3,9 @@ package se.cth.hedgehogphoto.global;
 import java.awt.Color;
 import java.awt.Toolkit;
 
+/**
+ * Constants used around the application
+ */
 public interface Constants {
 	public static final int PREFERRED_WINDOW_HEIGHT = 1000;
 	public static int PREFERRED_WINDOW_WIDTH = 500;

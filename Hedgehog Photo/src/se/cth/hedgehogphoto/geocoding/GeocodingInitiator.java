@@ -23,15 +23,11 @@ public class GeocodingInitiator {
 		GeocodingController controller = GeocodingController.getInstance(view);
 		view.setInitialSearchBoxText(initialSearch);
 		controller.setPhotoPanel(panel);
-		
-		
 	}
+	
 	public GeocodingInitiator(String initialSearch) {
 		GeoSearchPanel view = GeoSearchPanel.getInstance();
 		GeocodingController controller = GeocodingController.getInstance(view);
 		view.setInitialSearchBoxText(initialSearch);
-		//controller.setPhotoPanel(panel);
-		
-		
 	}
 }
