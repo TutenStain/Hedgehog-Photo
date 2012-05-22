@@ -157,6 +157,10 @@ public class MainView implements Observer {
 		}
 		return null;
 	}
+	
+	public void setHomeButtonListener(ActionListener l){
+		this.btnHome.addActionListener(l);
+	}
 
 	public void setCommentsButtonListener(ActionListener l){
 		this.btnshowHideComments.addActionListener(l);

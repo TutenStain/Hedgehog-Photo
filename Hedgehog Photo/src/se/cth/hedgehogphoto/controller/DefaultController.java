@@ -32,7 +32,15 @@ public class DefaultController {
 
 	public DefaultController(MainView v){
 		view = v;
+		
+		view.setHomeButtonListener(new ActionListener(){
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				DatabaseHandler.getInstance().updateAllPictures();
+			}
+			
+		});
 		view.setUploadPictureButtonListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
