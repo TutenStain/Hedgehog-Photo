@@ -15,6 +15,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import se.cth.hedgehogphoto.Constants;
 import se.cth.hedgehogphoto.metadata.PictureInserter;
 import se.cth.hedgehogphoto.view.ImageUtils;
 import se.cth.hedgehogphoto.view.MainView;
@@ -124,7 +125,20 @@ public class DefaultController {
 							
 						}
 						Image image = pp.getIcon().getImage();
-						BufferedImage bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
+						float scale;
+						BufferedImage bi;
+						if(image.getWidth(null) > Constants.MAX_PICTURE_WIDTH){
+							scale = Constants.MAX_PICTURE_WIDTH/image.getWidth(null);
+							bi = ImageUtils.resize(image, Math.round(Constants.MAX_PICTURE_WIDTH),
+									Math.round(image.getHeight(null)*scale));
+						}else if(image.getHeight(null) > Constants.MAX_PICTURE_HEIGHT){
+							scale = Constants.MAX_PICTURE_HEIGHT/image.getHeight(null);
+							bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
+									Math.round(Constants.MAX_PICTURE_HEIGHT));
+						}else{
+							bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
+						}
+						pp.setScaleDimension(new Dimension(bi.getWidth(), bi.getHeight()));
 						ImageIcon icon2 = new ImageIcon(bi);
 						pp.setIcon(icon2);
 						panel.add(pp);
@@ -145,13 +159,13 @@ public class DefaultController {
 					cl.show(cardPanel, "All");
 					view.setTopButtonsVisibility(false);
 					JPanel panel = view.getPhotoViewPanel();
-					List<PhotoPanel> ppList = view.getPhotoPanels();
-					//TODO not sure why this is needed
+					List<PhotoPanel> ppList = view.getPhotoPanels();					
 					for(int i=0;i<ppList.size();i++){
 						Image image = ppList.get(i).getIcon().getImage();
-						Dimension d = ppList.get(i).getScaleDimension();
-						BufferedImage bi = ImageUtils.resize(image, Math.round(d.width),
-								Math.round(d.height));
+						float scale = Constants.PREFERRED_PICTURE_HEIGHT/image.getHeight(null);
+						BufferedImage bi = ImageUtils.resize(image, Math.round(image.getWidth(null)*scale),
+								Math.round(Constants.PREFERRED_PICTURE_HEIGHT));
+						ppList.get(i).setScaleDimension(new Dimension(bi.getWidth(), bi.getHeight()));
 						ImageIcon icon2 = new ImageIcon(bi);
 						view.getPhotoPanels().get(i).setIcon(icon2);
 						panel.add(view.getPhotoPanels().get(i));

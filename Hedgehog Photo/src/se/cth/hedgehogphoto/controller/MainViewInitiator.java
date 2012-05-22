@@ -59,6 +59,7 @@ public class MainViewInitiator {
 				}else{
 					bi = ImageUtils.resize(image, image.getWidth(null), image.getHeight(null));
 				}
+				photoPanel.setScaleDimension(new Dimension(bi.getWidth(), bi.getHeight()));
 				ImageIcon icon2 = new ImageIcon(bi);
 				photoPanel.setIcon(icon2);
 				JPanel cardPanel = view.getCardPanel();
