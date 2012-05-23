@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import se.cth.hedgehogphoto.database.DaoFactory;
+import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.TagObject;
 import se.cth.hedgehogphoto.global.Constants;
 import se.cth.hedgehogphoto.model.PhotoPanelConstantsI;
@@ -43,7 +44,7 @@ public class PhotoPanel extends JPanel {
 	public PhotoPanel(String path) {
 		this.path = path;
 		this.nameTextField.setBackground(Color.LIGHT_GRAY);
-		this.setName(DaoFactory.getInstance().getJpaPictureDao().findById(path).getName());
+		this.setName(DatabaseHandler.getInstance().findPictureById(path).getName());
 		this.commentArea.setName(PhotoPanelConstantsI.COMMENT);
 		this.locationTextField.setName(PhotoPanelConstantsI.LOCATION);
 		this.nameTextField.setName(PhotoPanelConstantsI.NAME);

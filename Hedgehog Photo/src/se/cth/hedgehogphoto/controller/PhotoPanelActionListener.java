@@ -5,7 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 
-import se.cth.hedgehogphoto.database.DaoFactory;
+
+import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.JpaCommentDao;
 import se.cth.hedgehogphoto.database.JpaLocationDao;
 import se.cth.hedgehogphoto.database.JpaPictureDao;
@@ -14,8 +15,7 @@ import se.cth.hedgehogphoto.model.PhotoPanelConstantsI;
 import se.cth.hedgehogphoto.view.PhotoPanel;
 
 public class PhotoPanelActionListener implements ActionListener {
-	static DaoFactory daoFactory = DaoFactory.getInstance();
-	JpaPictureDao pictureDao = daoFactory.getJpaPictureDao();
+	
 
 	public PhotoPanelActionListener(){
 	}
@@ -27,7 +27,7 @@ public class PhotoPanelActionListener implements ActionListener {
 			if(cell.getName().equals(PhotoPanelConstantsI.COMMENT)){
 				if (cell.getParent() instanceof PhotoPanel) {
 					String path = ((PhotoPanel)cell.getParent()).getPath();
-					pictureDao.addComment( cell.getText(), path);
+					DatabaseHandler.getInstance().addCommenttoPicture( cell.getText(), path);
 					System.out.println("JTF" + cell.getText() +" " +  path);
 					System.out.print(new JpaCommentDao().getAll());
 				}
@@ -41,20 +41,20 @@ public class PhotoPanelActionListener implements ActionListener {
 			} else if(cell.getName().equals(PhotoPanelConstantsI.TAGS)){
 				if (cell.getParent() instanceof PhotoPanel) {
 					String path = ((PhotoPanel)cell.getParent()).getPath();
-					pictureDao.deleteTags(path);
+					DatabaseHandler.getInstance().deleteTagsfromPicture(path);
 					String[] tags = cell.getText().split(";");
 					for(int i = 0; i < tags.length; i++){
-						pictureDao.addTag(tags[i], path);
+						DatabaseHandler.getInstance().addTagtoPicture(tags[i], path);
 						System.out.println("JTF" +cell.getText());
 					}
-					System.out.print("ALL"+DaoFactory.getInstance().getJpaTagDao().getAll());
+				
 				}
 			} else if(cell.getName().equals(PhotoPanelConstantsI.NAME)){
 				if (cell.getParent() instanceof PhotoPanel) {
 					String path = ((PhotoPanel)cell.getParent()).getPath();
-					pictureDao.setName(cell.getText(), path);
+					DatabaseHandler.getInstance().setPictureName(cell.getText(), path);
 					System.out.println("JTF" +cell.getText());
-					System.out.print(pictureDao.findById(path));
+					System.out.print(DatabaseHandler.getInstance().findPictureById(path));
 
 				}
 			}

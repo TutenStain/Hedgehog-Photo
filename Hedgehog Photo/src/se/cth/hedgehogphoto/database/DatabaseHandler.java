@@ -22,7 +22,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	private JpaCommentDao commentDao;
 	private JpaLocationDao locationDao;
 	private JpaTagDao tagDao;
-	private JpaPictureDao pictureDao;
+	private JpaPictureDao pictureDao =  new JpaPictureDao();;
 
 	private EntityManager em;
 	private static DatabaseHandler db = null;
@@ -392,6 +392,14 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	@Override
 	public List<? extends PictureObject> findByDate(String search){
 		return pictureDao.findbyDate("date", search);
+	}
+	
+	public PictureObject findPictureById(String path){
+		return pictureDao.findById(path);
+	}
+	
+	public void setPictureName(String name,String path){
+		pictureDao.setName(name, path);
 	}
 }
 
