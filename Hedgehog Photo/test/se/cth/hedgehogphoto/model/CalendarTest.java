@@ -57,17 +57,5 @@ public class CalendarTest {
 		assertTrue(cm.getDayswithPicture().get(0) == 11);
 		
 	}
-	@Test
-	public void testSetpictureDays(){
-		 Map<Integer, List<Picture>> pictureDays = new HashMap<Integer, List<Picture>>();
-		int i = 1;
-		 List<Picture> pics = new ArrayList<Picture>();
-		 //pics.add(1);
-		 Picture p = new Picture();
-		 p.setPath("path");
-		 pics.add(p);
-		 pictureDays.put(i,pics);
-		 assertTrue(/*cm.getPictureDays().containsKey(i) && */cm.getPictureDays().get(i).get(0).equals(p)  /*.get(0).equals(pics)*/);
-		 
-	}
+
 }
