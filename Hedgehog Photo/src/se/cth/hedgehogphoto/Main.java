@@ -41,7 +41,7 @@ public class Main {
 		
 		//TODO Uncomment these the first run if you need to recreate the database
 //		DatabaseHandler.getInstance().deleteAll();
-//		insertFileObjectsIntoDatabase();
+	insertFileObjectsIntoDatabase();
 
 		MainViewInitiator mainView = new MainViewInitiator(start);
 		mainView.getMainModel().testNotify();
@@ -64,7 +64,7 @@ public class Main {
 			f.setLocationObject(new LocationGPSObject("Japan"));
 			f.setComment("Gutes bild");
 			f.setFileName(file.getName());
-			f.setDate("2012.05.19");
+			f.setDate("2012-05-19");
 			//Just some random tags to test the TagCloud
 			List<String> l = new ArrayList<String>();
 			l.add("Snyggt");

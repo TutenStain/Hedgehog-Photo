@@ -6,20 +6,26 @@ import java.awt.event.ActionListener;
 import se.cth.hedgehogphoto.calendar.model.CalendarModel;
 import se.cth.hedgehogphoto.database.DatabaseAccess;
 
-public class ButtonController implements ActionListener{
-	private CalendarModel model;
+
+
+public class ButtonController  implements ActionListener{
+	CalendarModel m;
 
 	public ButtonController(DatabaseAccess da){
-		 this.model = CalendarModel.getInstance(da);	
+		 m = CalendarModel.getInstance(da);
+
 	}
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Back")){
-			model.backwards();
+			m.backwards();
+			System.out.print("Back");
 		}if(e.getActionCommand().equals("Forward")){
-			model.forwards();
+			m.forwards();
+			System.out.print("Forwards");
 		}
+
+
 	}
 
 }

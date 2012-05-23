@@ -23,7 +23,7 @@ public class DatesView extends JPanel implements Observer{
 	private JPanel panel;
 	private DatabaseAccess da;
 	private Files files;
-	
+
 	private DatesView(DatabaseAccess da, Files files) {
 		this.files = files;
 		this.setPreferredSize(new Dimension(150,75));
@@ -35,37 +35,46 @@ public class DatesView extends JPanel implements Observer{
 		this.setVisible(true);
 		addDays();
 	}
-	
+
 	public static DatesView getInstance(DatabaseAccess da,Files files){
 		if(datesView==null){
 			datesView = new DatesView(da,files);
 		}
 		return datesView;
 	}
-	
+
 	public void addDays(){
 		this.removeAll();
 		this.panel.removeAll();
-		
+
 		for(int i = 1; i <= this.model.getMaxDays(); i++){
 			Button button = new Button(i + "");
+			button.setEnabled(false);
+			boolean isBlack = false;
 			for(Integer integer : this.model.getList()){
 				if(integer.equals(i)){
-					button.setEnabled(true);
+					System.out.print("Integer" + integer + "inrt" + i);
+					isBlack = true;
 					button.setBackground(Color.BLACK);
 					button.addActionListener(new DayController(this.da, this.model.getPictures(i), this.files));
 					button.setActionCommand("Day");
+				//	button.setEnabled(true);
+					this.revalidate();
 				}else{
-					button.setEnabled(false);
+				//	button.setEnabled(false);
 				}
 			}
 			button.setVisible(true);
+			if(isBlack)
+				button.setEnabled(true);
 			this.panel.add(button);
 			this.add(this.panel, BorderLayout.CENTER);
 			revalidate();
 		}
+		
+		revalidate();
 	}
-	
+
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		this.addDays();
