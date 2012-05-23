@@ -101,18 +101,23 @@ public class JPopupListItem extends JPanel implements JPopupItemI {
 			return;	
 		}
 
-		BufferedImage bi = ImageUtils.resize(new ImageIcon(getPicture().getPath()).getImage(), this.IMAGE_SIZE);
-		this.image.setIcon(new ImageIcon(bi));
-		this.comment.setText(getPicture().getComment().getComment());
-		
-		StringBuilder sb = new StringBuilder("");
-		List<? extends TagObject> tagList = getPicture().getTags();
-		for(TagObject tag : tagList){
-			sb.append(tag.getTag());
-			sb.append(' ');
+		/*If we for some reason should throw an exception while trying to zoom our image
+		 * to fit the preview window.*/
+		try {
+			BufferedImage bi = ImageUtils.resize(new ImageIcon(getPicture().getPath()).getImage(), this.IMAGE_SIZE);
+			this.image.setIcon(new ImageIcon(bi));
+			this.comment.setText(getPicture().getComment().getComment());
+			
+			StringBuilder sb = new StringBuilder("");
+			List<? extends TagObject> tagList = getPicture().getTags();
+			for(TagObject tag : tagList){
+				sb.append(tag.getTag());
+				sb.append(' ');
+			}
+			
+			this.tags.setText(sb.toString());
+		} catch (Exception e){
 		}
-		
-		this.tags.setText(sb.toString());
 	}
 	
 	@Override

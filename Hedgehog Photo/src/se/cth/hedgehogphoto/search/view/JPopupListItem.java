@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import javax.swing.JTextArea;
 
 import se.cth.hedgehogphoto.database.PictureObject;
 import se.cth.hedgehogphoto.database.TagObject;
+import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.view.ImageUtils;
 
 /**
@@ -102,19 +104,24 @@ public class JPopupListItem extends JPanel implements JPopupItemI {
 		if (this.picture == null){
 			return;	
 		}
-
-		BufferedImage bi = ImageUtils.resize(new ImageIcon(getPicture().getPath()).getImage(), this.IMAGE_SIZE);
-		this.image.setIcon(new ImageIcon(bi));
-		this.comment.setText(getPicture().getComment().getComment());
-		
-		StringBuilder sb = new StringBuilder("");
-		List<? extends TagObject> tagList = getPicture().getTags();
-		for(TagObject tag : tagList){
-			sb.append(tag.getTag());
-			sb.append(' ');
+		/*If we for some reason should throw an exception while trying to zoom our image
+		 * to fit the preview window. */
+		try {
+			BufferedImage bi = ImageUtils.resize(new ImageIcon(getPicture().getPath()).getImage(), this.IMAGE_SIZE);
+			this.image.setIcon(new ImageIcon(bi));
+			this.comment.setText(getPicture().getComment().getComment());
+			
+			StringBuilder sb = new StringBuilder("");
+			List<? extends TagObject> tagList = getPicture().getTags();
+			for(TagObject tag : tagList){
+				sb.append(tag.getTag());
+				sb.append(' ');
+			}
+			
+			this.tags.setText(sb.toString());
+		} catch (Exception e){
+			Log.getLogger().log(Level.SEVERE, "Exception", e);
 		}
-		
-		this.tags.setText(sb.toString());
 	}
 	
 	@Override
