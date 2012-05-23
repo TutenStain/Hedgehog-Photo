@@ -246,6 +246,10 @@ public class MainView implements Observer {
 					this.leftPanelView.add(panel, 2);
 				}
 			}
+			
+			/*Revalidate so we instantly refresh the view*/
+			this.leftPanelView.revalidate();
+			
 		} else {
 			Log.getLogger().log(Level.SEVERE, "Could not add plugin panel to the view, panel is null");
 		}
