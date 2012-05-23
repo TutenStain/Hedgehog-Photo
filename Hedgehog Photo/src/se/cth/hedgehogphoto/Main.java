@@ -40,11 +40,10 @@ public class Main {
 		}
 		
 		//TODO Uncomment these the first run if you need to recreate the database
-//		DatabaseHandler.getInstance().deleteAll();
-	insertFileObjectsIntoDatabase();
+		insertTestFileObjectsIntoDatabase();
 
 		MainViewInitiator mainView = new MainViewInitiator(start);
-		mainView.getMainModel().testNotify();
+		mainView.getMainModel().startNotify();
 		se.cth.hedgehogphoto.database.Files.getInstance().addObserver(mainView.getMainView());
 
 		File pluginRooDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "plugin");
@@ -53,7 +52,11 @@ public class Main {
 		pluginLoaderT.start();	
 	}
 	
-	private static void insertFileObjectsIntoDatabase() {
+	/**
+	 * Just adds the pictures in the supplied Pictures folder to the program
+	 * with some "random" tags, comment, location and date.
+	 */
+	private static void insertTestFileObjectsIntoDatabase() {
 		
 		File directory = new File("Pictures");
 		File[] files = directory.listFiles();

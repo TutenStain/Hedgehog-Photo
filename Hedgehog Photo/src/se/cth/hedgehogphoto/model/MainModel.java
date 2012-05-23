@@ -20,7 +20,7 @@ public class MainModel extends Observable {
 		return this.images;
 	}
 	
-	public void testNotify() {
+	public void startNotify() {
 		setChanged();
 		notifyObservers(this);
 	}
