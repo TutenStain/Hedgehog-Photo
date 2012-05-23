@@ -9,7 +9,6 @@ import java.util.List;
  */
 
 public interface PictureDao extends Dao<Picture, String> {
-	
 	public void deleteLocation(String filePath);
 	public void deleteComment(String filePath);
 	public void deleteTags(String filePath);

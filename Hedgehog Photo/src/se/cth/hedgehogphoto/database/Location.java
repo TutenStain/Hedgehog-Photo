@@ -25,7 +25,7 @@ public class Location implements LocationObject, LocationI {
 
 	@Override
 	public double getLongitude() {
-		return longitude;
+		return this.longitude;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class Location implements LocationObject, LocationI {
 
 	@Override
 	public double getLatitude() {
-		return latitude;
+		return this.latitude;
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class Location implements LocationObject, LocationI {
 
 	@Override
 	public List<? extends PictureI> getPictures() {
-		return pictures;
+		return this.pictures;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -61,17 +61,17 @@ public class Location implements LocationObject, LocationI {
 
 	@Override
 	public String getLocation() {
-		return location;
+		return this.location;
 	}
 
 	@Override
 	public String getLocationasString(){
-		return location;
+		return this.location;
 	}
 
 	@Override
 	public List<? extends AlbumI> getAlbums() {
-		return albums;
+		return this.albums;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -97,5 +97,4 @@ public class Location implements LocationObject, LocationI {
 	public String toString() {
 		return "[Location=" + location+ " Longitude= " + longitude + " Latitude= " + latitude+ "] ";
 	}
-
 }

@@ -39,7 +39,7 @@ public class Tag implements TagObject, TagI {
 
 	@Override
 	public List<Album> getAlbums() {
-		return albums;
+		return this.albums;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -50,7 +50,7 @@ public class Tag implements TagObject, TagI {
 
 	@Override
 	public List<? extends PictureI> getPictures() {
-		return pictures;
+		return this.pictures;
 	}
 
 	@Override

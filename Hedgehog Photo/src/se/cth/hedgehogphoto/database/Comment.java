@@ -23,7 +23,7 @@ public class Comment implements CommentObject, CommentI {
 
 	@Override
 	public List<Picture> getPictures() {
-		return pictures;
+		return this.pictures;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -39,18 +39,12 @@ public class Comment implements CommentObject, CommentI {
 
 	@Override
 	public String getComment() {
-		return comment;
-	}
-
-
-	@Override
-	public String toString() {
-		return " [Comment= " + comment+ "] ";
+		return this.comment;
 	}
 
 	@Override
 	public List<Album> getAlbums() {
-		return albums;
+		return this.albums;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -60,9 +54,8 @@ public class Comment implements CommentObject, CommentI {
 	}
 	
 	@Override
-	public String getCommentAsString(){
-		return comment;
+	public String toString() {
+		return " [Comment= " + comment+ "] ";
 	}
-
 }
 

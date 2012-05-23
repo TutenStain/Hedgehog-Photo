@@ -1,11 +1,14 @@
 package se.cth.hedgehogphoto.database;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import se.cth.hedgehogphoto.log.Log;
 /**
  * 
  * @author Julia
@@ -35,16 +38,16 @@ public class Album implements AlbumObject, AlbumI {
 	
 	@Override
 	public List<Tag> getTags() {
-		return tags;
+		return this.tags;
 	}
+	
 	protected void setTags(List<Tag> tags) {
 		this.tags = tags;
-	
 	}
 
 	@Override
 	public Comment getComment() {
-		return comment;
+		return this.comment;
 	}
 	
 	protected void setComment(Comment comment) {
@@ -53,7 +56,7 @@ public class Album implements AlbumObject, AlbumI {
 
 	@Override
 	public Location getLocation() {
-		return location;
+		return this.location;
 	}
 
 	protected void setLocation(Location location) {
@@ -62,7 +65,7 @@ public class Album implements AlbumObject, AlbumI {
 	
 	@Override
 	public String getDate() {
-		return date;
+		return this.date;
 	}
 
 	protected void setDate(String date) {
@@ -71,7 +74,7 @@ public class Album implements AlbumObject, AlbumI {
 	
 	@Override
 	public List<? extends PictureI> getPictures() {		
-		return pictures;
+		return this.pictures;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -82,7 +85,7 @@ public class Album implements AlbumObject, AlbumI {
 	
 	@Override
 	public String getAlbumName() {
-		return albumName;
+		return this.albumName;
 	}
 	
 	protected void setAlbumName(String albumName) {
@@ -91,7 +94,7 @@ public class Album implements AlbumObject, AlbumI {
 	
 	@Override
 	public String getCoverPath() {
-		return coverPath;
+		return this.coverPath;
 	}
 
 	@Override
@@ -102,10 +105,11 @@ public class Album implements AlbumObject, AlbumI {
 	@Override
 	public String toString() {
 		try{
-		tags.size();
-		}catch(Exception o){
-			
+			tags.size();
+		}catch(Exception e){
+			Log.getLogger().log(Level.SEVERE, "Exception", e); 
 		}
+		
 		return " Album [CoverPath=  " + coverPath+ ", AlbumName= " + albumName + "Location= " + location + "Comment= "+ comment + "Tags= " + tags +"Date= " + date+  "] ";
 	}
 }

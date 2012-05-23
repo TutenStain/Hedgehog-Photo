@@ -12,7 +12,4 @@ public interface CommentObject {
 	public String getComment();
 
 	public List<? extends AlbumI> getAlbums();
-
-	public String getCommentAsString();
-
 }

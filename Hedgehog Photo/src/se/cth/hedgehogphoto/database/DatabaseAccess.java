@@ -2,6 +2,10 @@ package se.cth.hedgehogphoto.database;
 
 import java.util.List;
 
+/**
+ * The interface that the pugins use to comminicate with the database.
+ * This gets set by the pluginloader.
+ */
 public interface DatabaseAccess {
 	public List<String> getTags(); 
 	public void updateSearchPicturesfromTags(String tag);

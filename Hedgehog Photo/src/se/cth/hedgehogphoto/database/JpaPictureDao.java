@@ -24,12 +24,10 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	private static List<AlbumObject> albumList = files.getAlbumList();
 	private static List<PictureObject> pictureList = files.getPictureList();
 
-
-
 	@Override
 	public  List<? extends PictureI> searchfromComments(String search){
 		if(!(search.equals(""))){
-			List<Comment> commments = commentDao.findByLike("comment", search);
+			List<Comment> commments = this.commentDao.findByLike("comment", search);
 			if(commments != null){
 				List<Picture> pictures = new ArrayList<Picture>();
 				for(CommentObject c: commments){
@@ -52,7 +50,6 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		}
 	}
 
-
 	@Override
 	public List<? extends PictureI> searchfromDates(String search){
 		if(!(search.equals(""))){
@@ -62,17 +59,15 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 		}
 	}
 
-
-
 	@Override
 	public List<? extends PictureI> searchfromTags(String search){
 		if(!(search.equals(""))){
-			List<Tag> tags = tagDao.findByLike("tag", search);
+			List<Tag> tags = this.tagDao.findByLike("tag", search);
 			List<? extends PictureI> pictures = new ArrayList<Picture>();
 			if(!(tags.isEmpty())){
 				for(TagI t: tags){
 					try{
-						for(TagI tag: tagDao.getAll()){
+						for(TagI tag: this.tagDao.getAll()){
 							if(tag.getTag().equals(t.getTag())){
 								pictures =  tag.getPictures();
 							}
@@ -90,7 +85,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 	public List<? extends PictureI> searchfromLocations(String search){
 		if(!(search.equals(""))){
 			List<Picture> 	pictures = new ArrayList<Picture>();
-			List<Location> locations = locationDao.findByLike("location", search);
+			List<Location> locations = this.locationDao.findByLike("location", search);
 			if(!(locations.isEmpty())){
 				for(LocationObject l:locations){
 					pictures.addAll(findByEntity(l, "se.cth.hedgehogphoto.database.Location"));
@@ -120,14 +115,13 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 				tags = new ArrayList<TagI>();
 			}
 
-			Tag tagg = tagDao.findById(tag);
+			Tag tagg = this.tagDao.findById(tag);
 			if(tagg != null){
 				List<PictureI> pics = new ArrayList<PictureI>();
 				try{
 					pics = (List<PictureI>) tagg.getPictures();
 				}catch(Exception i){
 					Log.getLogger().log(Level.INFO, "Couldn't get any pictures from Tag " + tagg);
-
 				}
 				if(!(pics.contains(picture))){
 					beginTransaction();
@@ -135,7 +129,7 @@ public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao
 					tagg.setPictures(pics);
 					tags.add(tagg);
 					picture.setTags(tags);
-					tagDao.persist(tagg);
+					this.tagDao.persist(tagg);
 					commitTransaction();	
 				}
 			}else{

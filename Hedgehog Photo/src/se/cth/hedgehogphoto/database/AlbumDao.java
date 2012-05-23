@@ -6,7 +6,6 @@ public interface AlbumDao extends Dao<Album,String>{
 	
 	public List<? extends AlbumI> getAllAlbums();
 
-
 	public List<? extends AlbumI> searchfromDates(String search);
 
 	public List<? extends AlbumI> searchfromNames(String search);
@@ -28,5 +27,6 @@ public interface AlbumDao extends Dao<Album,String>{
 	public void deleteLocation(String albumName);
 
 	public void deleteTags(String albumName);
+	
 	public void deletePicture(String filePath);
 }

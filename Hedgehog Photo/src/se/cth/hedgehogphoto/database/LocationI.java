@@ -8,7 +8,7 @@ import java.util.List;
  * is a complete accessor interface to the database. 
  */
 public interface LocationI extends LocationObject {
-
+	
 	public void setLongitude(double lon);
 
 	public void setLatitude(double lat);

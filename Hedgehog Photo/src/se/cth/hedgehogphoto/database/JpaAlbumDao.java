@@ -15,16 +15,14 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		super();
 	}
 
-
-	
 	@Override
 	public List<? extends AlbumI> getAllAlbums(){
 		return getAll();
 	}
-	
 
 
-	
+
+
 	@Override
 	public List<? extends AlbumI> searchfromDates(String search){
 		if(search.equals("")){
@@ -34,7 +32,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 	}
 
-	
+
 	@Override
 	public List<? extends AlbumI> searchfromNames(String search){
 		if(search.equals("")){
@@ -44,7 +42,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 
 	}
-	
+
 
 	@Override
 	public List<? extends AlbumI> searchfromComments(String search){
@@ -60,7 +58,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 		return null;
 	}
-	
+
 
 	@Override
 	public List<? extends AlbumI> searchfromTags(String search){
@@ -76,7 +74,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 		return null;
 	}
-	
+
 
 	@Override
 	public List<? extends AlbumI> searchfromLocations(String search){
@@ -93,7 +91,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		return null;
 	}
 
-	
+
 	@Override
 	public void addTag(String tag, String albumName){
 		Album album = findById(albumName);
@@ -128,7 +126,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 
 	}
-	
+
 
 
 	@Override
@@ -164,7 +162,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 			}
 		}
 	}
-	
+
 
 
 	@Override
@@ -203,7 +201,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 		}
 
 	}
-	
+
 
 	@Override
 	public void deleteComment(String albumName){
@@ -219,7 +217,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 			commitTransaction();
 		}
 	}
-	
+
 
 	@Override
 	public void deleteLocation(String albumName){
@@ -236,7 +234,7 @@ public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 	}
 
 
-	
+
 	@Override
 	public void deleteTags(String albumName){
 		albumName = albumName.toLowerCase();

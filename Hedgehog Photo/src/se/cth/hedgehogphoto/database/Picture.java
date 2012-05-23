@@ -18,7 +18,7 @@ public class Picture implements PictureObject, PictureI {
 	private String path;
 	private String name;
 	private String date;
-	
+
 	@ManyToOne
 	private Album album;
 
@@ -27,7 +27,7 @@ public class Picture implements PictureObject, PictureI {
 
 	@ManyToOne
 	private Comment comment;
-	
+
 	@ManyToOne
 	private Location location;
 
@@ -35,7 +35,7 @@ public class Picture implements PictureObject, PictureI {
 	public List<? extends TagI> getTags() {
 		return tags;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setTags(List<? extends TagI> tags) {
@@ -44,9 +44,9 @@ public class Picture implements PictureObject, PictureI {
 
 	@Override
 	public Comment getComment() {
-		return comment;
+		return this.comment;
 	}
-	
+
 	@Override
 	public void setComment(CommentI comment) {
 		this.comment = (Comment) comment;
@@ -54,17 +54,17 @@ public class Picture implements PictureObject, PictureI {
 
 	@Override
 	public LocationI getLocation() {
-		return location;
+		return this.location;
 	}
 
 	@Override
 	public void setLocation(LocationI location) {
 		this.location = (Location) location;
 	}
-	
+
 	@Override
 	public String getDate() {
-		return date;
+		return this.date;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class Picture implements PictureObject, PictureI {
 
 	@Override
 	public Album getAlbum() {
-		return album;
+		return this.album;
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class Picture implements PictureObject, PictureI {
 
 	@Override
 	public String getPath() {
-		return path;
+		return this.path;
 	}
 
 	@Override
@@ -94,9 +94,9 @@ public class Picture implements PictureObject, PictureI {
 
 	@Override
 	public String getName() {
-		return name;
+		return this.name;
 	}
-	
+
 	@Override
 	public void setName(String name) {
 		this.name = name;
@@ -107,5 +107,4 @@ public class Picture implements PictureObject, PictureI {
 		return "Pictures [Path= " + path + " Name=" + name + " Date= " + date
 				+  album  + " Taggar" + tags + comment  +  location +"]";
 	}
-
 }

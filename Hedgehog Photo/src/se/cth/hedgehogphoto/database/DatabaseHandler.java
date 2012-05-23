@@ -45,13 +45,9 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		this.locationDao = new JpaLocationDao();
 		this.tagDao = new JpaTagDao();
 		this.pictureDao = new JpaPictureDao();
-		em = Entity.entityManager;
+		this.em = Entity.entityManager;
 	}
 
-	/**
-	 * A method that return all tags in the database as strings.
-	 * @return List<String>
-	 */
 	public List<String> getTags(){
 		List<Tag> tags = this.tagDao.getAll();
 		List<String> taggs = new ArrayList<String>();
@@ -60,10 +56,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		}
 		return taggs;
 	}
-	/**
-	 * return all locations as Strings
-	 * @return List<String>
-	 */
+
 	public List<String> getLocations(){
 		List<Location> location = this.locationDao.getAll();
 		List<String> locations = new ArrayList<String>();
@@ -390,6 +383,7 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 	public void deleteTagsfromAlbum(String albumName){
 		this.albumDao.deleteTags(albumName);
 	}
+	
 	@Override
 	public List<? extends PictureObject> findByDate(String search){
 		return pictureDao.findbyDate("date", search);
