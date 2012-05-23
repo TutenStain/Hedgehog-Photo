@@ -9,23 +9,19 @@ import se.cth.hedgehogphoto.database.DatabaseAccess;
 
 
 public class ButtonController  implements ActionListener{
-	CalendarModel m;
+	CalendarModel model;
 
 	public ButtonController(DatabaseAccess da){
-		 m = CalendarModel.getInstance(da);
+		 model = CalendarModel.getInstance(da);
 
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Back")){
-			m.backwards();
-			System.out.print("Back");
+			model.backwards();
 		}if(e.getActionCommand().equals("Forward")){
-			m.forwards();
-			System.out.print("Forwards");
+			model.forwards();
 		}
-
-
 	}
-
 }

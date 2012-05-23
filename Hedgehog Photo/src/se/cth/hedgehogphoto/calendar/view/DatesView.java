@@ -21,19 +21,19 @@ public class DatesView extends JPanel implements Observer{
 	private static DatesView datesView;
 	private CalendarModel model;
 	private JPanel panel;
-	private DatabaseAccess da;
+	private DatabaseAccess db;
 	private Files files;
 
-	private DatesView(DatabaseAccess da, Files files) {
+	private DatesView(DatabaseAccess db, Files files) {
 		this.files = files;
-		this.setPreferredSize(new Dimension(150,75));
-		this.setLayout(new BorderLayout());
-		this.model = CalendarModel.getInstance(da);
+		this.model = CalendarModel.getInstance(db);
 		this.model.addObserver(this);
 		this.panel = new JPanel();
 		this.panel.setLayout(new GridLayout(5,7));
+		this.setPreferredSize(new Dimension(150,75));
+		this.setLayout(new BorderLayout());
 		this.setVisible(true);
-		addDays();
+		this.addDays();
 	}
 
 	public static DatesView getInstance(DatabaseAccess da,Files files){
@@ -53,22 +53,22 @@ public class DatesView extends JPanel implements Observer{
 			boolean isBlack = false;
 			for(Integer integer : this.model.getList()){
 				if(integer.equals(i)){
-					System.out.print("Integer" + integer + "inrt" + i);
 					isBlack = true;
 					button.setBackground(Color.BLACK);
-					button.addActionListener(new DayController(this.da, this.model.getPictures(i), this.files));
+					button.addActionListener(new DayController(this.db, this.model.getPictures(i), this.files));
 					button.setActionCommand("Day");
-				//	button.setEnabled(true);
 					this.revalidate();
 				}else{
-				//	button.setEnabled(false);
 				}
 			}
 			button.setVisible(true);
-			if(isBlack)
+			if(isBlack) {
 				button.setEnabled(true);
+			}
+			
 			this.panel.add(button);
 			this.add(this.panel, BorderLayout.CENTER);
+			
 			revalidate();
 		}
 		

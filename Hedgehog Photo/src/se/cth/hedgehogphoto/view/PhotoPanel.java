@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import se.cth.hedgehogphoto.database.DaoFactory;
 import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.TagObject;
 import se.cth.hedgehogphoto.global.Constants;

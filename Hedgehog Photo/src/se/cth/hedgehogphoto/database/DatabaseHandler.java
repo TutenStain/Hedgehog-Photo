@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import se.cth.hedgehogphoto.objects.FileObject;
+import se.cth.hedgehogphoto.objects.LocationGPSObject;
 
 /**
  * 
@@ -394,12 +395,16 @@ public class DatabaseHandler implements DatabaseAccess, Runnable{
 		return pictureDao.findbyDate("date", search);
 	}
 	
-	public PictureObject findPictureById(String path){
+	public Picture findPictureById(String path){
 		return pictureDao.findById(path);
 	}
 	
 	public void setPictureName(String name,String path){
 		pictureDao.setName(name, path);
+	}
+	
+	public void setLocationtoPicture(LocationGPSObject location,Picture picture){
+		pictureDao.setLocation(location, picture);
 	}
 }
 

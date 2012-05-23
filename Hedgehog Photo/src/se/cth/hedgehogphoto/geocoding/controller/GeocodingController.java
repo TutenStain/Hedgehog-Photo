@@ -5,9 +5,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import se.cth.hedgehogphoto.database.DaoFactory;
+import se.cth.hedgehogphoto.database.DatabaseHandler;
 import se.cth.hedgehogphoto.database.JpaPictureDao;
+import se.cth.hedgehogphoto.database.LocationI;
 import se.cth.hedgehogphoto.database.Picture;
+import se.cth.hedgehogphoto.database.PictureI;
 import se.cth.hedgehogphoto.geocoding.view.GeoLocationPanel;
 import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
 import se.cth.hedgehogphoto.objects.LocationGPSObject;
@@ -80,11 +82,10 @@ public class GeocodingController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (GeoLocationPanel.selectedPanel != null && photoPanel != null) {
-				JpaPictureDao pictureDao = DaoFactory.getInstance().getJpaPictureDao();
-				Picture picture = pictureDao.findById(photoPanel.getPath());
+				Picture picture = (Picture) DatabaseHandler.getInstance().findPictureById(photoPanel.getPath());
 				LocationGPSObject location = GeoLocationPanel.selectedPanel.getLocationObjectOther();
 				
-				pictureDao.setLocation(location, picture);
+				DatabaseHandler.getInstance().setLocationtoPicture(location, picture);
 				photoPanel.setLocation(location.getLocation());
 				searchPanel.setVisible(false);
 			}
