@@ -6,10 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
-import se.cth.hedgehogphoto.database.JpaPictureDao;
-import se.cth.hedgehogphoto.database.LocationI;
 import se.cth.hedgehogphoto.database.Picture;
-import se.cth.hedgehogphoto.database.PictureI;
 import se.cth.hedgehogphoto.geocoding.view.GeoLocationPanel;
 import se.cth.hedgehogphoto.geocoding.view.GeoSearchPanel;
 import se.cth.hedgehogphoto.objects.LocationGPSObject;

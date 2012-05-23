@@ -8,7 +8,6 @@ import javax.swing.JTextField;
 
 
 import se.cth.hedgehogphoto.database.DatabaseHandler;
-import se.cth.hedgehogphoto.database.JpaPictureDao;
 import se.cth.hedgehogphoto.geocoding.GeocodingInitiator;
 import se.cth.hedgehogphoto.model.PhotoPanelConstantsI;
 import se.cth.hedgehogphoto.view.PhotoPanel;
