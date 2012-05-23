@@ -4,7 +4,11 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.persistence.Query;
-
+/**
+ * 
+ * @author Julia
+ *
+ */
 
 public abstract class JpaDao<E,K> implements Dao<E,K>,Entity {
 
@@ -13,22 +17,6 @@ public abstract class JpaDao<E,K> implements Dao<E,K>,Entity {
 	public JpaDao() {
 		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 		this.entityClass = (Class<?>) genericSuperclass.getActualTypeArguments()[0];
-
-		/*Album album = new Album();
-			beginTransaction();
-			album.setAlbumName("Lallanarnsstggdfgadrxsfsllgkaafsglsdgggssra");
-			album.setDate("d");
-			/*Comment com = new Comment();
-			com.setComment("majsalsfssrlsgsssrnsdataaalra");
-			List<Album> albums = new ArrayList<Album>();
-			albums.add(album);
-			com.setAlbums(albums);
-			album.setComment(com);
-			 entityManager.persist(com);*/
-		/* entityManager.persist(album);
-			 commitTransaction();
-		 */
-
 
 	}
 	public void beginTransaction() { entityManager.getTransaction().begin(); }

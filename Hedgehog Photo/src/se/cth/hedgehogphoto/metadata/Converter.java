@@ -10,7 +10,11 @@ import se.cth.hedgehogphoto.geocoding.model.URLCreator;
 import se.cth.hedgehogphoto.geocoding.model.XMLParser;
 import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.LocationGPSObject;
-
+/**
+ * 
+ * @author Julia
+ *
+ */
 public class Converter {
 	
 

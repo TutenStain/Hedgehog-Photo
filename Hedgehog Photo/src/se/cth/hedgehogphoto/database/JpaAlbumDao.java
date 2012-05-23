@@ -2,7 +2,11 @@ package se.cth.hedgehogphoto.database;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 
+ * @author Julia
+ *
+ */
 public class JpaAlbumDao  extends JpaDao<Album, String> implements AlbumDao{
 	private static Files files = Files.getInstance();
 	private static List<AlbumObject> albumList = files.getAlbumList();

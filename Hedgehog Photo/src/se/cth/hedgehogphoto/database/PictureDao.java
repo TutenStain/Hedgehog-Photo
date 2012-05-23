@@ -2,6 +2,12 @@ package se.cth.hedgehogphoto.database;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Julia
+ *
+ */
+
 public interface PictureDao extends Dao<Picture, String> {
 	
 	public void deleteLocation(String filePath);

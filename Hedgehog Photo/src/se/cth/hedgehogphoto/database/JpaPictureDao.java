@@ -1,10 +1,6 @@
 package se.cth.hedgehogphoto.database;
 
 
-
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,6 +9,11 @@ import se.cth.hedgehogphoto.log.Log;
 import se.cth.hedgehogphoto.objects.FileObject;
 import se.cth.hedgehogphoto.objects.LocationGPSObject;
 
+/**
+ * 
+ * @author Julia
+ *
+ */
 public class JpaPictureDao extends JpaDao<Picture, String> implements PictureDao {
 	private static JpaAlbumDao albumDao = new JpaAlbumDao();
 	private static JpaCommentDao commentDao = new JpaCommentDao();
