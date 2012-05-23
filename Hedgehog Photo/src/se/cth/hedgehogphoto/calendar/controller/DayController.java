@@ -31,7 +31,7 @@ public class DayController implements ActionListener{
 		files = Files.getInstance();
 		files.setPictureList(pc);//SÄTT LISTA FILES TILL DETTA
 		System.out.print("Get Picture" + pc);
-		CalendarModel.getInstance(DatabaseHandler.getInstance()).importDates();
+	
 		}
 	}
 
