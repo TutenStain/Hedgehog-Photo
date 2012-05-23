@@ -13,7 +13,7 @@ import se.cth.hedgehogphoto.model.PhotoPanelConstantsI;
 import se.cth.hedgehogphoto.view.PhotoPanel;
 
 public class PhotoPanelFocusListener implements FocusListener {
-	
+
 	private String oldString;
 
 	public PhotoPanelFocusListener(){
@@ -34,16 +34,7 @@ public class PhotoPanelFocusListener implements FocusListener {
 			JTextField cell = (JTextField) e.getSource();
 
 			if (this.oldString.equals(cell.getText())) {
-				//string did not change, do not update
-			}/* else if(cell.getName().equals(PhotoPanelConstantsI.COMMENT)){
-				if (cell.getParent() instanceof PhotoPanel) {
-					String path = ((PhotoPanel)cell.getParent()).getPath();			
-					pictureDao.addComment(cell.getText(), path);
-					System.out.println("JTF" +cell.getText());
-					System.out.println(pictureDao.findById(path));
-				}
-
-			}*/ else if(cell.getName().equals(PhotoPanelConstantsI.LOCATION)){
+			} else if(cell.getName().equals(PhotoPanelConstantsI.LOCATION)){
 				if (cell.getParent() instanceof PhotoPanel) {
 					PhotoPanel panel = (PhotoPanel) cell.getParent();	
 					new GeocodingInitiator(cell.getText(), panel);
@@ -52,8 +43,6 @@ public class PhotoPanelFocusListener implements FocusListener {
 				if (cell.getParent() instanceof PhotoPanel) {
 					String path = ((PhotoPanel)cell.getParent()).getPath();	
 					DatabaseHandler.getInstance().setPictureName(cell.getText(), path);
-					System.out.println("JTF" +cell.getText());
-					System.out.println(	DatabaseHandler.getInstance().findPictureById(path));
 				}
 			} else if(cell.getName().equals(PhotoPanelConstantsI.TAGS)){
 				if (cell.getParent() instanceof PhotoPanel) {
@@ -63,23 +52,19 @@ public class PhotoPanelFocusListener implements FocusListener {
 					String[] tags = jtf.getText().split(";");
 					for(int i = 0; i < tags.length; i++){
 						DatabaseHandler.getInstance().addTagtoPicture(tags[i], path);
-						System.out.println("JTF" +jtf.getText());
 					}
-	
 				}
 			}
 		}
 		if (e.getSource() instanceof JTextArea) {
 			JTextArea cell = (JTextArea) e.getSource();
 
-		if(cell.getName().equals(PhotoPanelConstantsI.COMMENT)){
-			if (cell.getParent() instanceof PhotoPanel) {
-				String path = ((PhotoPanel)cell.getParent()).getPath();			
-				DatabaseHandler.getInstance().addCommenttoPicture(cell.getText(), path);
-				System.out.println("JTF" +cell.getText());
-				System.out.println(DatabaseHandler.getInstance().findPictureById(path));
+			if(cell.getName().equals(PhotoPanelConstantsI.COMMENT)){
+				if (cell.getParent() instanceof PhotoPanel) {
+					String path = ((PhotoPanel)cell.getParent()).getPath();			
+					DatabaseHandler.getInstance().addCommenttoPicture(cell.getText(), path);
+				}
 			}
 		}
 	}
-}
 }

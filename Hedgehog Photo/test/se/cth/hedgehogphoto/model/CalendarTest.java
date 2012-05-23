@@ -2,59 +2,57 @@ package se.cth.hedgehogphoto.model;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import se.cth.hedgehogphoto.calendar.model.CalendarModel;
-import se.cth.hedgehogphoto.database.Picture;
 public class CalendarTest {
-	private CalendarModel cm;
+	private CalendarModel model;
 	
 	@Before
 	public void setUp(){
-		cm = CalendarModel.getInstance(null);
+		model = CalendarModel.getInstance(null);
 		
 	}
 	
 	@Test
 	public void testSetMonth(){
-		cm.setMonth(12);
-		int month = cm.getMonth();
+		model.setMonth(12);
+		int month = model.getMonth();
 		assertTrue(month == 12);
 	}
 	@Test
 	public void testSetYear(){
-		cm.setYear(12);
-		int year = cm.getYear();
+		model.setYear(12);
+		int year = model.getYear();
 		assertTrue(year == 12);
 	}
 	
 	@Test
 	public void testForwars(){
-		cm.setYear(2011);
-		cm.setMonth(12);
-		cm.forwards();
-		assertTrue(cm.getMaxDays() == 31 && cm.getMonth() == 1 && cm.getYear() == 2012);
+		model.setYear(2011);
+		model.setMonth(12);
+		model.forwards();
+		assertTrue(model.getMaxDays() == 31 && model.getMonth() == 1 && model.getYear() == 2012);
 		
 	}
 	@Test
 	public void testBackwards(){
-		cm.setYear(2011);
-		cm.setMonth(12);
-		cm.backwards();
-		assertTrue(cm.getMaxDays() == 30 && cm.getMonth() == 11 && cm.getYear() == 2011);
+		model.setYear(2011);
+		model.setMonth(12);
+		model.backwards();
+		assertTrue(model.getMaxDays() == 30 && model.getMonth() == 11 && model.getYear() == 2011);
 		
 	}
 	@Test
 	public void testSetDayswithPicture(){
 		List<Integer> dayswithPicture = new ArrayList<Integer>();
 		dayswithPicture.add(11);
-		cm.setDayswithPicture(dayswithPicture);
-		assertTrue(cm.getDayswithPicture().get(0) == 11);
+		model.setDayswithPicture(dayswithPicture);
+		assertTrue(model.getDayswithPicture().get(0) == 11);
 		
 	}
 

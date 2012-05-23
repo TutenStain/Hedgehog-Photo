@@ -35,7 +35,7 @@ public class Main {
 		}
 		
 		//TODO Uncomment these the first run if you need to recreate the database
-		insertTestFileObjectsIntoDatabase();
+		//insertTestFileObjectsIntoDatabase();
 
 		MainViewInitiator mainView = new MainViewInitiator(start);
 		mainView.getMainModel().startNotify();
@@ -51,6 +51,7 @@ public class Main {
 	 * Just adds the pictures in the supplied Pictures folder to the program
 	 * with some "random" tags, comment, location and date.
 	 */
+	@SuppressWarnings("unused")
 	private static void insertTestFileObjectsIntoDatabase() {
 		
 		File directory = new File("Pictures");
@@ -63,7 +64,7 @@ public class Main {
 			f.setComment("Gutes bild");
 			f.setFileName(file.getName());
 			f.setDate("2012-05-19");
-			//Just some random tags to test the TagCloud
+			//Just some random tags
 			List<String> l = new ArrayList<String>();
 			l.add("Snyggt");
 			if(i == 0){

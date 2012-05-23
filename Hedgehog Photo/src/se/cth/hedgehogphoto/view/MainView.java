@@ -77,7 +77,7 @@ public class MainView implements Observer {
 	private void initialize(JFrame startView) {
 		this.frame = startView;
 		this.photoPanels = new ArrayList<PhotoPanel>();
-		
+
 		this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.frame.getContentPane().add(this.bottomPanel, BorderLayout.SOUTH);
 
@@ -117,19 +117,19 @@ public class MainView implements Observer {
 		this.topPanel.add(this.topImportHomeArea, BorderLayout.WEST);
 		this.topImportHomeArea.add(this.uploadPictures);
 		this.topImportHomeArea.add(this.btnHome);
-		
-		Dimension d = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
-		this.leftPanelView.setPreferredSize(d);
-		this.leftPanelView.setMinimumSize(d);
-		this.leftPanelView.setSize(d);
+
+		Dimension dimension = new Dimension(Constants.PREFERRED_MODULE_WIDTH, Constants.PREFERRED_MODULE_HEIGHT);
+		this.leftPanelView.setPreferredSize(dimension);
+		this.leftPanelView.setMinimumSize(dimension);
+		this.leftPanelView.setSize(dimension);
 		this.frame.getContentPane().add(this.leftPanelView, BorderLayout.WEST);
 		this.leftPanelView.setLayout(new GridLayout(3, 0, 0, 0));
 
 		//Lays out the placeholder widgets and start the loading animation
 		for(int i = 0; i < 3; i++) {
-			JPanel p = new JPanel();
-			p.add(new JLabel("Loading plugin..."));
-			this.layers[i] = new LoadingLayer(p);
+			JPanel panel = new JPanel();
+			panel.add(new JLabel("Loading plugin..."));
+			this.layers[i] = new LoadingLayer(panel);
 			this.leftPanelView.add(this.layers[i].getDecoratedPanel());	
 			this.layers[i].start();
 		}
@@ -157,7 +157,7 @@ public class MainView implements Observer {
 		}
 		return null;
 	}
-	
+
 	public void setHomeButtonListener(ActionListener l){
 		this.btnHome.addActionListener(l);
 	}
@@ -193,19 +193,19 @@ public class MainView implements Observer {
 	public JPanel getCardPanel(){
 		return this.cardPanel;
 	}
-	
+
 	public JPanel getSinglePhotoPanel(){
 		return this.singlePhotoPanel;
 	}
-	
+
 	public void resetSlider(){
 		this.slider.setValue(100);
 	}
-	
+
 	public JScrollPane getPhotoView(){
 		return this.photoView;
 	}
-	
+
 	public void setOverallBackground(Color c){
 		this.bottomPanel.setBackground(c);
 		this.topPanel.setBackground(c);
@@ -215,13 +215,13 @@ public class MainView implements Observer {
 		this.leftPanelView.setBackground(c);
 		this.slider.setBackground(c);
 	}
-	
+
 	public void setTopButtonsVisibility(Boolean b){
 		this.btnBack.setVisible(b);
 		this.btnPrevPP.setVisible(b);
 		this.btnNextPP.setVisible(b);
 	}
-	
+
 	public void addPlugin(JPanel panel, PluginArea placement){
 		if(panel != null){
 			panel.setBackground(Constants.GUI_BACKGROUND);
@@ -246,10 +246,10 @@ public class MainView implements Observer {
 					this.leftPanelView.add(panel, 2);
 				}
 			}
-			
+
 			/*Revalidate so we instantly refresh the view*/
 			this.leftPanelView.revalidate();
-			
+
 		} else {
 			Log.getLogger().log(Level.SEVERE, "Could not add plugin panel to the view, panel is null");
 		}
@@ -275,20 +275,20 @@ public class MainView implements Observer {
 			panel.setTextFieldFocusListeners(listener);
 		}
 	}
-	
+
 	public void setPrevNextBtnListeners(ActionListener l){
 		this.btnPrevPP.addActionListener(l);
 		this.btnNextPP.addActionListener(l);
 	}
-	
+
 	public void setBackBtnListener(ActionListener l){
 		this.btnBack.addActionListener(l);
 	}
-	
+
 	public JPanel getPhotoViewPanel(){
 		return this.photoViewPanel;
 	}
-	
+
 	private void addListenersToAll() {
 		addPhotoPanelActionListeners(this.actionListener);
 		addPhotoPanelFocusListener(this.focusListener);
@@ -301,12 +301,12 @@ public class MainView implements Observer {
 		this.resetSlider();
 		this.photoPanels = new ArrayList<PhotoPanel>();
 		List<? extends PictureObject> images;
-		
+
 		if(this.cardPanel.getLayout() instanceof CardLayout){
 			CardLayout cl = (CardLayout) this.cardPanel.getLayout();
 			cl.show(this.cardPanel, "All");
 		}
-	
+
 		this.photoViewPanel.removeAll();
 		this.photoViewPanel.repaint();
 
@@ -336,7 +336,6 @@ public class MainView implements Observer {
 				}catch(Exception f){
 
 				}
-				System.out.println(images.get(i).getName());
 
 				this.photoPanels.add(i, pp);
 				this.photoViewPanel.add(pp);
@@ -373,7 +372,7 @@ public class MainView implements Observer {
 			}
 			addListenersToAll();
 		}
-	
+
 		if(!this.photoPanels.isEmpty()){
 			for(int i = 0; i < this.photoPanels.size(); i++){
 				Image image = this.photoPanels.get(i).getIcon().getImage();
@@ -386,7 +385,7 @@ public class MainView implements Observer {
 						Math.round(image.getHeight(null)*scale)));
 			}
 		}
-		
+
 		this.frame.revalidate();
 	}
 }

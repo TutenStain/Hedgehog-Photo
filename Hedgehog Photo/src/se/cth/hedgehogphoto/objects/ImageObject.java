@@ -14,7 +14,6 @@ public class ImageObject implements FileObject {
 	private boolean legitGPSInfo;
 
 	public ImageObject() {
-		//init
 	}
 
 	public void setProperty(String property, String value) {
@@ -34,18 +33,8 @@ public class ImageObject implements FileObject {
 		}
 	}
 
-	public void print() {
-		System.out.println("date: " + date);
-		System.out.println("fileName: " + fileName);
-		System.out.println("filePath: " + filePath);
-		System.out.println("artist: " + artist);
-		System.out.println("comment: " + comment);
-		System.out.println("tags: " + tags);
-		System.out.println("location: " + location);
-	}
-
 	public String getAlbumName() {
-		return albumName;
+		return this.albumName;
 	}
 
 	public void setAlbumName(String albumName) {
@@ -53,7 +42,7 @@ public class ImageObject implements FileObject {
 	}
 
 	public String getTag() {
-		return tag;
+		return this.tag;
 	}
 
 	public void setTag(String tag) {
@@ -61,7 +50,7 @@ public class ImageObject implements FileObject {
 	}
 
 	public List<String> getTags() {
-		return tags;
+		return this.tags;
 	}
 
 	public void setTags(List<String> tags) {
@@ -69,7 +58,7 @@ public class ImageObject implements FileObject {
 	}
 
 	public String getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(String date) {
@@ -77,7 +66,7 @@ public class ImageObject implements FileObject {
 	}
 
 	public String getArtist() {
-		return artist;
+		return this.artist;
 	}
 
 	private void setArtist(String artist) {
@@ -85,7 +74,7 @@ public class ImageObject implements FileObject {
 	}
 
 	public String getComment() {
-		return comment;
+		return this.comment;
 	}
 
 	public void setComment(String comment) {
@@ -93,7 +82,7 @@ public class ImageObject implements FileObject {
 	}
 
 	public String getFilePath() {
-		return filePath;
+		return this.filePath;
 	}
 
 	public  void setFilePath(String filePath) {
@@ -101,7 +90,7 @@ public class ImageObject implements FileObject {
 	}
 
 	public String getFileName() {
-		return fileName;
+		return this.fileName;
 	}
 
 	public void setFileName(String fileName) {
@@ -109,30 +98,32 @@ public class ImageObject implements FileObject {
 	}
 
 	public LocationGPSObject getLocationObject() {
-		return locationObject;
+		return this.locationObject;
 	}
 	public String getLocation() {
-		return location;
+		return this.location;
 	}
 
 	private void setLongitude(String longitude) {
-		if (legitGPSInfo)
+		if (legitGPSInfo) {
 			locationObject.setLongitude(longitude);
+		}
 	}
 
 	private void setLatitude(String latitude) {
-		if (legitGPSInfo)
+		if (legitGPSInfo) {
 			locationObject.setLatitude(latitude);
+		}
 	}
 
 	private void setFirstGPSDirection(String value) {
 		value = value.trim();
-		legitGPSInfo = value.equals("\'N\'") || value.equals("\'S\'");
+		this.legitGPSInfo = value.equals("\'N\'") || value.equals("\'S\'");
 	}
 
 	private void setSecondGPSDirection(String value) {
 		value = value.trim();
-		legitGPSInfo = value.equals("\'W\'") || value.equals("\'E\'");
+		this.legitGPSInfo = value.equals("\'W\'") || value.equals("\'E\'");
 	}
 
 	@Override
@@ -143,43 +134,17 @@ public class ImageObject implements FileObject {
 	}
 
 	@Override
-	public String toString() {
-		return "[name=" + fileName + "] [location=" + location + "] [date=" + date + "] [tag=" + tags + "] [comments= " + comment +"] [albumName=" + albumName + "]" + "Path= " + filePath + "]";
-	}
-
-
-	
-
-/*	@Override
-	public void setLocation(String location) {
-		this.location=location;
-		locationObject = new LocationObjectOther(location);
-
-	}*/
-
-	@Override
 	public void setCoverPath(String coverPath) {
 		this.coverPath = coverPath;
-
 	}
 
 	@Override
 	public String getCoverPath(){
-		return coverPath;
+		return this.coverPath;
 	}
-/*	public void findLocationPlace(){
-		Point.Double p= new Point.Double();
-		p.setLocation( locationObject.getLongitude(),locationObject.getLatitude());
-		URL url =URLCreator.getInstance().queryReverseGeocodingURL(p);
-		LocationObjectOther newlocationObject = XMLParser.getInstance().processReverseGeocodingSearch(url);
-		try{
-			locationObject.setLocation( newlocationObject.getLocation());
-		}catch(Exception o){
-			System.out.println("NULL");
-		}
-		System.out.println(locationObject.getLocation());
-	}
-	*/
 	
-
+	@Override
+	public String toString() {
+		return "[name=" + fileName + "] [location=" + location + "] [date=" + date + "] [tag=" + tags + "] [comments= " + comment +"] [albumName=" + albumName + "]" + "Path= " + filePath + "]";
+	}
 }
